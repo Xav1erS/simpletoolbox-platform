@@ -1,0 +1,144 @@
+/* Additional styles for AI Background Remover */
+
+/* Animation for progress bar */
+@keyframes progressAnimation {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+}
+
+.progress-bar-animated {
+    background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+    animation: progressAnimation 1s linear infinite;
+}
+
+/* Loading spinner for buttons */
+.btn-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+    vertical-align: -0.125em;
+}
+
+/* Hover effects for cards */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-secondary-bg);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .display-5 {
+        font-size: 2rem;
+    }
+    
+    .upload-area {
+        padding: 40px 15px;
+    }
+    
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .theme-toggle,
+    .ad-container,
+    .btn:not(.btn-print) {
+        display: none !important;
+    }
+}
+
+/* Accessibility focus styles */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Smooth transitions for theme toggle */
+.theme-toggle {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Custom tooltip */
+.custom-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+}
+
+.custom-tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Image preview hover effect */
+.preview-image {
+    transition: transform 0.3s ease;
+}
+
+.preview-image:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Model selector active state */
+.model-selector.active {
+    border-color: var(--primary-color) !important;
+    background-color: rgba(99, 102, 241, 0.05) !important;
+}
+
+/* Feature icon animation */
+.feature-icon {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-icon:hover {
+    transform: scale(1.1);
+    background-color: rgba(99, 102, 241, 0.2) !important;
+}

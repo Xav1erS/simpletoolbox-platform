@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use Image Background Remover | Simple Toolbox</title>
+    <meta name="description" content="Step-by-step guide to using our free image background remover. Learn how to upload images, refine masks, choose output formats, and download results.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+            --success: #36D399;
+        }
+
+        [data-bs-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--dark-text);
+        }
+
+        [data-bs-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--light-text);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-bs-theme="dark"] .header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            background-color: rgba(22, 93, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .tip {
+            background-color: rgba(54, 211, 153, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip i {
+            color: var(--success);
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-top: 60px;
+        }
+
+        [data-bs-theme="dark"] .footer {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cut"></i>
+                <span>Image Background Remover</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="what-is.html">What Is</a>
+                <a href="how-to-use.html" class="active">How to Use</a>
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>How to Use Image Background Remover</h1>
+            
+            <p>Our free image background remover is designed to be intuitive and powerful. Whether you need to process a single product photo or refine a complex portrait, this guide will walk you through every feature. All AI processing happens locally in your browser—your images never leave your device.</p>
+
+            <h2>Quick Start: Remove a Background in Four Steps</h2>
+            
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Upload Your Image</div>
+                <p>Click the <strong>“Upload Image”</strong> button or drag and drop an image file (JPG, PNG, WebP up to 10 MB) into the designated area. The tool will load the image and immediately begin AI analysis.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Review the Automatic Result</div>
+                <p>Within seconds, the AI will generate a preliminary mask, removing the background and displaying the subject on a transparent background. Use the <strong>side‑by‑side slider</strong> to compare the original and result.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Refine the Mask (Optional)</div>
+                <p>If the automatic removal missed details or included unwanted areas, switch to the <strong>“Edit Mask”</strong> tab. Use the <strong>green brush</strong> to add foreground areas or the <strong>red brush</strong> to remove background areas. Adjust brush size with the slider.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">4</span> Download the Result</div>
+                <p>Choose your output format:</p>
+                <ul>
+                    <li><strong>PNG with transparency</strong> – The standard choice for designers.</li>
+                    <li><strong>Solid color background</strong> – Select white, black, or enter a custom hex color.</li>
+                </ul>
+                <p>Click <strong>“Download PNG”</strong> to save the final image to your device.</p>
+            </div>
+
+            <div class="tip">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> For best results, use images with clear contrast between subject and background. Complex backgrounds (e.g., foliage, patterned walls) may require manual refinement with the brush tool.
+            </div>
+
+            <h2>Using the Editing Tools</h2>
+            
+            <p>The built‑in editing tools give you precise control over the final mask.</p>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Zoom and Pan</div>
+                <p>Click the <strong>zoom buttons</strong> (or use your mouse wheel) to zoom in for detail work. Click and drag the image to pan. The <strong>“Reset View”</strong> button returns to the default zoom and position.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Undo and Redo</div>
+                <p>Made a mistake? Use the <strong>“Undo”</strong> button (or Ctrl+Z) to reverse your last brush stroke. <strong>“Redo”</strong> (Ctrl+Y) reapplies it. Up to 20 actions are stored.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Show/Hide Mask Overlay</div>
+                <p>Toggle the <strong>“Show Mask”</strong> checkbox to display a semi‑transparent green overlay over the foreground area. This helps you spot small errors.</p>
+            </div>
+
+            <h2>Understanding Output Options</h2>
+            
+            <p>You can tailor the result to your specific needs.</p>
+
+            <ul>
+                <li><strong>Transparent PNG</strong> – Ideal for graphic design, web use, or placing the subject onto a new background in an image editor.</li>
+                <li><strong>White Background</strong> – The standard for e‑commerce product photos; many marketplaces require pure‑white (#FFFFFF) backgrounds.</li>
+                <li><strong>Black Background</strong> – Creates a dramatic, high‑contrast look suitable for social media banners or artistic compositions.</li>
+                <li><strong>Custom Color</strong> – Enter any hex color (e.g., #165DFF) to match your brand palette or project theme.</li>
+            </ul>
+
+            <h2>Managing Your History</h2>
+            
+            <p>The tool keeps a local history of your last five processed images.</p>
+            
+            <ul>
+                <li><strong>View</strong> – The history panel (right side on desktop, below on mobile) shows thumbnails of your recent images.</li>
+                <li><strong>Reload</strong> – Click any thumbnail to reload that image into the editor, including its mask and editing state.</li>
+                <li><strong>Clear</strong> – Use the <strong>“Clear History”</strong> button to delete all stored images. History is stored only in your current browser and device.</li>
+            </ul>
+
+            <h2>Privacy and Performance</h2>
+            
+            <p>Our remover is built with privacy as a core principle:</p>
+            
+            <ul>
+                <li><strong>No Server Uploads</strong> – All AI processing runs locally using TensorFlow.js. Your images are never transmitted over the internet.</li>
+                <li><strong>No Registration</strong> – Use the tool immediately without creating an account.</li>
+                <li><strong>Fast Processing</strong> – The optimized model processes most images in 2‑5 seconds, depending on your device’s performance.</li>
+            </ul>
+
+            <p>There are no daily limits. You can process as many images as you need, at full original quality.</p>
+
+            <p>Start removing backgrounds now by visiting the <a href="index.html">Image Background Remover</a>.</p>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">Image Background Remover</div>
+            <p>simpletoolbox.dev/image-background-remover | A free, private AI‑powered background remover</p>
+            <p>© 2026 Simple Toolbox. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme detection
+        const savedTheme = localStorage.getItem('bg_remover_theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>

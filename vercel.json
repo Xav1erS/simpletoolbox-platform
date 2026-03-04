@@ -1,0 +1,72 @@
+{
+  "rewrites": [
+    {
+      "source": "/password-generator",
+      "destination": "/tools/password-generator/index.html"
+    },
+    {
+      "source": "/password-generator/what-is",
+      "destination": "/tools/password-generator/what-is.html"
+    },
+    {
+      "source": "/password-generator/how-to-use",
+      "destination": "/tools/password-generator/how-to-use.html"
+    },
+    {
+      "source": "/youtube-thumbnail-downloader",
+      "destination": "/tools/youtube-thumbnail-downloader/index.html"
+    },
+    {
+      "source": "/youtube-thumbnail-downloader/what-is",
+      "destination": "/tools/youtube-thumbnail-downloader/what-is.html"
+    },
+    {
+      "source": "/youtube-thumbnail-downloader/how-to-use",
+      "destination": "/tools/youtube-thumbnail-downloader/how-to-use.html"
+    },
+    {
+      "source": "/image-background-remover",
+      "destination": "/tools/image-background-remover/index.html"
+    },
+    {
+      "source": "/image-background-remover/what-is",
+      "destination": "/tools/image-background-remover/what-is.html"
+    },
+    {
+      "source": "/image-background-remover/how-to-use",
+      "destination": "/tools/image-background-remover/how-to-use.html"
+    },
+    {
+      "source": "/unit-converter",
+      "destination": "/tools/unit-converter/index.html"
+    },
+    {
+      "source": "/unit-converter/what-is",
+      "destination": "/tools/unit-converter/what-is.html"
+    },
+    {
+      "source": "/unit-converter/how-to-use",
+      "destination": "/tools/unit-converter/how-to-use.html"
+    },
+    {
+      "source": "/pdf-to-word-converter",
+      "destination": "/tools/pdf-to-word-converter/index.html"
+    },
+    {
+      "source": "/pdf-to-word-converter/what-is",
+      "destination": "/tools/pdf-to-word-converter/what-is.html"
+    },
+    {
+      "source": "/pdf-to-word-converter/how-to-use",
+      "destination": "/tools/pdf-to-word-converter/how-to-use.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    }
+  ]
+}

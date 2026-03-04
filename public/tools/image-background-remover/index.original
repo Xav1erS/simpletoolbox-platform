@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Background Remover | Free Online Tool</title>
+    <meta name="description" content="Remove image backgrounds instantly with AI. No uploads, privacy guaranteed. Free online tool powered by TensorFlow.js.">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Dark/Light theme toggle -->
+    <script>
+        // Set theme based on user preference
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+        // Initialize theme
+        function initTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+            setTheme(theme);
+            // Update toggle button icon
+            const icon = document.getElementById('themeToggleIcon');
+            if (icon) {
+                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+        // Toggle theme
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+            const icon = document.getElementById('themeToggleIcon');
+            if (icon) {
+                icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #165DFF;
+            --primary-dark: #0E42CC;
+            --success-color: #36D399;
+            --danger-color: #F87272;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            transition: var(--transition);
+        }
+        .card {
+            border-radius: var(--border-radius);
+            border: 1px solid var(--bs-border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .upload-area {
+            border: 3px dashed var(--bs-border-color);
+            border-radius: var(--border-radius);
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--bs-secondary-bg);
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary-color);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: repeating-conic-gradient(#f0f0f0 0% 25%, #fafafa 0% 50%) 50% / 20px 20px;
+        }
+        [data-bs-theme="dark"] .preview-container {
+            background: repeating-conic-gradient(#2d2d2d 0% 25%, #1a1a1a 0% 50%) 50% / 20px 20px;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .progress-bar {
+            border-radius: 10px;
+            height: 12px;
+        }
+        .ad-container {
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            background-color: var(--bs-secondary-bg);
+            border: 1px dashed var(--bs-border-color);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+        .model-selector {
+            background-color: var(--bs-secondary-bg);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid var(--bs-border-color);
+            text-align: center;
+        }
+        .footer .container {
+            justify-content: center;
+        }
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        /* 捐赠组件样式 */
+        .donation-container {
+            animation: fadeInUp 0.6s ease;
+        }
+        .donation-container .card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+            border-color: var(--primary-color) !important;
+        }
+        .donation-container .btn-primary {
+            background-color: #0070ba;
+            border-color: #0070ba;
+        }
+        .donation-container .btn-primary:hover {
+            background-color: #005ea6;
+            border-color: #005ea6;
+            transform: translateY(-2px);
+        }
+        .donation-container .btn-warning {
+            background-color: #ff5e5e;
+            border-color: #ff5e5e;
+            color: white;
+        }
+        .donation-container .btn-warning:hover {
+            background-color: #ff4444;
+            border-color: #ff4444;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .donation-container .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        /* 暗色模式适配 */
+        [data-bs-theme="dark"] .donation-container .card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border-color: var(--primary-color) !important;
+        }
+        [data-bs-theme="dark"] .donation-container .btn-primary {
+            background-color: #0061c2;
+            border-color: #0061c2;
+        }
+        [data-bs-theme="dark"] .donation-container .btn-warning {
+            background-color: #ff4444;
+            border-color: #ff4444;
+        }
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            .preview-container {
+                height: 200px;
+            }
+            .donation-container .d-flex {
+                flex-direction: column;
+                gap: 10px !important;
+            }
+            .donation-container .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        /* 特性展示 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--bs-secondary-bg);
+            border-radius: var(--border-radius);
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--bs-border-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        /* SEO内容样式 */
+        .seo-content {
+            background-color: var(--bs-secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+
+        .seo-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .seo-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--bs-border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .seo-section h3 {
+            color: var(--bs-body-color);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .seo-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: var(--bs-body-color);
+        }
+
+        .seo-section ul, .seo-section ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--bs-body-color);
+        }
+
+        .seo-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-section a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .seo-section a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 骨架屏样式 */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--border-radius);
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-preview {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 1rem;
+        }
+        
+        .skeleton-button {
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+        }
+        
+        /* 移动端拍照上传按钮 */
+        .camera-upload-btn {
+            margin-top: 10px;
+            background-color: var(--bs-secondary-bg);
+            border: 2px dashed var(--bs-border-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .camera-upload-btn:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        
+        /* 倒计时提示 */
+        .countdown-timer {
+            font-size: 0.9rem;
+            color: var(--bs-secondary-color);
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        /* 超时重试弹窗 */
+        .timeout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .timeout-modal-content {
+            background-color: var(--bs-body-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 批量上传区域 */
+        .batch-upload-area {
+            border: 3px dashed var(--bs-border-color);
+            border-radius: var(--border-radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--bs-secondary-bg);
+            margin-top: 20px;
+        }
+        
+        .batch-upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        
+        .batch-files-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        /* 用户留存悬浮按钮 */
+        .retention-floating {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .retention-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .retention-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 邮件订阅模块 */
+        .email-subscription {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        /* 广告位引导文案 */
+        .ad-guide-text {
+            font-size: 0.9rem;
+            color: var(--bs-secondary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI Image Background Remover",
+        "description": "Remove backgrounds from images instantly with AI. No uploads, privacy guaranteed. Free online tool powered by TensorFlow.js.",
+        "url": "https://bgremover.example.com",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": "Privacy First, Fast & Accurate, Custom Backgrounds, Mobile Friendly, Batch Processing, Multiple Formats",
+        "screenshot": "https://bgremover.example.com/screenshot.png",
+        "author": {
+            "@type": "Organization",
+            "name": "BgRemover",
+            "url": "https://bgremover.example.com"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1250"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i id="themeToggleIcon" class="fas fa-moon"></i>
+    </div>
+
+    <!-- Header -->
+    <header class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="fw-bold display-5 mb-2">
+                    <i class="fas fa-magic me-2" style="color: var(--primary-color);"></i>
+                    BgRemover
+                </h1>
+                <p class="lead text-muted mb-0">
+                    Remove backgrounds from images instantly with AI. No uploads, no privacy concerns. 100% free.
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <button class="btn btn-outline-primary" onclick="window.open('https://github.com/bunn-io/rembg-web', '_blank')">
+                    <i class="fab fa-github me-2"></i>GitHub
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ad Container Top -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-content">
+                <small class="text-muted">AdSense Advertisement</small>
+                <div class="mt-1">
+                    <!-- AdSense placeholder -->
+                    <div style="width: 728px; height: 90px; background-color: #f0f0f0; border-radius: 4px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px;">
+                        Google AdSense 728x90
+                        <br>
+                        <small>Publisher ID: pub-XXXXXXXXXXXXXXXX</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="row">
+            <!-- Left Column: Upload & Controls -->
+            <div class="col-lg-8">
+                <div class="card p-4 mb-4">
+                    <h3 class="fw-bold mb-3">
+                        <i class="fas fa-upload me-2"></i>Upload Image
+                    </h3>
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-muted"></i>
+                        <h4 class="fw-bold">Drag & Drop or Click to Upload</h4>
+                        <p class="text-muted mb-3">Supports JPG, PNG, WebP up to 10MB</p>
+                        <button class="btn btn-primary btn-lg">
+                            <i class="fas fa-folder-open me-2"></i>Choose File
+                        </button>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Batch upload area -->
+                    <div class="batch-upload-area" id="batchUploadArea">
+                        <i class="fas fa-layer-group fa-3x mb-3 text-muted"></i>
+                        <h4 class="fw-bold">Batch Upload (Drag & Drop Multiple Images)</h4>
+                        <p class="text-muted mb-3">Supports up to 10 images, 10MB each</p>
+                        <button class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-folder-plus me-2"></i>Select Multiple Files
+                        </button>
+                        <input type="file" id="batchFileInput" accept="image/*" multiple style="display: none;">
+                        <div class="batch-files-list" id="batchFilesList"></div>
+                        <div class="mt-3">
+                            <button class="btn btn-primary" onclick="processBatch()" id="batchProcessBtn">
+                                <i class="fas fa-bolt me-2"></i>Process All Images
+                            </button>
+                            <button class="btn btn-outline-secondary ms-2" onclick="batchFiles = []; updateBatchFilesList();">
+                                <i class="fas fa-trash me-2"></i>Clear List
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="model-selector">
+                                <h5 class="fw-bold mb-2">
+                                    <i class="fas fa-brain me-2"></i>AI Model
+                                </h5>
+                                <select id="modelSelect" class="form-select">
+                                    <option value="u2netp" selected>Lightweight (U2NetP) - Fast</option>
+                                    <option value="u2net">Standard (U2Net) - Accurate</option>
+                                    <option value="u2net_human_seg">Human Segmentation</option>
+                                </select>
+                                <small class="text-muted mt-2 d-block">Select the AI model based on your needs.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="model-selector">
+                                <h5 class="fw-bold mb-2">
+                                    <i class="fas fa-palette me-2"></i>Background
+                                </h5>
+                                <select id="backgroundSelect" class="form-select">
+                                    <option value="transparent" selected>Transparent</option>
+                                    <option value="white">White</option>
+                                    <option value="black">Black</option>
+                                    <option value="custom">Custom Color</option>
+                                </select>
+                                <div id="customColorContainer" class="mt-3" style="display: none;">
+                                    <input type="color" id="customColorPicker" class="form-control form-control-color" value="#3b82f6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button id="processBtn" class="btn btn-primary btn-lg w-100 py-3" onclick="processImage()" disabled>
+                            <i class="fas fa-bolt me-2"></i>Remove Background
+                        </button>
+                        <div class="progress mt-3" id="progressContainer" style="display: none;">
+                            <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                        <div id="statusText" class="text-center mt-2 small"></div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="card p-4" id="resultsSection" style="display: none;">
+                    <h3 class="fw-bold mb-3">
+                        <i class="fas fa-images me-2"></i>Results
+                    </h3>
+                    <!-- Skeleton loading container -->
+                    <div id="skeletonContainer" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="skeleton skeleton-preview"></div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="skeleton skeleton-preview"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton skeleton-button"></div>
+                        <div class="text-center mt-3">
+                            <div class="countdown-timer" id="countdownTimer">Removing background... (remaining <span id="countdownSeconds">10</span> seconds)</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h5 class="fw-bold mb-2">Original</h5>
+                            <div class="preview-container">
+                                <img id="originalPreview" class="preview-image" src="" alt="Original">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h5 class="fw-bold mb-2">Processed</h5>
+                            <div class="preview-container">
+                                <img id="processedPreview" class="preview-image" src="" alt="Processed">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button id="downloadBtn" class="btn btn-success btn-lg px-5" onclick="downloadResult()">
+                            <i class="fas fa-download me-2"></i>Download PNG
+                        </button>
+                        <button class="btn btn-outline-secondary ms-3" onclick="resetTool()">
+                            <i class="fas fa-redo me-2"></i>Process Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Features & Ad -->
+            <div class="col-lg-4">
+                <!-- Features -->
+                <div class="card p-4 mb-4">
+                    <h3 class="fw-bold mb-3">
+                        <i class="fas fa-star me-2"></i>Features
+                    </h3>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <p class="small fw-bold mb-0">Privacy First</p>
+                            <p class="small text-muted">All processing happens in your browser.</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <p class="small fw-bold mb-0">Fast & Accurate</p>
+                            <p class="small text-muted">AI-powered background removal.</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <p class="small fw-bold mb-0">Custom Backgrounds</p>
+                            <p class="small text-muted">Transparent, solid colors, or images.</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="feature-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <p class="small fw-bold mb-0">Mobile Friendly</p>
+                            <p class="small text-muted">Works on all devices.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Container Sidebar -->
+                <div class="card p-4">
+                    <div class="ad-container" style="min-height: 600px;">
+                        <div class="ad-content">
+                            <small class="text-muted">AdSense Advertisement</small>
+                            <div class="mt-1">
+                                <!-- AdSense placeholder -->
+                                <div style="width: 300px; height: 600px; background-color: #f0f0f0; border-radius: 4px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px;">
+                                    Google AdSense 300x600
+                                    <br>
+                                    <small>Publisher ID: pub-XXXXXXXXXXXXXXXX</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card p-4">
+                    <h3 class="fw-bold mb-3">
+                        <i class="fas fa-cogs me-2"></i>How It Works
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3">1. Upload</h5>
+                            <p class="text-muted">Select an image from your device.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3">2. AI Processing</h5>
+                            <p class="text-muted">Our AI model removes the background.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3">3. Preview</h5>
+                            <p class="text-muted">See the result instantly.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3">4. Download</h5>
+                            <p class="text-muted">Get your transparent PNG.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <section class="features">
+                    <div class="feature-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>Advanced AI Models</h3>
+                        <p>Powered by state-of-the-art AI models (U2Net, U2NetP) for precise background removal.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Privacy First</h3>
+                        <p>All processing happens in your browser. No images are uploaded to any server.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>Fast Processing</h3>
+                        <p>Get results in seconds with our optimized AI engine running on ONNX Runtime Web.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Custom Backgrounds</h3>
+                        <p>Replace backgrounds with transparent, solid colors, or custom images.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>Batch Processing</h3>
+                        <p>Process multiple images at once for efficient workflow (upcoming feature).</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-export"></i>
+                        <h3>Multiple Formats</h3>
+                        <p>Export images in PNG, JPG, WebP formats with customizable quality settings.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Donation Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="donation-container">
+                    <div class="card p-4 border-primary border-2">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h4 class="fw-bold mb-2">
+                                    <i class="fas fa-heart text-danger me-2"></i>Support This Free Tool
+                                </h4>
+                                <p class="text-muted mb-3">
+                                    This tool is completely free and open-source. If you find it useful, consider supporting the developer to keep it running and improving.
+                                </p>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_BUTTON_ID" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer nofollow"
+                                       class="btn btn-primary px-4 py-2">
+                                        <i class="fab fa-paypal me-2"></i>Donate via PayPal
+                                    </a>
+                                    <a href="https://ko-fi.com/YOUR_KOFI_USERNAME" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer nofollow"
+                                       class="btn btn-warning px-4 py-2">
+                                        <i class="fas fa-coffee me-2"></i>Buy Me a Coffee
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="feature-icon bg-primary bg-opacity-10">
+                                    <i class="fas fa-hands-helping text-primary fa-2x"></i>
+                                </div>
+                                <p class="small text-muted mt-2">Your support helps maintain and improve this tool</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO内容区域 -->
+        <section class="seo-content">
+            <div class="seo-section" id="what-is">
+                <h2>What Is AI Image Background Remover?</h2>
+                <p>AI Image Background Remover is a free online tool that uses artificial intelligence to automatically remove backgrounds from images. Powered by TensorFlow.js and ONNX Runtime Web, the tool runs entirely in your browser, ensuring complete privacy—no images are uploaded to any server. It supports various image formats including JPG, PNG, and WebP, and offers multiple AI models for different needs: lightweight for speed, standard for accuracy, and human segmentation for portraits. Whether you're an e-commerce seller needing product photos on transparent backgrounds, a graphic designer creating composites, or a social media user making memes, this tool provides professional-quality results in seconds.</p>
+            </div>
+            
+            <div class="seo-section" id="how-to-use">
+                <h2>How to Use AI Image Background Remover</h2>
+                <p>Using the AI Image Background Remover is simple: First, upload an image by dragging and dropping it onto the upload area or clicking to select a file. The tool accepts images up to 10MB. Second, choose an AI model from the dropdown: Lightweight (U2NetP) for fast processing, Standard (U2Net) for higher accuracy, or Human Segmentation for portraits. Third, select a background option: transparent (default), white, black, or custom color. Fourth, click the 'Remove Background' button. The AI will process the image locally in your browser, showing a progress bar. Once done, you'll see side-by-side previews of the original and processed images. Finally, click 'Download PNG' to save the result. You can also 'Process Another' to start over.</p>
+            </div>
+            
+            <div class="seo-section" id="about-us">
+                <h2>About Us</h2>
+                <p>BgRemover is part of a suite of free online tools built to empower creators with accessible AI technology. Our mission is to make advanced image editing capabilities available to everyone without cost or complexity. The tool leverages open-source projects like rembg-web and ONNX Runtime Web to deliver state-of-the-art background removal directly in the browser. We prioritize user privacy—all processing happens locally, and no data is stored. Our team consists of developers passionate about web performance and user experience. We continuously update the tool based on community feedback and technological advancements. Revenue from non-intrusive ads and optional donations helps cover hosting and development costs, keeping the tool free for all.</p>
+            </div>
+            
+            <div class="seo-section" id="terms-of-use">
+                <h2>Terms of Use</h2>
+                <p>By using the AI Image Background Remover tool, you agree to these Terms of Use. The tool is provided for personal, non-commercial use only. You must not use it for illegal purposes, including copyright infringement, harassment, or creating deceptive content. All processed images remain your property; however, you are responsible for ensuring you have the right to edit and distribute them. The tool is not affiliated with any third-party services except those explicitly mentioned. We reserve the right to modify or discontinue the tool at any time. We are not liable for any damages arising from use of the tool. Third-party links may appear; we are not responsible for their content. If you disagree with these terms, discontinue use immediately.</p>
+            </div>
+            
+            <div class="seo-section" id="privacy-policy">
+                <h2>Privacy Policy</h2>
+                <p>Your privacy is paramount. The AI Image Background Remover processes images entirely client-side using JavaScript and WebAssembly; no image data is transmitted to our servers. We do not collect, store, or share any personal information. The tool may display advertisements via Google AdSense, which may use cookies for personalized ads; you can opt out through Google's Ads Settings. We use Google Analytics for anonymized usage statistics (e.g., page views, button clicks) to improve the tool; this data cannot identify individuals. The website uses SSL encryption for security. We do not sell or rent user data. This policy may be updated; continued use implies acceptance.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold">AI Background Remover</h5>
+                    <p class="text-muted small">
+                        A free online tool that uses AI to remove backgrounds from images. No registration required.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="small text-muted">
+                        Powered by <a href="https://github.com/bunn-io/rembg-web" target="_blank">rembg-web</a> & ONNX Runtime Web
+                        <br>
+                        © 2026 | <a href="#" onclick="window.open('https://github.com/bunn-io/rembg-web/blob/main/LICENSE', '_blank')">MIT License</a>
+                        <br>
+                        <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | <a href="/feedback">Feedback</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Timeout Retry Modal -->
+    <div class="timeout-modal" id="timeoutModal">
+        <div class="timeout-modal-content">
+            <h4 class="fw-bold mb-3">Processing Timeout</h4>
+            <p class="text-muted mb-4">The background removal is taking longer than expected. Would you like to retry with a smaller image or try again?</p>
+            <div class="d-flex gap-3">
+                <button class="btn btn-primary flex-grow-1" onclick="retryProcessing()">
+                    <i class="fas fa-redo me-2"></i>Retry
+                </button>
+                <button class="btn btn-outline-secondary flex-grow-1" onclick="closeTimeoutModal()">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Retention Floating Buttons -->
+    <div class="retention-floating" id="retentionFloating">
+        <div class="retention-btn" id="bookmarkBtn" title="Save this tool to bookmarks">
+            <i class="fas fa-bookmark"></i>
+        </div>
+        <div class="retention-btn" id="shareBtn" title="Share on social media">
+            <i class="fas fa-share-alt"></i>
+        </div>
+    </div>
+
+    <!-- Email Subscription Module -->
+    <div class="container mt-5" id="emailSubscription" style="display: none;">
+        <div class="email-subscription">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4 class="fw-bold mb-2">Get more tools like this in your inbox</h4>
+                    <p class="text-muted mb-3">Subscribe to our newsletter for weekly tool updates, tips, and exclusive content.</p>
+                    <div class="d-flex gap-2">
+                        <input type="email" class="form-control" placeholder="Your email address" id="subscribeEmail">
+                        <button class="btn btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+                    </div>
+                    <small class="text-muted d-block mt-2">No spam. Unsubscribe anytime.</small>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="feature-icon bg-primary bg-opacity-10">
+                        <i class="fas fa-envelope-open-text text-primary fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required Scripts -->
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ONNX Runtime Web -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.23.0/dist/ort.min.js"></script>
+    <!-- rembg-web UMD -->
+    <script src="https://unpkg.com/@bunnio/rembg-web@latest/dist/index.umd.min.js"></script>
+    <!-- JSZip for batch download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>

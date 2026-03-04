@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Simple Toolbox</title>
+    <meta name="description" content="Create strong, random passwords, API keys, and security tokens with our free online tool. Customize length and character types for maximum security.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        /* 主题变量 - 亮色模式 */
+        :root {
+            --primary-color: #165DFF;
+            --primary-dark: #1452D6;
+            --success-color: #36D399;
+            --error-color: #F87272;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        /* 暗色模式 */
+        [data-theme="dark"] {
+            --primary-color: #5a7dff;
+            --primary-dark: #4a6ce8;
+            --success-color: #36D399;
+            --error-color: #F87272;
+            --text-color: #f0f0f0;
+            --text-light: #b0b0b0;
+            --bg-color: #121212;
+            --bg-secondary: #1e1e1e;
+            --border-color: #333;
+            --card-bg: #1e1e1e;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 头部样式 */
+        header {
+            background-color: var(--card-bg);
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        /* 主内容区域 */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 工具容器 */
+        .tool-container {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-color);
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color), 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 密码选项样式 */
+        .password-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-group {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .option-group h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .slider {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            min-height: 44px;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary.clicked {
+            transform: translateY(0);
+            background-color: var(--primary-dark);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* 结果区域 */
+        .result-section {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 密钥旋转加载动画 */
+        @keyframes keySpin {
+            0% { 
+                transform: rotate(0deg) scale(1);
+                color: var(--primary-color);
+            }
+            50% { 
+                transform: rotate(180deg) scale(1.2);
+                color: var(--primary-dark);
+            }
+            100% { 
+                transform: rotate(360deg) scale(1);
+                color: var(--primary-color);
+            }
+        }
+        
+        .key-loading-animation {
+            display: inline-block;
+            animation: keySpin 1.5s ease-in-out infinite;
+            font-size: 2rem;
+        }
+
+        .result-box {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-top: 1rem;
+            word-break: break-word;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 1px;
+            color: var(--text-color);
+        }
+
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* 特性展示 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 广告区域 */
+        .ad-container {
+            margin: 2rem auto;
+            max-width: 728px;
+            text-align: center;
+            background-color: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px dashed var(--border-color);
+        }
+
+        /* 眼睛图标样式 */
+        .eye-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        
+        .eye-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .eye-icon .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 1001;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .eye-icon:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* 强度指示器 */
+        .strength-meter {
+            margin-top: 1rem;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color);
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .strength-label {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            main {
+                padding: 1.5rem;
+            }
+            
+            .tool-container {
+                padding: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                min-height: 44px;
+                padding: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .copy-btn {
+                min-height: 44px;
+                padding: 0.8rem 1.5rem;
+                margin-top: 1rem;
+            }
+            
+            .password-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 移动端固定Generate按钮 */
+            .button-group {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--card-bg);
+                padding: 1rem;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 998;
+                border-top: 1px solid var(--border-color);
+            }
+            
+            /* 为固定按钮腾出空间 */
+            .tool-container {
+                padding-bottom: 120px;
+            }
+        }
+        /* 标签页样式 */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-radius: var(--radius) var(--radius) 0 0;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab-btn:hover {
+            color: var(--text-color);
+            background-color: var(--bg-secondary);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* API Key 生成样式 */
+        .api-key-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .api-key-result {
+            margin-top: 2rem;
+        }
+        
+        /* 高级设置样式 */
+        .advanced-settings {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .advanced-settings.active {
+            display: block;
+        }
+        
+        .toggle-advanced {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toggle-advanced:hover {
+            background-color: var(--bg-secondary);
+        }
+        
+        .bulk-btn {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .bulk-btn:hover {
+            transform: none;
+        }
+        
+        .prefix-suffix-input {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .prefix-suffix-input input {
+            flex: 1;
+        }
+        
+        /* 历史记录面板样式 - 底部抽屉式设计 */
+        .history-panel {
+            position: fixed;
+            bottom: -350px;
+            left: 0;
+            right: 0;
+            height: 350px;
+            background-color: var(--card-bg);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            transition: bottom 0.3s ease-out;
+            z-index: 1000;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .history-panel.active {
+            bottom: 0;
+        }
+        
+        .history-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-secondary);
+        }
+        
+        .history-header h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+        
+        .history-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .history-close:hover {
+            background-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .history-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .history-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9rem;
+            position: relative;
+            padding-right: 100px;
+        }
+        
+        .history-item-actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .history-copy-btn,
+        .history-delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .history-copy-btn {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .history-copy-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .history-delete-btn {
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .history-delete-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .history-empty {
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            font-style: italic;
+        }
+        
+        .history-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 999;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(22, 93, 255, 0.3);
+        }
+        
+        .history-toggle-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 16px rgba(22, 93, 255, 0.4);
+        }
+        
+        /* 移动端历史记录面板适配 */
+        @media (max-width: 768px) {
+            .history-panel {
+                width: 100%;
+                height: 40vh;
+                bottom: -40vh;
+            }
+            
+            .history-toggle-btn {
+                bottom: 10px;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .history-item {
+                padding-right: 1rem;
+                padding-bottom: 3.5rem;
+            }
+            
+            .history-item-actions {
+                top: auto;
+                bottom: 0.75rem;
+                right: 0.75rem;
+                left: 0.75rem;
+                justify-content: space-between;
+            }
+        }
+        
+        /* 自定义选项面板样式 */
+        .custom-options-panel {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .custom-options-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .custom-options-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .custom-options-toggle:hover {
+            background-color: var(--bg-secondary);
+        }
+        
+        .exclude-similar-group {
+            margin-top: 1.5rem;
+        }
+        
+        .exclude-similar-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* 广告延迟加载样式 */
+        .ad-container.lazy-load {
+            min-height: 90px;
+            background-color: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+    </style>
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Random Key Generator",
+        "description": "Generate secure random keys, passwords, and API tokens online.",
+        "operatingSystem": "All",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div id="pageLoadingOverlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--bg-color); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.3s ease;">
+        <div class="key-loading-animation">
+            <i class="fas fa-key"></i>
+        </div>
+    </div>
+    
+    <!-- 头部 -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-key"></i>
+                <span>RandomKey</span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <h1>Generate Secure Random Keys & Passwords Online</h1>
+            <p>Create strong, random passwords with custom options. Enhance your online security instantly.</p>
+        </section>
+
+        <!-- 广告区域 -->
+        <div class="ad-container">
+            <!-- Google AdSense广告位 - 替换 YOUR_PUBLISHER_ID 为你的实际发布商ID -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+            <!-- Password Generator Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4481254758178323"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // 标签页切换功能
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 更新活动按钮
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 显示对应内容
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tabId + '-tab') {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // 隐藏结果区域（如果可见）
+                document.getElementById('resultSection').classList.remove('active');
+                document.getElementById('apiKeyResultSection').style.display = 'none';
+            });
+        });
+        
+        // API Key 生成功能
+        const keyLengthSlider = document.getElementById('keyLengthSlider');
+        const keyLengthValue = document.getElementById('keyLengthValue');
+        const generateApiKeyBtn = document.getElementById('generateApiKeyBtn');
+        const clearApiKeyBtn = document.getElementById('clearApiKeyBtn');
+        const apiKeyResultSection = document.getElementById('apiKeyResultSection');
+        const apiKeyResultBox = document.getElementById('apiKeyResultBox');
+        const copyApiKeyBtn = document.getElementById('copyApiKeyBtn');
+        
+        keyLengthSlider.addEventListener('input', () => {
+            keyLengthValue.textContent = keyLengthSlider.value;
+        });
+        
+        generateApiKeyBtn.addEventListener('click', () => {
+            const length = parseInt(keyLengthSlider.value);
+            const lettersOnly = document.getElementById('lettersOnly').checked;
+            const prefix = document.getElementById('prefix').value.trim();
+            const suffix = document.getElementById('suffix').value.trim();
+            
+            // 字符集
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            let charset = letters;
+            if (!lettersOnly) {
+                charset += numbers;
+            }
+            
+            // 生成随机 key
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            let key = '';
+            for (let i = 0; i < length; i++) {
+                key += charset[array[i] % charset.length];
+            }
+            
+            // 添加前缀和后缀
+            if (prefix) key = prefix + key;
+            if (suffix) key = key + suffix;
+            
+            // 显示结果
+            apiKeyResultBox.textContent = key;
+            apiKeyResultSection.style.display = 'block';
+            
+            // 滚动到结果
+            apiKeyResultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        
+        clearApiKeyBtn.addEventListener('click', () => {
+            apiKeyResultSection.style.display = 'none';
+            apiKeyResultBox.textContent = '';
+            document.getElementById('prefix').value = '';
+            document.getElementById('suffix').value = '';
+        });
+        
+        // 复制 API Key
+        copyApiKeyBtn.addEventListener('click', async () => {
+            const key = apiKeyResultBox.textContent;
+            if (!key) {
+                alert('No API key to copy. Please generate an API key first.');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(key);
+                const originalText = copyApiKeyBtn.innerHTML;
+                copyApiKeyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                setTimeout(() => {
+                    copyApiKeyBtn.innerHTML = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy API key to clipboard.');
+            }
+        });
+        
+        // 高级设置切换
+        const toggleAdvancedBtn = document.getElementById('toggleAdvanced');
+        const advancedSettings = document.getElementById('advancedSettings');
+        
+        toggleAdvancedBtn.addEventListener('click', () => {
+            advancedSettings.classList.toggle('active');
+            const icon = toggleAdvancedBtn.querySelector('i');
+            if (advancedSettings.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+                toggleAdvancedBtn.innerHTML = '<i class="fas fa-times"></i> Hide Advanced Settings';
+            } else {
+                icon.className = 'fas fa-cog';
+                toggleAdvancedBtn.innerHTML = '<i class="fas fa-cog"></i> Advanced Settings';
+            }
+        });
+        
+        // 初始化标签页状态
+        window.addEventListener('load', () => {
+            // 确保密码标签页激活
+            document.getElementById('password-tab').classList.add('active');
+            document.getElementById('apikey-tab').classList.remove('active');
+        });
+            </script>
+        </div>
+
+        <!-- 工具容器 -->
+        <section class="tool-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="password">Password Generator</button>
+                <button class="tab-btn" data-tab="apikey">API Keys</button>
+            </div>
+            <div class="tab-content active" id="password-tab">
+                <div class="input-section">
+                <!-- 密码长度选项 -->
+                <div class="option-group">
+                    <h3>Password Length</h3>
+                    <div class="slider-container">
+                        <span class="slider-value" id="lengthValue">16</span>
+                        <input type="range" class="slider" id="lengthSlider" min="4" max="64" value="16">
+                        <span class="eye-icon" id="excludeSimilarEyeIcon" style="display: none; margin-left: 8px;" title="Excluding similar characters: 0/O, 1/l, I/i">
+                            <i class="fas fa-eye" style="color: var(--primary-color); font-size: 1.2rem;"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 字符类型选项 -->
+                <div class="option-group">
+                    <h3>Character Types</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span>Uppercase (A-Z)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="lowercase" checked>
+                            <span>Lowercase (a-z)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="numbers" checked>
+                            <span>Numbers (0-9)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="symbols" checked>
+                            <span>Symbols (!@#$%)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 自定义选项面板切换按钮 -->
+                <div style="text-align: center; margin: 1rem 0;">
+                    <button class="custom-options-toggle" id="customOptionsToggle">
+                        <i class="fas fa-cog"></i> Advanced Options
+                    </button>
+                </div>
+                
+                <!-- 自定义选项面板 -->
+                <div class="custom-options-panel" id="customOptionsPanel">
+                    <div class="exclude-similar-group">
+                        <label>
+                            <input type="checkbox" id="excludeSimilar">
+                            <span>Exclude similar characters (e.g., 0/O, 1/l, I/i)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 强度指示器 -->
+                <div class="option-group">
+                    <h3>Password Strength</h3>
+                    <div class="strength-meter">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-label" id="strengthLabel">Very Strong</div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" id="generateBtn">
+                        <i class="fas fa-key"></i> <span id="generateBtnText">Generate Password</span>
+                        <span id="generateBtnLoading" style="display: none; margin-left: 8px;">
+                            <i class="fas fa-spinner fa-spin"></i> Generating...
+                        </span>
+                        <span id="generateBtnSuccess" style="display: none; margin-left: 8px; color: var(--success-color);">
+                            <i class="fas fa-check"></i> Key generated successfully!
+                        </span>
+                    </button>
+                    <button class="btn btn-secondary" id="clearBtn">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+            
+            <!-- API Keys 选项卡内容 -->
+            <div class="tab-content" id="apikey-tab">
+                <div class="input-section">
+                    <!-- API 密钥长度选项 -->
+                    <div class="option-group">
+                        <h3>API Key Length</h3>
+                        <div class="slider-container">
+                            <span class="slider-value" id="keyLengthValue">32</span>
+                            <input type="range" class="slider" id="keyLengthSlider" min="32" max="128" step="32" value="32">
+                        </div>
+                    </div>
+                    
+                    <!-- 字符类型选项 -->
+                    <div class="option-group">
+                        <h3>Character Type</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="radio" id="lettersOnly" name="charType" checked>
+                                <span>Letters only (A-Z, a-z)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="radio" id="lettersNumbers" name="charType">
+                                <span>Letters + Numbers (A-Z, a-z, 0-9)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 高级设置切换按钮 -->
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <button class="toggle-advanced" id="toggleAdvanced">
+                            <i class="fas fa-cog"></i> Advanced Settings
+                        </button>
+                    </div>
+                    
+                    <!-- 高级设置面板 -->
+                    <div class="advanced-settings" id="advancedSettings">
+                        <div class="prefix-suffix-input">
+                            <div style="flex: 1;">
+                                <label for="prefix">Prefix (optional)</label>
+                                <input type="text" class="input-field" id="prefix" placeholder="e.g., sk_live_">
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="suffix">Suffix (optional)</label>
+                                <input type="text" class="input-field" id="suffix" placeholder="e.g., _2024">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 按钮组 -->
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="generateApiKeyBtn">
+                            <i class="fas fa-key"></i> Generate API Key
+                        </button>
+                        <button class="btn btn-secondary" id="clearApiKeyBtn">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- API Key 结果区域 -->
+                <div class="result-section" id="apiKeyResultSection" style="display: none; margin-top: 2rem;">
+                    <h2>Generated API Key</h2>
+                    <div class="result-box" id="apiKeyResultBox">
+                        Click "Generate API Key" to create a secure API key.
+                    </div>
+                    <button class="copy-btn" id="copyApiKeyBtn">
+                        <i class="fas fa-copy"></i> Copy API Key
+                    </button>
+                </div>
+            </div>
+
+            <!-- 结果区域 -->
+            <div class="result-section" id="resultSection">
+                <h2>Generated Password</h2>
+                <div class="result-box" id="resultBox">
+                    Click "Generate Password" to create a secure password.
+                </div>
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i> Copy Password
+                </button>
+            </div>
+        </section>
+
+        <!-- What Is & How to Use -->
+        <section class="what-is-section" style="margin: 3rem 0;">
+            <div class="container">
+                <h2>What Is a Random Key Generator?</h2>
+                <p>A random key generator creates secure random sequences for passwords, API keys, security tokens, and other applications requiring unpredictable strings.</p>
+                <p>This tool uses the Web Cryptography API for true randomness, suitable for security-sensitive applications.</p>
+                
+                <h2>How to Use This Tool</h2>
+                <h3>Password Generator</h3>
+                <ol>
+                    <li>Adjust password length (8‑32 characters)</li>
+                    <li>Select character types to include</li>
+                    <li>Click "Generate Password"</li>
+                    <li>Copy the password with the copy button</li>
+                </ol>
+                
+                <h3>API Key Generator</h3>
+                <ol>
+                    <li>Switch to the "API Keys" tab</li>
+                    <li>Choose key length: 32, 64, or 128 characters</li>
+                    <li>Select character type: letters only or letters + numbers</li>
+                    <li>Use Advanced Settings for custom prefixes/suffixes</li>
+                    <li>Click "Generate API Key"</li>
+                    <li>Copy the API key for your applications</li>
+                </ol>
+            </div>
+        </section>
+        <!-- About Us, Terms, Privacy -->
+        <section id="about" style="display: none; margin: 2rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius);">
+            <h2>About Us</h2>
+            <p>RandomKey.dev is a free online tool created to help developers and security-conscious users generate strong random keys and passwords. Our mission is to provide simple, secure, and accessible tools for everyday security needs.</p>
+            <p>All tools are open-source and process data locally in your browser for maximum privacy.</p>
+        </section>
+        <section id="terms" style="display: none; margin: 2rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius);">
+            <h2>Terms of Use</h2>
+            <p>By using RandomKey.dev, you agree to the following terms:</p>
+            <ul>
+                <li>This tool is provided "as is" without warranties of any kind.</li>
+                <li>You are responsible for how you use generated keys and passwords.</li>
+                <li>We do not store any data you enter or generate.</li>
+                <li>You must not use this tool for illegal purposes.</li>
+            </ul>
+        </section>
+        <section id="privacy" style="display: none; margin: 2rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius);">
+            <h2>Privacy Policy</h2>
+            <p>We respect your privacy:</p>
+            <ul>
+                <li>No data is sent to our servers – all processing happens locally in your browser.</li>
+                <li>We do not use cookies or tracking technologies.</li>
+                <li>Generated keys and passwords never leave your device.</li>
+                <li>We do not collect any personal information.</li>
+            </ul>
+        </section>
+        <!-- 特性展示 -->
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Military-Grade Security</h3>
+                <p>Passwords generated with cryptographically secure random algorithms.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Instant Generation</h3>
+                <p>Create passwords in milliseconds. No delays or waiting time.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-secret"></i>
+                <h3>Complete Privacy</h3>
+                <p>All processing happens locally in your browser. No data stored.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Friendly</h3>
+                <p>Works perfectly on所有设备 - desktop, tablet, and mobile.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-cogs"></i>
+                <h3>Customizable Options</h3>
+                <p>Customize password length, character types, exclude similar characters, and more.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <h3>Cross-Platform</h3>
+                <p>Works seamlessly across all browsers and devices without installation.</p>
+            </div>
+        </section>
+
+        <!-- 另一个广告区域 -->
+        <div class="ad-container">
+            <!-- Google AdSense广告位 - 替换 YOUR_PUBLISHER_ID 为你的实际发布商ID -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+            <!-- Password Generator Sidebar Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4481254758178323"
+                 data-ad-slot="0987654321"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="/contact">Contact</a>
+                <a href="#about">About</a>
+            </div>
+            <p>&copy; <span id="currentYear"></span> RandomKey. All rights reserved.</p>
+            <p>RandomKey.dev | A simple random key/password generator</p>
+            <p>This tool is free to use for personal and commercial purposes.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        // 密码生成逻辑
+        const generateBtn = document.getElementById('generateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const lengthSlider = document.getElementById('lengthSlider');
+        const lengthValue = document.getElementById('lengthValue');
+        const uppercaseCheck = document.getElementById('uppercase');
+        const lowercaseCheck = document.getElementById('lowercase');
+        const numbersCheck = document.getElementById('numbers');
+        const symbolsCheck = document.getElementById('symbols');
+        const resultSection = document.getElementById('resultSection');
+        const resultBox = document.getElementById('resultBox');
+        const copyBtn = document.getElementById('copyBtn');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthLabel = document.getElementById('strengthLabel');
+        
+        // 字符集
+        const charSets = {
+            uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lowercase: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+        
+        // 更新滑块显示
+        lengthSlider.addEventListener('input', () => {
+            lengthValue.textContent = lengthSlider.value;
+            updateStrengthIndicator();
+        });
+        
+        // 复选框变化时更新强度
+        [uppercaseCheck, lowercaseCheck, numbersCheck, symbolsCheck].forEach(checkbox => {
+            checkbox.addEventListener('change', updateStrengthIndicator);
+        });
+        
+        // 更新密码强度指示器
+        function updateStrengthIndicator() {
+            const length = parseInt(lengthSlider.value);
+            let selectedSets = 0;
+            if (uppercaseCheck.checked) selectedSets++;
+            if (lowercaseCheck.checked) selectedSets++;
+            if (numbersCheck.checked) selectedSets++;
+            if (symbolsCheck.checked) selectedSets++;
+            
+            // 计算强度分数 (0-100)
+            let score = 0;
+            score += Math.min(length * 3, 30); // 长度贡献最大30分
+            score += selectedSets * 15; // 每种字符类型贡献15分
+            
+            // 确保至少有一种字符类型被选中
+            if (selectedSets === 0) score = 0;
+            
+            // 更新UI
+            const width = Math.min(score, 100);
+            strengthFill.style.width = `${width}%`;
+            
+            // 设置颜色和标签
+            let strengthText, color;
+            if (score >= 80) {
+                strengthText = 'Very Strong';
+                color = '#10b981'; // 绿色
+            } else if (score >= 60) {
+                strengthText = 'Strong';
+                color = '#3b82f6'; // 蓝色
+            } else if (score >= 40) {
+                strengthText = 'Moderate';
+                color = '#f59e0b'; // 黄色
+            } else if (score >= 20) {
+                strengthText = 'Weak';
+                color = '#ef4444'; // 红色
+            } else {
+                strengthText = 'Very Weak';
+                color = '#6b7280'; // 灰色
+            }
+            
+            strengthFill.style.backgroundColor = color;
+            strengthLabel.textContent = strengthText;
+            strengthLabel.style.color = color;
+        }
+        
+        // 初始化强度指示器
+        updateStrengthIndicator();
+        
+
+        
+        // 生成密码
+        generateBtn.addEventListener('click', async () => {
+            const generateBtnText = document.getElementById('generateBtnText');
+            const generateBtnLoading = document.getElementById('generateBtnLoading');
+            const generateBtnSuccess = document.getElementById('generateBtnSuccess');
+            
+            // 点击动画：添加clicked类
+            generateBtn.classList.add('clicked');
+            
+            // 获取输入值
+            const length = parseInt(lengthSlider.value);
+            const excludeSimilarCheck = document.getElementById('excludeSimilar');
+            const options = {
+                uppercase: uppercaseCheck.checked,
+                lowercase: lowercaseCheck.checked,
+                numbers: numbersCheck.checked,
+                symbols: symbolsCheck.checked,
+                excludeSimilar: excludeSimilarCheck ? excludeSimilarCheck.checked : false
+            };
+            
+            // 检查至少选择了一种字符类型
+            const selectedTypes = Object.values(options).filter(v => v).length;
+            if (selectedTypes === 0) {
+                alert('Please select at least one character type.');
+                generateBtn.classList.remove('clicked');
+                return;
+            }
+            
+            // 显示加载状态
+            generateBtnText.style.display = 'none';
+            generateBtnLoading.style.display = 'inline';
+            generateBtnSuccess.style.display = 'none';
+            generateBtn.disabled = true;
+            
+            // 移动端震动反馈
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            // 模拟短暂延迟以显示加载状态（实际生成很快）
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // 生成密码
+            const password = generatePassword(length, options);
+            
+            // 显示成功状态：按钮文字变为Regenerate，添加绿色对勾图标
+            generateBtnLoading.style.display = 'none';
+            generateBtnSuccess.innerHTML = '<i class="fas fa-check" style="color: var(--success-color);"></i> Regenerate';
+            generateBtnSuccess.style.display = 'inline';
+            
+            // 显示结果
+            resultBox.textContent = password;
+            resultSection.classList.add('active');
+            
+            // 滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // 3秒后重置按钮状态，移除点击动画类
+            setTimeout(() => {
+                generateBtnSuccess.style.display = 'none';
+                generateBtnText.style.display = 'inline';
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('clicked');
+            }, 3000);
+            
+            // 保存到历史记录
+            saveToHistory(password);
+        });
+        
+        // 密码生成算法
+        function generatePassword(length, options) {
+            // 构建可用字符集
+            let availableChars = '';
+            if (options.uppercase) availableChars += charSets.uppercase;
+            if (options.lowercase) availableChars += charSets.lowercase;
+            if (options.numbers) availableChars += charSets.numbers;
+            if (options.symbols) availableChars += charSets.symbols;
+            
+            // 确保字符集非空
+            if (availableChars.length === 0) {
+                return 'Error: No character types selected';
+            }
+            
+            // 如果启用排除相似字符，过滤字符集
+            if (options.excludeSimilar) {
+                availableChars = filterSimilarCharacters(availableChars);
+                // 如果过滤后字符集为空，返回错误
+                if (availableChars.length === 0) {
+                    return 'Error: No characters left after excluding similar ones. Please select more character types.';
+                }
+            }
+            
+            // 使用cryptographically secure random
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += availableChars[array[i] % availableChars.length];
+            }
+            
+            return password;
+        }
+        
+        // 过滤相似字符函数
+        function filterSimilarCharacters(chars) {
+            // 相似字符映射：要排除的字符
+            const similarMap = {
+                '0': 'O', 'O': '0',
+                '1': 'l', 'l': '1',
+                'I': 'i', 'i': 'I',
+                '|': 'I', 'I': '|',
+                'S': '5', '5': 'S',
+                'Z': '2', '2': 'Z'
+            };
+            
+            // 过滤掉在similarMap中出现的字符
+            return chars.split('').filter(char => {
+                // 如果字符在映射中，并且映射到的字符也在字符集中，则排除
+                const similarChar = similarMap[char];
+                if (similarChar && chars.includes(similarChar)) {
+                    // 保留其中一个，排除另一个（这里保留第一个出现的）
+                    // 简单实现：排除数字和容易混淆的字母
+                    return false;
+                }
+                return true;
+            }).join('');
+        }
+        
+        // 自定义选项面板切换
+        const customOptionsToggle = document.getElementById('customOptionsToggle');
+        const customOptionsPanel = document.getElementById('customOptionsPanel');
+        
+        if (customOptionsToggle && customOptionsPanel) {
+            customOptionsToggle.addEventListener('click', () => {
+                customOptionsPanel.classList.toggle('active');
+                const icon = customOptionsToggle.querySelector('i');
+                if (customOptionsPanel.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                    customOptionsToggle.innerHTML = '<i class="fas fa-times"></i> Hide Advanced Options';
+                } else {
+                    icon.className = 'fas fa-cog';
+                    customOptionsToggle.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+                }
+            });
+        }
+        
+        // 眼睛图标提示功能
+        const excludeSimilarCheckbox = document.getElementById('excludeSimilar');
+        const eyeIconElement = document.getElementById('excludeSimilarEyeIcon');
+        
+        if (excludeSimilarCheckbox && eyeIconElement) {
+            // 初始状态
+            eyeIconElement.style.display = excludeSimilarCheckbox.checked ? 'inline-flex' : 'none';
+            
+            // 监听复选框变化
+            excludeSimilarCheckbox.addEventListener('change', () => {
+                eyeIconElement.style.display = excludeSimilarCheckbox.checked ? 'inline-flex' : 'none';
+            });
+        }
+        
+        // 清空功能
+        clearBtn.addEventListener('click', () => {
+            resultSection.classList.remove('active');
+            resultBox.textContent = 'Click "Generate Password" to create a secure password.';
+            lengthSlider.value = 16;
+            lengthValue.textContent = '16';
+            uppercaseCheck.checked = true;
+            lowercaseCheck.checked = true;
+            numbersCheck.checked = true;
+            symbolsCheck.checked = true;
+            // 重置自定义选项
+            const excludeSimilarCheck = document.getElementById('excludeSimilar');
+            if (excludeSimilarCheck) {
+                excludeSimilarCheck.checked = false;
+            }
+            // 隐藏自定义选项面板
+            if (customOptionsPanel) {
+                customOptionsPanel.classList.remove('active');
+                if (customOptionsToggle) {
+                    customOptionsToggle.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+                }
+            }
+            updateStrengthIndicator();
+        });
+        
+        // 复制功能
+        copyBtn.addEventListener('click', async () => {
+            const password = resultBox.textContent;
+            if (!password || password.includes('Click "Generate Password"')) {
+                alert('No password to copy. Please generate a password first.');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(password);
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy password to clipboard.');
+            }
+        });
+        
+        // 设置当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // 页面加载时自动聚焦生成按钮
+        window.addEventListener('load', () => {
+            generateBtn.focus();
+            
+            // 隐藏页面加载动画
+            const loadingOverlay = document.getElementById('pageLoadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        });
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + G 生成密码
+            if ((e.ctrlKey || e.metaKey) && e.key === 'g') {
+                e.preventDefault();
+                generateBtn.click();
+            }
+            
+            // Esc 清空
+            if (e.key === 'Escape') {
+                clearBtn.click();
+            }
+        });
+        
+        // Google AdSense初始化（示例）
+        function initAdSense() {
+            // 这里添加实际的AdSense初始化代码
+            console.log('AdSense initialized (placeholder)');
+        }
+        
+        // 初始化广告
+        if (typeof adsbygoogle !== 'undefined') {
+            initAdSense();
+        }
+    
+        // 处理 About, Terms, Privacy 页面显示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有页脚链接
+            const links = document.querySelectorAll('.footer-links a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetSection = document.getElementById(targetId);
+                        if (targetSection) {
+                            // 隐藏所有其他页面
+                            document.querySelectorAll('[id="about"],[id="terms"],[id="privacy"]').forEach(sec => {
+                                sec.style.display = 'none';
+                            });
+                            // 显示目标页面
+                            targetSection.style.display = 'block';
+                            // 滚动到目标
+                            targetSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        });
+        
+        // 历史记录功能
+        function saveToHistory(password) {
+            try {
+                let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                // 添加新记录到开头
+                history.unshift({
+                    password: password,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString()
+                });
+                // 只保留最近10条记录
+                history = history.slice(0, 10);
+                localStorage.setItem('passwordHistory', JSON.stringify(history));
+                // 刷新历史记录显示
+                renderHistory();
+            } catch (error) {
+                console.error('Failed to save to history:', error);
+            }
+        }
+        
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            const historyEmpty = document.getElementById('historyEmpty');
+            
+            if (!historyList) return;
+            
+            try {
+                const history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                
+                if (history.length === 0) {
+                    historyList.innerHTML = '';
+                    if (historyEmpty) historyEmpty.style.display = 'block';
+                    return;
+                }
+                
+                if (historyEmpty) historyEmpty.style.display = 'none';
+                
+                let html = '';
+                history.forEach((item, index) => {
+                    html += `
+                    <li class="history-item">
+                        ${item.password}
+                        <div class="history-item-actions">
+                            <button class="history-copy-btn" onclick="copyHistoryPassword('${item.password.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="history-delete-btn" onclick="deleteHistoryItem(${index})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </li>
+                    `;
+                });
+                
+                historyList.innerHTML = html;
+            } catch (error) {
+                console.error('Failed to render history:', error);
+                if (historyEmpty) historyEmpty.style.display = 'block';
+            }
+        }
+        
+        function copyHistoryPassword(password) {
+            navigator.clipboard.writeText(password).then(() => {
+                alert('Password copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy password.');
+            });
+        }
+        
+        function deleteHistoryItem(index) {
+            try {
+                let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                history.splice(index, 1);
+                localStorage.setItem('passwordHistory', JSON.stringify(history));
+                renderHistory();
+            } catch (error) {
+                console.error('Failed to delete history item:', error);
+            }
+        }
+        
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all history?')) {
+                localStorage.removeItem('passwordHistory');
+                renderHistory();
+            }
+        }
+        
+        // 初始化历史记录显示
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHistory();
+        });
+    </script>
+    
+    <!-- 历史记录面板 HTML -->
+    <button class="history-toggle-btn" id="historyToggleBtn" aria-label="Open history panel">
+        <i class="fas fa-history"></i> History
+    </button>
+    
+    <div class="history-panel" id="historyPanel">
+        <div class="history-header">
+            <h3>Password History</h3>
+            <button class="history-close" id="historyCloseBtn" aria-label="Close history panel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="history-content">
+            <ul class="history-list" id="historyList">
+                <!-- 历史记录将通过JavaScript动态插入 -->
+            </ul>
+            <div class="history-empty" id="historyEmpty" style="display: none;">
+                <p>No passwords generated yet.</p>
+                <p>Generate a password to see it here.</p>
+            </div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--border-color); text-align: center;">
+            <button onclick="clearHistory()" style="background: none; border: none; color: var(--text-light); cursor: pointer; font-size: 0.9rem;">
+                <i class="fas fa-trash-alt"></i> Clear All History
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 历史记录面板切换
+        const historyToggleBtn = document.getElementById('historyToggleBtn');
+        const historyCloseBtn = document.getElementById('historyCloseBtn');
+        const historyPanel = document.getElementById('historyPanel');
+        
+        if (historyToggleBtn && historyPanel) {
+            historyToggleBtn.addEventListener('click', () => {
+                historyPanel.classList.add('active');
+                historyToggleBtn.style.display = 'none';
+            });
+            
+            historyCloseBtn.addEventListener('click', () => {
+                historyPanel.classList.remove('active');
+                setTimeout(() => {
+                    historyToggleBtn.style.display = 'flex';
+                }, 300);
+            });
+            
+            // 点击面板外部关闭
+            document.addEventListener('click', (event) => {
+                if (historyPanel.classList.contains('active') && 
+                    !historyPanel.contains(event.target) && 
+                    event.target !== historyToggleBtn) {
+                    historyPanel.classList.remove('active');
+                    setTimeout(() => {
+                        historyToggleBtn.style.display = 'flex';
+                    }, 300);
+                }
+            });
+        }
+    </script>
+<script>
+// 选项卡切换功能（修复版本）
+document.addEventListener('DOMContentLoaded', function() {
+    // 标签页切换功能
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    console.log('Tab切换脚本加载，找到按钮:', tabBtns.length);
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            console.log('选项卡点击:', tabId);
+            
+            // 更新活动按钮
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 显示对应内容
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabId + '-tab') {
+                    content.classList.add('active');
+                }
+            });
+            
+            // 隐藏结果区域（如果可见）
+            const resultSection = document.getElementById('resultSection');
+            const apiKeyResultSection = document.getElementById('apiKeyResultSection');
+            if (resultSection) resultSection.classList.remove('active');
+            if (apiKeyResultSection) apiKeyResultSection.style.display = 'none';
+        });
+    });
+    
+    // 初始化标签页状态
+    window.addEventListener('load', function() {
+        const passwordTab = document.getElementById('password-tab');
+        const apiKeyTab = document.getElementById('apikey-tab');
+        if (passwordTab) passwordTab.classList.add('active');
+        if (apiKeyTab) apiKeyTab.classList.remove('active');
+    });
+});
+</script>
+</body>
+</html>

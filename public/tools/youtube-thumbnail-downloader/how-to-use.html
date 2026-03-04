@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use YouTube Thumbnail Downloader | Simple Toolbox</title>
+    <meta name="description" content="Step-by-step guide to using our free YouTube thumbnail downloader. Learn how to extract video IDs, choose resolutions, preview thumbnails, and download images.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+            --success: #36D399;
+        }
+
+        [data-bs-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--dark-text);
+        }
+
+        [data-bs-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--light-text);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+                align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-bs-theme="dark"] .header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            background-color: rgba(22, 93, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .tip {
+            background-color: rgba(54, 211, 153, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip i {
+            color: var(--success);
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-top: 60px;
+        }
+
+        [data-bs-theme="dark"] .footer {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube Thumbnail Downloader</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="what-is.html">What Is</a>
+                <a href="how-to-use.html" class="active">How to Use</a>
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>How to Use YouTube Thumbnail Downloader</h1>
+            
+            <p>Our free YouTube thumbnail downloader is designed to be straightforward and fast. Whether you need a single thumbnail or want to explore multiple resolutions, this guide will walk you through every feature. All processing happens locally in your browser—your privacy is guaranteed.</p>
+
+            <h2>Quick Start: Download a Single Thumbnail</h2>
+            
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Copy the YouTube Video URL</div>
+                <p>Go to YouTube and copy the URL of the video whose thumbnail you want. You can copy the full URL (e.g., <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code>) or just the video ID (e.g., <code>dQw4w9WgXcQ</code>).</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Paste the URL into the Tool</div>
+                <p>Return to our downloader and paste the URL into the input field labeled “YouTube Video URL.” The tool will automatically extract the video ID and display a preview of the available thumbnails.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Choose a Resolution</div>
+                <p>Below the preview you’ll see buttons for different resolutions:</p>
+                <ul>
+                    <li><strong>Default (120×90)</strong> – The smallest standard size.</li>
+                    <li><strong>Medium (320×180)</strong> – Balanced quality and file size.</li>
+                    <li><strong>High (480×360)</strong> – Good for most uses.</li>
+                    <li><strong>Max (up to 1280×720)</strong> – The highest quality available for the video.</li>
+                </ul>
+                <p>Click any button to see that resolution’s image enlarged in the preview area.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">4</span> Download the Thumbnail</div>
+                <p>Once you’ve selected the desired resolution, click the <strong>“Download”</strong> button below the preview. The image will be saved to your device with a filename like <code>youtube_thumbnail_dQw4w9WgXcQ_maxres.jpg</code>.</p>
+            </div>
+
+            <div class="tip">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> If the “Max” resolution is unavailable (grayed out), the video does not have a high‑definition thumbnail. Choose “High” or “Medium” instead—the tool automatically offers the next best option.
+            </div>
+
+            <h2>Using the Preview and History Features</h2>
+            
+            <p>The tool includes several convenience features to improve your experience.</p>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Preview Before Download</div>
+                <p>After pasting a URL, you’ll see a grid of small thumbnail previews. Click any preview to enlarge it in the main preview area. This lets you check the image quality and composition before downloading.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Access Your Download History</div>
+                <p>Every thumbnail you download is stored locally in your browser’s history panel (visible on the right side on desktop, below the main tool on mobile). You can:</p>
+                <ul>
+                    <li><strong>View</strong> – See the video title, resolution, and download time.</li>
+                    <li><strong>Copy</strong> – Copy the image URL again without re‑entering the video URL.</li>
+                    <li><strong>Delete</strong> – Remove individual entries or clear the entire history.</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Switch Themes</div>
+                <p>Click the sun/moon icon in the header to toggle between light and dark themes. Your preference is saved locally and will be restored on your next visit.</p>
+            </div>
+
+            <h2>Understanding Thumbnail Availability</h2>
+            
+            <p>Not every YouTube video has thumbnails in all resolutions. Here’s what to expect:</p>
+
+            <ul>
+                <li><strong>Default, Medium, High</strong> – Available for virtually all videos.</li>
+                <li><strong>Max (maxresdefault)</strong> – Only available for videos uploaded in HD (720p or higher). If the video was uploaded in standard definition, the “Max” button will be disabled.</li>
+                <li><strong>Custom Thumbnails</strong> – Many creators upload custom thumbnails; these are what you’ll download. The tool always fetches the actual thumbnail shown on YouTube.</li>
+            </ul>
+
+            <h2>Privacy and Usage Limits</h2>
+            
+            <p>We designed this tool with privacy as a core principle:</p>
+            
+            <ul>
+                <li><strong>No Server‑Side Processing</strong> – All URL extraction and thumbnail fetching happen in your browser. We never see the video URLs you enter.</li>
+                <li><strong>No Registration</strong> – Use the tool immediately and as often as you like.</li>
+                <li><strong>No Tracking</strong> – We do not embed analytics or tracking scripts in the tool page.</li>
+            </ul>
+
+            <p>There are no daily or monthly download limits. However, please respect YouTube’s terms of service and only download thumbnails for content you have the right to use.</p>
+
+            <p>Start downloading thumbnails now by visiting the <a href="index.html">YouTube Thumbnail Downloader</a>.</p>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">YouTube Thumbnail Downloader</div>
+            <p>simpletoolbox.dev/youtube-thumbnail-downloader | A free, private YouTube thumbnail downloader</p>
+            <p>© 2026 Simple Toolbox. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme detection
+        const savedTheme = localStorage.getItem('thumbnail_downloader_theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>

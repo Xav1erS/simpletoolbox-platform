@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Toolbox (STB) | Free Online Tools for Everyday Tasks</title>
+    <meta name="description" content="A collection of free, privacy‑first online tools that run entirely in your browser—no data is sent to servers. Discover your next efficiency tool today!">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../src/design/design-system.css">
+    
+    <!-- Page-specific styles -->
+    <style>
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--spacing-3xl);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-3xl);
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-xl);
+            line-height: 1.6;
+        }
+        
+        /* Tools grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .tool-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            transition: all var(--transition-normal);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            box-shadow: var(--shadow-md);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-primary);
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-lg);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-xl);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+        }
+        
+        .tool-description {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-lg);
+            flex-grow: 1;
+        }
+        
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--accent-primary);
+            font-weight: 600;
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: background-color var(--transition-fast);
+        }
+        
+        .tool-link:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        /* Categories */
+        .category-section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .category-title {
+            font-size: var(--font-size-2xl);
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        /* Footer */
+        .site-footer {
+            background-color: var(--background-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: var(--spacing-2xl) 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--brand-logo-color);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .footer-copyright {
+            color: var(--text-tertiary);
+            text-align: center;
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: var(--spacing-xl) var(--spacing-lg);
+            }
+            
+            .hero h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .hero p {
+                font-size: var(--font-size-md);
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-title {
+                font-size: var(--font-size-xl);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: var(--font-size-xl);
+            }
+            
+            .hero p {
+                font-size: var(--font-size-base);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Navigation Area -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">RK</div>
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Discover Your Next Efficiency Tool</h1>
+                <p>All tools run entirely in your browser—no data is sent to servers. No registration, no limits. Your privacy is protected by design.</p>
+                <div class="action-button primary-action" style="display: inline-flex;">
+                    <span>Explore Tools</span>
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </section>
+
+            <!-- All Tools Section -->
+            <section class="category-section">
+                <h2 class="category-title">
+                    <i class="fas fa-tools"></i>
+                    All Tools
+                </h2>
+                
+                <div class="tools-grid">
+                    <!-- Password Generator -->
+                    <a href="/tools/password-generator" class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 class="tool-title">Password Generator</h3>
+                        <p class="tool-description">Create strong, random passwords and API keys with customizable length and character sets. Perfect for securing accounts and applications.</p>
+                        <div class="tool-link">
+                            <span>Use Tool</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- YouTube Thumbnail Downloader -->
+                    <a href="/tools/youtube-thumbnail-downloader" class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="tool-title">YouTube Thumbnail Downloader</h3>
+                        <p class="tool-description">Download high‑quality thumbnails from any YouTube video in multiple resolutions. Simple, fast, and completely free.</p>
+                        <div class="tool-link">
+                            <span>Use Tool</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- Image Background Remover -->
+                    <a href="/tools/image-background-remover" class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3 class="tool-title">Image Background Remover</h3>
+                        <p class="tool-description">AI‑powered background removal that runs locally in your browser—no uploads, no privacy risks. Perfect for product photos and social media.</p>
+                        <div class="tool-link">
+                            <span>Use Tool</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- Unit Converter -->
+                    <a href="/tools/unit-converter" class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <h3 class="tool-title">Unit Converter</h3>
+                        <p class="tool-description">Convert length, weight, temperature, volume, area, speed, and time with real‑time calculations. Supports hundreds of units across categories.</p>
+                        <div class="tool-link">
+                            <span>Use Tool</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- PDF to Word Converter -->
+                    <a href="/tools/pdf-to-word-converter" class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <h3 class="tool-title">PDF to Word Converter</h3>
+                        <p class="tool-description">Convert PDF documents to editable Word format while preserving formatting and layout. Works entirely in your browser—your files never leave your device.</p>
+                        <div class="tool-link">
+                            <span>Use Tool</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Privacy Section -->
+            <section class="hero" style="background-color: var(--background-primary); border: 1px solid var(--accent-info);">
+                <h2 style="color: var(--accent-info);">Privacy First</h2>
+                <p>Every tool in Simple Toolbox is designed with privacy as the core principle. All processing happens locally in your browser—no data is ever sent to our servers. This means:</p>
+                <div style="text-align: left; max-width: 600px; margin: var(--spacing-xl) auto;">
+                    <ul style="color: var(--text-secondary); line-height: 1.6;">
+                        <li><strong>No data collection</strong>: We don't track your usage or collect personal information</li>
+                        <li><strong>No file uploads</strong>: Your files stay on your device, processed locally</li>
+                        <li><strong>No registration required</strong>: Use tools immediately without creating accounts</li>
+                        <li><strong>Open source transparency</strong>: All code is available for inspection and verification</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">RK</div>
+                <span>Simple Toolbox (STB)</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="/terms">Terms of Use</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="mailto:contact@simpletoolbox.dev">Contact</a>
+                <a href="/tools">All Tools</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+    </script>
+</body>
+</html>

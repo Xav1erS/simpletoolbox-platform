@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Password Generator? | Simple Toolbox</title>
+    <meta name="description" content="Learn what a password generator is, why strong passwords are essential for online security, and how our free tool helps create secure random passwords and API keys.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+        }
+
+        [data-bs-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--dark-text);
+        }
+
+        [data-bs-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--light-text);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-bs-theme="dark"] .header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-top: 60px;
+        }
+
+        [data-bs-theme="dark"] .footer {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <i class="fas fa-key"></i>
+                <span>Password Generator</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="what-is.html" class="active">What Is</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>What Is a Password Generator?</h1>
+            
+            <p>A password generator is a security tool designed to create strong, random passwords that are difficult for attackers to guess or crack. In today's digital landscape, where data breaches and identity theft are common, using weak or reused passwords poses a significant risk. A reliable password generator produces cryptographically secure strings that combine letters (uppercase and lowercase), numbers, and symbols, ensuring each password is unique and robust.</p>
+
+            <h2>Why Strong Passwords Matter</h2>
+            
+            <p>Passwords are the first line of defense for your online accounts. Consider these real‑world scenarios where password strength is critical:</p>
+            
+            <ul>
+                <li><strong>Online Banking:</strong> A weak password could allow unauthorized access to your financial accounts, leading to theft or fraud.</li>
+                <li><strong>Email Accounts:</strong> Compromised email can be used to reset passwords for other services, amplifying the damage.</li>
+                <li><strong>Workplace Systems:</strong> Weak corporate passwords can expose sensitive business data and intellectual property.</li>
+                <li><strong>Social Media:</strong> Hijacked accounts may be used to spread malware or scam your contacts.</li>
+                <li><strong>API Keys & Tokens:</strong> In development, secure API keys are essential to protect application data and user privacy.</li>
+            </ul>
+
+            <h2>How Our Password Generator Stands Out</h2>
+            
+            <p>While many password tools exist, our free online generator delivers a superior experience through several key features:</p>
+            
+            <ol>
+                <li><strong>Customizable Length & Character Sets:</strong> Choose password length from 4 to 64 characters and select which character types to include (uppercase, lowercase, numbers, symbols).</li>
+                <li><strong>Exclude Similar Characters:</strong> Optionally exclude visually similar characters like 0/O, 1/l, I/| to avoid confusion.</li>
+                <li><strong>API Key Generation:</strong> Dedicated tab for generating secure API keys (32/64/128‑bit) with pure‑alphanumeric or letter‑only options.</li>
+                <li><strong>History & One‑Click Copy:</strong> Automatically saves your last 10 generated passwords locally; copy any result with a single click.</li>
+                <li><strong>Privacy‑First Approach:</strong> All generation happens locally in your browser. We never transmit your passwords over the network.</li>
+                <li><strong>Modern, Accessible Design:</strong> Built with WCAG 2.1 AA standards, the tool works seamlessly for all users, including those relying on screen readers or keyboard navigation.</li>
+            </ol>
+
+            <h2>The Technology Behind Secure Generation</h2>
+            
+            <p>Our generator uses the browser's native <code>crypto.getRandomValues()</code> API, which provides cryptographically secure random numbers suitable for password creation. Each character is selected from the chosen character set using a uniform distribution, ensuring true randomness. For API keys, we implement Base62 encoding to produce compact, URL‑safe strings without ambiguous characters.</p>
+
+            <p>Beyond core generation, the tool integrates usability features: a dark/light theme toggle, responsive design that works on any device, and a progressive web app (PWA) capability that lets you install it and generate passwords offline. These elements combine to create a generator that is not only secure but also genuinely helpful in everyday situations.</p>
+
+            <p>Whether you're a developer needing secure API keys, a security‑conscious user creating account passwords, or an organization enforcing password policies, our free password generator provides the reliable, fast, and private solution you need. Explore our <a href="how-to-use.html">How to Use guide</a> to get started, or jump right into the <a href="index.html">generator</a> to create your first secure password.</p>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">Password Generator</div>
+            <p>simpletoolbox.dev/password-generator | A free, secure password and API key generator</p>
+            <p>© 2026 Simple Toolbox. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme detection
+        const savedTheme = localStorage.getItem('password_generator_theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>

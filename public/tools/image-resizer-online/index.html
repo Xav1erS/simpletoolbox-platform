@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Online - Free Photo Size Converter Tool</title>
+    <meta name="description" content="Resize images online for free. Batch processing, social media templates, quality adjustment. Client-side processing ensures your photos stay private.">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Resizer Online",
+        "description": "Free online image resizing tool with batch processing, social media templates, and quality adjustment. All processing happens locally in your browser.",
+        "url": "https://randomkey.dev/tools/image-resizer",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript and Canvas support",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Drag & drop image upload",
+            "Custom dimension resizing",
+            "Percentage scaling (25%-400%)",
+            "Social media templates (20+ platforms)",
+            "Batch processing (50+ images)",
+            "Output format conversion (JPG, PNG, WebP)",
+            "Quality adjustment (60%-100%)",
+            "Client-side processing (no data upload)"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "randomkey.dev",
+            "url": "https://randomkey.dev"
+        }
+    }
+    </script>
+    <!-- External libraries for image processing -->
+    <script src="https://cdn.jsdelivr.net/npm/pica@9.0.1/dist/pica.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        :root {
+            --upload-bg: var(--background-secondary);
+            --upload-border: var(--border-color);
+            --upload-text: var(--text-primary);
+            --preview-bg: var(--background-card);
+            --success-bg: rgba(158, 206, 106, 0.1);
+            --error-bg: rgba(247, 118, 142, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--background-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        /* Navigation */
+        .navigation-area {
+            background-color: var(--background-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .navigation-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            border-radius: var(--radius-md);
+            color: var(--text-inverse);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .theme-toggle-button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .theme-toggle-button:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        /* Main Content */
+        .main-content-area {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Three-column layout */
+        .three-column-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .three-column-layout {
+                flex-direction: row;
+                height: 600px;
+            }
+            
+            .upload-column {
+                flex: 1;
+            }
+            
+            .settings-column {
+                flex: 1;
+                max-width: 400px;
+            }
+            
+            .preview-column {
+                flex: 1;
+            }
+        }
+        
+        /* Upload Column */
+        .upload-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .upload-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .upload-area {
+            border: 3px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+            background-color: var(--upload-bg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--background-overlay);
+        }
+        
+        .upload-area.drag-over {
+            border-color: var(--accent-primary);
+            background-color: rgba(187, 154, 247, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--accent-primary);
+        }
+        
+        .upload-text h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .upload-text p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-list {
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            background-color: var(--background-secondary);
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            background-color: var(--background-primary);
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+        
+        .file-size {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--accent-error);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: background-color var(--transition-fast);
+        }
+        
+        .file-remove:hover {
+            background-color: rgba(247, 118, 142, 0.1);
+        }
+        
+        /* Settings Column */
+        .settings-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .settings-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .settings-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-icon {
+            font-size: 1.2rem;
+        }
+        
+        .dimension-inputs {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dimension-input {
+            flex: 1;
+        }
+        
+        .dimension-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .dimension-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+        
+        .dimension-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .dimension-separator {
+            color: var(--text-tertiary);
+            font-weight: 600;
+        }
+        
+        .percentage-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        .percentage-value {
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-top: 0.5rem;
+        }
+        
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--text-inverse);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--accent-primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .social-templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .template-card {
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background-color: var(--background-secondary);
+        }
+        
+        .template-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        
+        .template-card.selected {
+            border-color: var(--accent-primary);
+            background-color: rgba(187, 154, 247, 0.1);
+        }
+        
+        .template-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+        
+        .template-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .template-dimensions {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+        
+        .crop-mode-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .crop-mode-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .crop-mode-btn:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .crop-mode-btn.selected {
+            border-color: var(--accent-primary);
+            background-color: rgba(187, 154, 247, 0.1);
+        }
+        
+        /* Preview Column */
+        .preview-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .preview-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+        }
+        
+        .preview-placeholder {
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+        
+        .preview-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .preview-placeholder p {
+            font-size: 1rem;
+        }
+        
+        .preview-info {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color-light);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* Output Options */
+        .output-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .format-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .format-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+        
+        .format-option:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .format-option.selected {
+            border-color: var(--accent-primary);
+            background-color: rgba(187, 154, 247, 0.1);
+        }
+        
+        .quality-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        .quality-value {
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-top: 0.5rem;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius-lg);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            min-height: 44px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:disabled {
+            background-color: var(--text-disabled);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 1.5rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .progress-percentage {
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-primary);
+            border-radius: var(--radius-full);
+            transition: width var(--transition-normal);
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .message-success {
+            background-color: var(--success-bg);
+            border: 1px solid var(--accent-success);
+            color: var(--accent-success);
+        }
+        
+        .message-error {
+            background-color: var(--error-bg);
+            border: 1px solid var(--accent-error);
+            color: var(--accent-error);
+        }
+        
+        .message-icon {
+            font-size: 1.5rem;
+        }
+        
+        /* Footer */
+        .footer-area {
+            background-color: var(--background-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .footer-brand {
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .upload-card,
+            .settings-card,
+            .preview-card,
+            .output-card {
+                padding: 1.5rem;
+            }
+            
+            .dimension-inputs {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* Utility classes */
+        .hidden {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+        
+        .mt-1 {
+            margin-top: 0.5rem;
+        }
+        
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .faq-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color-light);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            background-color: var(--background-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .faq-item:hover {
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .faq-question::before {
+            content: "❓";
+            font-size: 1.2rem;
+        }
+        
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-left: 2rem;
+        }
+        
+        .faq-answer::before {
+            content: "💡 ";
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 1.5rem;
+            }
+            
+            .faq-item {
+                padding: 1rem;
+            }
+            
+            .faq-answer {
+                padding-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Navigation -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">RK</div>
+                <span>randomkey</span>
+            </div>
+            <div class="theme-toggle-container">
+                <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                    <span class="btn-icon">🌙</span>
+                </button>
+                <a href="legal.html" class="btn btn-secondary">Legal</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content-area">
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1>Free Online Image Resizer Tool</h1>
+                <p>Resize images for social media, websites, and documents. All processing happens locally in your browser - your photos never leave your device.</p>
+            </header>
+
+            <!-- Messages Area -->
+            <div id="messageArea"></div>
+
+            <!-- Three Column Layout -->
+            <div class="three-column-layout">
+                <!-- Upload Column -->
+                <div class="upload-column">
+                    <div class="upload-card">
+                        <h2 class="section-title">
+                            <span class="section-icon">📁</span>
+                            Upload Images
+                        </h2>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📤</div>
+                            <div class="upload-text">
+                                <h3>Drag & Drop Images Here</h3>
+                                <p>or click to browse files</p>
+                                <p class="mt-1 text-center" style="font-size: 0.8rem;">Supports JPG, PNG, WebP • Max 50MB per file</p>
+                            </div>
+                            <input type="file" id="fileInput" class="file-input" accept="image/jpeg,image/png,image/webp" multiple>
+                        </div>
+                        <button id="uploadBtn" class="btn btn-primary mt-2">
+                            <span class="btn-icon">📤</span>
+                            Select Images
+                        </button>
+                        
+                        <!-- File List -->
+                        <div class="file-list" id="fileList">
+                            <div class="preview-placeholder">
+                                <div class="preview-placeholder-icon">🖼️</div>
+                                <p>No images uploaded yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Column -->
+                <div class="settings-column">
+                    <div class="settings-card">
+                        <h2 class="section-title">
+                            <span class="section-icon">⚙️</span>
+                            Resize Settings
+                        </h2>
+                        
+                        <!-- Custom Dimensions -->
+                        <div class="settings-section">
+                            <h3 class="section-title">Custom Dimensions</h3>
+                            <div class="dimension-inputs">
+                                <div class="dimension-input">
+                                    <label class="dimension-label">Width (px)</label>
+                                    <input type="number" id="widthInput" class="dimension-field" min="1" max="10000" value="800" placeholder="Width">
+                                </div>
+                                <div class="dimension-separator">×</div>
+                                <div class="dimension-input">
+                                    <label class="dimension-label">Height (px)</label>
+                                    <input type="number" id="heightInput" class="dimension-field" min="1" max="10000" value="600" placeholder="Height">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Percentage Scale -->
+                        <div class="settings-section">
+                            <h3 class="section-title">Percentage Scale</h3>
+                            <input type="range" id="scaleSlider" class="percentage-slider" min="25" max="400" value="100" step="1">
+                            <div class="percentage-value" id="scaleValue">100%</div>
+                        </div>
+                        
+                        <!-- Aspect Ratio -->
+                        <div class="settings-section">
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Maintain Aspect Ratio</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="aspectRatioToggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Media Templates -->
+                        <div class="settings-section">
+                            <h3 class="section-title">Social Media Templates</h3>
+                            <div class="social-templates" id="socialTemplates">
+                                <!-- Templates will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Crop Mode -->
+                        <div class="settings-section">
+                            <h3 class="section-title">Crop Mode</h3>
+                            <div class="crop-mode-selector">
+                                <button class="crop-mode-btn selected" data-mode="fill">Fill</button>
+                                <button class="crop-mode-btn" data-mode="fit">Fit</button>
+                                <button class="crop-mode-btn" data-mode="stretch">Stretch</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Column -->
+                <div class="preview-column">
+                    <div class="preview-card">
+                        <h2 class="section-title">
+                            <span class="section-icon">👁️</span>
+                            Preview
+                        </h2>
+                        <div class="preview-area" id="previewArea">
+                            <div class="preview-placeholder">
+                                <div class="preview-placeholder-icon">🖼️</div>
+                                <p>Processed image will appear here</p>
+                            </div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Original Size</span>
+                                    <span class="info-value" id="originalSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">New Size</span>
+                                    <span class="info-value" id="newSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">File Format</span>
+                                    <span class="info-value" id="fileFormat">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Quality</span>
+                                    <span class="info-value" id="qualityValue">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Options -->
+            <div class="output-card">
+                <h2 class="section-title">
+                    <span class="section-icon">📦</span>
+                    Output Options
+                </h2>
+                
+                <!-- Format Selection -->
+                <div class="settings-section">
+                    <h3 class="section-title">Output Format</h3>
+                    <div class="format-selector">
+                        <div class="format-option selected" data-format="jpg">JPG</div>
+                        <div class="format-option" data-format="png">PNG</div>
+                        <div class="format-option" data-format="webp">WebP</div>
+                    </div>
+                </div>
+                
+                <!-- Quality Slider -->
+                <div class="settings-section">
+                    <h3 class="section-title">Quality</h3>
+                    <input type="range" id="qualitySlider" class="quality-slider" min="60" max="100" value="85" step="1">
+                    <div class="quality-value" id="qualityDisplay">85%</div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="processBtn" class="btn btn-primary" disabled>
+                        <span class="btn-icon">🔧</span>
+                        Process Images
+                    </button>
+                    <button id="downloadAllBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">📥</span>
+                        Download All (ZIP)
+                    </button>
+                    <button id="resetBtn" class="btn btn-secondary">
+                        <span class="btn-icon">🔄</span>
+                        Reset
+                    </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container hidden" id="progressContainer">
+                    <div class="progress-header">
+                        <span class="progress-title">Processing</span>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Processing image 1 of 1</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is my image data secure?</div>
+                <div class="faq-answer">Yes! All image processing happens entirely within your browser. Your photos never leave your device, ensuring complete privacy and security.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What image formats are supported?</div>
+                <div class="faq-answer">We support JPG, PNG, and WebP formats for both input and output. You can also convert between these formats during resizing.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How many images can I process at once?</div>
+                <div class="faq-answer">You can upload and process up to 50 images simultaneously. The tool supports batch processing with individual settings for each image.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What are the maximum image dimensions?</div>
+                <div class="faq-answer">You can resize images up to 10,000×10,000 pixels. The tool will automatically maintain aspect ratio to prevent distortion.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Do you support social media template sizes?</div>
+                <div class="faq-answer">Yes! We provide 20+ social media platform templates including Instagram, Facebook, Twitter, YouTube, LinkedIn, and TikTok with their exact recommended dimensions.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a file size limit?</div>
+                <div class="faq-answer">We recommend keeping files under 50MB for optimal performance. Larger files may take longer to process but will still work.</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer-area">
+            <p><span class="footer-brand">randomkey.dev</span> | Free online image resizer tool</p>
+            <p>© 2026 randomkey.dev. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // State management
+        const state = {
+            uploadedFiles: [],
+            processedImages: [],
+            currentSettings: {
+                width: 800,
+                height: 600,
+                scale: 100,
+                maintainAspectRatio: true,
+                cropMode: 'fill',
+                outputFormat: 'jpg',
+                quality: 85
+            },
+            isProcessing: false,
+            socialMediaTemplates: [
+                // Instagram
+                { id: 'insta-post', name: 'Instagram Post', icon: '📸', width: 1080, height: 1080 },
+                { id: 'insta-story', name: 'Instagram Story', icon: '📱', width: 1080, height: 1920 },
+                { id: 'insta-reel', name: 'Instagram Reel', icon: '🎬', width: 1080, height: 1920 },
+                
+                // Facebook
+                { id: 'fb-post', name: 'Facebook Post', icon: '👍', width: 1200, height: 630 },
+                { id: 'fb-cover', name: 'Facebook Cover', icon: '📘', width: 820, height: 312 },
+                { id: 'fb-story', name: 'Facebook Story', icon: '📖', width: 1080, height: 1920 },
+                
+                // Twitter
+                { id: 'twitter-post', name: 'Twitter Post', icon: '🐦', width: 1200, height: 675 },
+                { id: 'twitter-header', name: 'Twitter Header', icon: '🏔️', width: 1500, height: 500 },
+                
+                // YouTube
+                { id: 'yt-thumbnail', name: 'YouTube Thumbnail', icon: '🎥', width: 1280, height: 720 },
+                { id: 'yt-channel', name: 'YouTube Channel', icon: '📺', width: 2560, height: 1440 },
+                
+                // LinkedIn
+                { id: 'linkedin-post', name: 'LinkedIn Post', icon: '💼', width: 1200, height: 627 },
+                { id: 'linkedin-cover', name: 'LinkedIn Cover', icon: '🏢', width: 1584, height: 396 },
+                
+                // Pinterest
+                { id: 'pinterest-pin', name: 'Pinterest Pin', icon: '📌', width: 1000, height: 1500 },
+                
+                // TikTok
+                { id: 'tiktok-video', name: 'TikTok Video', icon: '🎵', width: 1080, height: 1920 },
+                
+                // WhatsApp
+                { id: 'whatsapp-status', name: 'WhatsApp Status', icon: '💬', width: 1080, height: 1920 },
+                
+                // Discord
+                { id: 'discord-banner', name: 'Discord Banner', icon: '🎮', width: 960, height: 540 },
+                
+                // Twitch
+                { id: 'twitch-banner', name: 'Twitch Banner', icon: '🟣', width: 1200, height: 480 },
+                
+                // Snapchat
+                { id: 'snapchat-story', name: 'Snapchat Story', icon: '👻', width: 1080, height: 1920 },
+                
+                // Shopify
+                { id: 'shopify-product', name: 'Shopify Product', icon: '🛍️', width: 800, height: 800 },
+                
+                // Amazon
+                { id: 'amazon-product', name: 'Amazon Product', icon: '📦', width: 1000, height: 1000 }
+            ]
+        };
+
+        // DOM Elements
+        const dom = {
+            uploadArea: document.getElementById('uploadArea'),
+            fileInput: document.getElementById('fileInput'),
+            uploadBtn: document.getElementById('uploadBtn'),
+            fileList: document.getElementById('fileList'),
+            widthInput: document.getElementById('widthInput'),
+            heightInput: document.getElementById('heightInput'),
+            scaleSlider: document.getElementById('scaleSlider'),
+            scaleValue: document.getElementById('scaleValue'),
+            aspectRatioToggle: document.getElementById('aspectRatioToggle'),
+            socialTemplates: document.getElementById('socialTemplates'),
+            cropModeBtns: document.querySelectorAll('.crop-mode-btn'),
+            formatOptions: document.querySelectorAll('.format-option'),
+            qualitySlider: document.getElementById('qualitySlider'),
+            qualityDisplay: document.getElementById('qualityDisplay'),
+            processBtn: document.getElementById('processBtn'),
+            downloadAllBtn: document.getElementById('downloadAllBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            previewArea: document.getElementById('previewArea'),
+            originalSize: document.getElementById('originalSize'),
+            newSize: document.getElementById('newSize'),
+            fileFormat: document.getElementById('fileFormat'),
+            qualityValue: document.getElementById('qualityValue'),
+            previewInfo: document.getElementById('previewInfo'),
+            progressContainer: document.getElementById('progressContainer'),
+            progressPercentage: document.getElementById('progressPercentage'),
+            progressFill: document.getElementById('progressFill'),
+            progressText: document.getElementById('progressText'),
+            messageArea: document.getElementById('messageArea'),
+            themeToggle: document.getElementById('themeToggle')
+        };
+
+        // Initialize the application
+        function init() {
+            setupEventListeners();
+            populateSocialTemplates();
+            updateUI();
+            loadThemePreference();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // File upload
+            dom.uploadArea.addEventListener('click', () => dom.fileInput.click());
+            dom.uploadBtn.addEventListener('click', () => dom.fileInput.click());
+            dom.fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            dom.uploadArea.addEventListener('dragover', handleDragOver);
+            dom.uploadArea.addEventListener('dragleave', handleDragLeave);
+            dom.uploadArea.addEventListener('drop', handleDrop);
+            
+            // Settings changes
+            dom.widthInput.addEventListener('input', handleDimensionChange);
+            dom.heightInput.addEventListener('input', handleDimensionChange);
+            dom.scaleSlider.addEventListener('input', handleScaleChange);
+            dom.aspectRatioToggle.addEventListener('change', handleAspectRatioToggle);
+            dom.qualitySlider.addEventListener('input', handleQualityChange);
+            
+            // Crop mode buttons
+            dom.cropModeBtns.forEach(btn => {
+                btn.addEventListener('click', () => handleCropModeChange(btn.dataset.mode));
+            });
+            
+            // Format options
+            dom.formatOptions.forEach(option => {
+                option.addEventListener('click', () => handleFormatChange(option.dataset.format));
+            });
+            
+            // Action buttons
+            dom.processBtn.addEventListener('click', processImages);
+            dom.downloadAllBtn.addEventListener('click', downloadAllImages);
+            dom.resetBtn.addEventListener('click', resetApplication);
+            
+            // Theme toggle
+            dom.themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Populate social media templates
+        function populateSocialTemplates() {
+            dom.socialTemplates.innerHTML = '';
+            state.socialMediaTemplates.forEach(template => {
+                const card = document.createElement('div');
+                card.className = 'template-card';
+                card.dataset.templateId = template.id;
+                card.innerHTML = `
+                    <div class="template-icon">${template.icon}</div>
+                    <div class="template-name">${template.name}</div>
+                    <div class="template-dimensions">${template.width}×${template.height}</div>
+                `;
+                card.addEventListener('click', () => handleTemplateSelect(template));
+                dom.socialTemplates.appendChild(card);
+            });
+        }
+
+        // Handle file selection
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            addFiles(files);
+        }
+
+        // Handle drag over
+        function handleDragOver(event) {
+            event.preventDefault();
+            dom.uploadArea.classList.add('drag-over');
+        }
+
+        // Handle drag leave
+        function handleDragLeave(event) {
+            event.preventDefault();
+            dom.uploadArea.classList.remove('drag-over');
+        }
+
+        // Handle drop
+        function handleDrop(event) {
+            event.preventDefault();
+            dom.uploadArea.classList.remove('drag-over');
+            const files = Array.from(event.dataTransfer.files);
+            addFiles(files);
+        }
+
+        // Add files to state and update UI
+        function addFiles(files) {
+            let imageFiles = files.filter(file => 
+                file.type.startsWith('image/') && 
+                ['image/jpeg', 'image/png', 'image/webp'].includes(file.type)
+            );
+            
+            if (imageFiles.length === 0) {
+                showMessage('error', 'Please select valid image files (JPG, PNG, or WebP)');
+                return;
+            }
+            
+            // Check file count (max 50 for batch processing)
+            if (imageFiles.length > 50) {
+                showMessage('warning', `You selected ${imageFiles.length} images. Limiting to first 50 files for batch processing.`);
+                imageFiles = imageFiles.slice(0, 50);
+            }
+            
+            // Check file sizes
+            const oversizedFiles = imageFiles.filter(file => file.size > 50 * 1024 * 1024);
+            if (oversizedFiles.length > 0) {
+                showMessage('error', 'Some files exceed the 50MB size limit');
+                imageFiles = imageFiles.filter(file => file.size <= 50 * 1024 * 1024);
+            }
+            
+            state.uploadedFiles.push(...imageFiles);
+            updateFileList();
+            updateUI();
+            showMessage('success', `Added ${imageFiles.length} image(s)`);
+        }
+
+        // Update file list display
+        function updateFileList() {
+            if (state.uploadedFiles.length === 0) {
+                dom.fileList.innerHTML = `
+                    <div class="preview-placeholder">
+                        <div class="preview-placeholder-icon">🖼️</div>
+                        <p>No images uploaded yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let fileListHTML = '';
+            state.uploadedFiles.forEach((file, index) => {
+                const url = URL.createObjectURL(file);
+                const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                fileListHTML += `
+                    <div class="file-item">
+                        <img src="${url}" alt="${file.name}" class="file-thumbnail">
+                        <div class="file-info">
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">${sizeMB} MB • ${file.type.replace('image/', '').toUpperCase()}</div>
+                        </div>
+                        <button class="file-remove" data-index="${index}" aria-label="Remove file">
+                            ❌
+                        </button>
+                    </div>
+                `;
+            });
+            
+            dom.fileList.innerHTML = fileListHTML;
+            
+            // Add remove event listeners
+            document.querySelectorAll('.file-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    removeFile(index);
+                });
+            });
+        }
+
+        // Remove a file
+        function removeFile(index) {
+            state.uploadedFiles.splice(index, 1);
+            updateFileList();
+            updateUI();
+            showMessage('info', 'File removed');
+        }
+
+        // Handle dimension change
+        function handleDimensionChange() {
+            const width = parseInt(dom.widthInput.value) || 1;
+            const height = parseInt(dom.heightInput.value) || 1;
+            
+            state.currentSettings.width = Math.min(width, 10000);
+            state.currentSettings.height = Math.min(height, 10000);
+            
+            // Update scale slider based on original dimensions
+            if (state.uploadedFiles.length > 0) {
+                // This would require knowing original dimensions - implement later
+            }
+            
+            updateUI();
+        }
+
+        // Handle scale change
+        function handleScaleChange() {
+            const scale = parseInt(dom.scaleSlider.value);
+            state.currentSettings.scale = scale;
+            dom.scaleValue.textContent = `${scale}%`;
+            
+            // Update width and height inputs if aspect ratio is maintained
+            if (state.currentSettings.maintainAspectRatio && state.uploadedFiles.length > 0) {
+                // This would require knowing original dimensions - implement later
+            }
+            
+            updateUI();
+        }
+
+        // Handle aspect ratio toggle
+        function handleAspectRatioToggle() {
+            state.currentSettings.maintainAspectRatio = dom.aspectRatioToggle.checked;
+            updateUI();
+        }
+
+        // Handle quality change
+        function handleQualityChange() {
+            const quality = parseInt(dom.qualitySlider.value);
+            state.currentSettings.quality = quality;
+            dom.qualityDisplay.textContent = `${quality}%`;
+            dom.qualityValue.textContent = `${quality}%`;
+        }
+
+        // Handle crop mode change
+        function handleCropModeChange(mode) {
+            state.currentSettings.cropMode = mode;
+            dom.cropModeBtns.forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.mode === mode);
+            });
+            updateUI();
+        }
+
+        // Handle format change
+        function handleFormatChange(format) {
+            state.currentSettings.outputFormat = format;
+            dom.formatOptions.forEach(option => {
+                option.classList.toggle('selected', option.dataset.format === format);
+            });
+            dom.fileFormat.textContent = format.toUpperCase();
+            updateUI();
+        }
+
+        // Handle template selection
+        function handleTemplateSelect(template) {
+            state.currentSettings.width = template.width;
+            state.currentSettings.height = template.height;
+            
+            // Update inputs
+            dom.widthInput.value = template.width;
+            dom.heightInput.value = template.height;
+            
+            // Update scale slider
+            const scale = Math.min(
+                Math.round((template.width / 800) * 100),
+                Math.round((template.height / 600) * 100)
+            );
+            state.currentSettings.scale = scale;
+            dom.scaleSlider.value = scale;
+            dom.scaleValue.textContent = `${scale}%`;
+            
+            // Update template selection UI
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.templateId === template.id);
+            });
+            
+            updateUI();
+            showMessage('info', `Selected ${template.name} template`);
+        }
+
+        // Process images
+        async function processImages() {
+            if (state.uploadedFiles.length === 0 || state.isProcessing) return;
+            
+            state.isProcessing = true;
+            state.processedImages = [];
+            updateUI();
+            
+            dom.progressContainer.classList.remove('hidden');
+            dom.progressFill.style.width = '0%';
+            dom.progressPercentage.textContent = '0%';
+            
+            const totalFiles = state.uploadedFiles.length;
+            
+            for (let i = 0; i < totalFiles; i++) {
+                const file = state.uploadedFiles[i];
+                dom.progressText.textContent = `Processing image ${i + 1} of ${totalFiles}`;
+                
+                try {
+                    const processedBlob = await resizeImage(file, state.currentSettings);
+                    state.processedImages.push({
+                        original: file,
+                        processed: processedBlob,
+                        name: file.name.replace(/\.[^/.]+$/, '') + '_resized.' + state.currentSettings.outputFormat
+                    });
+                    
+                    // Update progress
+                    const progress = Math.round(((i + 1) / totalFiles) * 100);
+                    dom.progressFill.style.width = `${progress}%`;
+                    dom.progressPercentage.textContent = `${progress}%`;
+                    
+                    // Update preview for first image
+                    if (i === 0) {
+                        updatePreview(state.processedImages[0]);
+                    }
+                } catch (error) {
+                    console.error('Error processing image:', error);
+                    showMessage('error', `Failed to process "${file.name}"`);
+                }
+            }
+            
+            state.isProcessing = false;
+            updateUI();
+            showMessage('success', `Processed ${totalFiles} image(s) successfully`);
+            
+            // Hide progress bar after delay
+            setTimeout(() => {
+                dom.progressContainer.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Resize image using Pica.js for high-quality scaling
+        async function resizeImage(file, settings) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    img.onload = async () => {
+                        // Calculate new dimensions
+                        let targetWidth, targetHeight;
+                        
+                        if (settings.scale !== 100) {
+                            targetWidth = Math.round(img.width * (settings.scale / 100));
+                            targetHeight = Math.round(img.height * (settings.scale / 100));
+                        } else {
+                            targetWidth = settings.width;
+                            targetHeight = settings.height;
+                        }
+                        
+                        // Apply aspect ratio constraints
+                        if (settings.maintainAspectRatio) {
+                            const scale = Math.min(
+                                targetWidth / img.width,
+                                targetHeight / img.height
+                            );
+                            targetWidth = Math.round(img.width * scale);
+                            targetHeight = Math.round(img.height * scale);
+                        }
+                        
+                        // Create canvas
+                        const canvas = document.createElement('canvas');
+                        canvas.width = targetWidth;
+                        canvas.height = targetHeight;
+                        
+                        try {
+                            // Use pica.js for high-quality resizing
+                            const pica = window.pica();
+                            
+                            // Apply crop mode if needed
+                            if (settings.cropMode === 'fill') {
+                                // For fill mode, we need to crop the source image
+                                const scale = Math.max(
+                                    targetWidth / img.width,
+                                    targetHeight / img.height
+                                );
+                                const sourceWidth = Math.round(targetWidth / scale);
+                                const sourceHeight = Math.round(targetHeight / scale);
+                                const sourceX = Math.round((img.width - sourceWidth) / 2);
+                                const sourceY = Math.round((img.height - sourceHeight) / 2);
+                                
+                                // Create a temporary canvas for cropping
+                                const tempCanvas = document.createElement('canvas');
+                                tempCanvas.width = sourceWidth;
+                                tempCanvas.height = sourceHeight;
+                                const tempCtx = tempCanvas.getContext('2d');
+                                tempCtx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
+                                
+                                // Resize the cropped image
+                                await pica.resize(tempCanvas, canvas);
+                            } else {
+                                // For fit or stretch modes, resize directly
+                                await pica.resize(img, canvas);
+                            }
+                            
+                            // Convert to blob
+                            canvas.toBlob(
+                                (blob) => resolve(blob),
+                                `image/${settings.outputFormat}`,
+                                settings.quality / 100
+                            );
+                        } catch (error) {
+                            // Fallback to Canvas API if pica fails
+                            console.warn('Pica.js failed, using Canvas fallback:', error);
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                            
+                            canvas.toBlob(
+                                (blob) => resolve(blob),
+                                `image/${settings.outputFormat}`,
+                                settings.quality / 100
+                            );
+                        }
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Update preview area
+        function updatePreview(processedImage) {
+            const url = URL.createObjectURL(processedImage.processed);
+            
+            dom.previewArea.innerHTML = `
+                <img src="${url}" alt="Processed image" class="preview-image">
+            `;
+            
+            // Update info
+            const originalSizeMB = (processedImage.original.size / (1024 * 1024)).toFixed(2);
+            const processedSizeMB = (processedImage.processed.size / (1024 * 1024)).toFixed(2);
+            dom.originalSize.textContent = `${processedImage.original.name} (${originalSizeMB} MB)`;
+            dom.newSize.textContent = `${processedImage.name} (${processedSizeMB} MB)`;
+            dom.fileFormat.textContent = state.currentSettings.outputFormat.toUpperCase();
+            dom.qualityValue.textContent = `${state.currentSettings.quality}%`;
+            
+            dom.previewInfo.classList.remove('hidden');
+        }
+
+        // Download all images as ZIP
+        async function downloadAllImages() {
+            if (state.processedImages.length === 0) return;
+            
+            try {
+                showMessage('info', 'Creating ZIP archive...');
+                
+                const zip = new JSZip();
+                state.processedImages.forEach((image, index) => {
+                    zip.file(image.name, image.processed);
+                });
+                
+                const content = await zip.generateAsync({ type: 'blob' });
+                saveAs(content, 'resized_images.zip');
+                
+                showMessage('success', 'ZIP file downloaded');
+            } catch (error) {
+                console.error('Error creating ZIP:', error);
+                showMessage('error', 'Failed to create ZIP file');
+            }
+        }
+
+        // Reset application
+        function resetApplication() {
+            state.uploadedFiles = [];
+            state.processedImages = [];
+            state.currentSettings = {
+                width: 800,
+                height: 600,
+                scale: 100,
+                maintainAspectRatio: true,
+                cropMode: 'fill',
+                outputFormat: 'jpg',
+                quality: 85
+            };
+            
+            // Reset UI
+            dom.widthInput.value = 800;
+            dom.heightInput.value = 600;
+            dom.scaleSlider.value = 100;
+            dom.scaleValue.textContent = '100%';
+            dom.aspectRatioToggle.checked = true;
+            dom.qualitySlider.value = 85;
+            dom.qualityDisplay.textContent = '85%';
+            
+            // Reset selections
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            dom.cropModeBtns.forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.mode === 'fill');
+            });
+            
+            dom.formatOptions.forEach(option => {
+                option.classList.toggle('selected', option.dataset.format === 'jpg');
+            });
+            
+            updateFileList();
+            updateUI();
+            showMessage('info', 'Application reset');
+        }
+
+        // Update UI state
+        function updateUI() {
+            // Enable/disable buttons based on state
+            dom.processBtn.disabled = state.uploadedFiles.length === 0 || state.isProcessing;
+            dom.downloadAllBtn.disabled = state.processedImages.length === 0 || state.isProcessing;
+            
+            // Update process button text
+            dom.processBtn.innerHTML = state.isProcessing ? 
+                `<span class="btn-icon">⏳</span>Processing...` :
+                `<span class="btn-icon">🔧</span>Process Images (${state.uploadedFiles.length})`;
+        }
+
+        // Show message
+        function showMessage(type, text) {
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.innerHTML = `
+                <span class="message-icon">${type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️'}</span>
+                <span>${text}</span>
+            `;
+            
+            dom.messageArea.appendChild(message);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.remove();
+                }
+            }, 5000);
+        }
+
+        // Theme management
+        function loadThemePreference() {
+            const savedTheme = localStorage.getItem('imageResizer_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeToggleIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('imageResizer_theme', newTheme);
+            updateThemeToggleIcon(newTheme);
+        }
+
+        function updateThemeToggleIcon(theme) {
+            const icon = dom.themeToggle.querySelector('.btn-icon');
+            icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

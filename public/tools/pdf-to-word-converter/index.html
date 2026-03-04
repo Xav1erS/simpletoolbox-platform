@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word Converter - Free Online PDF to DOCX Tool</title>
+    <meta name="description" content="Free online PDF to Word converter, preserves original formatting with high quality, supports batch conversion, no file upload required, ensures privacy and security.">
+    <meta name="keywords" content="PDF to Word, PDF to DOCX, online PDF converter, free PDF tool, PDF convert Word">
+    <link rel="canonical" href="https://tools.randomkey.dev/pdf-to-word-converter">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #165DFF;
+            --success-color: #36D399;
+            --error-color: #F87272;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --bg-light: #FFFFFF;
+            --bg-dark: #111827;
+            --border-color: #E5E7EB;
+            --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-medium: 0 4px 16px rgba(0,0,0,0.12);
+            --transition-speed: 0.2s;
+        }
+
+        /* 暗黑模式支持 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #F9FAFB;
+                --text-secondary: #9CA3AF;
+                --bg-light: #111827;
+                --bg-dark: #030712;
+                --border-color: #374151;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-light);
+            transition: background-color var(--transition-speed);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部样式 */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .logo-icon::after {
+            content: '↔️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+        }
+
+        .nav {
+            margin-left: auto;
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* 主内容区 */
+        .main {
+            padding: 48px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* 工具核心区域 */
+        .tool-container {
+            max-width: 800px;
+            margin: 0 auto 64px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            background-color: rgba(22, 93, 255, 0.02);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(22, 93, 255, 0.05);
+        }
+
+        .upload-area.highlight {
+            border-color: var(--primary-color);
+            background-color: rgba(22, 93, 255, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .upload-text h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .upload-text p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .upload-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            min-height: 48px;
+            min-width: 160px;
+        }
+
+        .upload-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-button:active {
+            transform: translateY(0);
+        }
+
+        .upload-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* 进度指示器 */
+        .progress-container {
+            margin-top: 32px;
+            display: none;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 文件列表 */
+        .file-list {
+            margin-top: 32px;
+            display: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background-color: rgba(22, 93, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .file-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .file-status {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            color: var(--success-color);
+        }
+
+        .status-error {
+            color: var(--error-color);
+        }
+
+        .status-processing {
+            color: var(--primary-color);
+        }
+
+        /* 控制按钮 */
+        .controls {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            justify-content: center;
+        }
+
+        .control-button {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            border: 2px solid var(--primary-color);
+            min-width: 140px;
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0E42D4;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(22, 93, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled, .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 特性卡片 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 64px 0;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* 结果区域 */
+        .result-area {
+            display: none;
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .result-success {
+            color: var(--success-color);
+            font-size: 18px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            min-height: 48px;
+        }
+
+        .download-button:hover {
+            background-color: #0E42D4;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .tool-container {
+                padding: 24px;
+            }
+            
+            .upload-area {
+                padding: 40px 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .control-button {
+                width: 100%;
+            }
+        }
+
+        /* 辅助类 */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <div class="logo-icon"></div>
+            <span>randomkey.dev</span>
+        </a>
+        <nav class="nav">
+            <a href="/tools" class="nav-link">Tools</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <h1>PDF to Word Converter</h1>
+            <p>Free online conversion of PDF to editable Word documents, preserving original formatting and layout with high quality. No file upload required, ensuring your privacy and security.</p>
+        </section>
+
+        <section class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">
+                    <h3>Drag & drop PDF files here</h3>
+                    <p>Or click to select files, supports batch conversion of multiple files</p>
+                    <button class="upload-button" id="selectFileBtn">Select PDF Files</button>
+                </div>
+            </div>
+
+            <input type="file" id="fileInput" accept=".pdf" multiple class="hidden">
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-info">
+                    <span id="progressText">Preparing conversion...</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="file-list" id="fileList">
+                <!-- 文件列表将动态生成 -->
+            </div>
+
+            <div class="controls">
+                <button class="control-button btn-primary" id="convertBtn" disabled>Start Conversion</button>
+                <button class="control-button btn-secondary" id="resetBtn" disabled>Reset</button>
+            </div>
+
+            <div class="result-area" id="resultArea">
+                <div class="result-success">
+                    <span>✅</span>
+                    <span>Conversion completed!</span>
+                </div>
+                <a href="#" class="download-button" id="downloadLink">
+                    <span>📥</span>
+                    <span>Download Word Document</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Privacy & Security</h3>
+                <p class="feature-desc">All files are processed in your browser, not uploaded to any server, completely ensuring your data privacy and security.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">High-Quality Conversion</h3>
+                <p class="feature-desc">Intelligently parses PDF format, preserves original layout, fonts, images and table structures, generating high-quality Word documents.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Fast Processing</h3>
+                <p class="feature-desc">Based on WebAssembly technology, enables fast PDF parsing and conversion, even large files can be processed quickly.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">Cross-Platform Support</h3>
+                <p class="feature-desc">Fully responsive design, supports desktop, tablet and mobile devices, convenient to use anywhere.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Batch Conversion</h3>
+                <p class="feature-desc">Supports uploading multiple PDF files simultaneously, completing batch conversion in one go, improving work efficiency.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Format Preservation</h3>
+                <p class="feature-desc">Intelligently recognizes paragraphs, headings, lists and tables, accurately reconstructing the original document structure in Word documents.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 核心变量声明
+        let selectedFiles = [];
+        let conversionInProgress = false;
+        let conversionResults = [];
+        
+        // DOM元素引用
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressText = document.getElementById('progressText');
+        const progressPercent = document.getElementById('progressPercent');
+        const progressFill = document.getElementById('progressFill');
+        const fileList = document.getElementById('fileList');
+        const resultArea = document.getElementById('resultArea');
+        const downloadLink = document.getElementById('downloadLink');
+        
+        // 文件选择事件
+        selectFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        // 拖放事件处理
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('highlight');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('highlight');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('highlight');
+            
+            if (e.dataTransfer.files.length > 0) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+        
+        // 文件处理函数
+        function handleFileSelect(e) {
+            if (e.target.files.length > 0) {
+                handleFiles(e.target.files);
+            }
+        }
+        
+        function handleFiles(files) {
+            // 重置状态
+            selectedFiles = [];
+            fileList.innerHTML = '';
+            
+            // 处理每个文件
+            for (let i = 0; i < Math.min(files.length, 5); i++) {
+                const file = files[i];
+                if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+                    selectedFiles.push(file);
+                    
+                    // 添加到文件列表显示
+                    const fileItem = createFileItem(file);
+                    fileList.appendChild(fileItem);
+                }
+            }
+            
+            // 更新UI状态
+            if (selectedFiles.length > 0) {
+                fileList.style.display = 'block';
+                convertBtn.disabled = false;
+                resetBtn.disabled = false;
+                resultArea.style.display = 'none';
+                
+                // 显示文件数量信息
+                const fileCount = selectedFiles.length;
+                uploadArea.querySelector('.upload-text h3').textContent = 
+                    `已选择 ${fileCount} 个PDF文件`;
+                uploadArea.querySelector('.upload-text p').textContent = 
+                    fileCount > 1 ? 'Click convert button to start batch conversion' : 'Click convert button to start conversion';
+            }
+        }
+        
+        function createFileItem(file) {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                </div>
+                <div class="file-status status-processing" id="status-${file.name}">
+                    Waiting for conversion
+                </div>
+            `;
+            return item;
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // 转换按钮事件
+        convertBtn.addEventListener('click', startConversion);
+        
+        // 重置按钮事件
+        resetBtn.addEventListener('click', resetTool);
+        
+        // 开始转换函数
+        async function startConversion() {
+            if (conversionInProgress || selectedFiles.length === 0) return;
+            
+            conversionInProgress = true;
+            conversionResults = [];
+            
+            // 更新UI状态
+            convertBtn.disabled = true;
+            resetBtn.disabled = true;
+            progressContainer.style.display = 'block';
+            resultArea.style.display = 'none';
+            
+            // 设置进度
+            updateProgress(0, 'Starting conversion...');
+            
+            // 处理每个文件
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const statusElement = document.getElementById(`status-${file.name}`);
+                
+                try {
+                    // 更新文件状态
+                    statusElement.textContent = 'Converting...';
+                    statusElement.className = 'file-status status-processing';
+                    
+                    // 模拟转换过程（实际实现时替换为真实转换逻辑）
+                    await simulateConversion(file, i + 1, selectedFiles.length);
+                    
+                    // 转换成功
+                    statusElement.textContent = 'Conversion successful ✓';
+                    statusElement.className = 'file-status status-success';
+                    
+                    conversionResults.push({
+                        name: file.name,
+                        success: true,
+                        result: `converted_${file.name.replace('.pdf', '.docx')}`
+                    });
+                    
+                } catch (error) {
+                    // 转换失败
+                    statusElement.textContent = 'Conversion failed ✗';
+                    statusElement.className = 'file-status status-error';
+                    
+                    conversionResults.push({
+                        name: file.name,
+                        success: false,
+                        error: error.message
+                    });
+                }
+                
+                // 更新总进度
+                const progress = Math.round(((i + 1) / selectedFiles.length) * 100);
+                updateProgress(progress, `Processing file ${i + 1}/${selectedFiles.length}`);
+            }
+            
+            // 转换完成
+            conversionInProgress = false;
+            convertBtn.disabled = true;
+            resetBtn.disabled = false;
+            
+            // 显示结果
+            showConversionResults();
+        }
+        
+        // 模拟转换过程（实际开发时替换为真实转换逻辑）
+        async function simulateConversion(file, current, total) {
+            return new Promise((resolve) => {
+                // 模拟转换耗时
+                const delay = 500 + Math.random() * 1000;
+                
+                setTimeout(() => {
+                    resolve({
+                        name: file.name,
+                        size: file.size,
+                        converted: true
+                    });
+                }, delay);
+            });
+        }
+        
+        // 更新进度函数
+        function updateProgress(percent, text) {
+            progressFill.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+            progressText.textContent = text;
+        }
+        
+        // 显示转换结果
+        function showConversionResults() {
+            const successCount = conversionResults.filter(r => r.success).length;
+            const totalCount = conversionResults.length;
+            
+            if (successCount > 0) {
+                // 生成模拟的下载链接（实际开发时替换为真实转换结果）
+                const successResults = conversionResults.filter(r => r.success);
+                
+                if (successResults.length === 1) {
+                    downloadLink.href = '#';
+                    downloadLink.download = successResults[0].result;
+                    downloadLink.querySelector('span:nth-child(2)').textContent = 
+                        `下载 ${successResults[0].result}`;
+                } else {
+                    // 批量下载时提供ZIP包（模拟）
+                    downloadLink.href = '#';
+                    downloadLink.download = 'converted_files.zip';
+                    downloadLink.querySelector('span:nth-child(2)').textContent = 
+                        `批量下载 (${successCount} files)`;
+                }
+                
+                // 显示结果区域
+                resultArea.style.display = 'block';
+                
+                // 更新成功信息
+                const resultText = successCount === totalCount 
+                    ? `All${totalCount} files converted successfully！`
+                    : `${successCount} files converted successfully，${totalCount - successCount} failed`;
+                
+                document.querySelector('.result-success span:last-child').textContent = resultText;
+            }
+        }
+        
+        // 重置工具函数
+        function resetTool() {
+            // 重置All状态
+            selectedFiles = [];
+            conversionInProgress = false;
+            conversionResults = [];
+            
+            // 重置UI
+            fileInput.value = '';
+            fileList.innerHTML = '';
+            fileList.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultArea.style.display = 'none';
+            convertBtn.disabled = true;
+            resetBtn.disabled = true;
+            
+            // 恢复上传区域原始状态
+            uploadArea.querySelector('.upload-text h3').textContent = '拖放PDF文件到此处';
+            uploadArea.querySelector('.upload-text p').textContent = '或点击选择文件，支持多文件批量转换';
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始状态设置
+            convertBtn.disabled = true;
+            resetBtn.disabled = true;
+            
+            // 添加触摸设备优化
+            if ('ontouchstart' in window) {
+                uploadArea.style.minHeight = '300px';
+            }
+        });
+    </script>
+</body>
+</html>

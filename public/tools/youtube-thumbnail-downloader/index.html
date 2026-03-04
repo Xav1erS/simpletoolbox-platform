@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Downloader – Free HD Thumbnail Download</title>
+    <meta name="description" content="Download high-quality YouTube thumbnails for free. No registration required. Supports all video resolutions.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <style>
+        /* 工具特定样式 */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .navigation-area {
+            height: 10vh;
+            min-height: 60px;
+            max-height: 80px;
+            background-color: var(--background-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .navigation-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--brand-logo-color);
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            border-radius: var(--radius-md);
+            color: var(--text-inverse);
+            font-weight: 800;
+        }
+        
+        .main-content-area {
+            flex: 1;
+            min-height: 60vh;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: var(--font-size-md);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .ad-container {
+            margin: var(--spacing-xl) auto;
+            max-width: 728px;
+            text-align: center;
+        }
+        
+        .tool-container {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .input-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-focus);
+        }
+        
+        .result-section {
+            display: none;
+        }
+        
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .result-box {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            margin-top: var(--spacing-md);
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .thumbnail-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .thumbnail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .thumbnail-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .thumbnail-info {
+            padding: var(--spacing-md);
+        }
+        
+        .thumbnail-info h4 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .thumbnail-info p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .action-button {
+            font-weight: 600;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-base);
+            min-height: 44px;
+        }
+        
+        .primary-action {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .primary-action:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .secondary-action {
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .secondary-action:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        .examples-sidebar {
+            width: 100%;
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .example-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .example-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .example-icon {
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        footer {
+            background-color: var(--background-secondary);
+            padding: var(--spacing-xl);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (min-width: 1024px) {
+            .layout-container {
+                flex-direction: row;
+                min-height: 100vh;
+            }
+            
+            .navigation-area {
+                flex-direction: column;
+                height: 100vh;
+                width: 10%;
+                min-height: auto;
+                min-width: 80px;
+                max-width: 100px;
+                padding: var(--spacing-xl) var(--spacing-md);
+                justify-content: flex-start;
+                gap: var(--spacing-2xl);
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+            }
+            
+            .main-content-area {
+                flex: 1;
+                min-height: 100vh;
+                padding: var(--spacing-2xl);
+                overflow-y: auto;
+            }
+            
+            .examples-sidebar {
+                width: 30%;
+                min-width: 300px;
+                max-width: 400px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+                margin-top: 0;
+                border-radius: 0;
+                border-left: 1px solid var(--border-color);
+                border-top: none;
+                overflow-y: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navigation-area {
+                padding: 0 var(--spacing-lg);
+                height: 60px;
+            }
+            
+            .main-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .examples-sidebar {
+                margin-top: var(--spacing-lg);
+                padding: var(--spacing-lg);
+            }
+            
+            .example-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .thumbnail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 导航区 (10%) -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">YT</div>
+                <span>Thumbnail</span>
+            </div>
+            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+        
+        <!-- 核心功能区 (60%) -->
+        <main class="main-content-area">
+            <header class="hero">
+                <h1>Download High-Quality YouTube Thumbnails</h1>
+                <p>Get HD thumbnails from any YouTube video instantly. No registration or download limits.</p>
+            </header>
+            
+            <!-- 广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            
+            <!-- 工具容器 -->
+            <section class="tool-container">
+                <div class="input-section">
+                    <label for="videoUrl">YouTube Video URL</label>
+                    <input type="url" id="videoUrl" class="input-field" placeholder="https://www.youtube.com/watch?v=..." required>
+                    <div class="example-links" style="margin-top: var(--spacing-sm); color: var(--text-secondary); font-size: var(--font-size-sm);">
+                        <p>Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ</p>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="action-button primary-action" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        <span id="downloadBtnText">Get Thumbnails</span>
+                        <span id="downloadBtnLoading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Processing...
+                        </span>
+                    </button>
+                    <button class="action-button secondary-action" id="clearBtn">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </section>
+            
+            <!-- 结果区域 -->
+            <section class="result-section" id="resultSection">
+                <h2>Available Thumbnails</h2>
+                <div class="thumbnail-grid" id="thumbnailGrid">
+                    <!-- 缩略图将通过JavaScript动态添加 -->
+                </div>
+            </section>
+            
+            <!-- What Is & How to Use -->
+            <section class="what-is-section" style="margin: var(--spacing-xl) 0; padding: var(--spacing-xl); background-color: var(--background-secondary); border-radius: var(--radius-lg);">
+                <h2>What Is YouTube Thumbnail Downloader?</h2>
+                <p>A YouTube thumbnail downloader is a tool that extracts thumbnail images from YouTube videos. YouTube automatically generates multiple thumbnail sizes for each video.</p>
+                <p>This tool works entirely in your browser, no data is sent to external servers.</p>
+                
+                <h2>How to Use This Tool</h2>
+                <ol>
+                    <li>Copy the YouTube video URL from your browser's address bar</li>
+                    <li>Paste the URL into the input field above</li>
+                    <li>Click "Get Thumbnails"</li>
+                    <li>Browse available thumbnail sizes (maxres, hq720, sd, etc.)</li>
+                    <li>Click any thumbnail to download it to your device</li>
+                </ol>
+                
+                <h3>Supported URL Formats</h3>
+                <ul>
+                    <li>Standard URL: https://www.youtube.com/watch?v=VIDEO_ID</li>
+                    <li>Short URL: https://youtu.be/VIDEO_ID</li>
+                    <li>Embed URL: https://www.youtube.com/embed/VIDEO_ID</li>
+                </ul>
+            </section>
+            
+            <!-- 特性展示 -->
+            <section class="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); margin-top: var(--spacing-xl);">
+                <div class="feature-card">
+                    <i class="fas fa-hdd"></i>
+                    <h3>All Sizes Available</h3>
+                    <p>Get maxres (1280×720), hq720, sd, and default thumbnail sizes.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Processing</h3>
+                    <p>Thumbnails are extracted in milliseconds without server delays.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-secret"></i>
+                    <h3>Complete Privacy</h3>
+                    <p>All processing happens locally in your browser. No data stored.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Cross-Platform</h3>
+                    <p>Works seamlessly across all browsers and devices without installation.</p>
+                </div>
+            </section>
+            
+            <!-- 另一个广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="0987654321"
+                     data-ad-format="rectangle"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+        
+        <!-- 使用示例区 (30%) -->
+        <aside class="examples-sidebar">
+            <h3><i class="fas fa-lightbulb"></i> Common Use Cases</h3>
+            <div class="example-cards">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <h4>Blog Posts</h4>
+                    <p>Enhance your blog posts with high-quality YouTube thumbnail images for better engagement.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-presentation"></i>
+                    </div>
+                    <h4>Presentations</h4>
+                    <p>Include YouTube thumbnails in your presentations to visually represent video content.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h4>Video Editing</h4>
+                    <p>Use thumbnails as reference images or background elements in your video editing projects.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h4>Social Media</h4>
+                    <p>Share high-quality thumbnails on social media platforms to promote video content.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
+                <h4><i class="fas fa-graduation-cap"></i> Quick Tip</h4>
+                <p>YouTube provides up to 4 different thumbnail resolutions. Use the "maxres" version for the highest quality (1280×720).</p>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="/contact">Contact</a>
+                <a href="#about">About</a>
+            </div>
+            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-sm);">&copy; <span id="currentYear"></span> Thumbnail Downloader. All rights reserved.</p>
+            <p style="color: var(--text-tertiary); font-size: var(--font-size-sm);">simpletoolbox.dev | Free YouTube thumbnail downloader</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        // YouTube 缩略图下载功能
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadBtnText = document.getElementById('downloadBtnText');
+        const downloadBtnLoading = document.getElementById('downloadBtnLoading');
+        const videoUrlInput = document.getElementById('videoUrl');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultSection = document.getElementById('resultSection');
+        const thumbnailGrid = document.getElementById('thumbnailGrid');
+        
+        // 提取视频ID函数
+        function extractVideoId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+                /youtube\.com\/v\/([^&\n?#]+)/,
+                /youtube\.com\/watch\?.*&v=([^&\n?#]+)/,
+                /youtube\.com\/shorts\/([^&\n?#]+)/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            return null;
+        }
+        
+        // 生成缩略图URL
+        function generateThumbnailUrls(videoId) {
+            return [
+                {
+                    name: 'Maximum Resolution',
+                    quality: 'maxresdefault',
+                    url: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                    size: '1280×720',
+                    description: 'Highest quality available'
+                },
+                {
+                    name: 'HD 720p',
+                    quality: 'hq720',
+                    url: `https://img.youtube.com/vi/${videoId}/hq720.jpg`,
+                    size: '1280×720',
+                    description: 'High definition quality'
+                },
+                {
+                    name: 'Standard Definition',
+                    quality: 'sddefault',
+                    url: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
+                    size: '640×480',
+                    description: 'Standard quality'
+                },
+                {
+                    name: 'Default Thumbnail',
+                    quality: 'default',
+                    url: `https://img.youtube.com/vi/${videoId}/default.jpg`,
+                    size: '120×90',
+                    description: 'Default quality'
+                }
+            ];
+        }
+        
+        // 检查缩略图是否存在
+        async function checkImageExists(url) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = url;
+            });
+        }
+        
+        // 主下载功能
+        downloadBtn.addEventListener('click', async () => {
+            const url = videoUrlInput.value.trim();
+            
+            if (!url) {
+                alert('Please enter a YouTube video URL.');
+                return;
+            }
+            
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                alert('Invalid YouTube URL. Please use a valid YouTube video URL.');
+                return;
+            }
+            
+            // 显示加载状态
+            downloadBtnText.style.display = 'none';
+            downloadBtnLoading.style.display = 'inline';
+            downloadBtn.disabled = true;
+            
+            // 移动端震动反馈
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            try {
+                // 生成缩略图
+                const thumbnails = generateThumbnailUrls(videoId);
+                const validThumbnails = [];
+                
+                // 检查每个缩略图是否存在
+                for (const thumb of thumbnails) {
+                    const exists = await checkImageExists(thumb.url);
+                    if (exists) {
+                        validThumbnails.push(thumb);
+                    }
+                }
+                
+                // 显示结果
+                if (validThumbnails.length === 0) {
+                    resultSection.innerHTML = `
+                        <h2>No Thumbnails Found</h2>
+                        <div class="result-box">
+                            <p>The video may be private, deleted, or not have thumbnails available.</p>
+                            <p>Try a different YouTube video URL.</p>
+                        </div>
+                    `;
+                } else {
+                    // 创建缩略图卡片
+                    thumbnailGrid.innerHTML = '';
+                    validThumbnails.forEach(thumb => {
+                        const card = document.createElement('div');
+                        card.className = 'thumbnail-card';
+                        card.innerHTML = `
+                            <a href="${thumb.url}" download="youtube-thumbnail-${videoId}-${thumb.quality}.jpg" target="_blank">
+                                <img src="${thumb.url}" alt="${thumb.name}" class="thumbnail-img">
+                            </a>
+                            <div class="thumbnail-info">
+                                <h4>${thumb.name}</h4>
+                                <p>${thumb.size} – ${thumb.description}</p>
+                                <a href="${thumb.url}" download="youtube-thumbnail-${videoId}-${thumb.quality}.jpg" target="_blank" class="action-button primary-action" style="margin-top: 8px; text-decoration: none;">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        `;
+                        thumbnailGrid.appendChild(card);
+                    });
+                }
+                
+                // 显示结果区域
+                resultSection.classList.add('active');
+                
+                // 滚动到结果区域
+                resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            } catch (error) {
+                console.error('Error fetching thumbnails:', error);
+                resultSection.innerHTML = `
+                    <h2>Error</h2>
+                    <div class="result-box">
+                        <p>An error occurred while fetching thumbnails. Please try again.</p>
+                        <p>Make sure you have a stable internet connection.</p>
+                    </div>
+                `;
+                resultSection.classList.add('active');
+            } finally {
+                // 重置按钮状态
+                setTimeout(() => {
+                    downloadBtnText.style.display = 'inline';
+                    downloadBtnLoading.style.display = 'none';
+                    downloadBtn.disabled = false;
+                }, 1000);
+            }
+        });
+        
+        // 清空功能
+        clearBtn.addEventListener('click', () => {
+            videoUrlInput.value = '';
+            resultSection.classList.remove('active');
+            thumbnailGrid.innerHTML = '';
+        });
+        
+        // 输入字段回车键支持
+        videoUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                downloadBtn.click();
+            }
+        });
+        
+        // 设置当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // 页面加载时自动聚焦输入框
+        window.addEventListener('load', () => {
+            videoUrlInput.focus();
+        });
+    </script>
+</body>
+</html>

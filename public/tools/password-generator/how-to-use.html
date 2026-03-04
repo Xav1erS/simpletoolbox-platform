@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use Password Generator | Simple Toolbox</title>
+    <meta name="description" content="Step-by-step guide to using our free password generator. Learn how to create strong passwords, generate API keys, customize options, and use advanced features.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+            --success: #36D399;
+        }
+
+        [data-bs-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--dark-text);
+        }
+
+        [data-bs-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--light-text);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-bs-theme="dark"] .header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            background-color: rgba(22, 93, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .tip {
+            background-color: rgba(54, 211, 153, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip i {
+            color: var(--success);
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-top: 60px;
+        }
+
+        [data-bs-theme="dark"] .footer {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <i class="fas fa-key"></i>
+                <span>Password Generator</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="what-is.html">What Is</a>
+                <a href="how-to-use.html" class="active">How to Use</a>
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>How to Use Password Generator</h1>
+            
+            <p>Our free password generator is designed to be intuitive and secure. Whether you need a strong password for a new account or a secure API key for your application, this guide will walk you through every feature. All generation happens locally in your browser—no data is sent to servers.</p>
+
+            <h2>Quick Start: Generate a Basic Password</h2>
+            
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Choose Password Length</div>
+                <p>Use the slider or input box to select the desired password length, from 4 to 64 characters. For most accounts, a length of 12‑16 characters is recommended.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Select Character Types</div>
+                <p>Check the boxes for the character sets you want to include:</p>
+                <ul>
+                    <li><strong>Uppercase Letters</strong> (A‑Z)</li>
+                    <li><strong>Lowercase Letters</strong> (a‑z)</li>
+                    <li><strong>Numbers</strong> (0‑9)</li>
+                    <li><strong>Symbols</strong> (!@#$%^&* etc.)</li>
+                </ul>
+                <p>At least one box must be checked. For maximum security, include all four types.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Exclude Similar Characters (Optional)</div>
+                <p>If you want to avoid visually ambiguous characters (like 0/O, 1/l, I/|), check the <strong>"Exclude Similar Characters"</strong> option. This is useful when you might need to read or type the password manually.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">4</span> Generate and Copy</div>
+                <p>Click the <strong>"Generate Password"</strong> button. The new password will appear in the result box. Click the <strong>"Copy"</strong> button (or the copy icon next to the result) to copy it to your clipboard.</p>
+            </div>
+
+            <div class="tip">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Each time you generate a password, it is saved in the <strong>History</strong> panel on the right (desktop) or below (mobile). You can revisit, copy, or delete any previous password.
+            </div>
+
+            <h2>Advanced: Generate API Keys</h2>
+            
+            <p>Switch to the <strong>"API Key"</strong> tab to generate secure API keys, tokens, or other long identifiers.</p>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">1</span> Select Key Length</div>
+                <p>Choose from three standard lengths: <strong>32‑bit</strong>, <strong>64‑bit</strong>, or <strong>128‑bit</strong>. Longer keys provide higher security but are harder to handle.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">2</span> Choose Character Set</div>
+                <p>Select <strong>"Alphanumeric"</strong> (letters A‑Z, a‑z, and digits 0‑9) or <strong>"Letters Only"</strong> (A‑Z, a‑z). Alphanumeric keys are more compact; letters‑only keys avoid confusion with numbers.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span class="step-number">3</span> Generate and Copy</div>
+                <p>Click <strong>"Generate API Key"</strong>. The key will appear in the result area. Use the copy button to copy it to your clipboard. API keys are also saved in the History panel.</p>
+            </div>
+
+            <h2>Customizing Advanced Options</h2>
+            
+            <p>Click the <strong>"Advanced Options"</strong> button (below the main controls) to access additional settings.</p>
+
+            <ul>
+                <li><strong>Custom Prefix/Suffix:</strong> Add a fixed prefix or suffix to every generated password (e.g., "app‑" prefix).</li>
+                <li><strong>Exclude Specific Characters:</strong> Enter characters you want to exclude from the generated string (e.g., "0O1lI|").</li>
+                <li><strong>Batch Generation:</strong> Generate multiple passwords at once (up to 10). This feature is currently disabled but will be enabled in a future update.</li>
+            </ul>
+
+            <h2>Managing Your History</h2>
+            
+            <p>The History panel stores your last 10 generated passwords and API keys locally in your browser. You can:</p>
+            
+            <ul>
+                <li><strong>Copy:</strong> Click any entry's copy icon to copy that value again.</li>
+                <li><strong>Delete:</strong> Click the trash icon to remove a single entry.</li>
+                <li><strong>Clear All:</strong> Use the "Clear History" button at the bottom of the panel to delete all saved items.</li>
+            </ul>
+
+            <p>History is only stored on the device you're using; it will not sync across devices and will be cleared if you clear your browser's local storage.</p>
+
+            <h2>Theme and Accessibility</h2>
+            
+            <p>The tool supports both light and dark themes. Click the theme toggle (sun/moon icon) in the header to switch. The interface is built with WCAG 2.1 AA standards, ensuring proper contrast and keyboard navigation.</p>
+
+            <p>If you encounter any issues or have suggestions, please use the feedback link in the footer. We're constantly improving the tool based on user input.</p>
+
+            <p>Start generating secure passwords now by visiting the <a href="index.html">Password Generator</a>.</p>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">Password Generator</div>
+            <p>simpletoolbox.dev/password-generator | A free, secure password and API key generator</p>
+            <p>© 2026 Simple Toolbox. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme detection
+        const savedTheme = localStorage.getItem('password_generator_theme');
+        if (savedTheme) {
+            document.document.setAttribute('data-bs-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>

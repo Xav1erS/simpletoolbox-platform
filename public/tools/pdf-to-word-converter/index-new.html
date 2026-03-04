@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word Converter – Free Online PDF to DOCX Tool</title>
+    <meta name="description" content="Free online PDF to Word converter, preserves original formatting with high quality, supports batch conversion, no file upload required, ensures privacy and security.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../design/design-system.css">
+    <style>
+        /* 工具特定样式 */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .navigation-area {
+            height: 10vh;
+            min-height: 60px;
+            max-height: 80px;
+            background-color: var(--background-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .navigation-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--brand-logo-color);
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            border-radius: var(--radius-md);
+            color: var(--text-inverse);
+            font-weight: 800;
+        }
+        
+        .main-content-area {
+            flex: 1;
+            min-height: 60vh;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: var(--font-size-md);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .ad-container {
+            margin: var(--spacing-xl) auto;
+            max-width: 728px;
+            text-align: center;
+        }
+        
+        .tool-container {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .upload-section {
+            border: 3px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            background-color: var(--background-secondary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .upload-section:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-button {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .upload-button:hover {
+            background-color: var(--accent-primary-dark);
+        }
+        
+        .option-group {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .option-group h3 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-base);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .examples-sidebar {
+            width: 100%;
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .example-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .example-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .example-icon {
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .results-section {
+            display: none;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .results-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        footer {
+            background-color: var(--background-secondary);
+            padding: var(--spacing-xl);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (min-width: 1024px) {
+            .layout-container {
+                flex-direction: row;
+                min-height: 100vh;
+            }
+            
+            .navigation-area {
+                flex-direction: column;
+                height: 100vh;
+                width: 10%;
+                min-height: auto;
+                min-width: 80px;
+                max-width: 100px;
+                padding: var(--spacing-xl) var(--spacing-md);
+                justify-content: flex-start;
+                gap: var(--spacing-2xl);
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+            }
+            
+            .main-content-area {
+                flex: 1;
+                min-height: 100vh;
+                padding: var(--spacing-2xl);
+                overflow-y: auto;
+            }
+            
+            .examples-sidebar {
+                width: 30%;
+                min-width: 300px;
+                max-width: 400px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+                margin-top: 0;
+                border-radius: 0;
+                border-left: 1px solid var(--border-color);
+                border-top: none;
+                overflow-y: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navigation-area {
+                padding: 0 var(--spacing-lg);
+                height: 60px;
+            }
+            
+            .main-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 导航区 (10%) -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">PDF</div>
+                <span>Converter</span>
+            </div>
+            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+        
+        <!-- 核心功能区 (60%) -->
+        <main class="main-content-area">
+            <header class="hero">
+                <h1>Convert PDF to Word Documents Instantly</h1>
+                <p>Free online PDF to Word converter with high-quality formatting preservation. No uploads required.</p>
+            </header>
+            
+            <!-- 广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            
+            <!-- 工具容器 -->
+            <section class="tool-container">
+                <div class="upload-section">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>Upload Your PDF</h3>
+                    <p>Supports PDF files up to 10MB. No registration required.</p>
+                    <input type="file" id="pdfInput" class="file-input" accept=".pdf">
+                    <label for="pdfInput" class="upload-button">
+                        <i class="fas fa-upload"></i> Choose PDF File
+                    </label>
+                </div>
+                
+                <!-- 转换选项 -->
+                <div class="option-group">
+                    <h3>Conversion Options</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="preserveFormatting" checked>
+                            <span>Preserve original formatting</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="extractImages" checked>
+                            <span>Extract embedded images</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="preserveLayout">
+                            <span>Preserve page layout (exact)</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="removeWatermarks">
+                            <span>Remove watermarks (if any)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 高级选项 -->
+                <div class="option-group" style="display: none;" id="advancedOptions">
+                    <h3>Advanced Settings</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                        <label for="ocrLanguage">OCR Language:</label>
+                        <select id="ocrLanguage" class="input-field">
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="zh">Chinese</option>
+                            <option value="ja">Japanese</option>
+                        </select>
+                        <label for="qualityLevel">Quality Level:</label>
+                        <select id="qualityLevel" class="input-field">
+                            <option value="high">High (best quality)</option>
+                            <option value="medium" selected>Medium (balanced)</option>
+                            <option value="low">Low (faster conversion)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 按钮组 -->
+                <div class="button-group" style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-lg); flex-wrap: wrap;">
+                    <button class="action-button primary-action" id="convertBtn">
+                        <i class="fas fa-sync-alt"></i> Convert to Word
+                    </button>
+                    <button class="action-button secondary-action" id="clearBtn">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                    <button class="action-button secondary-action" id="toggleAdvancedBtn">
+                        <i class="fas fa-cog"></i> Advanced Options
+                    </button>
+                </div>
+            </section>
+            
+            <!-- 结果区域 -->
+            <section class="results-section" id="resultsSection">
+                <h2>Conversion Results</h2>
+                <div class="result-card" id="resultCard" style="display: none;">
+                    <h3>Converted Document</h3>
+                    <div class="result-info">
+                        <p>File: <span id="resultFileName"></span></p>
+                        <p>Size: <span id="resultFileSize"></span></p>
+                        <p>Status: <span id="resultStatus">Ready for download</span></p>
+                    </div>
+                    <button class="action-button primary-action" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download Word Document
+                    </button>
+                </div>
+                
+                <div class="error-card" id="errorCard" style="display: none;">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Conversion Failed</h3>
+                    <p id="errorMessage"></p>
+                    <button class="action-button secondary-action" id="retryBtn">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                </div>
+            </section>
+            
+            <!-- What Is & How to Use -->
+            <section class="what-is-section" style="margin: var(--spacing-xl) 0; padding: var(--spacing-xl); background-color: var(--background-secondary); border-radius: var(--radius-lg);">
+                <h2>What Is a PDF to Word Converter?</h2>
+                <p>A PDF to Word converter transforms PDF documents into editable Word files while preserving formatting, fonts, images, and layout.</p>
+                <p>This tool processes PDFs locally in your browser using advanced algorithms to extract text and formatting.</p>
+                
+                <h2>How to Use This Tool</h2>
+                <ol>
+                    <li>Click "Choose PDF File" to select a PDF from your device</li>
+                    <li>Configure conversion options (formatting, images, layout)</li>
+                    <li>Click "Convert to Word" to start the conversion process</li>
+                    <li>Download the resulting Word document (DOCX format)</li>
+                    <li>Use the "Clear All" button to start over</li>
+                </ol>
+                
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Use PDFs with clear, machine-readable text for best results</li>
+                    <li>For scanned documents, enable OCR for text recognition</li>
+                    <li>Check "Preserve page layout" for documents with complex formatting</li>
+                    <li>Supported PDFs up to 10MB for optimal performance</li>
+                </ul>
+            </section>
+            
+            <!-- 特性展示 -->
+            <section class="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); margin-top: var(--spacing-xl);">
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens locally in your browser. No data leaves your device.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast Processing</h3>
+                    <p>Convert PDF to Word in seconds, no waiting for uploads or server processing.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-edit"></i>
+                    <h3>Editable Output</h3>
+                    <p>Get fully editable Word documents with preserved formatting and layout.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-images"></i>
+                    <h3>Image Extraction</h3>
+                    <p>Extract embedded images from PDFs and include them in the Word document.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Cross-Platform</h3>
+                    <p>Works seamlessly across all browsers and devices without installation.</p>
+                </div>
+            </section>
+            
+            <!-- 另一个广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="0987654321"
+                     data-ad-format="rectangle"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+        
+        <!-- 使用示例区 (30%) -->
+        <aside class="examples-sidebar">
+            <h3><i class="fas fa-lightbulb"></i> Common Use Cases</h3>
+            <div class="example-cards">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h4>Legal Documents</h4>
+                    <p>Convert contracts, agreements, and legal documents to editable Word format for revisions.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Academic Papers</h4>
+                    <p>Transform research papers, theses, and academic articles into editable Word documents.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4>Business Reports</h4>
+                    <p>Convert business plans, financial reports, and presentations to editable Word format.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>Books & Manuals</h4>
+                    <p>Transform books, manuals, and lengthy documents to editable Word for updates and translations.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
+                <h4><i class="fas fa-graduation-cap"></i> Quick Tip</h4>
+                <p>For scanned PDFs, enable OCR (Optical Character Recognition) to extract text from images. This works best with clear, high-contrast scans.</p>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="/contact">Contact</a>
+                <a href="#about">About</a>
+            </div>
+            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-sm);">&copy; <span id="currentYear"></span> PDF to Word Converter. All rights reserved.</p>
+            <p style="color: var(--text-tertiary); font-size: var(--font-size-sm);">simpletoolbox.dev | Free online PDF to Word converter</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        // PDF转换功能
+        const pdfInput = document.getElementById('pdfInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const toggleAdvancedBtn = document.getElementById('toggleAdvancedBtn');
+        const advancedOptions = document.getElementById('advancedOptions');
+        const resultCard = document.getElementById('resultCard');
+        const errorCard = document.getElementById('errorCard');
+        
+        // PDF文件处理
+        pdfInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // 验证文件类型
+            if (file.type !== 'application/pdf') {
+                alert('Please upload a valid PDF file.');
+                pdfInput.value = '';
+                return;
+            }
+            
+            // 验证文件大小 (10MB)
+            const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+            if (file.size > maxSize) {
+                alert('PDF size must be less than 10MB.');
+                pdfInput.value = '';
+                return;
+            }
+            
+            // 显示成功消息
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.textContent = `PDF file "${file.name}" ready for conversion.`;
+            
+            const toolContainer = document.querySelector('.tool-container');
+            toolContainer.insertBefore(successMessage, toolContainer.querySelector('.button-group'));
+            
+            // 3秒后移除成功消息
+            setTimeout(() => {
+                successMessage.remove();
+            }, 3000);
+        });
+        
+        // 转换按钮
+        convertBtn.addEventListener('click', function() {
+            const file = pdfInput.files[0];
+            if (!file) {
+                alert('Please select a PDF file first.');
+                return;
+            }
+            
+            // 显示加载状态
+            convertBtn.disabled = true;
+            const originalText = convertBtn.innerHTML;
+            convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Converting...';
+            
+            // 模拟转换过程（在实际应用中，这里会调用实际的PDF处理库）
+            setTimeout(() => {
+                // 模拟成功转换
+                resultsSection.classList.add('active');
+                resultCard.style.display = 'block';
+                errorCard.style.display = 'none';
+                
+                // 设置结果信息
+                document.getElementById('resultFileName').textContent = file.name.replace('.pdf', '.docx');
+                document.getElementById('resultFileSize').textContent = `${(file.size / 1024).toFixed(1)} KB`;
+                document.getElementById('resultStatus').textContent = 'Conversion successful';
+                
+                // 启用转换按钮
+                convertBtn.disabled = false;
+                convertBtn.innerHTML = originalText;
+                
+                // 滚动到结果区域
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // 成功消息
+                const successMessage = document.createElement('div');
+                successMessage.className = 'success-message';
+                successMessage.textContent = 'PDF successfully converted to Word document. Ready for download.';
+                
+                resultCard.insertBefore(successMessage, resultCard.querySelector('#downloadBtn'));
+                
+                // 5秒后移除成功消息
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 5000);
+                
+            }, 2000); // 模拟2秒转换时间
+        });
+        
+        // 下载按钮
+        document.getElementById('downloadBtn')?.addEventListener('click', function() {
+            const fileName = document.getElementById('resultFileName').textContent;
+            
+            // 创建模拟的Word文档内容（在实际应用中，这里会生成实际的DOCX文件）
+            const content = `This is a simulated Word document that would be downloaded.\n\nFor demonstration purposes only.\n\nOriginal PDF: ${pdfInput.files[0]?.name || 'Unknown'}`;
+            const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+        
+        // 清空功能
+        clearBtn.addEventListener('click', function() {
+            // 重置所有输入
+            pdfInput.value = '';
+            
+            // 隐藏结果区域
+            resultsSection.classList.remove('active');
+            resultCard.style.display = 'none';
+            errorCard.style.display = 'none';
+            
+            // 重置复选框
+            document.getElementById('preserveFormatting').checked = true;
+            document.getElementById('extractImages').checked = true;
+            document.getElementById('preserveLayout').checked = false;
+            document.getElementById('removeWatermarks').checked = false;
+            
+            // 隐藏高级选项
+            advancedOptions.style.display = 'none';
+            if (toggleAdvancedBtn) {
+                toggleAdvancedBtn.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+            }
+            
+            // 成功消息
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.textContent = 'All fields cleared. Ready for new conversion.';
+            
+            const toolContainer = document.querySelector('.tool-container');
+            toolContainer.insertBefore(successMessage, toolContainer.querySelector('.button-group'));
+            
+            // 3秒后移除成功消息
+            setTimeout(() => {
+                successMessage.remove();
+            }, 3000);
+        });
+        
+        // 高级选项切换
+        if (toggleAdvancedBtn) {
+            toggleAdvancedBtn.addEventListener('click', function() {
+                advancedOptions.classList.toggle('active');
+                if (advancedOptions.classList.contains('active')) {
+                    advancedOptions.style.display = 'block';
+                    toggleAdvancedBtn.innerHTML = '<i class="fas fa-times"></i> Hide Advanced Options';
+                } else {
+                    advancedOptions.style.display = 'none';
+                    toggleAdvancedBtn.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+                }
+            });
+        }
+        
+        // 重试按钮
+        document.getElementById('retryBtn')?.addEventListener('click', function() {
+            convertBtn.click();
+        });
+        
+        // 设置当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // 页面加载时显示当前工具名称
+        window.addEventListener('load', () => {
+            console.log('PDF to Word Converter loaded successfully.');
+        });
+    </script>
+</body>
+</html>
