@@ -7,8 +7,6 @@
     <meta name="description" content="Free online unit converter with real-time calculations. Convert length, weight, temperature, volume, area, speed, and more. No ads, privacy-first, works offline.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/design-system.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
             --primary: #165DFF;
@@ -468,6 +466,31 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Breadcrumb styles */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 var(--spacing-xs);
+            color: var(--text-tertiary);
+        }
     </style>
 </head>
 <body>
@@ -482,6 +505,15 @@
                 <i class="fas fa-moon"></i>
             </button>
         </header>
+
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span class="breadcrumb-separator">></span>
+            <a href="/tools">Tools</a>
+            <span class="breadcrumb-separator">></span>
+            <span>Unit Converter</span>
+        </div>
 
         <!-- Main Converter Card -->
         <main class="converter-card">
