@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Simple Toolbox</title>
+    <meta name="description" content="Create strong, random passwords, API keys, and security tokens with our free online tool. Customize length and character types for maximum security.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <style>
+        /* 工具特定样式 */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .navigation-area {
+            height: 10vh;
+            min-height: 60px;
+            max-height: 80px;
+            background-color: var(--background-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .navigation-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--brand-logo-color);
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            border-radius: var(--radius-md);
+            color: var(--text-inverse);
+            font-weight: 800;
+        }
+        
+        .main-content-area {
+            flex: 1;
+            min-height: 60vh;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: var(--font-size-md);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .ad-container {
+            margin: var(--spacing-xl) auto;
+            max-width: 728px;
+            text-align: center;
+        }
+        
+        .tool-container {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .tab-btn {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: none;
+            border: none;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--accent-primary);
+        }
+        
+        .tab-btn.active {
+            position: relative;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--accent-primary);
+            border-radius: 2px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .option-group {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .option-group h3 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-base);
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .slider {
+            flex: 1;
+            height: 8px;
+            border-radius: var(--radius-sm);
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: var(--spacing-sm);
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .strength-meter {
+            height: 8px;
+            border-radius: var(--radius-sm);
+            background-color: var(--background-secondary);
+            overflow: hidden;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .strength-fill {
+            height: 100%;
+            border-radius: var(--radius-sm);
+            transition: width var(--transition-normal), background-color var(--transition-normal);
+        }
+        
+        .strength-label {
+            margin-top: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .result-section {
+            display: none;
+        }
+        
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .result-box {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            margin-top: var(--spacing-md);
+            word-break: break-all;
+            white-space: pre-wrap;
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-md);
+            text-align: center;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .action-button {
+            font-weight: 600;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-base);
+            min-height: 44px;
+        }
+        
+        .primary-action {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .primary-action:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .secondary-action {
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .secondary-action:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        .examples-sidebar {
+            width: 100%;
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .example-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .example-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .example-icon {
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .advanced-settings {
+            display: none;
+        }
+        
+        .advanced-settings.active {
+            display: block;
+        }
+        
+        .custom-options-panel {
+            display: none;
+        }
+        
+        .custom-options-panel.active {
+            display: block;
+        }
+        
+        footer {
+            background-color: var(--background-secondary);
+            padding: var(--spacing-xl);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (min-width: 1024px) {
+            .layout-container {
+                flex-direction: row;
+                min-height: 100vh;
+            }
+            
+            .navigation-area {
+                flex-direction: column;
+                height: 100vh;
+                width: 10%;
+                min-height: auto;
+                min-width: 80px;
+                max-width: 100px;
+                padding: var(--spacing-xl) var(--spacing-md);
+                justify-content: flex-start;
+                gap: var(--spacing-2xl);
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+            }
+            
+            .main-content-area {
+                flex: 1;
+                min-height: 100vh;
+                padding: var(--spacing-2xl);
+                overflow-y: auto;
+            }
+            
+            .examples-sidebar {
+                width: 30%;
+                min-width: 300px;
+                max-width: 400px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+                margin-top: 0;
+                border-radius: 0;
+                border-left: 1px solid var(--border-color);
+                border-top: none;
+                overflow-y: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navigation-area {
+                padding: 0 var(--spacing-lg);
+                height: 60px;
+            }
+            
+            .main-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .examples-sidebar {
+                margin-top: var(--spacing-lg);
+                padding: var(--spacing-lg);
+            }
+            
+            .example-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 导航区 (10%) -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox</span>
+            </div>
+            </div>
+            <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+        
+        <!-- 核心功能区 (60%) -->
+        <main class="main-content-area">
+            <header class="hero">
+                <h1>Generate Secure Random Keys & Passwords Online</h1>
+                <p>Create strong, random passwords with custom options. Enhance your online security instantly.</p>
+            </header>
+            
+            <!-- 广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            
+            <!-- 工具容器 -->
+            <section class="tool-container">
+                <!-- 标签页 -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="password">Password Generator</button>
+                    <button class="tab-btn" data-tab="apikey">API Keys</button>
+                </div>
+                
+                <!-- 密码生成器标签页内容 -->
+                <div class="tab-content active" id="password-tab">
+                    <div class="input-section">
+                        <!-- 密码长度选项 -->
+                        <div class="option-group">
+                            <h3>Password Length</h3>
+                            <div class="slider-container">
+                                <span class="slider-value" id="lengthValue">16</span>
+                                <input type="range" class="slider" id="lengthSlider" min="4" max="64" value="16">
+                            </div>
+                        </div>
+                        
+                        <!-- 字符类型选项 -->
+                        <div class="option-group">
+                            <h3>Character Types</h3>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="uppercase" checked>
+                                    <span>Uppercase (A-Z)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="lowercase" checked>
+                                    <span>Lowercase (a-z)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="numbers" checked>
+                                    <span>Numbers (0-9)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="symbols" checked>
+                                    <span>Symbols (!@#$%)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- 高级选项切换 -->
+                        <div style="text-align: center; margin: var(--spacing-md) 0;">
+                            <button class="custom-options-toggle" id="customOptionsToggle">
+                                <i class="fas fa-cog"></i> Advanced Options
+                            </button>
+                        </div>
+                        
+                        <!-- 高级选项面板 -->
+                        <div class="option-group" id="customOptionsPanel" style="display: none;">
+                            <h3>Advanced Options</h3>
+                            <div class="exclude-similar-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="excludeSimilar">
+                                    <span>Exclude similar characters (e.g., 0/O, 1/l, I/i)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- 强度指示器 -->
+                        <div class="option-group">
+                            <h3>Password Strength</h3>
+                            <div class="strength-meter">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-label" id="strengthLabel">Very Strong</div>
+                        </div>
+                        
+                        <!-- 按钮组 -->
+                        <div class="button-group">
+                            <button class="action-button primary-action" id="generateBtn">
+                                <i class="fas fa-key"></i>
+                                <span id="generateBtnText">Generate Secure Password</span>
+                                <span id="generateBtnLoading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Generating...
+                                </span>
+                                <span id="generateBtnSuccess" style="display: none; color: var(--accent-success);">
+                                    <i class="fas fa-check"></i> Key generated successfully!
+                                </span>
+                            </button>
+                            <button class="action-button secondary-action" id="clearBtn">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 结果区域 -->
+                    <div class="result-section" id="resultSection">
+                        <h2>Generated Password</h2>
+                        <div class="result-box" id="resultBox">
+                            Click "Generate Password" to create a secure password.
+                        </div>
+                        <button class="action-button primary-action" id="copyBtn" style="margin-top: var(--spacing-md);">
+                            <i class="fas fa-copy"></i> Copy Password
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- API Keys 标签页内容 -->
+                <div class="tab-content" id="apikey-tab">
+                    <div class="input-section">
+                        <!-- API 密钥长度选项 -->
+                        <div class="option-group">
+                            <h3>API Key Length</h3>
+                            <div class="slider-container">
+                                <span class="slider-value" id="keyLengthValue">32</span>
+                                <input type="range" class="slider" id="keyLengthSlider" min="32" max="128" step="32" value="32">
+                            </div>
+                        </div>
+                        
+                        <!-- 字符类型选项 -->
+                        <div class="option-group">
+                            <h3>Character Type</h3>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="radio" id="lettersOnly" name="charType" checked>
+                                    <span>Letters only (A-Z, a-z)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="radio" id="lettersNumbers" name="charType">
+                                    <span>Letters + Numbers (A-Z, a-z, 0-9)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- 高级设置切换按钮 -->
+                        <div style="text-align: center; margin: var(--spacing-md) 0;">
+                            <button class="toggle-advanced" id="toggleAdvanced">
+                                <i class="fas fa-cog"></i> Advanced Settings
+                            </button>
+                        </div>
+                        
+                        <!-- 高级设置面板 -->
+                        <div class="option-group" id="advancedSettings" style="display: none;">
+                            <h3>Advanced Settings</h3>
+                            <div class="prefix-suffix-input">
+                                <div style="flex: 1;">
+                                    <label for="prefix">Prefix (optional)</label>
+                                    <input type="text" class="input-field" id="prefix" placeholder="e.g., sk_live_">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="suffix">Suffix (optional)</label>
+                                    <input type="text" class="input-field" id="suffix" placeholder="e.g., _2024">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 按钮组 -->
+                        <div class="button-group">
+                            <button class="action-button primary-action" id="generateApiKeyBtn">
+                                <i class="fas fa-key"></i> Generate API Key
+                            </button>
+                            <button class="action-button secondary-action" id="clearApiKeyBtn">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- API Key 结果区域 -->
+                    <div class="result-section" id="apiKeyResultSection">
+                        <h2>Generated API Key</h2>
+                        <div class="result-box" id="apiKeyResultBox">
+                            Click "Generate API Key" to create a secure API key.
+                        </div>
+                        <button class="action-button primary-action" id="copyApiKeyBtn" style="margin-top: var(--spacing-md);">
+                            <i class="fas fa-copy"></i> Copy API Key
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- What Is & How to Use -->
+            <section class="what-is-section" style="margin: var(--spacing-xl) 0; padding: var(--spacing-xl); background-color: var(--background-secondary); border-radius: var(--radius-lg);">
+                <h2>What Is a Random Key Generator?</h2>
+                <p>A random key generator creates secure random sequences for passwords, API keys, security tokens, and other applications requiring unpredictable strings.</p>
+                <p>This tool uses the Web Cryptography API for true randomness, suitable for security-sensitive applications.</p>
+                
+                <h2>How to Use This Tool</h2>
+                <h3>Password Generator</h3>
+                <ol>
+                    <li>Adjust password length (8‑32 characters)</li>
+                    <li>Select character types to include</li>
+                    <li>Click "Generate Password"</li>
+                    <li>Copy the password with the copy button</li>
+                </ol>
+                
+                <h3>API Key Generator</h3>
+                <ol>
+                    <li>Switch to the "API Keys" tab</li>
+                    <li>Choose key length: 32, 64, or 128 characters</li>
+                    <li>Select character type: letters only or letters + numbers</li>
+                    <li>Use Advanced Settings for custom prefixes/suffixes</li>
+                    <li>Click "Generate API Key"</li>
+                    <li>Copy the API key for your applications</li>
+                </ol>
+            </section>
+            
+            <!-- 特性展示 -->
+            <section class="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); margin-top: var(--spacing-xl);">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Military-Grade Security</h3>
+                    <p>Passwords generated with cryptographically secure random algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Generation</h3>
+                    <p>Create passwords in milliseconds. No delays or waiting time.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-secret"></i>
+                    <h3>Complete Privacy</h3>
+                    <p>All processing happens locally in your browser. No data stored.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Customizable Options</h3>
+                    <p>Customize password length, character types, exclude similar characters, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Cross-Platform</h3>
+                    <p>Works seamlessly across all browsers and devices without installation.</p>
+                </div>
+            </section>
+            
+            <!-- 另一个广告区域 -->
+            <div class="ad-container">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4481254758178323" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-4481254758178323"
+                     data-ad-slot="0987654321"
+                     data-ad-format="rectangle"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+        
+        <!-- 使用示例区 (30%) -->
+        <aside class="examples-sidebar">
+            <h3><i class="fas fa-lightbulb"></i> Common Use Cases</h3>
+            <div class="example-cards">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h4>Personal Accounts</h4>
+                    <p>Generate unique passwords for email, social media, and banking accounts to prevent credential stuffing attacks.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>Developer API Keys</h4>
+                    <p>Create secure API keys for your applications. Use advanced options for custom prefixes matching your naming conventions.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h4>Database Credentials</h4>
+                    <p>Generate strong database passwords that resist brute force attacks. Exclude similar characters to avoid confusion.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h4>Wi-Fi Passwords</h4>
+                    <p>Create memorable yet secure Wi-Fi passwords using a mix of characters that are easy to share with guests.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
+                <h4><i class="fas fa-graduation-cap"></i> Security Tip</h4>
+                <p>A password with 16 characters using uppercase, lowercase, numbers, and symbols would take approximately <strong>500 years</strong> to crack with modern computing power.</p>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="/contact">Contact</a>
+                <a href="#about">About</a>
+            </div>
+            <p style="color: var(--text-tertiary); margin-bottom: var(--spacing-sm);">&copy; <span id="currentYear"></span> RandomKey. All rights reserved.</p>
+            <p style="color: var(--text-tertiary); font-size: var(--font-size-sm);">RandomKey.dev | A simple random key/password generator</p>
+        </div>
+    </footer>
+    
+    <!-- 历史记录面板 -->
+    <div id="historyPanel" class="history-panel">
+        <div class="history-header">
+            <h3>Recent Passwords</h3>
+            <button class="history-close" id="historyCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="history-content">
+            <ul class="history-list" id="historyList">
+                <li class="history-empty" id="historyEmpty">No passwords generated yet.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 历史记录切换按钮 -->
+    <button class="history-toggle-btn" id="historyToggleBtn">
+        <i class="fas fa-history"></i> History
+    </button>
+    
+    <script>
+        // 提取的JavaScript代码
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        // 密码生成逻辑
+        const generateBtn = document.getElementById('generateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const lengthSlider = document.getElementById('lengthSlider');
+        const lengthValue = document.getElementById('lengthValue');
+        const uppercaseCheck = document.getElementById('uppercase');
+        const lowercaseCheck = document.getElementById('lowercase');
+        const numbersCheck = document.getElementById('numbers');
+        const symbolsCheck = document.getElementById('symbols');
+        const resultSection = document.getElementById('resultSection');
+        const resultBox = document.getElementById('resultBox');
+        const copyBtn = document.getElementById('copyBtn');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthLabel = document.getElementById('strengthLabel');
+        
+        // 字符集
+        const charSets = {
+            uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lowercase: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+        
+        // 更新滑块显示
+        lengthSlider.addEventListener('input', () => {
+            lengthValue.textContent = lengthSlider.value;
+            updateStrengthIndicator();
+        });
+        
+        // 复选框变化时更新强度
+        [uppercaseCheck, lowercaseCheck, numbersCheck, symbolsCheck].forEach(checkbox => {
+            checkbox.addEventListener('change', updateStrengthIndicator);
+        });
+        
+        // 更新密码强度指示器
+        function updateStrengthIndicator() {
+            const length = parseInt(lengthSlider.value);
+            let selectedSets = 0;
+            if (uppercaseCheck.checked) selectedSets++;
+            if (lowercaseCheck.checked) selectedSets++;
+            if (numbersCheck.checked) selectedSets++;
+            if (symbolsCheck.checked) selectedSets++;
+            
+            // 计算强度分数 (0-100)
+            let score = 0;
+            score += Math.min(length * 3, 30); // 长度贡献最大30分
+            score += selectedSets * 15; // 每种字符类型贡献15分
+            
+            // 确保至少有一种字符类型被选中
+            if (selectedSets === 0) score = 0;
+            
+            // 更新UI
+            const width = Math.min(score, 100);
+            strengthFill.style.width = `${width}%`;
+            
+            // 设置颜色和标签
+            let strengthText, color;
+            if (score >= 80) {
+                strengthText = 'Very Strong';
+                color = '#10b981'; // 绿色
+            } else if (score >= 60) {
+                strengthText = 'Strong';
+                color = '#3b82f6'; // 蓝色
+            } else if (score >= 40) {
+                strengthText = 'Moderate';
+                color = '#f59e0b'; // 黄色
+            } else if (score >= 20) {
+                strengthText = 'Weak';
+                color = '#ef4444'; // 红色
+            } else {
+                strengthText = 'Very Weak';
+                color = '#6b7280'; // 灰色
+            }
+            
+            strengthFill.style.backgroundColor = color;
+            strengthLabel.textContent = strengthText;
+            strengthLabel.style.color = color;
+        }
+        
+        // 初始化强度指示器
+        updateStrengthIndicator();
+        
+        // 生成密码
+        generateBtn.addEventListener('click', async () => {
+            const generateBtnText = document.getElementById('generateBtnText');
+            const generateBtnLoading = document.getElementById('generateBtnLoading');
+            const generateBtnSuccess = document.getElementById('generateBtnSuccess');
+            
+            // 点击动画：添加clicked类
+            generateBtn.classList.add('clicked');
+            
+            // 获取输入值
+            const length = parseInt(lengthSlider.value);
+            const excludeSimilarCheck = document.getElementById('excludeSimilar');
+            const options = {
+                uppercase: uppercaseCheck.checked,
+                lowercase: lowercaseCheck.checked,
+                numbers: numbersCheck.checked,
+                symbols: symbolsCheck.checked,
+                excludeSimilar: excludeSimilarCheck ? excludeSimilarCheck.checked : false
+            };
+            
+            // 检查至少选择了一种字符类型
+            const selectedTypes = Object.values(options).filter(v => v).length;
+            if (selectedTypes === 0) {
+                alert('Please select at least one character type.');
+                generateBtn.classList.remove('clicked');
+                return;
+            }
+            
+            // 显示加载状态
+            generateBtnText.style.display = 'none';
+            generateBtnLoading.style.display = 'inline';
+            generateBtnSuccess.style.display = 'none';
+            generateBtn.disabled = true;
+            
+            // 移动端震动反馈
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            // 模拟短暂延迟以显示加载状态（实际生成很快）
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // 生成密码
+            const password = generatePassword(length, options);
+            
+            // 显示成功状态：按钮文字变为Regenerate，添加绿色对勾图标
+            generateBtnLoading.style.display = 'none';
+            generateBtnSuccess.innerHTML = '<i class="fas fa-check" style="color: var(--accent-success);"></i> Regenerate';
+            generateBtnSuccess.style.display = 'inline';
+            
+            // 显示结果
+            resultBox.textContent = password;
+            resultSection.classList.add('active');
+            
+            // 滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // 3秒后重置按钮状态，移除点击动画类
+            setTimeout(() => {
+                generateBtnSuccess.style.display = 'none';
+                generateBtnText.style.display = 'inline';
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('clicked');
+            }, 3000);
+            
+            // 保存到历史记录
+            saveToHistory(password);
+        });
+        
+        // 密码生成算法
+        function generatePassword(length, options) {
+            // 构建可用字符集
+            let availableChars = '';
+            if (options.uppercase) availableChars += charSets.uppercase;
+            if (options.lowercase) availableChars += charSets.lowercase;
+            if (options.numbers) availableChars += charSets.numbers;
+            if (options.symbols) availableChars += charSets.symbols;
+            
+            // 确保字符集非空
+            if (availableChars.length === 0) {
+                return 'Error: No character types selected';
+            }
+            
+            // 如果启用排除相似字符，过滤字符集
+            if (options.excludeSimilar) {
+                availableChars = filterSimilarCharacters(availableChars);
+                // 如果过滤后字符集为空，返回错误
+                if (availableChars.length === 0) {
+                    return 'Error: No characters left after excluding similar ones. Please select more character types.';
+                }
+            }
+            
+            // 使用cryptographically secure random
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += availableChars[array[i] % availableChars.length];
+            }
+            
+            return password;
+        }
+        
+        // 过滤相似字符函数
+        function filterSimilarCharacters(chars) {
+            // 相似字符映射：要排除的字符
+            const similarMap = {
+                '0': 'O', 'O': '0',
+                '1': 'l', 'l': '1',
+                'I': 'i', 'i': 'I',
+                '|': 'I', 'I': '|',
+                'S': '5', '5': 'S',
+                'Z': '2', '2': 'Z'
+            };
+            
+            // 过滤掉在similarMap中出现的字符
+            return chars.split('').filter(char => {
+                // 如果字符在映射中，并且映射到的字符也在字符集中，则排除
+                const similarChar = similarMap[char];
+                if (similarChar && chars.includes(similarChar)) {
+                    // 保留其中一个，排除另一个（这里保留第一个出现的）
+                    // 简单实现：排除数字和容易混淆的字母
+                    return false;
+                }
+                return true;
+            }).join('');
+        }
+        
+        // 自定义选项面板切换
+        const customOptionsToggle = document.getElementById('customOptionsToggle');
+        const customOptionsPanel = document.getElementById('customOptionsPanel');
+        
+        if (customOptionsToggle && customOptionsPanel) {
+            customOptionsToggle.addEventListener('click', () => {
+                customOptionsPanel.classList.toggle('active');
+                const icon = customOptionsToggle.querySelector('i');
+                if (customOptionsPanel.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                    customOptionsToggle.innerHTML = '<i class="fas fa-times"></i> Hide Advanced Options';
+                } else {
+                    icon.className = 'fas fa-cog';
+                    customOptionsToggle.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+                }
+            });
+        }
+        
+        // 清空功能
+        clearBtn.addEventListener('click', () => {
+            resultSection.classList.remove('active');
+            resultBox.textContent = 'Click "Generate Password" to create a secure password.';
+            lengthSlider.value = 16;
+            lengthValue.textContent = '16';
+            uppercaseCheck.checked = true;
+            lowercaseCheck.checked = true;
+            numbersCheck.checked = true;
+            symbolsCheck.checked = true;
+            // 重置自定义选项
+            const excludeSimilarCheck = document.getElementById('excludeSimilar');
+            if (excludeSimilarCheck) {
+                excludeSimilarCheck.checked = false;
+            }
+            // 隐藏自定义选项面板
+            if (customOptionsPanel) {
+                customOptionsPanel.classList.remove('active');
+                if (customOptionsToggle) {
+                    customOptionsToggle.innerHTML = '<i class="fas fa-cog"></i> Advanced Options';
+                }
+            }
+            updateStrengthIndicator();
+        });
+        
+        // 复制功能
+        copyBtn.addEventListener('click', async () => {
+            const password = resultBox.textContent;
+            if (!password || password.includes('Click "Generate Password"')) {
+                alert('No password to copy. Please generate a password first.');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(password);
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy password to clipboard.');
+            }
+        });
+        
+        // 标签页切换功能
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 更新活动按钮
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 显示对应内容
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tabId + '-tab') {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // 隐藏结果区域（如果可见）
+                document.getElementById('resultSection').classList.remove('active');
+                document.getElementById('apiKeyResultSection').style.display = 'none';
+            });
+        });
+        
+        // API Key 生成功能
+        const keyLengthSlider = document.getElementById('keyLengthSlider');
+        const keyLengthValue = document.getElementById('keyLengthValue');
+        const generateApiKeyBtn = document.getElementById('generateApiKeyBtn');
+        const clearApiKeyBtn = document.getElementById('clearApiKeyBtn');
+        const apiKeyResultSection = document.getElementById('apiKeyResultSection');
+        const apiKeyResultBox = document.getElementById('apiKeyResultBox');
+        const copyApiKeyBtn = document.getElementById('copyApiKeyBtn');
+        
+        keyLengthSlider.addEventListener('input', () => {
+            keyLengthValue.textContent = keyLengthSlider.value;
+        });
+        
+        generateApiKeyBtn.addEventListener('click', () => {
+            const length = parseInt(keyLengthSlider.value);
+            const lettersOnly = document.getElementById('lettersOnly').checked;
+            const prefix = document.getElementById('prefix').value.trim();
+            const suffix = document.getElementById('suffix').value.trim();
+            
+            // 字符集
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            let charset = letters;
+            if (!lettersOnly) {
+                charset += numbers;
+            }
+            
+            // 生成随机 key
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            let key = '';
+            for (let i = 0; i < length; i++) {
+                key += charset[array[i] % charset.length];
+            }
+            
+            // 添加前缀和后缀
+            if (prefix) key = prefix + key;
+            if (suffix) key = key + suffix;
+            
+            // 显示结果
+            apiKeyResultBox.textContent = key;
+            apiKeyResultSection.style.display = 'block';
+            
+            // 滚动到结果
+            apiKeyResultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        
+        clearApiKeyBtn.addEventListener('click', () => {
+            apiKeyResultSection.style.display = 'none';
+            apiKeyResultBox.textContent = '';
+            document.getElementById('prefix').value = '';
+            document.getElementById('suffix').value = '';
+        });
+        
+        // 复制 API Key
+        copyApiKeyBtn.addEventListener('click', async () => {
+            const key = apiKeyResultBox.textContent;
+            if (!key) {
+                alert('No API key to copy. Please generate an API key first.');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(key);
+                const originalText = copyApiKeyBtn.innerHTML;
+                copyApiKeyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                setTimeout(() => {
+                    copyApiKeyBtn.innerHTML = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy API key to clipboard.');
+            }
+        });
+        
+        // 高级设置切换
+        const toggleAdvancedBtn = document.getElementById('toggleAdvanced');
+        const advancedSettings = document.getElementById('advancedSettings');
+        
+        if (toggleAdvancedBtn && advancedSettings) {
+            toggleAdvancedBtn.addEventListener('click', () => {
+                advancedSettings.classList.toggle('active');
+                const icon = toggleAdvancedBtn.querySelector('i');
+                if (advancedSettings.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                    toggleAdvancedBtn.innerHTML = '<i class="fas fa-times"></i> Hide Advanced Settings';
+                } else {
+                    icon.className = 'fas fa-cog';
+                    toggleAdvancedBtn.innerHTML = '<i class="fas fa-cog\"></i> Advanced Settings';
+                }
+            });
+        }
+        
+        // 设置当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // 初始化标签页状态
+        window.addEventListener('load', () => {
+            // 确保密码标签页激活
+            document.getElementById('password-tab').classList.add('active');
+            document.getElementById('apikey-tab').classList.remove('active');
+            
+            // 隐藏页面加载动画
+            const loadingOverlay = document.getElementById('pageLoadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        });
+        
+        // 历史记录功能
+        function saveToHistory(password) {
+            try {
+                let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                // 添加新记录到开头
+                history.unshift({
+                    password: password,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString()
+                });
+                // 只保留最近10条记录
+                history = history.slice(0, 10);
+                localStorage.setItem('passwordHistory', JSON.stringify(history));
+                // 刷新历史记录显示
+                renderHistory();
+            } catch (error) {
+                console.error('Failed to save to history:', error);
+            }
+        }
+        
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            const historyEmpty = document.getElementById('historyEmpty');
+            
+            if (!historyList) return;
+            
+            try {
+                const history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                
+                if (history.length === 0) {
+                    historyList.innerHTML = '';
+                    if (historyEmpty) historyEmpty.style.display = 'block';
+                    return;
+                }
+                
+                if (historyEmpty) historyEmpty.style.display = 'none';
+                
+                let html = '';
+                history.forEach((item, index) => {
+                    html += `
+                    <li class="history-item">
+                        ${item.password}
+                        <div class="history-item-actions">
+                            <button class="history-copy-btn" onclick="copyHistoryPassword('${item.password.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="history-delete-btn" onclick="deleteHistoryItem(${index})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </li>
+                    `;
+                });
+                
+                historyList.innerHTML = html;
+            } catch (error) {
+                console.error('Failed to render history:', error);
+                if (historyEmpty) historyEmpty.style.display = 'block';
+            }
+        }
+        
+        function copyHistoryPassword(password) {
+            navigator.clipboard.writeText(password).then(() => {
+                alert('Password copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy password.');
+            });
+        }
+        
+        function deleteHistoryItem(index) {
+            try {
+                let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+                history.splice(index, 1);
+                localStorage.setItem('passwordHistory', JSON.stringify(history));
+                renderHistory();
+            } catch (error) {
+                console.error('Failed to delete history item:', error);
+            }
+        }
+        
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all history?')) {
+                localStorage.removeItem('passwordHistory');
+                renderHistory();
+            }
+        }
+        
+        // 初始化历史记录显示
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHistory();
+        });
+        
+        // 历史记录面板切换
+        const historyToggleBtn = document.getElementById('historyToggleBtn');
+        const historyCloseBtn = document.getElementById('historyCloseBtn');
+        const historyPanel = document.getElementById('historyPanel');
+        
+        if (historyToggleBtn && historyPanel) {
+            historyToggleBtn.addEventListener('click', () => {
+                historyPanel.classList.add('active');
+                historyToggleBtn.style.display = 'none';
+            });
+            
+            historyCloseBtn.addEventListener('click', () => {
+                historyPanel.classList.remove('active');
+                setTimeout(() => {
+                    historyToggleBtn.style.display = 'flex';
+                }, 300);
+            });
+            
+            // 点击面板外部关闭
+            document.addEventListener('click', (event) => {
+                if (historyPanel.classList.contains('active') && 
+                    !historyPanel.contains(event.target) && 
+                    event.target !== historyToggleBtn) {
+                    historyPanel.classList.remove('active');
+                    setTimeout(() => {
+                        historyToggleBtn.style.display = 'flex';
+                    }, 300);
+                }
+            });
+        }
+        
+        // 页面加载时自动聚焦生成按钮
+        window.addEventListener('load', () => {
+            generateBtn.focus();
+        });
+    </script>
+
+    <script src="/js/spa-router.js"></script>
+</body>
+</html>

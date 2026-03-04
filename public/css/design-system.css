@@ -351,7 +351,39 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px)
+
+/* 平板设备优化 (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navigation-area {
+    padding: 0 var(--spacing-xl);
+    height: 70px;
+  }
+  
+  .main-content-area {
+    padding: var(--spacing-xl);
+  }
+  
+  .examples-sidebar {
+    width: 40%;
+    min-width: 280px;
+    max-width: 350px;
+  }
+  
+  .tool-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .button-group {
+    flex-direction: row;
+  }
+  
+  .action-button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+  }
+}
+ {
   .navigation-area {
     padding: 0 var(--spacing-lg);
     height: 60px;
