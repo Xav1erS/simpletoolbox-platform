@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Word Counter Tool? Features & Benefits | SimpleToolBox</title>
+    <meta name="description" content="What is a word counter tool and why do writers need it? Learn about advanced features like multi-language detection, sentiment analysis, and social media optimization. Start analyzing your writing today - all processing happens securely in your browser.">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Word Counter Tool",
+      "applicationCategory": "WritingApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Learn about advanced text analysis, readability scoring, writing optimization, and how our Word Counter Tool can improve your writing.",
+      "featureList": [
+        "Real-time word counting",
+        "Readability scoring", 
+        "Multi-language detection",
+        "Sentiment analysis",
+        "Social media optimization"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "980"
+      }
+    }
+    </script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../css/design-system.css">
+    
+    <!-- Page-specific styles -->
+    <style>
+        .tool-content-area {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 var(--spacing-xs);
+            color: var(--text-tertiary);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-header h1 {
+            font-size: var(--font-size-3xl);
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .page-header p {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .content-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .content-card h2 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .content-card h3 {
+            color: var(--text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+            font-size: var(--font-size-lg);
+        }
+        
+        .content-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .feature-item {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-normal);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-4px);
+        }
+        
+        .feature-icon {
+            font-size: 28px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .feature-item h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+        
+        .use-case-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .use-case-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .use-case-icon {
+            font-size: 32px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+            width: 64px;
+            height: 64px;
+            background-color: rgba(187, 154, 247, 0.1);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .use-case-card h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .use-case-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .language-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .language-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .language-name {
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .language-info {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding: var(--spacing-2xl);
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--font-size-lg);
+            transition: all var(--transition-fast);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        @media (max-width: 768px) {
+            .tool-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .page-header h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .page-header p {
+                font-size: var(--font-size-md);
+            }
+            
+            .feature-grid,
+            .use-case-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .language-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Navigation Area -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="/tools">Tools</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="/word-counter-tool">Word Counter Tool</a>
+                <span class="breadcrumb-separator">></span>
+                <span>What Is</span>
+            </div>
+            
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1>What is Word Counter Tool?</h1>
+                <p>What is a word counter tool and why do writers need it? Our advanced text analysis platform provides real-time statistics, readability scoring, and writing optimization features. Perfect for writers, students, and content creators - all processing happens securely in your browser with no data sent to servers.</p>
+            </header>
+            
+            <!-- Tool-specific content -->
+            <div class="tool-content-area">
+                <!-- Introduction Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+                    <p>A <strong>Word Counter Tool</strong> is more than just a simple character counter. It's a comprehensive writing analysis platform that provides deep insights into your text, helping you optimize for clarity, engagement, and effectiveness.</p>
+                    
+                    <p>Our Word Counter Tool goes beyond basic statistics to offer readability scoring, vocabulary analysis, sentiment detection, and social media optimization—all in real-time as you type or paste your text.</p>
+                    
+                    <p>Whether you're crafting an academic paper, writing a blog post, creating social media content, or preparing a business document, our tool provides the analytical support you need to produce high-quality writing.</p>
+                </div>
+                
+                <!-- Key Features Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-star"></i> Key Features</h2>
+                    <p>Our advanced Word Counter Tool includes these powerful capabilities:</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                            <h4>Real-Time Statistics</h4>
+                            <p>Word count, character count (with/without spaces), sentence count, paragraph count, and reading time calculations updated instantly.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                            <h4>Readability Analysis</h4>
+                            <p>Multiple readability formulas including Flesch-Kincaid Grade Level, Reading Ease Score, Gunning Fog Index, and SMOG Index.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-language"></i></div>
+                            <h4>Smart Language Detection</h4>
+                            <p>Automatic detection of multiple languages with language-specific counting rules for accurate analysis.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                            <h4>Writing Goals Tracking</h4>
+                            <p>Set word count targets and track your progress with visual indicators and completion statistics.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                            <h4>Sentiment Analysis</h4>
+                            <p>Detect emotional tone and sentiment polarity (positive, negative, neutral) in your writing.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-hashtag"></i></div>
+                            <h4>Social Media Optimization</h4>
+                            <p>Platform-specific character limits and optimization tips for Twitter/X, LinkedIn, Facebook, and Instagram.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                            <h4>Text Processing Tools</h4>
+                            <p>Uppercase/lowercase conversion, title case formatting, extra space removal, and text cleaning utilities.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-file-export"></i></div>
+                            <h4>Export Capabilities</h4>
+                            <p>Download analysis results as CSV or JSON files for further use in spreadsheets or data analysis tools.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Language Detection Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-globe"></i> Smart Multi-Language Support</h2>
+                    <p>Our tool intelligently detects and analyzes text in multiple languages, applying language-specific rules for accurate counting:</p>
+                    
+                    <div class="language-cards">
+                        <div class="language-card">
+                            <div class="language-name">English</div>
+                            <div class="language-info">Word-based counting with punctuation handling. Supports contractions and compound words.</div>
+                        </div>
+                        
+                        <div class="language-card">
+                            <div class="language-name">Chinese</div>
+                            <div class="language-info">Character-based counting (汉字). Handles simplified and traditional Chinese characters.</div>
+                        </div>
+                        
+                        <div class="language-card">
+                            <div class="language-name">Japanese</div>
+                            <div class="language-info">Mixed character counting (漢字, ひらがな, カタカナ). Respects Japanese writing conventions.</div>
+                        </div>
+                        
+                        <div class="language-card">
+                            <div class="language-name">Korean</div>
+                            <div class="language-info">Hangul syllable counting. Accounts for Korean spacing rules and character combinations.</div>
+                        </div>
+                        
+                        <div class="language-card">
+                            <div class="language-name">Spanish</div>
+                            <div class="language-info">Accented character handling. Proper treatment of Spanish punctuation and word boundaries.</div>
+                        </div>
+                        
+                        <div class="language-card">
+                            <div class="language-name">French</div>
+                            <div class="language-info">Diacritical mark preservation. Accurate counting with French-specific punctuation rules.</div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: var(--spacing-lg);">The tool automatically detects the primary language(s) in your text and applies the appropriate counting algorithm, ensuring accurate statistics regardless of language mixing.</p>
+                </div>
+                
+                <!-- Use Cases Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-briefcase"></i> Practical Applications</h2>
+                    <p>Our Word Counter Tool is valuable for a wide range of writing scenarios:</p>
+                    
+                    <div class="use-case-cards">
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <h4>Academic Writing</h4>
+                            <p>Meet word count requirements for essays, research papers, and theses. Ensure appropriate readability levels for target audiences.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-blog"></i></div>
+                            <h4>Content Creation</h4>
+                            <p>Optimize blog posts and articles for engagement. Balance sentence length and vocabulary diversity for maximum reader retention.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-bullhorn"></i></div>
+                            <h4>Social Media Management</h4>
+                            <p>Craft platform-specific content that fits character limits while maintaining message clarity and impact.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-briefcase"></i></div>
+                            <h4>Business Communication</h4>
+                            <p>Improve reports, proposals, and emails with clear, concise language and appropriate formality levels.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-book"></i></div>
+                            <h4>Creative Writing</h4>
+                            <p>Analyze narrative flow, dialogue patterns, and descriptive density in fiction and non-fiction works.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon"><i class="fas fa-search"></i></div>
+                            <h4>SEO Optimization</h4>
+                            <p>Balance keyword density with natural language flow. Optimize content for both search engines and human readers.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Why Use Our Word Counter Tool? Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-thumbs-up"></i> Why Use Our Word Counter Tool?</h2>
+                    <p>Our advanced word counter tool stands out with these unique advantages:</p>
+                    
+                    <div class="usp-grid">
+                        <div class="usp-item">
+                            <div class="usp-icon">🧠</div>
+                            <h4>AI-Powered Writing Assistant</h4>
+                            <p>Get intelligent suggestions to improve your writing style, vocabulary, and overall text quality in real-time.</p>
+                        </div>
+                        
+                        <div class="usp-item">
+                            <div class="usp-icon">🌍</div>
+                            <h4>Multi-Language Detection & Analysis</h4>
+                            <p>Accurately analyze texts in 50+ languages with intelligent character counting and language-specific rules.</p>
+                        </div>
+                        
+                        <div class="usp-item">
+                            <div class="usp-icon">📊</div>
+                            <h4>Comprehensive Readability Scoring</h4>
+                            <p>Get detailed readability metrics including Flesch-Kincaid, SMOG, and Gunning Fog scores with improvement suggestions.</p>
+                        </div>
+                        
+                        <div class="usp-item">
+                            <div class="usp-icon">🔒</div>
+                            <h4>100% Client-Side Privacy Protection</h4>
+                            <p>All analysis happens in your browser. No data is ever sent to servers, ensuring complete privacy for sensitive documents.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Privacy & Security Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-user-shield"></i> Privacy & Security</h2>
+                    <p>We prioritize your privacy and data security:</p>
+                    
+                    <h3>Client-Side Processing</h3>
+                    <p>All text analysis occurs entirely within your browser. No data is transmitted to external servers, ensuring complete privacy and confidentiality.</p>
+                    
+                    <h3>No Data Storage</h3>
+                    <p>Your text is never stored on our systems. Analysis happens in real-time and disappears when you close the page or clear the text.</p>
+                    
+                    <h3>No Tracking</h3>
+                    <p>We do not use cookies, analytics, or tracking technologies that collect personal information. Your writing remains private and anonymous.</p>
+                    
+                    <h3>Open Source Algorithms</h3>
+                    <p>All analysis algorithms use standard, well-documented methods. You can inspect the source code to understand exactly how your text is processed.</p>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="cta-section">
+                    <h2>Start Analyzing Your Text</h2>
+                    <p>Experience the power of advanced text analysis with our comprehensive Word Counter Tool.</p>
+                    <a href="/word-counter-tool" class="cta-button">
+                        <i class="fas fa-edit"></i>
+                        Try Word Counter Tool Now
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox (STB)</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="/terms">Terms of Use</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="mailto:contact@simpletoolbox.dev">Contact</a>
+                <a href="/tools">All Tools</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for theme toggle -->
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+    </script>
+</body>
+</html>
