@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use Random Number Generator - Simple Toolbox</title>
+    <meta name="description" content="Step-by-step guide to using our Random Number Generator tool effectively for various applications and scenarios.">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../css/design-system.css">
+    
+    <!-- Page-specific styles -->
+    <style>
+        .tool-content-area {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 var(--spacing-xs);
+            color: var(--text-tertiary);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-header h1 {
+            font-size: var(--font-size-3xl);
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .page-header p {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .content-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .content-card h2 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .content-card h3 {
+            color: var(--text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+            font-size: var(--font-size-lg);
+        }
+        
+        .content-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .step-guide {
+            counter-reset: step-counter;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .step-item {
+            position: relative;
+            padding-left: 4rem;
+            margin-bottom: var(--spacing-xl);
+            counter-increment: step-counter;
+        }
+        
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3rem;
+            height: 3rem;
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: var(--font-size-lg);
+        }
+        
+        .step-icon {
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-right: var(--spacing-sm);
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .example-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .example-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .example-code {
+            background-color: var(--background-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-md);
+            overflow-x: auto;
+        }
+        
+        .faq-section {
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .faq-question h4 {
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .faq-toggle {
+            color: var(--accent-primary);
+            transition: transform var(--transition-fast);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-normal);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: var(--spacing-md);
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .quick-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .tip-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .tip-icon {
+            font-size: 28px;
+            color: var(--accent-success);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tip-card h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tip-card p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding: var(--spacing-2xl);
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: var(--font-size-lg);
+            transition: all var(--transition-fast);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        @media (max-width: 768px) {
+            .tool-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .page-header h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .page-header p {
+                font-size: var(--font-size-md);
+            }
+            
+            .step-item {
+                padding-left: 3rem;
+            }
+            
+            .step-item::before {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: var(--font-size-md);
+            }
+            
+            .example-grid,
+            .quick-tips {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Navigation Area -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="/tools">Tools</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="/random-number-generator">Random Number Generator</a>
+                <span class="breadcrumb-separator">></span>
+                <span>How to Use</span>
+            </div>
+            
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1>How to Use Random Number Generator</h1>
+                <p>A comprehensive step-by-step guide to effectively using our Random Number Generator tool for various applications and scenarios.</p>
+            </header>
+            
+            <!-- Tool-specific content -->
+            <div class="tool-content-area">
+                <!-- Getting Started Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-play-circle"></i> Getting Started</h2>
+                    <p>This guide will walk you through all the features and capabilities of our Random Number Generator tool. Follow these steps to make the most of its advanced functionality.</p>
+                    
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <h3><i class="fas fa-sliders-h step-icon"></i> Step 1: Set Your Range</h3>
+                            <p>Enter the minimum and maximum values for your random numbers. Our tool supports:</p>
+                            <ul>
+                                <li><strong>Integers</strong>: Whole numbers (e.g., 1, 100, -50)</li>
+                                <li><strong>Decimals</strong>: Floating-point numbers with configurable precision</li>
+                                <li><strong>Negative values</strong>: Any range including negative numbers</li>
+                            </ul>
+                            <p><strong>Example</strong>: To generate numbers between -10 and 10, set Min = -10 and Max = 10.</p>
+                        </div>
+                        
+                        <div class="step-item">
+                            <h3><i class="fas fa-cogs step-icon"></i> Step 2: Choose an Algorithm</h3>
+                            <p>Select from four different random number generation algorithms:</p>
+                            <ul>
+                                <li><strong>Pseudo Random</strong>: Fast, suitable for games and simulations</li>
+                                <li><strong>Xorshift128+</strong>: High quality with long period</li>
+                                <li><strong>Mersenne Twister</strong>: Extremely long period, good for statistics</li>
+                                <li><strong>Cryptographically Secure</strong>: True randomness for security applications</li>
+                            </ul>
+                            <p><strong>Tip</strong>: Click on any algorithm card to select it and view its description.</p>
+                        </div>
+                        
+                        <div class="step-item">
+                            <h3><i class="fas fa-tools step-icon"></i> Step 3: Configure Advanced Options</h3>
+                            <p>Customize the generation process with these options:</p>
+                            <ul>
+                                <li><strong>Data Type</strong>: Choose between Integer or Decimal output</li>
+                                <li><strong>Decimal Places</strong>: Set precision for decimal numbers (1-10 places)</li>
+                                <li><strong>Quantity</strong>: Generate 1 to 1000 random numbers at once</li>
+                                <li><strong>Allow Duplicates</strong>: Toggle to generate unique random numbers</li>
+                            </ul>
+                            <p><strong>Note</strong>: When "Allow Duplicates" is unchecked, ensure your range is large enough to accommodate the requested quantity of unique numbers.</p>
+                        </div>
+                        
+                        <div class="step-item">
+                            <h3><i class="fas fa-bolt step-icon"></i> Step 4: Generate and View Results</h3>
+                            <p>Click the "Generate Random Numbers" button to create your numbers. Results will display in two formats:</p>
+                            <ul>
+                                <li><strong>Single number</strong>: Large display when generating one number</li>
+                                <li><strong>Multiple numbers</strong>: Numbered list when generating multiple numbers</li>
+                            </ul>
+                            <p>The result area supports scrolling for viewing large sets of generated numbers.</p>
+                        </div>
+                        
+                        <div class="step-item">
+                            <h3><i class="fas fa-chart-bar step-icon"></i> Step 5: Analyze Distribution</h3>
+                            <p>After generation, view the distribution visualization which includes:</p>
+                            <ul>
+                                <li><strong>Real-time histogram</strong>: Visual representation of number frequencies</li>
+                                <li><strong>Statistical panel</strong>: Key metrics including mean, standard deviation, min, and max</li>
+                            </ul>
+                            <p>Use this feature to verify the randomness and uniform distribution of your generated numbers.</p>
+                        </div>
+                        
+                        <div class="step-item">
+                            <h3><i class="fas fa-copy step-icon"></i> Step 6: Export and Share</h3>
+                            <p>Utilize the export and copy functions to save your results:</p>
+                            <ul>
+                                <li><strong>Copy All</strong>: Copy all generated numbers to clipboard</li>
+                                <li><strong>Export CSV</strong>: Download results as a CSV file for spreadsheet applications</li>
+                            </ul>
+                            <p><strong>Tip</strong>: For large datasets, use the export function for easier data management.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Practical Examples Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-code"></i> Practical Examples</h2>
+                    <p>Here are real-world scenarios demonstrating how to use our tool effectively:</p>
+                    
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4><i class="fas fa-dice"></i> Game Dice Roll</h4>
+                            <p>Simulate rolling a standard 6-sided die:</p>
+                            <div class="example-code">
+                                Min: 1<br>
+                                Max: 6<br>
+                                Data Type: Integer<br>
+                                Quantity: 1<br>
+                                Algorithm: Pseudo Random
+                            </div>
+                            <p><strong>Result</strong>: Generates a random integer between 1 and 6 inclusive.</p>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4><i class="fas fa-lottery"></i> Lottery Number Selection</h4>
+                            <p>Generate unique lottery numbers (e.g., 6 numbers from 1-49):</p>
+                            <div class="example-code">
+                                Min: 1<br>
+                                Max: 49<br>
+                                Data Type: Integer<br>
+                                Quantity: 6<br>
+                                Allow Duplicates: No<br>
+                                Algorithm: Xorshift128+
+                            </div>
+                            <p><strong>Result</strong>: Six unique random integers between 1 and 49.</p>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4><i class="fas fa-flask"></i> Scientific Sampling</h4>
+                            <p>Generate decimal values for scientific measurements:</p>
+                            <div class="example-code">
+                                Min: 0.0<br>
+                                Max: 1.0<br>
+                                Data Type: Decimal<br>
+                                Decimal Places: 4<br>
+                                Quantity: 100<br>
+                                Algorithm: Mersenne Twister
+                            </div>
+                            <p><strong>Result</strong>: 100 random decimal numbers with 4 decimal places.</p>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4><i class="fas fa-shield-alt"></i> Password Generation</h4>
+                            <p>Create random numbers for security tokens:</p>
+                            <div class="example-code">
+                                Min: 100000<br>
+                                Max: 999999<br>
+                                Data Type: Integer<br>
+                                Quantity: 10<br>
+                                Algorithm: Cryptographically Secure
+                            </div>
+                            <p><strong>Result</strong>: Ten 6-digit random numbers for secure applications.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Tips Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-lightbulb"></i> Quick Tips & Best Practices</h2>
+                    <p>Optimize your random number generation with these expert recommendations:</p>
+                    
+                    <div class="quick-tips">
+                        <div class="tip-card">
+                            <div class="tip-icon"><i class="fas fa-rocket"></i></div>
+                            <h4>Performance Optimization</h4>
+                            <p>For generating large quantities of numbers (1000+), use Pseudo Random or Xorshift128+ algorithms for fastest performance.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon"><i class="fas fa-lock"></i></div>
+                            <h4>Security First</h4>
+                            <p>Always use Cryptographically Secure algorithm for passwords, encryption keys, and any security-sensitive applications.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon"><i class="fas fa-chart-pie"></i></div>
+                            <h4>Distribution Verification</h4>
+                            <p>Use the visualization feature to ensure your generated numbers follow the expected uniform distribution pattern.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h4>Mobile Optimization</h4>
+                            <p>Our tool is fully responsive. On mobile devices, use portrait orientation for optimal input and visualization experience.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ Card -->
+                <div class="content-card">
+                    <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+                    <p>Find answers to common questions about random number generation:</p>
+                    
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>What's the difference between pseudo-random and truly random numbers?</h4>
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Pseudo-random numbers</strong> are generated by deterministic algorithms and appear random but are reproducible if the seed is known. <strong>Truly random numbers</strong> come from unpredictable physical processes and are not reproducible.</p>
+                                <p>For most applications (games, simulations, testing), pseudo-random numbers are sufficient. For cryptography and security, truly random numbers are essential.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>Why are duplicates sometimes not allowed?</h4>
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Certain applications require unique random numbers, such as:</p>
+                                <ul>
+                                    <li>Lottery number selection (no repeating numbers)</li>
+                                    <li>Sampling without replacement in statistics</li>
+                                    <li>Generating unique IDs or tokens</li>
+                                </ul>
+                                <p>When "Allow Duplicates" is unchecked, our tool ensures each generated number is unique within the specified range.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>How accurate is the decimal precision?</h4>
+                                <div class="faq-question">
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Our tool provides precise decimal generation up to 10 decimal places. The accuracy is maintained through careful floating-point arithmetic handling.</p>
+                                <p>For extremely high precision requirements (beyond 10 decimal places), consider generating integers and scaling them appropriately in your application.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>Can I generate random numbers offline?</h4>
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! Our tool works completely offline once loaded. All processing happens in your browser with no server communication required.</p>
+                                <p>This makes it ideal for privacy-sensitive applications and situations where internet connectivity is unreliable.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>What's the maximum quantity I can generate?</h4>
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>You can generate up to 1000 random numbers in a single operation. For larger datasets, consider generating in batches or using programming libraries designed for high-volume random number generation.</p>
+                                <p>The limitation ensures responsive performance and prevents browser memory issues.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h4>How do I choose the right algorithm for my needs?</h4>
+                                <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Follow this simple guide:</p>
+                                <ul>
+                                    <li><strong>General use/Games</strong>: Pseudo Random (fastest)</li>
+                                    <li><strong>High quality simulations</strong>: Xorshift128+ or Mersenne Twister</li>
+                                    <li><strong>Security applications</strong>: Cryptographically Secure (mandatory)</li>
+                                    <li><strong>Statistical research</strong>: Mersenne Twister (longest period)</li>
+                                </ul>
+                                <p>When in doubt, use Cryptographically Secure for security or Xorshift128+ for general high-quality needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="cta-section">
+                    <h2>Start Generating Random Numbers Now</h2>
+                    <p>Put your knowledge into practice with our powerful and intuitive Random Number Generator.</p>
+                    <a href="/random-number-generator" class="cta-button">
+                        <i class="fas fa-bolt"></i>
+                        Launch Random Number Generator
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox (STB)</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="/terms">Terms of Use</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="mailto:contact@simpletoolbox.dev">Contact</a>
+                <a href="/tools">All Tools</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+</footer>
+
+    <!-- JavaScript for theme toggle and FAQ -->
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+        
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.closest('.faq-item');
+                faqItem.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

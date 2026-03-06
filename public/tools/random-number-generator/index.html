@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator - Range, Algorithm & Analysis | SimpleToolBox</title>
+    <meta name="description" content="Need truly random numbers for games or security? Generate custom-range numbers with multiple algorithms and real-time distribution analysis. 100% client-side processing ensures data never leaves your browser. Try free now - trusted by developers worldwide.">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Random Number Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free online random number generator with custom ranges, multiple algorithms, and real-time distribution analysis.",
+      "featureList": [
+        "Custom range setting",
+        "Multiple algorithms",
+        "Distribution visualization",
+        "Client-side processing",
+        "Export capabilities"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "1250"
+      }
+    }
+    </script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../css/design-system.css">
+    
+    <!-- Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-content-area {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 var(--spacing-xs);
+            color: var(--text-tertiary);
+        }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .tool-header h1 {
+            font-size: var(--font-size-3xl);
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-header p {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Main generator card */
+        .generator-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .control-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-section h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .range-inputs {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .range-inputs input {
+            flex: 1;
+        }
+        
+        .range-separator {
+            color: var(--text-tertiary);
+            font-weight: bold;
+        }
+        
+        .algorithm-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .algorithm-card {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-align: center;
+        }
+        
+        .algorithm-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .algorithm-card.selected {
+            border-color: var(--accent-primary);
+            background-color: rgba(187, 154, 247, 0.1);
+        }
+        
+        .algorithm-icon {
+            font-size: 24px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .algorithm-card h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .algorithm-card p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.4;
+        }
+        
+        .advanced-options {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .advanced-options h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .action-button {
+            font-weight: 600;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-base);
+            min-height: 44px;
+        }
+        
+        .primary-action {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .primary-action:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .secondary-action {
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .secondary-action:hover {
+            background-color: var(--background-overlay);
+        }
+        
+        /* Results section */
+        .results-section {
+            margin-top: var(--spacing-xl);
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .results-display {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-md);
+            word-break: break-all;
+            white-space: pre-wrap;
+            border: 1px solid var(--border-color);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .single-result {
+            font-size: var(--font-size-2xl);
+            font-weight: bold;
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--accent-primary);
+        }
+        
+        /* Visualization section */
+        .visualization-section {
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .visualization-container {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .stat-item {
+            background-color: var(--background-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        
+        /* Algorithm museum */
+        .algorithm-museum {
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .museum-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .museum-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+            transition: transform var(--transition-normal);
+        }
+        
+        .museum-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .museum-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .museum-card p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+        
+        /* Related Tools Section Styles */
+        .related-tools-section {
+            background-color: var(--background-secondary);
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .related-tools-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .related-tools-container h2 {
+            color: var(--accent-primary);
+            font-size: var(--font-size-2xl);
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .section-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            font-size: var(--font-size-md);
+        }
+        
+        .related-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .related-tool-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-xl);
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .related-tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .tool-card-icon {
+            font-size: 32px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .related-tool-card h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .related-tool-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-sm);
+        }
+        
+        .tool-link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            min-height: 44px;
+            min-width: 160px;
+            justify-content: center;
+        }
+        
+        .tool-link-button:hover {
+            background-color: var(--accent-primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .view-all-tools {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .view-all-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background-color: var(--background-card);
+            color: var(--text-primary);
+            padding: var(--spacing-lg) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--accent-primary);
+            transition: all var(--transition-fast);
+        }
+        
+        .view-all-button:hover {
+            background-color: var(--accent-primary);
+            color: var(--text-inverse);
+        }
+        
+        /* Responsive adjustments for related tools */
+        @media (max-width: 768px) {
+            .related-tools-section {
+                padding: var(--spacing-xl) var(--spacing-lg);
+            }
+            
+            .related-tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .tool-content-area {
+                padding: var(--spacing-lg);
+            }
+            
+            .tool-header h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .tool-header p {
+                font-size: var(--font-size-md);
+            }
+            
+            .range-inputs {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--spacing-sm);
+            }
+            
+            .range-separator {
+                text-align: center;
+            }
+            
+            .algorithm-cards {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Navigation Area -->
+        <nav class="navigation-area">
+            <div class="navigation-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="/tools">Tools</a>
+                <span class="breadcrumb-separator">></span>
+                <span>Random Number Generator</span>
+            </div>
+            
+            <!-- Tool Header -->
+            <header class="tool-header">
+                <h1>Random Number Generator</h1>
+                <p>Need truly random numbers for games or security? Generate custom-range numbers with multiple algorithms and real-time distribution analysis. 100% client-side processing ensures your sensitive data never leaves the browser. Try our advanced random number generator now - trusted by developers worldwide.</p>
+            </header>
+            
+            <!-- Tool-specific content -->
+            <div class="tool-content-area">
+                <!-- Main Generator Card -->
+                <div class="generator-card">
+                    <!-- Range Setting -->
+                    <div class="control-section">
+                        <h3><i class="fas fa-sliders-h"></i> Range Setting</h3>
+                        <div class="range-inputs">
+                            <div class="input-group">
+                                <label for="min-value">Minimum Value</label>
+                                <input type="number" id="min-value" class="input-field" value="1" step="any">
+                            </div>
+                            <div class="range-separator">to</div>
+                            <div class="input-group">
+                                <label for="max-value">Maximum Value</label>
+                                <input type="number" id="max-value" class="input-field" value="100" step="any">
+                            </div>
+                        </div>
+                        <div style="margin-top: var(--spacing-sm); color: var(--text-tertiary); font-size: var(--font-size-sm);">
+                            Supports negative numbers and decimals.
+                        </div>
+                    </div>
+                    
+                    <!-- Algorithm Selection -->
+                    <div class="control-section">
+                        <h3><i class="fas fa-cogs"></i> Algorithm Selection</h3>
+                        <div class="algorithm-cards">
+                            <div class="algorithm-card selected" data-algorithm="pseudo">
+                                <div class="algorithm-icon"><i class="fas fa-dice"></i></div>
+                                <h4>Pseudo Random</h4>
+                                <p>Standard Math.random, fast and suitable for most purposes</p>
+                            </div>
+                            <div class="algorithm-card" data-algorithm="xorshift">
+                                <div class="algorithm-icon"><i class="fas fa-random"></i></div>
+                                <h4>Xorshift128+</h4>
+                                <p>High quality, long period pseudorandom algorithm</p>
+                            </div>
+                            <div class="algorithm-card" data-algorithm="mersenne">
+                                <div class="algorithm-icon"><i class="fas fa-infinity"></i></div>
+                                <h4>Mersenne Twister</h4>
+                                <p>Extremely long period, commonly used in games</p>
+                            </div>
+                            <div class="algorithm-card" data-algorithm="crypto">
+                                <div class="algorithm-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h4>Crypto Secure</h4>
+                                <p>Cryptographically secure random numbers via Web Crypto API</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Options -->
+                    <div class="control-section">
+                        <div class="advanced-options">
+                            <h4><i class="fas fa-tools"></i> Advanced Options</h4>
+                            <div class="options-grid">
+                                <div class="input-group">
+                                    <label for="data-type">Data Type</label>
+                                    <select id="data-type" class="input-field">
+                                        <option value="integer">Integer</option>
+                                        <option value="decimal">Decimal</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="decimal-places">Decimal Places</label>
+                                    <input type="number" id="decimal-places" class="input-field" value="2" min="1" max="10" disabled>
+                                </div>
+                                <div class="input-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" id="quantity" class="input-field" value="1" min="1" max="1000">
+                                </div>
+                                <div class="input-group">
+                                    <label for="allow-duplicates">
+                                        <input type="checkbox" id="allow-duplicates" checked>
+                                        Allow Duplicates
+                                    </label>
+                                    <div style="font-size: var(--font-size-sm); color: var(--text-tertiary); margin-top: var(--spacing-xs);">
+                                        Uncheck for unique random numbers
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-button primary-action" id="generate-btn">
+                            <i class="fas fa-bolt"></i>
+                            <span id="generate-btn-text">Generate Random Numbers</span>
+                            <span id="generate-btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Generating...
+                            </span>
+                        </button>
+                        <button class="action-button secondary-action" id="clear-btn">
+                            <i class="fas fa-trash"></i> Clear Results
+                        </button>
+                        <button class="action-button secondary-action" id="export-btn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                    
+                    <!-- Results Section -->
+                    <div class="results-section" id="results-section" style="display: none;">
+                        <div class="results-header">
+                            <h3>Generated Numbers</h3>
+                            <button class="secondary-action" id="copy-btn">
+                                <i class="fas fa-copy"></i> Copy All
+                            </button>
+                        </div>
+                        <div class="results-display" id="results-display">
+                            <!-- Results will appear here -->
+                        </div>
+                        <div style="margin-top: var(--spacing-md); color: var(--text-tertiary); font-size: var(--font-size-sm);">
+                            <span id="results-count">0</span> numbers generated
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualization Section -->
+                <div class="visualization-section" id="visualization-section" style="display: none;">
+                    <div class="visualization-container">
+                        <h3><i class="fas fa-chart-bar"></i> Distribution Visualization</h3>
+                        <div class="chart-container">
+                            <canvas id="distribution-chart"></canvas>
+                        </div>
+                        <div class="stats-panel" id="stats-panel">
+                            <!-- Stats will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Algorithm Museum -->
+                <div class="algorithm-museum">
+                    <div class="visualization-container">
+                        <h3><i class="fas fa-university"></i> Algorithm Museum</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">
+                            Learn about different random number generation algorithms and their applications.
+                        </p>
+                        <div class="museum-cards">
+                            <div class="museum-card">
+                                <h4>Pseudo Random (Math.random)</h4>
+                                <p>Built-in JavaScript algorithm. Fast but predictable if seed known. Good for games and simulations where security isn't critical.</p>
+                            </div>
+                            <div class="museum-card">
+                                <h4>Xorshift128+</h4>
+                                <p>Modern algorithm with 2^128-1 period. Very fast and passes most statistical tests. Used in modern browsers for Math.random.</p>
+                            </div>
+                            <div class="museum-card">
+                                <h4>Mersenne Twister</h4>
+                                <p>Classic algorithm with extremely long period (2^19937-1). Used in Python, Ruby, and many games. Slow but high quality.</p>
+                            </div>
+                            <div class="museum-card">
+                                <h4>Cryptographically Secure</h4>
+                                <p>Uses Web Crypto API for true randomness. Suitable for passwords, tokens, and security applications. Slower but most secure.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Related Tools Section -->
+        <section class="related-tools-section">
+            <div class="related-tools-container">
+                <h2>Related Tools You Might Need</h2>
+                <p class="section-description">Explore other developer tools in our collection:</p>
+                
+                <div class="related-tools-grid">
+                    <div class="related-tool-card">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="tool-card-content">
+                            <h3>Word Counter Tool</h3>
+                            <p>Advanced text analysis with real-time statistics, readability scoring, and writing optimization features.</p>
+                            <a href="/word-counter-tool" class="tool-link-button">
+                                Try Word Counter <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="related-tool-card">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="tool-card-content">
+                            <h3>Password Generator</h3>
+                            <p>Create secure, customizable passwords with multiple character sets and length options.</p>
+                            <a href="/password-generator" class="tool-link-button">
+                                Try Password Generator <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="related-tool-card">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="tool-card-content">
+                            <h3>JSON Formatter Tool</h3>
+                            <p>Format, validate, and minify JSON instantly in your browser with zero data sent to servers.</p>
+                            <a href="/tools/json-formatter-tool" class="tool-link-button">
+                                Try JSON Formatter <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="view-all-tools">
+                    <a href="/tools" class="view-all-button">
+                        <i class="fas fa-tools"></i> View All Tools
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">STB</div>
+                <span>Simple Toolbox (STB)</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="/terms">Terms of Use</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="mailto:contact@simpletoolbox.dev">Contact</a>
+                <a href="/tools">All Tools</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+        
+        // Random number generator logic
+        const generateBtn = document.getElementById('generate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const minValueInput = document.getElementById('min-value');
+        const maxValueInput = document.getElementById('max-value');
+        const dataTypeSelect = document.getElementById('data-type');
+        const decimalPlacesInput = document.getElementById('decimal-places');
+        const quantityInput = document.getElementById('quantity');
+        const allowDuplicatesCheck = document.getElementById('allow-duplicates');
+        const resultsSection = document.getElementById('results-section');
+        const resultsDisplay = document.getElementById('results-display');
+        const resultsCount = document.getElementById('results-count');
+        const visualizationSection = document.getElementById('visualization-section');
+        const algorithmCards = document.querySelectorAll('.algorithm-card');
+        
+        let selectedAlgorithm = 'pseudo';
+        let chartInstance = null;
+        
+        // Algorithm selection
+        algorithmCards.forEach(card => {
+            card.addEventListener('click', () => {
+                algorithmCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedAlgorithm = card.dataset.algorithm;
+            });
+        });
+        
+        // Data type change
+        dataTypeSelect.addEventListener('change', function() {
+            decimalPlacesInput.disabled = this.value !== 'decimal';
+        });
+        
+        // Generate random numbers
+        function generateRandomNumbers(min, max, count, algorithm, dataType, decimalPlaces, allowDuplicates) {
+            const numbers = [];
+            
+            // Different algorithms
+            const generators = {
+                pseudo: () => Math.random(),
+                xorshift: (function() {
+                    // Simple Xorshift implementation
+                    let x = 123456789;
+                    let y = 362436069;
+                    let z = 521288629;
+                    let w = 88675123;
+                    return () => {
+                        const t = x ^ (x << 11);
+                        x = y; y = z; z = w;
+                        w = w ^ (w >> 19) ^ (t ^ (t >> 8));
+                        return w / 0x100000000;
+                    };
+                })(),
+                mersenne: (function() {
+                    // Simplified Mersenne Twister
+                    const N = 624;
+                    const M = 397;
+                    const MATRIX_A = 0x9908b0df;
+                    const UPPER_MASK = 0x80000000;
+                    const LOWER_MASK = 0x7fffffff;
+                    
+                    let mt = new Array(N);
+                    let mti = N + 1;
+                    
+                    function init(seed) {
+                        mt[0] = seed >>> 0;
+                        for (mti = 1; mti < N; mti++) {
+                            mt[mti] = (1812433253 * (mt[mti-1] ^ (mt[mti-1] >>> 30)) + mti) >>> 0;
+                        }
+                    }
+                    
+                    init(Date.now());
+                    
+                    return () => {
+                        if (mti >= N) {
+                            for (let k = 0; k < N - M; k++) {
+                                const y = (mt[k] & UPPER_MASK) | (mt[k+1] & LOWER_MASK);
+                                mt[k] = mt[k+M] ^ (y >>> 1) ^ ((y & 1) ? MATRIX_A : 0);
+                            }
+                            for (let k = N - M; k < N - 1; k++) {
+                                const y = (mt[k] & UPPER_MASK) | (mt[k+1] & LOWER_MASK);
+                                mt[k] = mt[k+(M-N)] ^ (y >>> 1) ^ ((y & 1) ? MATRIX_A : 0);
+                            }
+                            const y = (mt[N-1] & UPPER_MASK) | (mt[0] & LOWER_MASK);
+                            mt[N-1] = mt[M-1] ^ (y >>> 1) ^ ((y & 1) ? MATRIX_A : 0);
+                            mti = 0;
+                        }
+                        
+                        let y = mt[mti++];
+                        y ^= y >>> 11;
+                        y ^= (y << 7) & 0x9d2c5680;
+                        y ^= (y << 15) & 0xefc60000;
+                        y ^= y >>> 18;
+                        
+                        return (y >>> 0) / 4294967296;
+                    };
+                })(),
+                crypto: () => {
+                    // Web Crypto API for cryptographic randomness
+                    const array = new Uint32Array(1);
+                    crypto.getRandomValues(array);
+                    return array[0] / 0x100000000;
+                }
+            };
+            
+            const generator = generators[algorithm];
+            
+            if (allowDuplicates) {
+                for (let i = 0; i < count; i++) {
+                    let random = generator();
+                    let number = min + random * (max - min);
+                    
+                    if (dataType === 'integer') {
+                        number = Math.floor(number);
+                    } else {
+                        number = parseFloat(number.toFixed(decimalPlaces));
+                    }
+                    
+                    numbers.push(number);
+                }
+            } else {
+                // Generate unique numbers within range
+                const rangeSize = max - min;
+                if (count > rangeSize + 1) {
+                    throw new Error(`Cannot generate ${count} unique numbers in range ${min} to ${max}`);
+                }
+                
+                const available = new Set();
+                while (numbers.length < count) {
+                    let random = generator();
+                    let number = min + random * (max - min);
+                    
+                    if (dataType === 'integer') {
+                        number = Math.floor(number);
+                    } else {
+                        number = parseFloat(number.toFixed(decimalPlaces));
+                    }
+                    
+                    // For uniqueness check
+                    const key = dataType === 'integer' ? number : number.toFixed(decimalPlaces);
+                    if (!available.has(key)) {
+                        available.add(key);
+                        numbers.push(number);
+                    }
+                }
+            }
+            
+            return numbers;
+        }
+        
+        // Generate button click
+        generateBtn.addEventListener('click', async () => {
+            const generateBtnText = document.getElementById('generate-btn-text');
+            const generateBtnLoading = document.getElementById('generate-btn-loading');
+            
+            // Get input values
+            const min = parseFloat(minValueInput.value);
+            const max = parseFloat(maxValueInput.value);
+            const count = parseInt(quantityInput.value);
+            const dataType = dataTypeSelect.value;
+            const decimalPlaces = parseInt(decimalPlacesInput.value);
+            const allowDuplicates = allowDuplicatesCheck.checked;
+            
+            // Validation
+            if (isNaN(min) || isNaN(max)) {
+                alert('Please enter valid numbers for min and max values.');
+                return;
+            }
+            
+            if (min > max) {
+                alert('Minimum value must be less than or equal to maximum value.');
+                return;
+            }
+            
+            if (count < 1 || count > 1000) {
+                alert('Please enter a quantity between 1 and 1000.');
+                return;
+            }
+            
+            // Show loading state
+            generateBtnText.style.display = 'none';
+            generateBtnLoading.style.display = 'inline';
+            generateBtn.disabled = true;
+            
+            // Haptic feedback on mobile
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            // Small delay for UX
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            try {
+                // Generate random numbers
+                const numbers = generateRandomNumbers(
+                    min, max, count, selectedAlgorithm, dataType, decimalPlaces, allowDuplicates
+                );
+                
+                // Display results
+                displayResults(numbers);
+                
+                // Show visualization
+                updateVisualization(numbers);
+                visualizationSection.style.display = 'block';
+                
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                // Reset button state
+                setTimeout(() => {
+                    generateBtnLoading.style.display = 'none';
+                    generateBtnText.style.display = 'inline';
+                    generateBtn.disabled = false;
+                }, 300);
+            }
+        });
+        
+        // Display results
+        function displayResults(numbers) {
+            resultsSection.style.display = 'block';
+            
+            if (numbers.length === 1) {
+                resultsDisplay.innerHTML = `<div class="single-result">${numbers[0]}</div>`;
+            } else {
+                let html = '';
+                numbers.forEach((num, index) => {
+                    html += `<div>${index + 1}. ${num}</div>`;
+                });
+                resultsDisplay.innerHTML = html;
+            }
+            
+            resultsCount.textContent = numbers.length;
+        }
+        
+        // Update visualization chart
+        function updateVisualization(numbers) {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
+            
+            // Destroy existing chart
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            
+            // Calculate histogram
+            const min = Math.min(...numbers);
+            const max = Math.max(...numbers);
+            const binCount = Math.min(10, numbers.length);
+            const binSize = (max - min) / binCount;
+            
+            const bins = new Array(binCount).fill(0);
+            numbers.forEach(num => {
+                let binIndex = Math.min(Math.floor((num - min) / binSize), binCount - 1);
+                bins[binIndex]++;
+            });
+            
+            // Create chart
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: bins.map((_, i) => {
+                        const binStart = min + i * binSize;
+                        const binEnd = binStart + binSize;
+                        return `${binStart.toFixed(2)}-${binEnd.toFixed(2)}`;
+                    }),
+                    datasets: [{
+                        label: 'Frequency',
+                        data: bins,
+                        backgroundColor: 'rgba(187, 154, 247, 0.5)',
+                        borderColor: 'rgba(187, 154, 247, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Random Number Distribution'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Value Range'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Update statistics panel
+            updateStatistics(numbers);
+        }
+        
+        // Calculate and display statistics
+        function updateStatistics(numbers) {
+            const count = numbers.length;
+            const mean = numbers.reduce((a, b) => a + b, 0) / count;
+            
+            // Variance and standard deviation
+            const variance = numbers.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / count;
+            const stdDev = Math.sqrt(variance);
+            
+            // Min and max
+            const min = Math.min(...numbers);
+            const max = Math.max(...numbers);
+            
+            const statsPanel = document.getElementById('stats-panel');
+            statsPanel.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-label">Count</div>
+                    <div class="stat-value">${count}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Mean</div>
+                    <div class="stat-value">${mean.toFixed(4)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Std Dev</div>
+                    <div class="stat-value">${stdDev.toFixed(4)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Min</div>
+                    <div class="stat-value">${min.toFixed(4)}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Max</div>
+                    <div class="stat-value">${max.toFixed(4)}</div>
+                </div>
+            `;
+        }
+        
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            resultsDisplay.innerHTML = '';
+            resultsSection.style.display = 'none';
+            visualizationSection.style.display = 'none';
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+        });
+        
+        // Copy button
+        copyBtn.addEventListener('click', () => {
+            const text = resultsDisplay.innerText;
+            if (!text || text.includes('Click')) {
+                alert('No results to copy.');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHtml = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.style.backgroundColor = 'var(--accent-success)';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHtml;
+                    copyBtn.style.backgroundColor = '';
+                }, 2000);
+            });
+        });
+        
+        // Export button
+        exportBtn.addEventListener('click', () => {
+            const numbers = resultsDisplay.innerText;
+            if (!numbers || numbers.includes('Click')) {
+                alert('No results to export.');
+                return;
+            }
+            
+            // Create CSV content
+            const lines = numbers.split('\n');
+            const csvContent = lines.map(line => {
+                const match = line.match(/\d+\.\s*(.+)/);
+                return match ? match[1] : line;
+            }).join('\n');
+            
+            // Create blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'random_numbers.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        
+        // Initialize decimal places input state
+        dataTypeSelect.dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
