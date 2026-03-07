@@ -6,7 +6,7 @@
     
     // 配置
     const config = {
-        contentSelector: '.main-content-area',
+        contentSelectors: ['.main-content-area', '.main', '.tools'],
         navigationSelector: '.navigation-area',
         transitionDuration: 300,
         // 内部链接选择器（排除外部链接和特殊链接）
@@ -43,8 +43,13 @@
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, 'text/html');
             
-            // 提取内容区域
-            const content = doc.querySelector(config.contentSelector);
+            // 尝试使用多个选择器查找内容区域
+            let content = null;
+            for (const selector of config.contentSelectors) {
+                content = doc.querySelector(selector);
+                if (content) break;
+            }
+            
             if (!content) {
                 throw new Error('Content area not found');
             }
@@ -63,7 +68,13 @@
     
     // 更新页面内容
     function updatePageContent(content, title) {
-        const contentArea = document.querySelector(config.contentSelector);
+        // 尝试使用多个选择器查找内容区域
+        let contentArea = null;
+        for (const selector of config.contentSelectors) {
+            contentArea = document.querySelector(selector);
+            if (contentArea) break;
+        }
+        
         if (!contentArea) return;
         
         // 添加过渡类

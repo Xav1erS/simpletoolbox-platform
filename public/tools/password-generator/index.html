@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator - Create Secure Passwords | SimpleToolBox</title>
-    <meta name="description" content="Worried about weak passwords? Generate secure, customizable passwords with multiple character sets and length options. 100% client-side processing ensures yo...">
+    <meta name="description" content="Generate secure, customizable passwords and API keys with multiple character sets and length options. 100% client-side processing ensures your data never leaves your browser.">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -229,6 +229,42 @@
             margin-top: var(--linear-spacing-xl);
         }
         
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .token-strength {
+            font-size: var(--linear-font-size-sm);
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-text-secondary);
+        }
+        
+        .token-strength.very-strong {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+        
+        .token-strength.strong {
+            background-color: rgba(0, 200, 0, 0.1);
+            color: #00c800;
+        }
+        
+        .token-strength.medium {
+            background-color: rgba(255, 200, 0, 0.1);
+            color: #ffc800;
+        }
+        
+        .token-strength.weak {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+        }
+        
         .token-display {
             background-color: var(--linear-bg-tertiary);
             border-radius: var(--linear-radius-md);
@@ -243,44 +279,111 @@
             margin-bottom: var(--linear-spacing-md);
         }
         
-        .history-panel {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 300px;
-            height: 100%;
-            background-color: var(--linear-bg-secondary);
-            box-shadow: var(--linear-shadow-lg);
-            transition: right var(--linear-transition-normal);
-            z-index: 1000;
-            padding: var(--linear-spacing-xl);
-        }
-        
-        .history-panel.active {
-            right: 0;
-        }
-        
-        .history-toggle-btn {
-            position: fixed;
-            bottom: var(--linear-spacing-xl);
-            right: var(--linear-spacing-xl);
-            background-color: var(--linear-primary);
-            color: var(--linear-text-inverse);
-            border: none;
-            border-radius: var(--linear-radius-full);
-            width: 56px;
-            height: 56px;
+        .result-actions {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--linear-shadow-md);
-            transition: all var(--linear-transition-fast);
-            z-index: 999;
+            gap: var(--linear-spacing-md);
         }
         
-        .history-toggle-btn:hover {
-            transform: scale(1.1);
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--linear-spacing-lg);
+            margin-top: var(--linear-spacing-2xl);
+        }
+        
+        .info-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-sm);
+        }
+        
+        .info-card h3 {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .info-card p {
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .info-card ul {
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+            padding-left: var(--linear-spacing-xl);
+        }
+        
+        .info-card li {
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--linear-spacing-lg);
+            margin-top: var(--linear-spacing-xl);
+        }
+        
+        .use-case-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-sm);
+        }
+        
+        .use-case-card h4 {
+            font-size: var(--linear-font-size-md);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .use-case-card .example {
+            font-family: var(--linear-font-family-mono);
+            font-size: var(--linear-font-size-sm);
+            background-color: var(--linear-bg-tertiary);
+            padding: var(--linear-spacing-sm);
+            border-radius: var(--linear-radius-sm);
+            margin-bottom: var(--linear-spacing-sm);
+            word-break: break-all;
+        }
+        
+        .use-case-card .recommendation {
+            font-size: var(--linear-font-size-sm);
+            color: var(--linear-text-secondary);
+            margin-top: var(--linear-spacing-sm);
+        }
+        
+        .code-examples {
+            margin-top: var(--linear-spacing-2xl);
+        }
+        
+        .code-example {
+            background-color: var(--linear-bg-tertiary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-lg);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .code-example h4 {
+            font-size: var(--linear-font-size-md);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .code-example pre {
+            font-family: var(--linear-font-family-mono);
+            font-size: var(--linear-font-size-sm);
+            line-height: 1.5;
+            overflow-x: auto;
+            padding: var(--linear-spacing-md);
+            background-color: var(--linear-bg-primary);
+            border-radius: var(--linear-radius-sm);
         }
         
         @media (max-width: 768px) {
@@ -303,6 +406,10 @@
             .button-group {
                 flex-direction: column;
             }
+            
+            .result-actions {
+                flex-direction: column;
+            }
         }
     </style>
 
@@ -319,11 +426,12 @@
     "price": "0",
     "priceCurrency": "USD"
   },
-  "description": "Worried about weak passwords? Generate secure, customizable passwords with multiple character sets and length options. 100% client-side processing ensures your data never leaves your browser. Create s...",
+  "description": "Generate secure, customizable passwords and API keys with multiple character sets and length options. 100% client-side processing ensures your data never leaves your browser.",
   "featureList": [
-    "Customizable password length",
-    "Multiple character sets",
+    "Customizable password length (8-128 characters)",
+    "Multiple character sets (uppercase, lowercase, numbers, symbols)",
     "Advanced options for security",
+    "Password strength indicator",
     "Client-side processing",
     "Password history tracking"
   ],
@@ -341,7 +449,7 @@
         <nav class="navigation-area">
             <div class="nav-container">
                 <div class="navigation-brand">
-                    <span>Password</span>
+                    <span>Password Generator</span>
                 </div>
                 <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
@@ -375,7 +483,7 @@
                     <div class="control-group">
                         <label>Password Length: <span class="slider-value" id="lengthValue">32</span></label>
                         <div class="slider-container">
-                            <input type="range" class="slider" id="lengthSlider" min="4" max="64" value="32">
+                            <input type="range" class="slider" id="lengthSlider" min="8" max="128" value="32">
                         </div>
                     </div>
 
@@ -434,33 +542,91 @@
 
                     <!-- Result Area -->
                     <div class="result-section" id="resultSection" style="display: none;">
-                        <div class="result-header">Generated Password</div>
+                        <div class="result-header">
+                            <div>Generated Password</div>
+                            <div class="token-strength" id="tokenStrength">Very Strong</div>
+                        </div>
                         <div class="token-display" id="tokenDisplay">
                             Click "Generate Password" to create a secure password.
                         </div>
-                        <button class="action-button primary-action" id="copyBtn">
-                            <i class="fas fa-copy"></i> Copy Password
-                        </button>
+                        <div class="result-actions">
+                            <button class="action-button primary-action" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Password
+                            </button>
+                            <button class="action-button secondary-action" id="regenerateBtn">
+                                <i class="fas fa-sync"></i> Regenerate
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Information Card -->
+                <!-- Information Cards -->
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>About Password Generation</h3>
+                        <p>Strong passwords are essential for security. They create unpredictable strings that are difficult to guess or brute-force.</p>
+                        <p>Different scenarios may require different password characteristics:</p>
+                        <ul>
+                            <li><strong>Passwords</strong>: Use a mix of all character types for maximum security</li>
+                            <li><strong>API Keys</strong>: Often alphanumeric (no special characters) for easier usage in URLs</li>
+                            <li><strong>Session Tokens</strong>: Longer tokens (32+ characters) for better security</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Security Best Practices</h3>
+                        <ul>
+                            <li><strong>Store Securely</strong>: Never store passwords in plain text</li>
+                            <li><strong>Use Different Passwords</strong>: Don't reuse passwords across services</li>
+                            <li><strong>Enable 2FA</strong>: Use two-factor authentication whenever possible</li>
+                            <li><strong>Regular Updates</strong>: Change passwords periodically</li>
+                            <li><strong>Secure Transmission</strong>: Always use HTTPS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Use Cases -->
                 <div class="token-generator-card">
-                    <h2 style="font-size: var(--font-size-xl); margin-bottom: var(--spacing-lg);">About Password Generation</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--spacing-lg);">
-                        Strong passwords are essential for security. They create unpredictable strings that are difficult to guess or brute-force.
-                    </p>
-                    
-                    <h3 style="font-size: var(--font-size-lg); margin-bottom: var(--spacing-md);">Different scenarios may require different password characteristics:</h3>
-                    <ul style="color: var(--text-secondary); line-height: 1.6; padding-left: var(--spacing-xl); margin-bottom: var(--spacing-lg);">
-                        <li><strong>Passwords</strong>: Use a mix of all character types for maximum security</li>
-                        <li><strong>API Keys</strong>: Often alphanumeric (no special characters) for easier usage in URLs</li>
-                        <li><strong>Session Tokens</strong>: Longer tokens (32+ characters) for better security</li>
-                    </ul>
-                    
-                    <p style="color: var(--text-secondary); line-height: 1.6;">
-                        This tool generates passwords client-side using JavaScript's pseudo-random number generator. For truly cryptographic-quality random tokens in production systems, consider using specialized cryptographic libraries.
-                    </p>
+                    <h2 style="font-size: var(--linear-font-size-2xl); margin-bottom: var(--linear-spacing-lg);">Token Types and Use Cases</h2>
+                    <div class="use-case-grid">
+                        <div class="use-case-card">
+                            <h4>Secure Password</h4>
+                            <div class="example">aB3$cD7!eF9@gH2</div>
+                            <div class="recommendation">16-24 characters, all character types</div>
+                        </div>
+                        <div class="use-case-card">
+                            <h4>API Key</h4>
+                            <div class="example">37fda8c94eb8b512e93f</div>
+                            <div class="recommendation">20-40 characters, alphanumeric</div>
+                        </div>
+                        <div class="use-case-card">
+                            <h4>Session Token</h4>
+                            <div class="example">cdf5881d7af1ef0fd8e20762f8834e9da87901234a567890</div>
+                            <div class="recommendation">32+ characters, alphanumeric</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Examples -->
+                <div class="code-examples">
+                    <h2 style="font-size: var(--linear-font-size-2xl); margin-bottom: var(--linear-spacing-lg);">Generating Tokens in Different Languages</h2>
+                    <div class="code-example">
+                        <h4>Node.js</h4>
+                        <pre>const crypto = require('crypto');
+const token = crypto.randomBytes(16).toString('hex');
+// Result: '3a1c267e3d15cec2fa4182e94a0187a2'</pre>
+                    </div>
+                    <div class="code-example">
+                        <h4>Python</h4>
+                        <pre>import secrets
+token = secrets.token_hex(16)
+# Result: '3a1c267e3d15cec2fa4182e94a0187a2'</pre>
+                    </div>
+                    <div class="code-example">
+                        <h4>PHP</h4>
+                        <pre>$token = bin2hex(random_bytes(16));
+// Result: '3a1c267e3d15cec2fa4182e94a0187a2'</pre>
+                    </div>
                 </div>
             </div>
         </main>
@@ -475,8 +641,8 @@
             </div>
             
             <div class="footer-links">
-                <a href="/terms">Terms of Use</a>
-                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="/privacy.html">Privacy Policy</a>
                 <a href="mailto:contact@simpletoolbox.dev">Contact</a>
                 <a href="/tools">All Tools</a>
             </div>
@@ -488,7 +654,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript (same functionality as before, but using design system classes) -->
+    <!-- JavaScript -->
     <script>
         // Theme toggle functionality
         const themeToggle = document.getElementById('theme-toggle');
@@ -527,9 +693,10 @@
             }
         });
         
-        // Password generation logic (same as before, but using design system classes)
+        // Password generation logic
         const generateBtn = document.getElementById('generateBtn');
         const clearBtn = document.getElementById('clearBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
         const lengthSlider = document.getElementById('lengthSlider');
         const lengthValue = document.getElementById('lengthValue');
         const uppercaseCheck = document.getElementById('uppercase');
@@ -542,6 +709,7 @@
         const toggleAdvancedBtn = document.getElementById('toggleAdvancedBtn');
         const advancedOptions = document.getElementById('advancedOptions');
         const excludeSimilarCheck = document.getElementById('excludeSimilar');
+        const tokenStrength = document.getElementById('tokenStrength');
         
         // Character sets
         const charSets = {
@@ -555,6 +723,32 @@
         function filterSimilarCharacters(chars) {
             const similar = ['0', 'O', 'o', '1', 'l', 'I', 'i'];
             return chars.split('').filter(char => !similar.includes(char)).join('');
+        }
+        
+        // Calculate password strength
+        function calculateStrength(password, options) {
+            let strength = 0;
+            
+            // Length contribution
+            if (password.length >= 32) strength += 40;
+            else if (password.length >= 24) strength += 30;
+            else if (password.length >= 16) strength += 20;
+            else if (password.length >= 12) strength += 10;
+            
+            // Character types contribution
+            let typesCount = 0;
+            if (options.uppercase) typesCount++;
+            if (options.lowercase) typesCount++;
+            if (options.numbers) typesCount++;
+            if (options.symbols) typesCount++;
+            
+            strength += typesCount * 15;
+            
+            // Determine strength level
+            if (strength >= 90) return { level: 'very-strong', text: 'Very Strong' };
+            if (strength >= 70) return { level: 'strong', text: 'Strong' };
+            if (strength >= 40) return { level: 'medium', text: 'Medium' };
+            return { level: 'weak', text: 'Weak' };
         }
         
         // Update slider display
@@ -594,7 +788,7 @@
         }
         
         // Generate button click
-        generateBtn.addEventListener('click', async () => {
+        async function handleGenerate() {
             const generateBtnText = document.getElementById('generateBtnText');
             const generateBtnLoading = document.getElementById('generateBtnLoading');
             
@@ -631,8 +825,13 @@
             // Generate password
             const password = generatePassword(length, options);
             
+            // Calculate strength
+            const strength = calculateStrength(password, options);
+            
             // Display result
             tokenDisplay.textContent = password;
+            tokenStrength.textContent = strength.text;
+            tokenStrength.className = `token-strength ${strength.level}`;
             resultSection.style.display = 'block';
             
             // Reset button state
@@ -642,9 +841,15 @@
                 generateBtn.disabled = false;
             }, 300);
             
-            // Save to history (simplified)
+            // Save to history
             saveToHistory(password);
-        });
+        }
+        
+        // Generate button event listener
+        generateBtn.addEventListener('click', handleGenerate);
+        
+        // Regenerate button event listener
+        regenerateBtn.addEventListener('click', handleGenerate);
         
         // Clear button
         clearBtn.addEventListener('click', () => {
@@ -663,7 +868,7 @@
             navigator.clipboard.writeText(token).then(() => {
                 const originalHtml = copyBtn.innerHTML;
                 copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                copyBtn.style.backgroundColor = 'var(--accent-success)';
+                copyBtn.style.backgroundColor = 'var(--linear-primary)';
                 
                 setTimeout(() => {
                     copyBtn.innerHTML = originalHtml;
@@ -681,7 +886,7 @@
                 : '<i class="fas fa-cog"></i> Hide Advanced Options';
         });
         
-        // History functionality (simplified)
+        // History functionality
         function saveToHistory(token) {
             let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
             history.unshift({
@@ -694,18 +899,9 @@
             }
             
             localStorage.setItem('passwordHistory', JSON.stringify(history));
-            updateHistoryDisplay();
         }
-        
-        function updateHistoryDisplay() {
-            // Simplified - you can implement a history panel if needed
-            console.log('History updated');
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            updateHistoryDisplay();
-        });
     </script>
+
+    <script src="../../js/spa-router.js"></script>
 </body>
 </html>
