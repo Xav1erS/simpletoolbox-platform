@@ -21,11 +21,31 @@
     --linear-accent-gradient: linear-gradient(135deg, #10b981, #34d399);
     --linear-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     --linear-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --linear-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --linear-radius: 8px;
     --linear-radius-sm: 4px;
     --linear-radius-lg: 12px;
     --linear-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --linear-transition-fast: all 0.1s ease;
     --linear-font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    --linear-font-family-mono: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --linear-font-size-sm: 12px;
+    --linear-font-size-base: 14px;
+    --linear-font-size-md: 16px;
+    --linear-font-size-lg: 18px;
+    --linear-font-size-xl: 20px;
+    --linear-font-size-2xl: 24px;
+    --linear-font-size-3xl: 32px;
+    --linear-spacing-xs: 4px;
+    --linear-spacing-sm: 8px;
+    --linear-spacing-md: 16px;
+    --linear-spacing-lg: 24px;
+    --linear-spacing-xl: 32px;
+    --linear-spacing-2xl: 48px;
+    --linear-text-primary: #f4f4f5;
+    --linear-text-inverse: #ffffff;
+    --linear-bg-primary: #0f0f11;
+    --linear-bg-overlay: rgba(255, 255, 255, 0.05);
 }
 
 body.light {
@@ -40,6 +60,11 @@ body.light {
     --linear-text-tertiary: #9ca3af;
     --linear-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     --linear-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --linear-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --linear-text-primary: #111827;
+    --linear-text-inverse: #ffffff;
+    --linear-bg-primary: #ffffff;
+    --linear-bg-overlay: rgba(0, 0, 0, 0.05);
 }
 
 body {
@@ -376,7 +401,7 @@ body.dark .theme-toggle .icon-moon {
 .tools-container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 32px 24px;
 }
 
 .filter-header {
@@ -594,6 +619,37 @@ body.dark .theme-toggle .icon-moon {
 .footer p {
     font-size: 14px;
     color: var(--linear-text-tertiary);
+}
+
+/* Contact page styles */
+.section {
+    margin-bottom: 32px;
+}
+
+.section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--linear-text);
+}
+
+.section p {
+    font-size: 16px;
+    color: var(--linear-text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.section ul {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.section li {
+    font-size: 16px;
+    color: var(--linear-text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.6;
 }
 
 @media (max-width: 1024px) {
