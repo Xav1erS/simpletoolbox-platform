@@ -1,600 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact Simple Toolbox - Get in touch with us for questions, feedback, or support." />
     <title>Contact Us - SimpleToolbox.dev</title>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #165DFF;
-            --primary-dark: #0E42C4;
-            --text-color: #333;
-            --text-light: #666;
-            --bg-color: #fff;
-            --bg-light: #f8f9fa;
-            --border-color: #e9ecef;
-            --shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --radius: 8px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        }
-        
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 0;
-            margin: 0;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-        
-        /* Header */
-        header {
-            background-color: var(--bg-color);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-        
-        .logo i {
-            margin-right: 8px;
-            font-size: 1.8rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .nav-links a.active {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .home-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .home-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        /* Main Content */
-        .contact-content {
-            background-color: var(--bg-color);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 48px;
-            margin: 48px 0;
-        }
-        
-        .contact-header {
-            margin-bottom: 32px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 24px;
-        }
-        
-        .contact-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        
-        .contact-header p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-        
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-        }
-        
-        .info-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(22, 93, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .info-icon i {
-            color: var(--primary-color);
-            font-size: 20px;
-        }
-        
-        .info-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: var(--text-color);
-        }
-        
-        .info-content p {
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-        
-        .info-content a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .info-content a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 16px;
-            margin-top: 8px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(22, 93, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        
-        .social-link:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .form-group label {
-            font-weight: 500;
-            color: var(--text-color);
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            padding: 12px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            background-color: var(--bg-light);
-            transition: border-color 0.2s;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            align-self: flex-start;
-        }
-        
-        .submit-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .highlight {
-            background-color: rgba(22, 93, 255, 0.05);
-            border-left: 4px solid var(--primary-color);
-            padding: 16px 20px;
-            margin: 20px 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--bg-color);
-            border-top: 1px solid var(--border-color);
-            padding: 48px 0;
-            margin-top: 48px;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-        }
-        
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-        
-        .footer-section p {
-            color: var(--text-light);
-            margin-bottom: 16px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 32px;
-            margin-top: 32px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-                padding: 20px 0;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 16px;
-            }
-            
-            .contact-content {
-                padding: 32px 24px;
-                margin: 32px 0;
-            }
-            
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-            
-            .contact-header h1 {
-                font-size: 2rem;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 32px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .contact-content {
-                padding: 24px 16px;
-            }
-            
-            .contact-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .home-btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-            
-            .submit-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="css/design-system.css">
 </head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
+<body class="dark">
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
                 <a href="/" class="logo">
-                    <i class="fas fa-toolbox"></i>
-                    simpletoolbox.dev
+                    <span>Simple Toolbox</span>
                 </a>
-                <div class="nav-links">
-                    <a href="/">Home</a>
-                    <a href="/tools">Tools</a>
-                    <a href="/about.html">About Us</a>
-                    <a href="/contact.html" class="active">Contact</a>
-                    <a href="/privacy.html">Privacy Policy</a>
-                    <a href="/terms.html">Terms of Use</a>
-                    <a href="/" class="home-btn">
-                        <i class="fas fa-home"></i> Back to Tools
-                    </a>
+                
+                <nav class="nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/tools" class="nav-link">Tools</a>
+                    <a href="/about.html" class="nav-link">About Us</a>
+                    <a href="/contact.html" class="nav-link active">Contact</a>
+                    <a href="/privacy" class="nav-link">Privacy</a>
+                    <a href="/terms" class="nav-link">Terms</a>
+                </nav>
+                
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun icon-sun"></i>
+                    <i class="fas fa-moon icon-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <section class="hero">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="hero-title-main">Contact Simple Toolbox</span>
+                            <span class="hero-title-sub">Get in Touch</span>
+                        </h1>
+                        <p class="hero-description">We value your feedback and are always eager to hear from our users. Whether you have a suggestion for a new tool, found a bug, or just want to say hello, our team is ready to assist you.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </header>
+            </section>
 
-    <main class="container">
-        <div class="contact-content">
-            <div class="contact-header">
-                <h1>Contact Simple Toolbox</h1>
-                <p>We value your feedback and are always eager to hear from our users. Whether you have a suggestion for a new tool, found a bug, or just want to say hello, our team is ready to assist you.</p>
-            </div>
-
-            <div class="section">
-                <h2>Get in Touch</h2>
-                <p>You can reach us by email at <a href="mailto:support@simpletoolbox.dev">support@simpletoolbox.dev</a>. We aim to respond to all inquiries within 24 hours. For the quickest resolution, please include as much detail as possible about the issue or your request.</p>
-            </div>
-
-            <div class="section">
-                <h2>Frequently Asked Questions</h2>
-                <p>Before contacting us, you might find your answer in our FAQ section.</p>
-                <ul>
-                    <li><strong>Is this service free?</strong> Yes, all tools on Simple Toolbox are completely free to use.</li>
-                    <li><strong>Do I need to register?</strong> No registration or login is required to access our utilities.</li>
-                    <li><strong>Is my data safe?</strong> We do not store any of the data you process through our tools. Your information remains private and secure.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>User Feedback</h2>
-                <p>Your input helps us grow. Have an idea for a tool that would make your workflow easier? Let us know, and we will do our best to build it.</p>
-            </div>
-
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3>Email</h3>
-                            <p>For general inquiries, feedback, or support:</p>
-                            <a href="mailto:contact@simpletoolbox.dev">contact@simpletoolbox.dev</a>
-                        </div>
+            <section class="tools">
+                <div class="tools-container">
+                    <div class="section">
+                        <h2>Get in Touch</h2>
+                        <p>You can reach us by email at <a href="mailto:support@simpletoolbox.dev">support@simpletoolbox.dev</a>. We aim to respond to all inquiries within 24 hours. For the quickest resolution, please include as much detail as possible about the issue or your request.</p>
                     </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3>Technical Support</h3>
-                            <p>For tool-specific issues or technical questions:</p>
-                            <a href="mailto:support@simpletoolbox.dev">support@simpletoolbox.dev</a>
-                        </div>
+                    <div class="section">
+                        <h2>Frequently Asked Questions</h2>
+                        <p>Before contacting us, you might find your answer in our FAQ section.</p>
+                        <ul>
+                            <li><strong>Is this service free?</strong> Yes, all tools on Simple Toolbox are completely free to use.</li>
+                            <li><strong>Do I need to register?</strong> No registration or login is required to access our utilities.</li>
+                            <li><strong>Is my data safe?</strong> We do not store any of the data you process through our tools. Your information remains private and secure.</li>
+                        </ul>
                     </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3>Legal</h3>
-                            <p>For privacy, terms, or legal matters:</p>
-                            <a href="mailto:legal@simpletoolbox.dev">legal@simpletoolbox.dev</a>
-                        </div>
+                    <div class="section">
+                        <h2>User Feedback</h2>
+                        <p>Your input helps us grow. Have an idea for a tool that would make your workflow easier? Let us know, and we will do our best to build it.</p>
                     </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-share-alt"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3>Follow Us</h3>
-                            <p>Stay updated with our latest tools and features:</p>
-                            <div class="social-links">
-                                <a href="#" class="social-link" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="social-link" target="_blank">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="social-link" target="_blank">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="#" class="social-link" target="_blank">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
+                    <div class="contact-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px;">
+                        <div class="contact-info">
+                            <div class="info-item" style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px;">
+                                <div class="info-icon" style="width: 48px; height: 48px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fas fa-envelope" style="color: var(--accent-info); font-size: 20px;"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Email</h3>
+                                    <p>For general inquiries, feedback, or support:</p>
+                                    <a href="mailto:contact@simpletoolbox.dev">contact@simpletoolbox.dev</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item" style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px;">
+                                <div class="info-icon" style="width: 48px; height: 48px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fas fa-code" style="color: var(--accent-info); font-size: 20px;"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Technical Support</h3>
+                                    <p>For tool-specific issues or technical questions:</p>
+                                    <a href="mailto:support@simpletoolbox.dev">support@simpletoolbox.dev</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item" style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px;">
+                                <div class="info-icon" style="width: 48px; height: 48px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fas fa-shield-alt" style="color: var(--accent-info); font-size: 20px;"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Legal</h3>
+                                    <p>For privacy, terms, or legal matters:</p>
+                                    <a href="mailto:legal@simpletoolbox.dev">legal@simpletoolbox.dev</a>
+                                </div>
+                            </div>
+
+                            <div class="info-item" style="display: flex; align-items: flex-start; gap: 16px;">
+                                <div class="info-icon" style="width: 48px; height: 48px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fas fa-share-alt" style="color: var(--accent-info); font-size: 20px;"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Follow Us</h3>
+                                    <p>Stay updated with our latest tools and features:</p>
+                                    <div class="social-links" style="display: flex; gap: 16px; margin-top: 8px;">
+                                        <a href="#" class="social-link" target="_blank" style="width: 40px; height: 40px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-info); text-decoration: none; transition: all 0.2s;">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a href="#" class="social-link" target="_blank" style="width: 40px; height: 40px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-info); text-decoration: none; transition: all 0.2s;">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                        <a href="#" class="social-link" target="_blank" style="width: 40px; height: 40px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-info); text-decoration: none; transition: all 0.2s;">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
+                                        <a href="#" class="social-link" target="_blank" style="width: 40px; height: 40px; background: rgba(22, 93, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-info); text-decoration: none; transition: all 0.2s;">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="contact-form">
+                            <h2>Send Us a Message</h2>
+                            <form id="contactForm" style="display: flex; flex-direction: column; gap: 24px;">
+                                <div class="form-group" style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" name="name" required style="padding: 12px 16px; border: 1px solid var(--border-primary); border-radius: 8px; font-size: 1rem; background-color: var(--background-secondary); color: var(--text-primary); transition: border-color 0.2s;">
+                                </div>
+                                
+                                <div class="form-group" style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" required style="padding: 12px 16px; border: 1px solid var(--border-primary); border-radius: 8px; font-size: 1rem; background-color: var(--background-secondary); color: var(--text-primary); transition: border-color 0.2s;">
+                                </div>
+                                
+                                <div class="form-group" style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" id="subject" name="subject" required style="padding: 12px 16px; border: 1px solid var(--border-primary); border-radius: 8px; font-size: 1rem; background-color: var(--background-secondary); color: var(--text-primary); transition: border-color 0.2s;">
+                                </div>
+                                
+                                <div class="form-group" style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" required style="padding: 12px 16px; border: 1px solid var(--border-primary); border-radius: 8px; font-size: 1rem; background-color: var(--background-secondary); color: var(--text-primary); transition: border-color 0.2s; resize: vertical; min-height: 120px;"></textarea>
+                                </div>
+                                
+                                <button type="submit" style="background-color: var(--accent-info); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s, transform 0.1s; align-self: flex-start;">
+                                    <i class="fas fa-paper-plane"></i> Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="hero" style="background-color: var(--background-primary); border: 1px solid var(--accent-info); margin-top: 40px;">
+                        <h2 style="color: var(--accent-info);">Response Time</h2>
+                        <p>We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly.</p>
                     </div>
                 </div>
+            </section>
+        </main>
 
-                <div class="contact-form">
-                    <h2>Send Us a Message</h2>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
-                </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
             </div>
+        </footer>
+    </div>
 
-            <div class="highlight">
-                <p><strong>Response Time:</strong> We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly.</p>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>SimpleToolbox.dev</h3>
-                    <p>A collection of free, easy-to-use online tools for everyday tasks. No registration required.</p>
-                    <p>Your privacy is important to us. We process your data transparently and securely.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="/terms.html">Terms of Use</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="/tools/password-generator">Password Generator</a></li>
-                        <li><a href="/tools/youtube-thumbnail-downloader">YouTube Thumbnail Downloader</a></li>
-                        <li><a href="/tools/image-background-remover">Image Background Remover</a></li>
-                        <li><a href="/tools/unit-converter">Unit Converter</a></li>
-                        <li><a href="/tools/pdf-to-word-converter">PDF to Word Converter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2026 SimpleToolbox.dev. All rights reserved.</p>
-                <p>This website uses cookies and similar technologies to enhance your experience. By using our website, you agree to our use of cookies as described in our Privacy Policy.</p>
-            </div>
-        </div>
-    </footer>
-
+    <!-- JavaScript -->
     <script>
-        // Set current year in copyright
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearSpan = document.querySelector('.copyright p');
-            if (yearSpan) {
-                yearSpan.innerHTML = yearSpan.innerHTML.replace('2026', new Date().getFullYear());
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.body.className = theme;
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-container p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
             }
-            
-            // Add active class to current page in nav
-            const currentPage = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
             
             // Contact form submission
             const contactForm = document.getElementById('contactForm');

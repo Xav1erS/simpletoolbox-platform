@@ -1,465 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Privacy Policy for SimpleToolbox.dev - How we collect, use, and protect your data.">
     <title>Privacy Policy - SimpleToolbox.dev</title>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #165DFF;
-            --primary-dark: #0E42C4;
-            --text-color: #333;
-            --text-light: #666;
-            --bg-color: #fff;
-            --bg-light: #f8f9fa;
-            --border-color: #e9ecef;
-            --shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --radius: 8px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        }
-        
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 0;
-            margin: 0;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-        
-        /* Header */
-        header {
-            background-color: var(--bg-color);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-        
-        .logo i {
-            margin-right: 8px;
-            font-size: 1.8rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .nav-links a.active {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .home-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .home-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        /* Main Content */
-        .legal-content {
-            background-color: var(--bg-color);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 48px;
-            margin: 48px 0;
-        }
-        
-        .legal-header {
-            margin-bottom: 32px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 24px;
-        }
-        
-        .legal-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        
-        .legal-header p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-        }
-        
-        .last-updated {
-            background-color: var(--bg-light);
-            padding: 12px 20px;
-            border-radius: var(--radius);
-            display: inline-block;
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-top: 16px;
-        }
-        
-        .section {
-            margin-bottom: 32px;
-        }
-        
-        .section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 16px;
-            color: var(--text-color);
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .section p {
-            margin-bottom: 16px;
-            color: var(--text-color);
-        }
-        
-        .section ul, .section ol {
-            margin-left: 24px;
-            margin-bottom: 16px;
-        }
-        
-        .section li {
-            margin-bottom: 8px;
-            color: var(--text-color);
-        }
-        
-        .highlight {
-            background-color: rgba(22, 93, 255, 0.05);
-            border-left: 4px solid var(--primary-color);
-            padding: 16px 20px;
-            margin: 20px 0;
-            border-radius: 0 var(--radius) var(--radius) 0;
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        .data-table th, .data-table td {
-            border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .data-table th {
-            background-color: var(--bg-light);
-            font-weight: 600;
-        }
-        
-        .data-table tr:nth-child(even) {
-            background-color: var(--bg-light);
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--bg-color);
-            border-top: 1px solid var(--border-color);
-            padding: 48px 0;
-            margin-top: 48px;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-        }
-        
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-        
-        .footer-section p {
-            color: var(--text-light);
-            margin-bottom: 16px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 32px;
-            margin-top: 32px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-                padding: 20px 0;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 16px;
-            }
-            
-            .legal-content {
-                padding: 32px 24px;
-                margin: 32px 0;
-            }
-            
-            .legal-header h1 {
-                font-size: 2rem;
-            }
-            
-            .section h2 {
-                font-size: 1.5rem;
-            }
-            
-            .data-table {
-                font-size: 0.9rem;
-            }
-            
-            .data-table th, .data-table td {
-                padding: 8px 12px;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 32px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .legal-content {
-                padding: 24px 16px;
-            }
-            
-            .legal-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .home-btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-            
-            .data-table {
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="css/design-system.css">
 </head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
+<body class="dark">
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
                 <a href="/" class="logo">
-                    <i class="fas fa-toolbox"></i>
-                    simpletoolbox.dev
+                    <span>Simple Toolbox</span>
                 </a>
-                <div class="nav-links">
-                    <a href="/">Home</a>
-                    <a href="/tools">Tools</a>
-                    <a href="/about.html">About Us</a>
-                    <a href="/contact.html">Contact</a>
-                    <a href="/privacy.html" class="active">Privacy Policy</a>
-                    <a href="/terms.html">Terms of Use</a>
-                    <a href="/" class="home-btn">
-                        <i class="fas fa-home"></i> Back to Tools
-                    </a>
+                
+                <nav class="nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/tools" class="nav-link">Tools</a>
+                    <a href="/about.html" class="nav-link">About Us</a>
+                    <a href="/contact.html" class="nav-link">Contact</a>
+                    <a href="/privacy" class="nav-link active">Privacy</a>
+                    <a href="/terms" class="nav-link">Terms</a>
+                </nav>
+                
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun icon-sun"></i>
+                    <i class="fas fa-moon icon-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <section class="hero">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="hero-title-main">Privacy Policy</span>
+                            <span class="hero-title-sub">Your Privacy Matters</span>
+                        </h1>
+                        <p class="hero-description">At Simple Toolbox ("we", "us", or "our"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our online tools at simpletoolbox.dev.</p>
+                        <div class="last-updated" style="background-color: var(--background-secondary); padding: 12px 20px; border-radius: 8px; display: inline-block; font-size: 0.95rem; color: var(--text-secondary); margin-top: 16px;">
+                            <strong>Last Updated:</strong> March 7, 2026
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </header>
+            </section>
 
-    <main class="container">
-        <div class="legal-content">
-            <div class="legal-header">
-                <h1>Privacy Policy</h1>
-                <p>At Simple Toolbox ("we", "us", or "our"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our online tools at simpletoolbox.dev.</p>
-                <div class="last-updated">
-                    <strong>Last Updated:</strong> March 7, 2026
+            <section class="tools">
+                <div class="tools-container">
+                    <div class="section">
+                        <h2>Information Collection</h2>
+                        <p>We do not require you to register or provide personal information to use our tools. However, we may collect the following data:</p>
+                        <ul>
+                            <li><strong>Usage Data:</strong> We use analytics tools (such as Google Analytics) to understand how our site is used. This may include your IP address, browser type, and pages visited.</li>
+                            <li><strong>Tool Input:</strong> The data you enter into our tools (such as text, code, or files) is processed temporarily to provide the requested service.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2>Use of Data</h2>
+                        <ul>
+                            <li><strong>Service Provision:</strong> The data you input into our tools is processed in real-time to provide the output or conversion you requested.</li>
+                            <li><strong>Analytics:</strong> Usage data helps us understand traffic patterns and improve our site's performance and user experience.</li>
+                            <li><strong>Security:</strong> We may use your IP address to monitor for and prevent malicious activity or attacks.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2>Data Retention and Security</h2>
+                        <ul>
+                            <li><strong>Temporary Processing:</strong> The data you enter into our tools is not stored on our servers after the processing is complete. It is held in memory only for the duration of your session.</li>
+                            <li><strong>No Personal Storage:</strong> We do not store personal information (such as names or email addresses) unless explicitly provided by you (for example, in a support email).</li>
+                            <li><strong>Security Measures:</strong> We implement appropriate technical and organizational measures to protect against unauthorized access or disclosure of the data we process.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2>Third-Party Services</h2>
+                        <ul>
+                            <li><strong>Google Analytics:</strong> We use Google Analytics to collect usage information. Google may use this data to contextualize ads on other websites. You can opt out of Google Analytics <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">here</a>.</li>
+                            <li><strong>Google AdSense:</strong> Our site uses Google AdSense to display ads. Google may use cookies to personalize ads based on your visit. You can manage your ad preferences <a href="https://adssettings.google.com/" target="_blank">here</a>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2>Children's Privacy</h2>
+                        <p>Our site is not directed at children under the age of 13. We do not knowingly collect personal information from children.</p>
+                    </div>
+
+                    <div class="section">
+                        <h2>Changes to This Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+                    </div>
+
+                    <div class="section">
+                        <h2>Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy, please contact us at <strong>privacy@simpletoolbox.dev</strong>.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
+        </main>
 
-            <div class="section">
-                <h2>Information Collection</h2>
-                <p>We do not require you to register or provide personal information to use our tools. However, we may collect the following data:</p>
-                <ul>
-                    <li><strong>Usage Data:</strong> We use analytics tools (such as Google Analytics) to understand how our site is used. This may include your IP address, browser type, and pages visited.</li>
-                    <li><strong>Tool Input:</strong> The data you enter into our tools (such as text, code, or files) is processed temporarily to provide the requested service.</li>
-                </ul>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
             </div>
+        </footer>
+    </div>
 
-            <div class="section">
-                <h2>Use of Data</h2>
-                <ul>
-                    <li><strong>Service Provision:</strong> The data you input into our tools is processed in real-time to provide the output or conversion you requested.</li>
-                    <li><strong>Analytics:</strong> Usage data helps us understand traffic patterns and improve our site's performance and user experience.</li>
-                    <li><strong>Security:</strong> We may use your IP address to monitor for and prevent malicious activity or attacks.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>Data Retention and Security</h2>
-                <ul>
-                    <li><strong>Temporary Processing:</strong> The data you enter into our tools is not stored on our servers after the processing is complete. It is held in memory only for the duration of your session.</li>
-                    <li><strong>No Personal Storage:</strong> We do not store personal information (such as names or email addresses) unless explicitly provided by you (for example, in a support email).</li>
-                    <li><strong>Security Measures:</strong> We implement appropriate technical and organizational measures to protect against unauthorized access or disclosure of the data we process.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>Third-Party Services</h2>
-                <ul>
-                    <li><strong>Google Analytics:</strong> We use Google Analytics to collect usage information. Google may use this data to contextualize ads on other websites. You can opt out of Google Analytics <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">here</a>.</li>
-                    <li><strong>Google AdSense:</strong> Our site uses Google AdSense to display ads. Google may use cookies to personalize ads based on your visit. You can manage your ad preferences <a href="https://adssettings.google.com/" target="_blank">here</a>.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>Children's Privacy</h2>
-                <p>Our site is not directed at children under the age of 13. We do not knowingly collect personal information from children.</p>
-            </div>
-
-            <div class="section">
-                <h2>Changes to This Policy</h2>
-                <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
-            </div>
-
-            <div class="section">
-                <h2>Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy, please contact us at <strong>privacy@simpletoolbox.dev</strong>.</p>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>SimpleToolbox.dev</h3>
-                    <p>A collection of free, easy-to-use online tools for everyday tasks. No registration required.</p>
-                    <p>Your privacy is important to us. We process your data transparently and securely.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="/terms.html">Terms of Use</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="/tools/password-generator">Password Generator</a></li>
-                        <li><a href="/tools/youtube-thumbnail-downloader">YouTube Thumbnail Downloader</a></li>
-                        <li><a href="/tools/image-background-remover">Image Background Remover</a></li>
-                        <li><a href="/tools/unit-converter">Unit Converter</a></li>
-                        <li><a href="/tools/pdf-to-word-converter">PDF to Word Converter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2026 SimpleToolbox.dev. All rights reserved.</p>
-                <p>This website uses cookies and similar technologies to enhance your experience. By using our website, you agree to our use of cookies as described in this Privacy Policy.</p>
-            </div>
-        </div>
-    </footer>
-
+    <!-- JavaScript -->
     <script>
-        // Set current year in copyright
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearSpan = document.querySelector('.copyright p');
-            if (yearSpan) {
-                yearSpan.innerHTML = yearSpan.innerHTML.replace('2026', new Date().getFullYear());
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.body.className = theme;
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-container p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
             }
-            
-            // Add active class to current page in nav
-            const currentPage = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
         });
     </script>
 
