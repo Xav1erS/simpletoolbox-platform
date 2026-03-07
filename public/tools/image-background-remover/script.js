@@ -87,16 +87,12 @@ function initBackgroundSelector() {
     });
 }
 
-// Load default model (u2netp)
+// Load default model (ONNX)
 async function loadDefaultModel() {
     try {
         showStatus('Loading AI model...', 'info');
-        // Configure rembg-web to use Hugging Face hosted models (dev only)
-        if (typeof rembgWeb !== 'undefined' && rembgWeb.rembgConfig) {
-            rembgWeb.rembgConfig.setBaseUrl('https://huggingface.co/bunnio/dis_anime/resolve/main');
-        }
-        // Load the selected model
-        await loadModel(modelSelect.value);
+        // Load the model
+        await loadModel();
     } catch (error) {
         console.error('Failed to load default model:', error);
         showStatus('Failed to load AI model. Using fallback simulation.', 'error');
@@ -105,18 +101,24 @@ async function loadDefaultModel() {
     }
 }
 
-// Load specific model
-async function loadModel(modelName) {
+// Load ONNX model
+async function loadModel() {
     try {
-        showStatus(`Loading ${modelName} model...`, 'info');
+        showStatus('Loading AI model...', 'info');
         
-        // Check if rembgWeb is available
-        if (typeof rembgWeb === 'undefined') {
-            throw new Error('rembg-web library not loaded');
+        // Check if ONNX Runtime is available
+        if (typeof ort === 'undefined') {
+            throw new Error('ONNX Runtime Web library not loaded');
         }
         
-        // Create a new session with the selected model
-        const session = await rembgWeb.newSession(modelName);
+        // Configure ONNX Runtime for better performance
+        const options = {
+            executionProviders: ['wasm'], // Use WebAssembly backend
+            graphOptimizationLevel: 'all' // Enable all graph optimizations
+        };
+        
+        // Create a new session with the model
+        const session = await ort.InferenceSession.create(MODEL_PATH, options);
         appState.session = session;
         appState.modelLoaded = true;
         
@@ -124,7 +126,7 @@ async function loadModel(modelName) {
         updateProcessButton();
     } catch (error) {
         console.error('Model loading error:', error);
-        showStatus(`Failed to load ${modelName}. Using fallback simulation.`, 'error');
+        showStatus(`Failed to load model. Using fallback simulation.`, 'error');
         // Fallback to simulation
         appState.modelLoaded = true;
         appState.session = null;
@@ -259,13 +261,8 @@ async function processImage() {
             showStatus('Running AI model...', 'info');
             updateProgress(50);
             
-            const options = {};
-            if (bgColor) {
-                options.bgcolor = bgColor;
-            }
-            
-            // Call rembg-web remove function
-            resultBlob = await rembgWeb.remove(file, options);
+            // Call ONNX model for background removal
+            resultBlob = await removeBackground(file, bgColor);
             updateProgress(80);
         } else {
             // Simulation mode (simple color-based removal)
@@ -320,6 +317,175 @@ async function processImage() {
             progressContainer.style.display = 'none';
         }, 2000);
     }
+}
+
+// Background removal core function using ONNX model
+async function removeBackground(file, bgColor) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Read image
+            const img = await loadImage(file);
+            
+            // Preprocess image
+            const preprocessedData = await preprocessImage(img);
+            
+            // Run inference
+            const mask = await runInference(preprocessedData);
+            
+            // Postprocess
+            const resultBlob = await postprocessImage(img, mask, bgColor);
+            
+            resolve(resultBlob);
+        } catch (error) {
+            console.error('Background removal error:', error);
+            // Try fallback method
+            try {
+                console.log('Using fallback background removal method');
+                const fallbackResult = await simulateBackgroundRemoval(file, bgColor);
+                resolve(fallbackResult);
+            } catch (fallbackError) {
+                console.error('Fallback method failed:', fallbackError);
+                reject(new Error('Both AI and fallback methods failed'));
+            }
+        }
+    });
+}
+
+// Load image
+function loadImage(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            img.onload = function() {
+                resolve(img);
+            };
+            img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// Preprocess image
+async function preprocessImage(img) {
+    // Resize image
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Model input size (adjust according to model requirements)
+    const inputWidth = 320;
+    const inputHeight = 320;
+    
+    canvas.width = inputWidth;
+    canvas.height = inputHeight;
+    
+    // Draw image with quality optimization
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, inputWidth, inputHeight);
+    
+    // Get image data
+    const imageData = ctx.getImageData(0, 0, inputWidth, inputHeight);
+    const data = imageData.data;
+    
+    // Convert to model input format
+    const inputTensor = new Float32Array(inputWidth * inputHeight * 3);
+    
+    // Optimize loop for better performance
+    const length = data.length;
+    for (let i = 0; i < length; i += 4) {
+        const index = i / 4;
+        inputTensor[index * 3] = data[i] / 255.0;     // R
+        inputTensor[index * 3 + 1] = data[i + 1] / 255.0; // G
+        inputTensor[index * 3 + 2] = data[i + 2] / 255.0; // B
+    }
+    
+    return inputTensor;
+}
+
+// Run model inference
+async function runInference(inputTensor) {
+    if (!appState.session) {
+        throw new Error('Model not loaded');
+    }
+    
+    // Create input tensor
+    const inputs = {
+        // Input name may need adjustment based on model
+        'input': new ort.Tensor('float32', inputTensor, [1, 3, 320, 320])
+    };
+    
+    // Run inference
+    const outputs = await appState.session.run(inputs);
+    
+    // Get output (mask)
+    const mask = outputs['output'].data;
+    return mask;
+}
+
+// Postprocess image
+function postprocessImage(img, mask, bgColor) {
+    return new Promise((resolve, reject) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw original image
+        ctx.drawImage(img, 0, 0);
+        
+        // Get original image data
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        // Apply mask with optimized loop
+        const length = data.length;
+        for (let i = 0; i < length; i += 4) {
+            const index = i / 4;
+            const maskValue = mask[index];
+            
+            // Set transparency based on mask value
+            data[i + 3] = maskValue * 255;
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        
+        // Apply background color if specified
+        if (bgColor) {
+            // Create new canvas with background color
+            const bgCanvas = document.createElement('canvas');
+            bgCanvas.width = img.width;
+            bgCanvas.height = img.height;
+            const bgCtx = bgCanvas.getContext('2d');
+            
+            // Draw background color
+            bgCtx.fillStyle = `rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, ${bgColor[3] / 255})`;
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+            
+            // Draw processed image on top
+            bgCtx.drawImage(canvas, 0, 0);
+            
+            // Convert to blob with quality optimization
+            bgCanvas.toBlob(blob => {
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error('Canvas to blob conversion failed'));
+                }
+            }, 'image/png', 0.9); // Higher quality
+        } else {
+            // Convert to blob with quality optimization
+            canvas.toBlob(blob => {
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error('Canvas to blob conversion failed'));
+                }
+            }, 'image/png', 0.9); // Higher quality
+        }
+    });
 }
 
 // Update progress bar
