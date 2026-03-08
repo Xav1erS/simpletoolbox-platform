@@ -167,26 +167,69 @@
     
     // 初始化页面脚本
     function initializePageScripts() {
-        // 检查是否存在页面特定的初始化函数
+        console.log('Initializing page scripts...');
+        
+        // 方法1: 检查是否存在页面特定的初始化函数
         if (typeof init !== 'undefined' && typeof init === 'function') {
             try {
+                console.log('Calling page-specific init() function');
                 init();
             } catch (e) {
                 console.error('Error initializing page scripts:', e);
             }
         }
         
-        // 检查是否存在DOMContentLoaded事件监听器需要重新触发
-        if (typeof window.onDOMContentLoaded === 'function') {
-            try {
-                window.onDOMContentLoaded();
-            } catch (e) {
-                console.error('Error triggering DOMContentLoaded:', e);
+        // 方法2: 查找并执行所有script标签中的代码
+        const scripts = document.querySelectorAll('script');
+        scripts.forEach(script => {
+            // 跳过已执行的脚本（有src属性且非内联）
+            if (script.src && !script.hasAttribute('data-reexecutable')) {
+                return;
             }
+            
+            // 对于内联脚本，尝试重新执行（需要谨慎处理）
+            if (!script.src && script.textContent.trim()) {
+                // 检查是否包含DOMContentLoaded监听器
+                if (script.textContent.includes('DOMContentLoaded')) {
+                    console.log('Found script with DOMContentLoaded, attempting to re-execute');
+                }
+            }
+        });
+        
+        // 方法3: 手动触发DOMContentLoaded的替代方案
+        // 查找所有可能的初始化函数模式
+        try {
+            // 检查是否有工具特定的初始化函数
+            if (typeof initEventListeners === 'function') {
+                console.log('Calling initEventListeners()');
+                initEventListeners();
+            }
+            if (typeof initBackgroundSelector === 'function') {
+                console.log('Calling initBackgroundSelector()');
+                initBackgroundSelector();
+            }
+            if (typeof loadDefaultModel === 'function') {
+                console.log('Calling loadDefaultModel()');
+                loadDefaultModel();
+            }
+            if (typeof initEnhancements === 'function') {
+                console.log('Calling initEnhancements()');
+                initEnhancements();
+            }
+        } catch (e) {
+            console.error('Error calling tool-specific init functions:', e);
         }
+        
+        // 方法4: 触发自定义事件，让工具页面可以监听
+        const customEvent = new CustomEvent('pageLoaded', { 
+            detail: { url: window.location.href } 
+        });
+        document.dispatchEvent(customEvent);
         
         // 重新绑定事件监听器
         reattachEventListeners();
+        
+        console.log('Page scripts initialization complete');
     }
     
     // 重新绑定事件监听器
@@ -252,6 +295,12 @@
         document.documentElement.setAttribute('data-spa', 'enabled');
         
         console.log('SPA router initialized');
+        
+        // 初始化当前页面的脚本（解决首次加载问题）
+        setTimeout(() => {
+            console.log('Initializing scripts for initial page load');
+            initializePageScripts();
+        }, 100);
     }
     
     // 等待DOM加载完成

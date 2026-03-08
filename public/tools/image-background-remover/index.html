@@ -1082,15 +1082,27 @@
         let originalImageData = null;
         let processedImageData = null;
         
-        // 初始化页面状态
-        document.addEventListener('DOMContentLoaded', function() {
+        // 初始化函数
+        function initToolPage() {
+            console.log('Initializing Image Background Remover tool page');
             // 上传前状态
             const uploadState = document.getElementById('uploadState');
             const processingState = document.getElementById('processingState');
             
-            // 确保上传状态显示，处理状态隐藏
-            uploadState.style.display = 'flex';
-            processingState.style.display = 'none';
+            if (uploadState && processingState) {
+                // 确保上传状态显示，处理状态隐藏
+                uploadState.style.display = 'flex';
+                processingState.style.display = 'none';
+            }
+        }
+        
+        // 监听DOMContentLoaded事件（首次加载）
+        document.addEventListener('DOMContentLoaded', initToolPage);
+        
+        // 监听pageLoaded事件（SPA导航）
+        document.addEventListener('pageLoaded', function(event) {
+            console.log('pageLoaded event received:', event.detail);
+            initToolPage();
         });
         
         // 图片上传处理
