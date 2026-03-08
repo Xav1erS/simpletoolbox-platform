@@ -256,14 +256,52 @@ const STBFramework = {
             const card = document.createElement('div');
             card.className = 'stb-feature-card';
             card.innerHTML = `
-                &lt;div class="stb-feature-icon"&gt;
-                    &lt;i class="fas ${feature.icon}"&gt;&lt;/i&gt;
+                &lt;div class="stb-feature-icon-wrapper"&gt;
+                    &lt;i class="fas ${feature.icon} stb-feature-icon"&gt;&lt;/i&gt;
                 &lt;/div&gt;
                 &lt;h3 class="stb-feature-title"&gt;${feature.title}&lt;/h3&gt;
-                &lt;p&gt;${feature.description}&lt;/p&gt;
+                &lt;p class="stb-feature-description"&gt;${feature.description}&lt;/p&gt;
             `;
             container.appendChild(card);
         });
+    },
+    
+    generateWhyChooseSection: function(toolName, subtitle, features, socialProof = null) {
+        const section = document.createElement('section');
+        section.className = 'stb-why-choose-section';
+        
+        let html = `
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-section-header"&gt;
+                    &lt;h2 class="stb-section-title"&gt;Why Choose Our ${toolName}?&lt;/h2&gt;
+                    &lt;p class="stb-section-subtitle"&gt;${subtitle}&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="stb-features-grid" id="why-choose-features"&gt;&lt;/div&gt;
+        `;
+        
+        if (socialProof) {
+            html += `
+                &lt;div class="stb-social-proof"&gt;
+                    &lt;div class="stb-proof-item"&gt;
+                        &lt;span class="stb-proof-number"&gt;${socialProof.users}+&lt;/span&gt;
+                        &lt;span class="stb-proof-label"&gt;Happy Users&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class="stb-proof-item"&gt;
+                        &lt;span class="stb-proof-number"&gt;${socialProof.tools}+&lt;/span&gt;
+                        &lt;span class="stb-proof-label"&gt;Free Tools&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class="stb-proof-item"&gt;
+                        &lt;span class="stb-proof-number"&gt;${socialProof.rating}&lt;/span&gt;
+                        &lt;span class="stb-proof-label"&gt;Rating&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            `;
+        }
+        
+        html += '&lt;/div&gt;';
+        section.innerHTML = html;
+        
+        return section;
     }
 };
 

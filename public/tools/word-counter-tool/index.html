@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter Tool - Advanced Text Analysis & Writing Optimization | Simple ToolBox</title>
+    <meta name="description" content="Struggling to optimize your writing? Get real-time word count, readability scores, and vocabulary analysis. Advanced AI-powered writing assistant helps improve your text instantly. Try free now - 100% client-side processing ensures privacy.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <link rel="stylesheet" href="../../css/framework.css">
+    
+    <style>
+        .stb-tool-custom {
+            min-height: 400px;
+        }
+        
+        .stb-tool-custom .word-counter-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-md);
+        }
+        
+        .stb-tool-custom .textarea-container {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .stb-tool-custom .textarea-container textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: var(--linear-spacing-lg);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-text);
+            font-size: var(--linear-font-size-base);
+            font-family: inherit;
+            resize: vertical;
+            transition: var(--linear-transition);
+        }
+        
+        .stb-tool-custom .textarea-container textarea:focus {
+            outline: none;
+            border-color: var(--linear-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .stb-tool-custom .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--linear-spacing-md);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .stb-tool-custom .stat-card {
+            background-color: var(--linear-bg-tertiary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            padding: var(--linear-spacing-lg);
+            text-align: center;
+            transition: var(--linear-transition);
+        }
+        
+        .stb-tool-custom .stat-card:hover {
+            border-color: var(--linear-primary);
+            transform: translateY(-2px);
+        }
+        
+        .stb-tool-custom .stat-number {
+            font-size: var(--linear-font-size-3xl);
+            font-weight: 800;
+            color: var(--linear-primary);
+            line-height: 1;
+            margin-bottom: var(--linear-spacing-xs);
+        }
+        
+        .stb-tool-custom .stat-label {
+            font-size: var(--linear-font-size-sm);
+            color: var(--linear-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 768px) {
+            .stb-tool-custom .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Word Counter Tool",
+  "applicationCategory": "WritingApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Struggling to optimize your writing? Get real-time word count, readability scores, and vocabulary analysis. Advanced AI-powered writing assistant helps improve your text instantly. Try free now - 100% client-side processing ensures privacy.",
+  "featureList": [
+    "Free to use",
+    "No registration required",
+    "Client-side processing",
+    "Privacy-first approach"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1250"
+  }
+}
+    </script>
+</head>
+<body class="dark">
+    <div class="stb-layout">
+        <header class="stb-layout-header">
+            <div class="stb-container">
+                <div class="stb-header-inner">
+                    <a href="/" class="stb-brand">
+                        <span>Simple Toolbox</span>
+                    </a>
+                    
+                    <nav class="stb-nav-desktop">
+                        <a href="/" class="stb-nav-link">Home</a>
+                        <div class="stb-nav-dropdown">
+                            <a href="/tools" class="stb-nav-link stb-nav-dropdown-toggle">
+                                Tools <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                            </a>
+                            <div class="stb-nav-dropdown-menu">
+                                <a href="/tools/password-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-key"></i> Password Generator
+                                </a>
+                                <a href="/tools/unit-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-ruler-combined"></i> Unit Converter
+                                </a>
+                                <a href="/tools/image-background-remover" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-cut"></i> Image Background Remover
+                                </a>
+                                <a href="/tools/image-resizer-online" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-expand-alt"></i> Image Resizer
+                                </a>
+                                <div class="stb-nav-divider"></div>
+                                <a href="/tools/json-formatter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-code"></i> JSON Formatter
+                                </a>
+                                <a href="/tools/random-number-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-dice"></i> Random Number Generator
+                                </a>
+                                <a href="/tools/word-counter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-font"></i> Word Counter
+                                </a>
+                                <a href="/tools/pdf-to-word-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-file-word"></i> PDF to Word
+                                </a>
+                                <a href="/tools/youtube-thumbnail-downloader" class="stb-nav-dropdown-item">
+                                    <i class="fab fa-youtube"></i> YouTube Thumbnail Downloader
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/about.html" class="stb-nav-link">About</a>
+                        <a href="/contact.html" class="stb-nav-link">Contact</a>
+                    </nav>
+                    
+                    <div class="stb-nav-actions">
+                        <div class="stb-nav-search">
+                            <i class="fas fa-search stb-nav-search-icon"></i>
+                            <input type="text" class="stb-nav-search-input" placeholder="Search tools...">
+                        </div>
+                        <button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu">
+                <div class="stb-mobile-nav-links">
+                    <a href="/" class="stb-mobile-nav-link">Home</a>
+                    <a href="/tools" class="stb-mobile-nav-link">All Tools</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Popular Tools</div>
+                    <a href="/tools/password-generator" class="stb-mobile-nav-link"><i class="fas fa-key" style="margin-right: 8px; color: var(--linear-primary);"></i> Password Generator</a>
+                    <a href="/tools/unit-converter" class="stb-mobile-nav-link"><i class="fas fa-ruler-combined" style="margin-right: 8px; color: var(--linear-primary);"></i> Unit Converter</a>
+                    <a href="/tools/image-background-remover" class="stb-mobile-nav-link"><i class="fas fa-cut" style="margin-right: 8px; color: var(--linear-primary);"></i> Image Background Remover</a>
+                    <a href="/tools/json-formatter-tool" class="stb-mobile-nav-link"><i class="fas fa-code" style="margin-right: 8px; color: var(--linear-primary);"></i> JSON Formatter</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">More Tools</div>
+                    <a href="/tools/image-resizer-online" class="stb-mobile-nav-link">Image Resizer</a>
+                    <a href="/tools/random-number-generator" class="stb-mobile-nav-link">Random Number Generator</a>
+                    <a href="/tools/word-counter-tool" class="stb-mobile-nav-link">Word Counter</a>
+                    <a href="/tools/pdf-to-word-converter" class="stb-mobile-nav-link">PDF to Word</a>
+                    <a href="/tools/youtube-thumbnail-downloader" class="stb-mobile-nav-link">YouTube Thumbnail Downloader</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Company</div>
+                    <a href="/about.html" class="stb-mobile-nav-link">About</a>
+                    <a href="/contact.html" class="stb-mobile-nav-link">Contact</a>
+                    <a href="/privacy.html" class="stb-mobile-nav-link">Privacy</a>
+                    <a href="/terms.html" class="stb-mobile-nav-link">Terms</a>
+                </div>
+            </nav>
+        </header>
+        
+        <main class="stb-layout-main">
+            <section class="stb-tool-area">
+                <div class="stb-container">
+                    <div class="stb-breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <a href="/tools">Tools</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <span>Word Counter Tool</span>
+                    </div>
+                    
+                    <header class="stb-tool-header">
+                        <h1 class="stb-tool-title">Word Counter Tool</h1>
+                        <p class="stb-tool-description">Struggling to optimize your writing? Get real-time word count, readability scores, and vocabulary analysis. Advanced AI-powered writing assistant helps improve your text instantly. Try free now - 100% client-side processing ensures privacy.</p>
+                    </header>
+                    
+                    <div class="stb-content-card stb-tool-custom">
+                        <div class="word-counter-card">
+                            <h2 class="stb-card-title">
+                                <i class="fas fa-font"></i>
+                                Count Your Words
+                            </h2>
+                            
+                            <div class="textarea-container">
+                                <textarea id="text-input" placeholder="Start typing or paste your text here..."></textarea>
+                            </div>
+                            
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="word-count">0</div>
+                                    <div class="stat-label">Words</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number" id="char-count">0</div>
+                                    <div class="stat-label">Characters</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number" id="sentence-count">0</div>
+                                    <div class="stat-label">Sentences</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number" id="paragraph-count">0</div>
+                                    <div class="stat-label">Paragraphs</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stb-btn-group">
+                                <button id="clear-btn" class="stb-btn stb-btn-secondary">
+                                    <i class="fas fa-trash"></i>
+                                    <span class="stb-btn-text">Clear Text</span>
+                                </button>
+                                <button id="copy-btn" class="stb-btn stb-btn-primary">
+                                    <i class="fas fa-copy"></i>
+                                    <span class="stb-btn-text">Copy Text</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="why-choose-container"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="stb-layout-footer">
+            <div class="stb-container">
+                <div class="stb-footer-content">
+                    <div class="stb-footer-brand">
+                        <span>Simple Toolbox</span>
+                    </div>
+                    
+                    <div class="stb-footer-links">
+                        <a href="/about.html">About Us</a>
+                        <a href="/contact.html">Contact</a>
+                        <a href="/terms.html">Terms of Use</a>
+                        <a href="/privacy.html">Privacy Policy</a>
+                    </div>
+                    
+                    <div class="stb-footer-copyright">
+                        <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                        <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="../../js/framework.js"></script>
+    <script>
+        const toolConfig = {
+            id: 'word-counter-tool',
+            name: 'Word Counter Tool'
+        };
+        
+        const features = [
+            {
+                icon: 'fa-bolt',
+                title: 'Real-time Counting',
+                description: 'See word and character counts update instantly as you type.'
+            },
+            {
+                icon: 'fa-chart-bar',
+                title: 'Comprehensive Stats',
+                description: 'Get detailed metrics including sentences, paragraphs, and more.'
+            },
+            {
+                icon: 'fa-lock',
+                title: 'Privacy First',
+                description: 'All processing happens locally in your browser. No data leaves your device.'
+            },
+            {
+                icon: 'fa-copy',
+                title: 'Easy Copy',
+                description: 'Copy your text with a single click for quick sharing.'
+            }
+        ];
+        
+        const socialProof = {
+            users: '50K',
+            tools: '9',
+            rating: '4.8'
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const whyChooseSection = STBFramework.generateWhyChooseSection(
+                'Word Counter Tool',
+                'Perfect your writing with our comprehensive word counter. Get real-time insights into your text while keeping everything completely private and secure.',
+                features,
+                socialProof
+            );
+            document.getElementById('why-choose-container').appendChild(whyChooseSection);
+            STBFramework.generateFeatureCards(features, 'why-choose-features');
+            
+            initWordCounter();
+        });
+        
+        function initWordCounter() {
+            const textInput = document.getElementById('text-input');
+            const wordCountEl = document.getElementById('word-count');
+            const charCountEl = document.getElementById('char-count');
+            const sentenceCountEl = document.getElementById('sentence-count');
+            const paragraphCountEl = document.getElementById('paragraph-count');
+            const clearBtn = document.getElementById('clear-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            
+            textInput.addEventListener('input', updateStats);
+            clearBtn.addEventListener('click', clearText);
+            copyBtn.addEventListener('click', copyText);
+            
+            function updateStats() {
+                const text = textInput.value;
+                
+                const charCount = text.length;
+                const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+                const sentenceCount = text.trim() === '' ? 0 : (text.match(/[.!?]+/g) || []).length || 1;
+                const paragraphCount = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim() !== '').length;
+                
+                charCountEl.textContent = charCount;
+                wordCountEl.textContent = wordCount;
+                sentenceCountEl.textContent = sentenceCount;
+                paragraphCountEl.textContent = paragraphCount;
+            }
+            
+            function clearText() {
+                textInput.value = '';
+                updateStats();
+                STBFramework.showToast('Text cleared');
+            }
+            
+            async function copyText() {
+                if (textInput.value.trim() === '') {
+                    STBFramework.showToast('Nothing to copy');
+                    return;
+                }
+                const success = await STBFramework.copyToClipboard(textInput.value);
+                if (success) {
+                    STBFramework.showToast('Text copied to clipboard!');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

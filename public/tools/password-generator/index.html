@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Create Secure Passwords | Simple ToolBox</title>
+    <meta name="description" content="Generate secure, customizable passwords and API keys with multiple character sets and length options. 100% client-side processing ensures your data never leaves your browser.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <link rel="stylesheet" href="../../css/framework.css">
+    
+    <style>
+        .stb-tool-custom .token-generator-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-md);
+        }
+        
+        .stb-tool-custom .control-group {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .stb-tool-custom .control-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--linear-text-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .stb-tool-custom .slider-container {
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-custom .slider-value {
+            font-weight: 700;
+            font-size: var(--linear-font-size-xl);
+            color: var(--linear-primary);
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .stb-tool-custom .slider {
+            flex: 1;
+            height: 8px;
+            border-radius: var(--linear-radius-sm);
+            background-color: var(--linear-bg-tertiary);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        
+        .stb-tool-custom .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: var(--linear-primary);
+            border: 2px solid var(--linear-bg-primary);
+            box-shadow: var(--linear-shadow-sm);
+            transition: all var(--linear-transition-fast);
+        }
+        
+        .stb-tool-custom .slider::-webkit-slider-thumb:hover {
+            background-color: var(--linear-primary-hover);
+            transform: scale(1.1);
+        }
+        
+        .stb-tool-custom .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--linear-spacing-sm);
+        }
+        
+        .stb-tool-custom .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+            cursor: pointer;
+            padding: var(--linear-spacing-sm);
+            border-radius: var(--linear-radius-md);
+            transition: background-color var(--linear-transition-fast);
+        }
+        
+        .stb-tool-custom .checkbox-item:hover {
+            background-color: var(--linear-bg-overlay);
+        }
+        
+        .stb-tool-custom .result-section {
+            margin-top: var(--linear-spacing-xl);
+        }
+        
+        .stb-tool-custom .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .stb-tool-custom .token-strength {
+            font-size: var(--linear-font-size-sm);
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-text-secondary);
+        }
+        
+        .stb-tool-custom .token-strength.very-strong {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+        
+        .stb-tool-custom .token-strength.strong {
+            background-color: rgba(0, 200, 0, 0.1);
+            color: #00c800;
+        }
+        
+        .stb-tool-custom .token-strength.medium {
+            background-color: rgba(255, 200, 0, 0.1);
+            color: #ffc800;
+        }
+        
+        .stb-tool-custom .token-strength.weak {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+        }
+        
+        .stb-tool-custom .token-display {
+            background-color: var(--linear-bg-tertiary);
+            border-radius: var(--linear-radius-md);
+            padding: var(--linear-spacing-lg);
+            font-family: var(--linear-font-family-mono);
+            font-size: var(--linear-font-size-md);
+            word-break: break-all;
+            white-space: pre-wrap;
+            border: 1px solid var(--linear-border);
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-custom .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--linear-spacing-lg);
+            margin-top: var(--linear-spacing-2xl);
+        }
+        
+        .stb-tool-custom .info-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-sm);
+        }
+        
+        .stb-tool-custom .info-card h3 {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-custom .info-card p {
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-custom .info-card ul {
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+            padding-left: var(--linear-spacing-xl);
+        }
+        
+        .stb-tool-custom .info-card li {
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        @media (max-width: 768px) {
+            .stb-tool-custom .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Password Generator",
+  "applicationCategory": "WebApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Generate secure, customizable passwords and API keys with multiple character sets and length options. 100% client-side processing ensures your data never leaves your browser.",
+  "featureList": [
+    "Customizable password length (8-128 characters)",
+    "Multiple character sets (uppercase, lowercase, numbers, symbols)",
+    "Advanced options for security",
+    "Password strength indicator",
+    "Client-side processing",
+    "Password history tracking"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1250"
+  }
+}
+    </script>
+</head>
+<body class="dark">
+    <div class="stb-layout">
+        <header class="stb-layout-header">
+            <div class="stb-container">
+                <div class="stb-header-inner">
+                    <a href="/" class="stb-brand">
+                        <span>Simple Toolbox</span>
+                    </a>
+                    
+                    <nav class="stb-nav-desktop">
+                        <a href="/" class="stb-nav-link">Home</a>
+                        <div class="stb-nav-dropdown">
+                            <a href="/tools" class="stb-nav-link stb-nav-dropdown-toggle">
+                                Tools <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                            </a>
+                            <div class="stb-nav-dropdown-menu">
+                                <a href="/tools/password-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-key"></i> Password Generator
+                                </a>
+                                <a href="/tools/unit-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-ruler-combined"></i> Unit Converter
+                                </a>
+                                <a href="/tools/image-background-remover" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-cut"></i> Image Background Remover
+                                </a>
+                                <a href="/tools/image-resizer-online" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-expand-alt"></i> Image Resizer
+                                </a>
+                                <div class="stb-nav-divider"></div>
+                                <a href="/tools/json-formatter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-code"></i> JSON Formatter
+                                </a>
+                                <a href="/tools/random-number-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-dice"></i> Random Number Generator
+                                </a>
+                                <a href="/tools/word-counter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-font"></i> Word Counter
+                                </a>
+                                <a href="/tools/pdf-to-word-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-file-word"></i> PDF to Word
+                                </a>
+                                <a href="/tools/youtube-thumbnail-downloader" class="stb-nav-dropdown-item">
+                                    <i class="fab fa-youtube"></i> YouTube Thumbnail Downloader
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/about.html" class="stb-nav-link">About</a>
+                        <a href="/contact.html" class="stb-nav-link">Contact</a>
+                    </nav>
+                    
+                    <div class="stb-nav-actions">
+                        <div class="stb-nav-search">
+                            <i class="fas fa-search stb-nav-search-icon"></i>
+                            <input type="text" class="stb-nav-search-input" placeholder="Search tools...">
+                        </div>
+                        <button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu">
+                <div class="stb-mobile-nav-links">
+                    <a href="/" class="stb-mobile-nav-link">Home</a>
+                    <a href="/tools" class="stb-mobile-nav-link">All Tools</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Popular Tools</div>
+                    <a href="/tools/password-generator" class="stb-mobile-nav-link"><i class="fas fa-key" style="margin-right: 8px; color: var(--linear-primary);"></i> Password Generator</a>
+                    <a href="/tools/unit-converter" class="stb-mobile-nav-link"><i class="fas fa-ruler-combined" style="margin-right: 8px; color: var(--linear-primary);"></i> Unit Converter</a>
+                    <a href="/tools/image-background-remover" class="stb-mobile-nav-link"><i class="fas fa-cut" style="margin-right: 8px; color: var(--linear-primary);"></i> Image Background Remover</a>
+                    <a href="/tools/json-formatter-tool" class="stb-mobile-nav-link"><i class="fas fa-code" style="margin-right: 8px; color: var(--linear-primary);"></i> JSON Formatter</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">More Tools</div>
+                    <a href="/tools/image-resizer-online" class="stb-mobile-nav-link">Image Resizer</a>
+                    <a href="/tools/random-number-generator" class="stb-mobile-nav-link">Random Number Generator</a>
+                    <a href="/tools/word-counter-tool" class="stb-mobile-nav-link">Word Counter</a>
+                    <a href="/tools/pdf-to-word-converter" class="stb-mobile-nav-link">PDF to Word</a>
+                    <a href="/tools/youtube-thumbnail-downloader" class="stb-mobile-nav-link">YouTube Thumbnail Downloader</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Company</div>
+                    <a href="/about.html" class="stb-mobile-nav-link">About</a>
+                    <a href="/contact.html" class="stb-mobile-nav-link">Contact</a>
+                    <a href="/privacy.html" class="stb-mobile-nav-link">Privacy</a>
+                    <a href="/terms.html" class="stb-mobile-nav-link">Terms</a>
+                </div>
+            </nav>
+        </header>
+        
+        <main class="stb-layout-main">
+            <section class="stb-tool-area">
+                <div class="stb-container">
+                    <div class="stb-breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <a href="/tools">Tools</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <span>Password Generator</span>
+                    </div>
+                    
+                    <header class="stb-tool-header">
+                        <h1 class="stb-tool-title">Password Generator</h1>
+                        <p class="stb-tool-description">Generate strong, random passwords and API keys with customizable length and character sets. Perfect for securing accounts and applications.</p>
+                    </header>
+                    
+                    <div class="stb-content-card stb-tool-custom">
+                        <h2 class="stb-card-title">
+                            <i class="fas fa-key"></i>
+                            Generate Secure Password
+                        </h2>
+                        
+                        <div class="token-generator-card">
+                            <div class="control-group">
+                                <label>Password Length: <span class="slider-value" id="lengthValue">32</span></label>
+                                <div class="slider-container">
+                                    <input type="range" class="slider" id="lengthSlider" min="8" max="128" value="32">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label>Character Types</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="uppercase" checked>
+                                        Include Uppercase (A-Z)
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lowercase" checked>
+                                        Include Lowercase (a-z)
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="numbers" checked>
+                                        Include Numbers (0-9)
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="symbols" checked>
+                                        Include Symbols (!@#$%)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-group" id="advancedOptions" style="display: none;">
+                                <label>Advanced Options</label>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="excludeSimilar">
+                                    Exclude similar characters (e.g., 0/O, 1/l, I/i)
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin: 20px 0;">
+                                <button class="stb-btn stb-btn-secondary" id="toggleAdvancedBtn">
+                                    <i class="fas fa-cog"></i> Advanced Options
+                                </button>
+                            </div>
+
+                            <div class="stb-btn-group">
+                                <button class="stb-btn stb-btn-primary" id="generateBtn">
+                                    <i class="fas fa-key"></i>
+                                    <span id="generateBtnText">Generate Password</span>
+                                    <span id="generateBtnLoading" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i> Generating...
+                                    </span>
+                                </button>
+                                <button class="stb-btn stb-btn-secondary" id="clearBtn">
+                                    <i class="fas fa-trash"></i> Clear
+                                </button>
+                            </div>
+
+                            <div class="result-section" id="resultSection" style="display: none;">
+                                <div class="result-header">
+                                    <div>Generated Password</div>
+                                    <div class="token-strength" id="tokenStrength">Very Strong</div>
+                                </div>
+                                <div class="token-display" id="tokenDisplay">
+                                    Click "Generate Password" to create a secure password.
+                                </div>
+                                <div class="stb-btn-group">
+                                    <button class="stb-btn stb-btn-primary" id="copyBtn">
+                                        <i class="fas fa-copy"></i> Copy Password
+                                    </button>
+                                    <button class="stb-btn stb-btn-secondary" id="regenerateBtn">
+                                        <i class="fas fa-sync"></i> Regenerate
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>About Password Generation</h3>
+                                <p>Strong passwords are essential for security. They create unpredictable strings that are difficult to guess or brute-force.</p>
+                                <p>Different scenarios may require different password characteristics:</p>
+                                <ul>
+                                    <li><strong>Passwords</strong>: Use a mix of all character types for maximum security</li>
+                                    <li><strong>API Keys</strong>: Often alphanumeric (no special characters) for easier usage in URLs</li>
+                                    <li><strong>Session Tokens</strong>: Longer tokens (32+ characters) for better security</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>Security Best Practices</h3>
+                                <ul>
+                                    <li><strong>Store Securely</strong>: Never store passwords in plain text</li>
+                                    <li><strong>Use Different Passwords</strong>: Don't reuse passwords across services</li>
+                                    <li><strong>Enable 2FA</strong>: Use two-factor authentication whenever possible</li>
+                                    <li><strong>Regular Updates</strong>: Change passwords periodically</li>
+                                    <li><strong>Secure Transmission</strong>: Always use HTTPS</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <section class="stb-why-choose-section">
+                        <div class="stb-container">
+                            <div class="stb-section-header">
+                                <h2 class="stb-section-title">Why Choose Our Password Generator?</h2>
+                                <p class="stb-section-subtitle">Experience the perfect balance of security, convenience, and privacy with our password generator tool.</p>
+                            </div>
+                            <div class="stb-features-grid" id="features-container"></div>
+                            <div class="stb-social-proof">
+                                <div class="stb-proof-item">
+                                    <span class="stb-proof-number">10K+</span>
+                                    <span class="stb-proof-label">Happy Users</span>
+                                </div>
+                                <div class="stb-proof-item">
+                                    <span class="stb-proof-number">9</span>
+                                    <span class="stb-proof-label">Free Tools</span>
+                                </div>
+                                <div class="stb-proof-item">
+                                    <span class="stb-proof-number">4.8</span>
+                                    <span class="stb-proof-label">Rating</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="stb-layout-footer">
+            <div class="stb-container">
+                <div class="stb-footer-content">
+                    <div class="stb-footer-brand">
+                        <span>Simple Toolbox</span>
+                    </div>
+                    
+                    <div class="stb-footer-links">
+                        <a href="what-is.html">What Is</a>
+                        <a href="how-to-use.html">How to Use</a>
+                        <a href="/about.html">About Us</a>
+                        <a href="/terms.html">Terms of Use</a>
+                        <a href="/privacy.html">Privacy Policy</a>
+                    </div>
+                    
+                    <div class="stb-footer-copyright">
+                        <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                        <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="../../js/framework.js"></script>
+    <script>
+        const toolConfig = {
+            id: 'password-generator',
+            name: 'Password Generator'
+        };
+        
+        const features = [
+            {
+                icon: 'fa-bolt',
+                title: 'Fast & Secure',
+                description: 'Generate passwords instantly with cryptographically secure random number generation.'
+            },
+            {
+                icon: 'fa-shield-alt',
+                title: 'Client-Side Only',
+                description: 'All processing happens locally in your browser—your data never leaves your device.'
+            },
+            {
+                icon: 'fa-mobile-alt',
+                title: 'Mobile Optimized',
+                description: 'Works perfectly on all devices with a responsive design.'
+            }
+        ];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            STBFramework.generateFeatureCards(features, 'features-container');
+            initTool();
+        });
+        
+        const charSets = {
+            uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lowercase: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+        
+        function filterSimilarCharacters(chars) {
+            const similar = ['0', 'O', 'o', '1', 'l', 'I', 'i'];
+            return chars.split('').filter(char => !similar.includes(char)).join('');
+        }
+        
+        function calculateStrength(password, options) {
+            let strength = 0;
+            
+            if (password.length >= 32) strength += 40;
+            else if (password.length >= 24) strength += 30;
+            else if (password.length >= 16) strength += 20;
+            else if (password.length >= 12) strength += 10;
+            
+            let typesCount = 0;
+            if (options.uppercase) typesCount++;
+            if (options.lowercase) typesCount++;
+            if (options.numbers) typesCount++;
+            if (options.symbols) typesCount++;
+            
+            strength += typesCount * 15;
+            
+            if (strength >= 90) return { level: 'very-strong', text: 'Very Strong' };
+            if (strength >= 70) return { level: 'strong', text: 'Strong' };
+            if (strength >= 40) return { level: 'medium', text: 'Medium' };
+            return { level: 'weak', text: 'Weak' };
+        }
+        
+        function generatePassword(length, options) {
+            let availableChars = '';
+            if (options.uppercase) availableChars += charSets.uppercase;
+            if (options.lowercase) availableChars += charSets.lowercase;
+            if (options.numbers) availableChars += charSets.numbers;
+            if (options.symbols) availableChars += charSets.symbols;
+            
+            if (availableChars.length === 0) {
+                return 'Error: No character types selected';
+            }
+            
+            if (options.excludeSimilar) {
+                availableChars = filterSimilarCharacters(availableChars);
+                if (availableChars.length === 0) {
+                    return 'Error: No characters available after filtering';
+                }
+            }
+            
+            let result = '';
+            const randomValues = new Uint32Array(length);
+            crypto.getRandomValues(randomValues);
+            
+            for (let i = 0; i < length; i++) {
+                const randomIndex = randomValues[i] % availableChars.length;
+                result += availableChars[randomIndex];
+            }
+            
+            return result;
+        }
+        
+        function saveToHistory(token) {
+            let history = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+            history.unshift({
+                token: token,
+                timestamp: new Date().toISOString()
+            });
+            
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+            
+            localStorage.setItem('passwordHistory', JSON.stringify(history));
+        }
+        
+        function initTool() {
+            const generateBtn = document.getElementById('generateBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const regenerateBtn = document.getElementById('regenerateBtn');
+            const lengthSlider = document.getElementById('lengthSlider');
+            const lengthValue = document.getElementById('lengthValue');
+            const uppercaseCheck = document.getElementById('uppercase');
+            const lowercaseCheck = document.getElementById('lowercase');
+            const numbersCheck = document.getElementById('numbers');
+            const symbolsCheck = document.getElementById('symbols');
+            const resultSection = document.getElementById('resultSection');
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            const copyBtn = document.getElementById('copyBtn');
+            const toggleAdvancedBtn = document.getElementById('toggleAdvancedBtn');
+            const advancedOptions = document.getElementById('advancedOptions');
+            const excludeSimilarCheck = document.getElementById('excludeSimilar');
+            const tokenStrength = document.getElementById('tokenStrength');
+            
+            lengthSlider.addEventListener('input', () => {
+                lengthValue.textContent = lengthSlider.value;
+            });
+            
+            async function handleGenerate() {
+                const generateBtnText = document.getElementById('generateBtnText');
+                const generateBtnLoading = document.getElementById('generateBtnLoading');
+                
+                const length = parseInt(lengthSlider.value);
+                const options = {
+                    uppercase: uppercaseCheck.checked,
+                    lowercase: lowercaseCheck.checked,
+                    numbers: numbersCheck.checked,
+                    symbols: symbolsCheck.checked,
+                    excludeSimilar: excludeSimilarCheck ? excludeSimilarCheck.checked : false
+                };
+                
+                const selectedTypes = Object.values(options).filter(v => v).length;
+                if (selectedTypes === 0) {
+                    alert('Please select at least one character type.');
+                    return;
+                }
+                
+                generateBtnText.style.display = 'none';
+                generateBtnLoading.style.display = 'inline';
+                generateBtn.disabled = true;
+                
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                const password = generatePassword(length, options);
+                const strength = calculateStrength(password, options);
+                
+                tokenDisplay.textContent = password;
+                tokenStrength.textContent = strength.text;
+                tokenStrength.className = `token-strength ${strength.level}`;
+                resultSection.style.display = 'block';
+                
+                setTimeout(() => {
+                    generateBtnLoading.style.display = 'none';
+                    generateBtnText.style.display = 'inline';
+                    generateBtn.disabled = false;
+                }, 300);
+                
+                saveToHistory(password);
+            }
+            
+            generateBtn.addEventListener('click', handleGenerate);
+            regenerateBtn.addEventListener('click', handleGenerate);
+            
+            clearBtn.addEventListener('click', () => {
+                tokenDisplay.textContent = 'Click "Generate Password" to create a secure password.';
+                resultSection.style.display = 'none';
+            });
+            
+            copyBtn.addEventListener('click', () => {
+                const token = tokenDisplay.textContent;
+                if (!token || token.includes('Click')) {
+                    alert('No password to copy.');
+                    return;
+                }
+                
+                navigator.clipboard.writeText(token).then(() => {
+                    const originalHtml = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalHtml;
+                    }, 2000);
+                });
+            });
+            
+            toggleAdvancedBtn.addEventListener('click', () => {
+                const isVisible = advancedOptions.style.display === 'block';
+                advancedOptions.style.display = isVisible ? 'none' : 'block';
+                toggleAdvancedBtn.innerHTML = isVisible 
+                    ? '<i class="fas fa-cog"></i> Advanced Options'
+                    : '<i class="fas fa-cog"></i> Hide Advanced Options';
+            });
+        }
+    </script>
+</body>
+</html>

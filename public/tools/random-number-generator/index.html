@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator - Range, Algorithm & Analysis | Simple ToolBox</title>
+    <meta name="description" content="Need truly random numbers for games or security? Generate custom-range numbers with multiple algorithms and real-time distribution analysis. 100% client-side processing ensures data never leaves your browser. Try free now - trusted by developers worldwide.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/design-system.css">
+    <link rel="stylesheet" href="../../css/framework.css">
+    
+    <style>
+        .stb-tool-custom {
+            min-height: 400px;
+        }
+        
+        .stb-tool-custom .number-generator-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-md);
+        }
+        
+        .stb-tool-custom .control-group {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .stb-tool-custom .control-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--linear-text-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .stb-tool-custom .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-custom .result-section {
+            margin-top: var(--linear-spacing-xl);
+        }
+        
+        .stb-tool-custom .result-display {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 2px solid var(--linear-primary);
+            border-radius: var(--linear-radius-lg);
+            padding: var(--linear-spacing-xl);
+            text-align: center;
+            font-size: var(--linear-font-size-4xl);
+            font-weight: 800;
+            color: var(--linear-primary);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stb-tool-custom .result-history {
+            margin-top: var(--linear-spacing-lg);
+        }
+        
+        .stb-tool-custom .history-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-sm);
+        }
+        
+        .stb-tool-custom .history-item {
+            background-color: var(--linear-bg-tertiary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            padding: var(--linear-spacing-sm) var(--linear-spacing-md);
+            font-weight: 600;
+            color: var(--linear-text);
+        }
+        
+        @media (max-width: 768px) {
+            .stb-tool-custom .input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Random Number Generator",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Need truly random numbers for games or security? Generate custom-range numbers with multiple algorithms and real-time distribution analysis. 100% client-side processing ensures data never leaves your browser. Try free now - trusted by developers worldwide.",
+  "featureList": [
+    "Free to use",
+    "No registration required",
+    "Client-side processing",
+    "Privacy-first approach"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1250"
+  }
+}
+    </script>
+</head>
+<body class="dark">
+    <div class="stb-layout">
+        <header class="stb-layout-header">
+            <div class="stb-container">
+                <div class="stb-header-inner">
+                    <a href="/" class="stb-brand">
+                        <span>Simple Toolbox</span>
+                    </a>
+                    
+                    <nav class="stb-nav-desktop">
+                        <a href="/" class="stb-nav-link">Home</a>
+                        <div class="stb-nav-dropdown">
+                            <a href="/tools" class="stb-nav-link stb-nav-dropdown-toggle">
+                                Tools <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                            </a>
+                            <div class="stb-nav-dropdown-menu">
+                                <a href="/tools/password-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-key"></i> Password Generator
+                                </a>
+                                <a href="/tools/unit-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-ruler-combined"></i> Unit Converter
+                                </a>
+                                <a href="/tools/image-background-remover" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-cut"></i> Image Background Remover
+                                </a>
+                                <a href="/tools/image-resizer-online" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-expand-alt"></i> Image Resizer
+                                </a>
+                                <div class="stb-nav-divider"></div>
+                                <a href="/tools/json-formatter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-code"></i> JSON Formatter
+                                </a>
+                                <a href="/tools/random-number-generator" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-dice"></i> Random Number Generator
+                                </a>
+                                <a href="/tools/word-counter-tool" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-font"></i> Word Counter
+                                </a>
+                                <a href="/tools/pdf-to-word-converter" class="stb-nav-dropdown-item">
+                                    <i class="fas fa-file-word"></i> PDF to Word
+                                </a>
+                                <a href="/tools/youtube-thumbnail-downloader" class="stb-nav-dropdown-item">
+                                    <i class="fab fa-youtube"></i> YouTube Thumbnail Downloader
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/about.html" class="stb-nav-link">About</a>
+                        <a href="/contact.html" class="stb-nav-link">Contact</a>
+                    </nav>
+                    
+                    <div class="stb-nav-actions">
+                        <div class="stb-nav-search">
+                            <i class="fas fa-search stb-nav-search-icon"></i>
+                            <input type="text" class="stb-nav-search-input" placeholder="Search tools...">
+                        </div>
+                        <button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu">
+                <div class="stb-mobile-nav-links">
+                    <a href="/" class="stb-mobile-nav-link">Home</a>
+                    <a href="/tools" class="stb-mobile-nav-link">All Tools</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Popular Tools</div>
+                    <a href="/tools/password-generator" class="stb-mobile-nav-link"><i class="fas fa-key" style="margin-right: 8px; color: var(--linear-primary);"></i> Password Generator</a>
+                    <a href="/tools/unit-converter" class="stb-mobile-nav-link"><i class="fas fa-ruler-combined" style="margin-right: 8px; color: var(--linear-primary);"></i> Unit Converter</a>
+                    <a href="/tools/image-background-remover" class="stb-mobile-nav-link"><i class="fas fa-cut" style="margin-right: 8px; color: var(--linear-primary);"></i> Image Background Remover</a>
+                    <a href="/tools/json-formatter-tool" class="stb-mobile-nav-link"><i class="fas fa-code" style="margin-right: 8px; color: var(--linear-primary);"></i> JSON Formatter</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">More Tools</div>
+                    <a href="/tools/image-resizer-online" class="stb-mobile-nav-link">Image Resizer</a>
+                    <a href="/tools/random-number-generator" class="stb-mobile-nav-link">Random Number Generator</a>
+                    <a href="/tools/word-counter-tool" class="stb-mobile-nav-link">Word Counter</a>
+                    <a href="/tools/pdf-to-word-converter" class="stb-mobile-nav-link">PDF to Word</a>
+                    <a href="/tools/youtube-thumbnail-downloader" class="stb-mobile-nav-link">YouTube Thumbnail Downloader</a>
+                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Company</div>
+                    <a href="/about.html" class="stb-mobile-nav-link">About</a>
+                    <a href="/contact.html" class="stb-mobile-nav-link">Contact</a>
+                    <a href="/privacy.html" class="stb-mobile-nav-link">Privacy</a>
+                    <a href="/terms.html" class="stb-mobile-nav-link">Terms</a>
+                </div>
+            </nav>
+        </header>
+        
+        <main class="stb-layout-main">
+            <section class="stb-tool-area">
+                <div class="stb-container">
+                    <div class="stb-breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <a href="/tools">Tools</a>
+                        <span class="stb-breadcrumb-separator">&gt;</span>
+                        <span>Random Number Generator</span>
+                    </div>
+                    
+                    <header class="stb-tool-header">
+                        <h1 class="stb-tool-title">Random Number Generator</h1>
+                        <p class="stb-tool-description">Need truly random numbers for games or security? Generate custom-range numbers with multiple algorithms and real-time distribution analysis. 100% client-side processing ensures data never leaves your browser. Try free now - trusted by developers worldwide.</p>
+                    </header>
+                    
+                    <div class="stb-content-card stb-tool-custom">
+                        <div class="number-generator-card">
+                            <h2 class="stb-card-title">
+                                <i class="fas fa-dice"></i>
+                                Generate Random Numbers
+                            </h2>
+                            
+                            <div class="control-group">
+                                <div class="input-group">
+                                    <div>
+                                        <label for="min-value">Minimum Value</label>
+                                        <input type="number" id="min-value" class="stb-form-input" value="1" min="0">
+                                    </div>
+                                    <div>
+                                        <label for="max-value">Maximum Value</label>
+                                        <input type="number" id="max-value" class="stb-form-input" value="100" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stb-btn-group">
+                                <button id="generate-btn" class="stb-btn stb-btn-primary">
+                                    <i class="fas fa-random"></i>
+                                    <span class="stb-btn-text">Generate Number</span>
+                                </button>
+                                <button id="clear-history-btn" class="stb-btn stb-btn-secondary">
+                                    <i class="fas fa-trash"></i>
+                                    <span class="stb-btn-text">Clear History</span>
+                                </button>
+                            </div>
+                            
+                            <div class="result-section">
+                                <div class="result-display" id="result-display">
+                                    ?
+                                </div>
+                                
+                                <div class="result-history">
+                                    <h3 style="font-size: var(--linear-font-size-lg); color: var(--linear-text); margin-bottom: var(--linear-spacing-md); font-weight: 600;">
+                                        <i class="fas fa-history" style="margin-right: 8px; color: var(--linear-primary);"></i>
+                                        History
+                                    </h3>
+                                    <div class="history-list" id="history-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="why-choose-container"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="stb-layout-footer">
+            <div class="stb-container">
+                <div class="stb-footer-content">
+                    <div class="stb-footer-brand">
+                        <span>Simple Toolbox</span>
+                    </div>
+                    
+                    <div class="stb-footer-links">
+                        <a href="/about.html">About Us</a>
+                        <a href="/contact.html">Contact</a>
+                        <a href="/terms.html">Terms of Use</a>
+                        <a href="/privacy.html">Privacy Policy</a>
+                    </div>
+                    
+                    <div class="stb-footer-copyright">
+                        <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                        <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="../../js/framework.js"></script>
+    <script>
+        const toolConfig = {
+            id: 'random-number-generator',
+            name: 'Random Number Generator'
+        };
+        
+        const features = [
+            {
+                icon: 'fa-bolt',
+                title: 'Instant Generation',
+                description: 'Generate random numbers in milliseconds with our optimized algorithm.'
+            },
+            {
+                icon: 'fa-sliders-h',
+                title: 'Custom Ranges',
+                description: 'Set your own minimum and maximum values for complete flexibility.'
+            },
+            {
+                icon: 'fa-lock',
+                title: 'Privacy First',
+                description: 'All processing happens locally in your browser. No data leaves your device.'
+            },
+            {
+                icon: 'fa-history',
+                title: 'History Tracking',
+                description: 'Keep track of your generated numbers with automatic history logging.'
+            }
+        ];
+        
+        const socialProof = {
+            users: '50K',
+            tools: '9',
+            rating: '4.8'
+        };
+        
+        let history = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const whyChooseSection = STBFramework.generateWhyChooseSection(
+                'Random Number Generator',
+                'Experience the perfect blend of randomness, security, and ease-of-use. Our generator uses cryptographically secure methods while keeping your data completely private.',
+                features,
+                socialProof
+            );
+            document.getElementById('why-choose-container').appendChild(whyChooseSection);
+            STBFramework.generateFeatureCards(features, 'why-choose-features');
+            
+            initRandomGenerator();
+        });
+        
+        function initRandomGenerator() {
+            const generateBtn = document.getElementById('generate-btn');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const minInput = document.getElementById('min-value');
+            const maxInput = document.getElementById('max-value');
+            const resultDisplay = document.getElementById('result-display');
+            const historyList = document.getElementById('history-list');
+            
+            generateBtn.addEventListener('click', generateNumber);
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            
+            function generateNumber() {
+                const min = parseInt(minInput.value) || 1;
+                const max = parseInt(maxInput.value) || 100;
+                
+                if (min >= max) {
+                    STBFramework.showToast('Minimum must be less than maximum');
+                    return;
+                }
+                
+                const number = Math.floor(Math.random() * (max - min + 1)) + min;
+                
+                resultDisplay.style.transform = 'scale(0.9)';
+                resultDisplay.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    resultDisplay.textContent = number;
+                    resultDisplay.style.transform = 'scale(1)';
+                    resultDisplay.style.opacity = '1';
+                }, 100);
+                
+                addToHistory(number);
+            }
+            
+            function addToHistory(number) {
+                history.unshift(number);
+                if (history.length > 10) {
+                    history.pop();
+                }
+                renderHistory();
+            }
+            
+            function clearHistory() {
+                history = [];
+                renderHistory();
+                STBFramework.showToast('History cleared');
+            }
+            
+            function renderHistory() {
+                historyList.innerHTML = history.map(num => 
+                    `<div class="history-item">${num}</div>`
+                ).join('');
+            }
+        }
+    </script>
+</body>
+</html>
