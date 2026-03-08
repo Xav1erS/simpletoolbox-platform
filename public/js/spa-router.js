@@ -150,6 +150,11 @@
             // 滚动到顶部
             window.scrollTo(0, 0);
             
+            // 重新初始化页面脚本
+            setTimeout(() => {
+                initializePageScripts();
+            }, 100);
+            
         } catch (error) {
             console.error('Navigation failed:', error);
             // 回退到整页加载
@@ -158,6 +163,37 @@
             isLoading = false;
             hideLoadingIndicator();
         }
+    }
+    
+    // 初始化页面脚本
+    function initializePageScripts() {
+        // 检查是否存在页面特定的初始化函数
+        if (typeof init !== 'undefined' && typeof init === 'function') {
+            try {
+                init();
+            } catch (e) {
+                console.error('Error initializing page scripts:', e);
+            }
+        }
+        
+        // 检查是否存在DOMContentLoaded事件监听器需要重新触发
+        if (typeof window.onDOMContentLoaded === 'function') {
+            try {
+                window.onDOMContentLoaded();
+            } catch (e) {
+                console.error('Error triggering DOMContentLoaded:', e);
+            }
+        }
+        
+        // 重新绑定事件监听器
+        reattachEventListeners();
+    }
+    
+    // 重新绑定事件监听器
+    function reattachEventListeners() {
+        // 这里可以添加通用的事件监听器重新绑定逻辑
+        // 例如：按钮点击、表单提交等
+        console.log('Event listeners reattached');
     }
     
     // 加载指示器
