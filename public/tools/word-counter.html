@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Word Counter — Simple ToolBox</title>
+  <meta name="description" content="Free online word counter. Count words, characters, sentences, paragraphs, and estimate reading time. Runs entirely in your browser." />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0F0F11;
+      --bg-surface:   #16161A;
+      --bg-hover:     #1C1C22;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5;
+      --text-secondary:#8B8B9A;
+      --text-muted:   #555560;
+      --accent:       #5E6AD2;
+      --accent-hover: #6E7AE2;
+      --accent-dim:   rgba(94,106,210,0.12);
+      --accent-glow:  rgba(94,106,210,0.25);
+      --green:        #22c55e;
+      --teal:         #14b8a6;
+      --yellow:       #eab308;
+      --orange:       #f97316;
+      --red:          #ef4444;
+      --radius-sm:    6px;
+      --radius-md:    10px;
+      --font:         'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --mono:         'JetBrains Mono', 'Fira Code', monospace;
+      --nav-h:        60px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; padding: 0 24px; gap: 16px;
+      background: rgba(15,15,17,0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-secondary); font-size: 13px;
+      padding: 5px 10px; border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s; white-space: nowrap;
+    }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge {
+      font-family: var(--mono); font-size: 10px;
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3);
+      color: #9B8DEB; padding: 2px 7px; border-radius: 4px;
+    }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    /* ── TOOL HEADER ── */
+    .tool-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 32px 28px;
+      position: relative; overflow: hidden;
+    }
+    .tool-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tool-header-inner { max-width: 1100px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon {
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill {
+      font-family: var(--mono); font-size: 11px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 2px 8px; border-radius: 4px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── TEXTAREA PANEL ── */
+    .editor-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .editor-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .editor-toolbar-label {
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em; flex: 1;
+    }
+    .btn-toolbar {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--text-secondary);
+      padding: 5px 10px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+    .btn-toolbar:hover { color: var(--text-primary); background: var(--bg-hover); border-color: rgba(255,255,255,0.12); }
+    .editor-textarea {
+      width: 100%; min-height: 420px;
+      padding: 18px 20px;
+      background: transparent;
+      border: none; outline: none; resize: vertical;
+      color: var(--text-primary); font-family: var(--font);
+      font-size: 14px; line-height: 1.75;
+      caret-color: var(--accent);
+    }
+    .editor-textarea::placeholder { color: var(--text-muted); }
+    .editor-footer {
+      padding: 8px 14px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .editor-char-count { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+
+    /* ── STATS PANEL ── */
+    .stats-col { display: flex; flex-direction: column; gap: 14px; }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .stat-card-header {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .stat-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:nth-child(even) { border-right: none; }
+    .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+    /* Single-column items */
+    .stat-item.full {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+    .stat-item.full:last-child { border-bottom: none; }
+    .stat-num {
+      font-family: var(--mono); font-size: 22px; font-weight: 700;
+      color: var(--text-primary); letter-spacing: -0.5px; line-height: 1.1;
+    }
+    .stat-num.accent { color: var(--accent); }
+    .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+    /* Reading time card */
+    .time-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .time-row:last-child { border-bottom: none; }
+    .time-icon { font-size: 14px; margin-right: 6px; }
+    .time-label { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; }
+    .time-val { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text-primary); }
+
+    /* Top words card */
+    .word-list { padding: 4px 0; }
+    .word-row {
+      display: flex; align-items: center;
+      padding: 8px 16px; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .word-row:last-child { border-bottom: none; }
+    .word-rank { font-family: var(--mono); font-size: 11px; color: var(--text-muted); min-width: 18px; }
+    .word-text { font-size: 13px; color: var(--text-primary); flex: 1; font-family: var(--mono); }
+    .word-bar-wrap { width: 60px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .word-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+    .word-count { font-family: var(--mono); font-size: 11px; color: var(--text-muted); min-width: 24px; text-align: right; }
+
+    .empty-words {
+      padding: 16px;
+      font-size: 13px; color: var(--text-muted); text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .main { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .tool-header { padding: 24px 20px 20px; }
+      .nav { padding: 0 16px; }
+      .nav-logo span { display: none; }
+      .nav-privacy { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Home
+  </a>
+  <div class="nav-divider"></div>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">
+    Word Counter
+    <span class="nav-tool-badge">analyze</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-privacy">
+    <span class="nav-privacy-dot"></span>
+    Runs locally — no data sent
+  </div>
+</nav>
+
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">📝</div>
+      <h1 class="tool-title">Word Counter</h1>
+    </div>
+    <p class="tool-desc-text">Paste or type any text to instantly count words, characters, sentences, and estimate reading time.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">words</span>
+      <span class="tool-tag-pill">characters</span>
+      <span class="tool-tag-pill">reading time</span>
+      <span class="tool-tag-pill">analyze</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- EDITOR -->
+  <div class="editor-panel">
+    <div class="editor-toolbar">
+      <span class="editor-toolbar-label">Text Input</span>
+      <button class="btn-toolbar" id="btnPaste">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+        Paste
+      </button>
+      <button class="btn-toolbar" id="btnClear">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        Clear
+      </button>
+    </div>
+    <textarea class="editor-textarea" id="textInput" placeholder="Start typing or paste your text here…" spellcheck="false"></textarea>
+    <div class="editor-footer">
+      <span class="editor-char-count" id="charLiveCount">0 characters</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-col">
+
+    <!-- Primary counts -->
+    <div class="stat-card">
+      <div class="stat-card-header">Counts</div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num accent" id="statWords">0</div>
+          <div class="stat-lbl">Words</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statChars">0</div>
+          <div class="stat-lbl">Characters</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statCharsNoSpace">0</div>
+          <div class="stat-lbl">No spaces</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statSentences">0</div>
+          <div class="stat-lbl">Sentences</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statParagraphs">0</div>
+          <div class="stat-lbl">Paragraphs</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statLines">0</div>
+          <div class="stat-lbl">Lines</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reading / speaking time -->
+    <div class="stat-card">
+      <div class="stat-card-header">Time Estimates</div>
+      <div class="time-row">
+        <span class="time-label"><span class="time-icon">📖</span>Reading time</span>
+        <span class="time-val" id="statReadTime">—</span>
+      </div>
+      <div class="time-row">
+        <span class="time-label"><span class="time-icon">🎙️</span>Speaking time</span>
+        <span class="time-val" id="statSpeakTime">—</span>
+      </div>
+    </div>
+
+    <!-- Word analysis -->
+    <div class="stat-card">
+      <div class="stat-card-header">Word Analysis</div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num" id="statAvgWord">—</div>
+          <div class="stat-lbl">Avg length</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statLongest">—</div>
+          <div class="stat-lbl">Longest word</div>
+        </div>
+        <div class="stat-item full">
+          <div class="stat-num" id="statAvgSentence">—</div>
+          <div class="stat-lbl">Avg words / sentence</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top words -->
+    <div class="stat-card">
+      <div class="stat-card-header">Top Words</div>
+      <div class="word-list" id="topWords">
+        <div class="empty-words">Type some text to see top words</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const textInput   = document.getElementById('textInput');
+  const btnClear    = document.getElementById('btnClear');
+  const btnPaste    = document.getElementById('btnPaste');
+
+  const elWords     = document.getElementById('statWords');
+  const elChars     = document.getElementById('statChars');
+  const elCharsNS   = document.getElementById('statCharsNoSpace');
+  const elSentences = document.getElementById('statSentences');
+  const elParagraphs= document.getElementById('statParagraphs');
+  const elLines     = document.getElementById('statLines');
+  const elReadTime  = document.getElementById('statReadTime');
+  const elSpeakTime = document.getElementById('statSpeakTime');
+  const elAvgWord   = document.getElementById('statAvgWord');
+  const elLongest   = document.getElementById('statLongest');
+  const elAvgSent   = document.getElementById('statAvgSentence');
+  const elTopWords  = document.getElementById('topWords');
+  const elCharLive  = document.getElementById('charLiveCount');
+
+  const STOP_WORDS = new Set([
+    'the','a','an','and','or','but','in','on','at','to','for','of','with',
+    'is','are','was','were','be','been','being','have','has','had','do','does',
+    'did','will','would','could','should','may','might','shall','can','need',
+    'it','its','this','that','these','those','i','you','he','she','we','they',
+    'me','him','her','us','them','my','your','his','our','their','its','what',
+    'which','who','whom','how','when','where','why','not','no','so','as','if',
+    'from','by','about','into','through','during','before','after','above',
+    'below','up','down','out','off','over','under','again','then','there',
+  ]);
+
+  function fmtTime(seconds) {
+    if (seconds < 60) return `< 1 min`;
+    const m = Math.round(seconds / 60);
+    if (m < 60) return `${m} min`;
+    const h = Math.floor(m / 60), rem = m % 60;
+    return rem ? `${h}h ${rem}m` : `${h}h`;
+  }
+
+  function analyze(text) {
+    const chars      = text.length;
+    const charsNoSp  = text.replace(/\s/g, '').length;
+    const lines      = text === '' ? 0 : text.split('\n').length;
+    const paras      = text.trim() === '' ? 0 : text.trim().split(/\n\s*\n+/).filter(p => p.trim()).length;
+
+    const wordMatches = text.match(/\b[\w''-]+\b/g) || [];
+    const words = wordMatches.length;
+
+    const sentenceMatches = text.match(/[^.!?]*[.!?]+/g) || [];
+    const sentences = sentenceMatches.filter(s => s.trim().length > 0).length;
+
+    const readSec  = Math.round(words / 200 * 60);
+    const speakSec = Math.round(words / 130 * 60);
+
+    const wordLengths = wordMatches.map(w => w.replace(/['''-]/g, '').length).filter(l => l > 0);
+    const avgWord  = wordLengths.length ? (wordLengths.reduce((a,b) => a+b, 0) / wordLengths.length).toFixed(1) : null;
+    const longest  = wordMatches.reduce((a, b) => b.length > a.length ? b : a, '');
+    const avgSent  = sentences > 0 ? (words / sentences).toFixed(1) : null;
+
+    // Frequency map (lowercase, exclude stop words, min length 2)
+    const freq = {};
+    for (const w of wordMatches) {
+      const lc = w.toLowerCase().replace(/['''-]/g, '');
+      if (lc.length < 2 || STOP_WORDS.has(lc)) continue;
+      freq[lc] = (freq[lc] || 0) + 1;
+    }
+    const topWords = Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+    return { chars, charsNoSp, lines, paras, words, sentences, readSec, speakSec, avgWord, longest, avgSent, topWords };
+  }
+
+  function render(text) {
+    const s = analyze(text);
+
+    elChars.textContent      = s.chars.toLocaleString();
+    elCharsNS.textContent    = s.charsNoSp.toLocaleString();
+    elWords.textContent      = s.words.toLocaleString();
+    elSentences.textContent  = s.sentences.toLocaleString();
+    elParagraphs.textContent = s.paras.toLocaleString();
+    elLines.textContent      = s.lines.toLocaleString();
+    elCharLive.textContent   = `${s.chars.toLocaleString()} character${s.chars !== 1 ? 's' : ''}`;
+
+    elReadTime.textContent   = s.words > 0 ? fmtTime(s.readSec)  : '—';
+    elSpeakTime.textContent  = s.words > 0 ? fmtTime(s.speakSec) : '—';
+
+    elAvgWord.textContent    = s.avgWord  ?? '—';
+    elLongest.textContent    = s.longest  || '—';
+    elAvgSent.textContent    = s.avgSent  ?? '—';
+
+    if (s.topWords.length === 0) {
+      elTopWords.innerHTML = '<div class="empty-words">Type some text to see top words</div>';
+    } else {
+      const maxCount = s.topWords[0][1];
+      elTopWords.innerHTML = s.topWords.map(([word, count], i) => `
+        <div class="word-row">
+          <span class="word-rank">#${i + 1}</span>
+          <span class="word-text">${word}</span>
+          <div class="word-bar-wrap"><div class="word-bar" style="width:${Math.round(count/maxCount*100)}%"></div></div>
+          <span class="word-count">${count}</span>
+        </div>`).join('');
+    }
+  }
+
+  textInput.addEventListener('input', () => render(textInput.value));
+
+  btnClear.addEventListener('click', () => {
+    textInput.value = '';
+    textInput.focus();
+    render('');
+  });
+
+  btnPaste.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      textInput.value = text;
+      render(text);
+      textInput.focus();
+    } catch {
+      textInput.focus();
+    }
+  });
+
+  // Initial render
+  render('');
+</script>
+</body>
+</html>
