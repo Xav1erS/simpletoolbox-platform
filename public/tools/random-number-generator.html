@@ -188,12 +188,64 @@
     .error-msg { font-size: 12px; color: var(--red); margin-top: 6px; display: none; }
     .error-msg.visible { display: block; }
 
+    /* MODE TABS */
+    .mode-bar { max-width: 1100px; margin: 0 auto; padding: 20px 24px 0; }
+    .mode-tabs { display: flex; gap: 4px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px; width: fit-content; }
+    .mode-tab { padding: 6px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; color: var(--text-secondary); transition: color 0.15s, background 0.15s; }
+    .mode-tab.active { background: var(--accent); color: #fff; }
+    .mode-tab:not(.active):hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+
+    /* LIST RANDOMIZER */
+    .list-main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .list-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; }
+    .list-panel-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .list-panel-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .list-panel-actions { display: flex; gap: 6px; }
+    .list-textarea { flex: 1; min-height: 300px; resize: vertical; border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font); font-size: 13px; line-height: 1.7; padding: 14px 16px; }
+    .list-textarea::placeholder { color: var(--text-muted); }
+    .list-controls { padding: 14px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn-list-action { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: 1px solid var(--border); color: var(--text-secondary); background: rgba(255,255,255,0.04); transition: all 0.15s; }
+    .btn-list-action:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+    .btn-list-action.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    .btn-list-action.primary:hover { background: var(--accent-hover); }
+    .pick-n-wrap { display: flex; align-items: center; gap: 6px; }
+    .pick-n-input { width: 56px; padding: 7px 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-family: var(--mono); font-size: 13px; outline: none; text-align: center; }
+
+    /* DICE & COIN */
+    .dice-main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+    .dice-controls { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .dice-result-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; }
+    .dice-result-body { flex: 1; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; min-height: 300px; }
+    .dice-display { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .die-face {
+      width: 64px; height: 64px; border-radius: 12px;
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--accent);
+      transition: transform 0.15s;
+    }
+    .die-face.rolling { animation: roll 0.3s ease; }
+    @keyframes roll { 0% { transform: scale(0.8) rotate(-5deg); opacity: 0.5; } 50% { transform: scale(1.1) rotate(3deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+    .dice-total { font-family: var(--mono); font-size: 14px; color: var(--text-muted); }
+    .dice-total strong { font-size: 28px; color: var(--text-primary); margin: 0 6px; }
+    .coin-display { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .coin {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; border: 2px solid;
+    }
+    .coin.heads { background: rgba(234,179,8,0.15); border-color: rgba(234,179,8,0.4); }
+    .coin.tails { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); }
+    .coin-stats { font-size: 13px; color: var(--text-muted); }
+    .dice-empty { color: var(--text-muted); font-size: 13px; text-align: center; padding: 40px; }
+
     @media (max-width: 760px) {
-      .main { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .main, .list-main, .dice-main { grid-template-columns: 1fr; padding: 16px 16px 48px; }
       .tool-header { padding: 24px 20px 20px; }
       .nav { padding: 0 16px; }
       .nav-logo span { display: none; }
       .nav-privacy { display: none; }
+      .mode-bar { padding: 16px 16px 0; }
     }
   </style>
 </head>
@@ -237,7 +289,17 @@
   </div>
 </div>
 
-<div class="main">
+<!-- Mode Tabs -->
+<div class="mode-bar">
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="numbers">Numbers</button>
+    <button class="mode-tab" data-mode="list">List Randomizer</button>
+    <button class="mode-tab" data-mode="dice">Dice &amp; Coin</button>
+  </div>
+</div>
+
+<!-- ══ NUMBERS MODE ══ -->
+<div id="modeNumbers" class="main">
 
   <!-- SETTINGS -->
   <div class="panel">
@@ -341,7 +403,105 @@
     <div class="output-footer" id="outputFooter"></div>
   </div>
 
-</div>
+</div><!-- end #modeNumbers -->
+
+<!-- ══ LIST RANDOMIZER MODE ══ -->
+<div id="modeList" class="list-main" style="display:none">
+  <div class="list-panel">
+    <div class="list-panel-header">
+      <span class="list-panel-label">Input List</span>
+      <div class="list-panel-actions">
+        <button class="btn-list-action" id="btnListClear">Clear</button>
+      </div>
+    </div>
+    <textarea class="list-textarea" id="listInput" placeholder="Enter one item per line:&#10;Alice&#10;Bob&#10;Carol&#10;Dave&#10;..."></textarea>
+    <div class="list-controls">
+      <button class="btn-list-action primary" id="btnShuffle">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+        Shuffle All
+      </button>
+      <div class="pick-n-wrap">
+        <input class="pick-n-input" id="pickN" type="number" value="1" min="1" />
+        <button class="btn-list-action" id="btnPickN">Pick N</button>
+      </div>
+    </div>
+  </div>
+  <div class="list-panel">
+    <div class="list-panel-header">
+      <span class="list-panel-label">Result</span>
+      <div class="list-panel-actions">
+        <button class="btn-list-action" id="btnCopyListResult">Copy</button>
+      </div>
+    </div>
+    <textarea class="list-textarea" id="listOutput" placeholder="Result will appear here…" readonly></textarea>
+    <div class="list-controls">
+      <span id="listResultInfo" style="font-size:12px;color:var(--text-muted)"></span>
+    </div>
+  </div>
+</div><!-- end #modeList -->
+
+<!-- ══ DICE & COIN MODE ══ -->
+<div id="modeDice" class="dice-main" style="display:none">
+  <div class="dice-controls">
+    <div class="panel-section">
+      <div class="panel-label">Dice</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Die type</div>
+          <div class="seg-group" id="dieTypeGroup">
+            <button class="seg-btn" data-die="4">d4</button>
+            <button class="seg-btn active" data-die="6">d6</button>
+            <button class="seg-btn" data-die="8">d8</button>
+            <button class="seg-btn" data-die="10">d10</button>
+            <button class="seg-btn" data-die="12">d12</button>
+            <button class="seg-btn" data-die="20">d20</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Number of dice</div>
+          <div class="slider-row">
+            <div class="slider-wrap">
+              <input type="range" id="diceCount" min="1" max="10" value="1" />
+              <div class="slider-limits"><span>1</span><span>10</span></div>
+            </div>
+            <div class="slider-value" id="diceCountVal">1</div>
+          </div>
+        </div>
+        <button class="btn-generate" id="btnRollDice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+          Roll Dice
+        </button>
+      </div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-label">Coin</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Number of flips</div>
+          <div class="slider-row">
+            <div class="slider-wrap">
+              <input type="range" id="coinCount" min="1" max="10" value="1" />
+              <div class="slider-limits"><span>1</span><span>10</span></div>
+            </div>
+            <div class="slider-value" id="coinCountVal">1</div>
+          </div>
+        </div>
+        <button class="btn-generate" id="btnFlipCoin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+          Flip Coin
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="dice-result-panel">
+    <div class="list-panel-header">
+      <span class="list-panel-label" id="diceResultLabel">Results</span>
+    </div>
+    <div class="dice-result-body" id="diceResultBody">
+      <div class="dice-empty">Roll dice or flip a coin to see results</div>
+    </div>
+  </div>
+</div><!-- end #modeDice -->
 
 <script>
   const inMin       = document.getElementById('inMin');
@@ -513,10 +673,150 @@
 
   btnGenerate.addEventListener('click', generateNumbers);
 
-  // Keyboard shortcut
+  // ── MODE SWITCHING ──────────────────────────────────────
+  let currentMode = 'numbers';
+  const modeEls = {
+    numbers: document.getElementById('modeNumbers'),
+    list:    document.getElementById('modeList'),
+    dice:    document.getElementById('modeDice'),
+  };
+  document.querySelectorAll('.mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      currentMode = tab.dataset.mode;
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      Object.entries(modeEls).forEach(([k, el]) => { el.style.display = k === currentMode ? '' : 'none'; });
+    });
+  });
+
+  // ── LIST RANDOMIZER ─────────────────────────────────────
+  const listInput  = document.getElementById('listInput');
+  const listOutput = document.getElementById('listOutput');
+  const listResultInfo = document.getElementById('listResultInfo');
+
+  function getListItems() {
+    return listInput.value.split('\n').map(l => l.trim()).filter(Boolean);
+  }
+
+  function fisherYates(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(cryptoRandom() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  document.getElementById('btnShuffle').addEventListener('click', () => {
+    const items = getListItems();
+    if (!items.length) { listOutput.value = ''; listResultInfo.textContent = ''; return; }
+    const shuffled = fisherYates(items);
+    listOutput.value = shuffled.join('\n');
+    listResultInfo.textContent = `${shuffled.length} items shuffled`;
+  });
+
+  document.getElementById('btnPickN').addEventListener('click', () => {
+    const items = getListItems();
+    const n = Math.max(1, Math.min(parseInt(document.getElementById('pickN').value) || 1, items.length));
+    if (!items.length) { listOutput.value = ''; listResultInfo.textContent = ''; return; }
+    const picked = fisherYates(items).slice(0, n);
+    listOutput.value = picked.join('\n');
+    listResultInfo.textContent = `Picked ${picked.length} of ${items.length} items`;
+  });
+
+  document.getElementById('btnListClear').addEventListener('click', () => {
+    listInput.value = ''; listOutput.value = ''; listResultInfo.textContent = '';
+  });
+
+  document.getElementById('btnCopyListResult').addEventListener('click', async () => {
+    if (!listOutput.value) return;
+    const btn = document.getElementById('btnCopyListResult');
+    const orig = btn.textContent;
+    try { await navigator.clipboard.writeText(listOutput.value); } catch {}
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  });
+
+  // ── DICE & COIN ─────────────────────────────────────────
+  let currentDie = 6;
+  const diceCountSlider = document.getElementById('diceCount');
+  const diceCountVal    = document.getElementById('diceCountVal');
+  const coinCountSlider = document.getElementById('coinCount');
+  const coinCountVal    = document.getElementById('coinCountVal');
+  const diceResultBody  = document.getElementById('diceResultBody');
+  const diceResultLabel = document.getElementById('diceResultLabel');
+
+  diceCountSlider.addEventListener('input', () => { diceCountVal.textContent = diceCountSlider.value; });
+  coinCountSlider.addEventListener('input', () => { coinCountVal.textContent = coinCountSlider.value; });
+
+  document.querySelectorAll('[data-die]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentDie = +btn.dataset.die;
+      document.querySelectorAll('[data-die]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  document.getElementById('btnRollDice').addEventListener('click', () => {
+    const count = +diceCountSlider.value;
+    diceResultLabel.textContent = `${count}d${currentDie} — Rolling…`;
+    // Animate
+    let frames = 0;
+    const maxFrames = 8;
+    const dieFaces = Array.from({ length: count }, () => document.createElement('div'));
+    diceResultBody.innerHTML = '';
+    const display = document.createElement('div');
+    display.className = 'dice-display';
+    dieFaces.forEach(d => { d.className = 'die-face'; display.appendChild(d); });
+    diceResultBody.appendChild(display);
+    const totEl = document.createElement('div');
+    totEl.className = 'dice-total';
+    diceResultBody.appendChild(totEl);
+
+    const final = Array.from({ length: count }, () => 1 + Math.floor(cryptoRandom() * currentDie));
+    const interval = setInterval(() => {
+      frames++;
+      dieFaces.forEach(d => { d.textContent = 1 + Math.floor(cryptoRandom() * currentDie); });
+      if (frames >= maxFrames) {
+        clearInterval(interval);
+        final.forEach((v, i) => {
+          dieFaces[i].textContent = v;
+          dieFaces[i].classList.add('rolling');
+          setTimeout(() => dieFaces[i].classList.remove('rolling'), 350);
+        });
+        const total = final.reduce((a, b) => a + b, 0);
+        diceResultLabel.textContent = `${count}d${currentDie}`;
+        totEl.innerHTML = `Total: <strong>${total}</strong>${count > 1 ? ` (${final.join(' + ')})` : ''}`;
+      }
+    }, 40);
+  });
+
+  document.getElementById('btnFlipCoin').addEventListener('click', () => {
+    const count = +coinCountSlider.value;
+    const results = Array.from({ length: count }, () => cryptoRandom() < 0.5 ? 'heads' : 'tails');
+    const headsN = results.filter(r => r === 'heads').length;
+    diceResultLabel.textContent = `${count} Coin Flip${count > 1 ? 's' : ''}`;
+    const display = document.createElement('div');
+    display.className = 'coin-display';
+    results.forEach(r => {
+      const c = document.createElement('div');
+      c.className = `coin ${r}`;
+      c.textContent = r === 'heads' ? '🌟' : '🌑';
+      c.title = r;
+      display.appendChild(c);
+    });
+    const stats = document.createElement('div');
+    stats.className = 'coin-stats';
+    stats.textContent = count > 1 ? `Heads: ${headsN}  ·  Tails: ${count - headsN}` : (results[0] === 'heads' ? 'Heads' : 'Tails');
+    diceResultBody.innerHTML = '';
+    diceResultBody.appendChild(display);
+    diceResultBody.appendChild(stats);
+  });
+
+  // ── KEYBOARD SHORTCUTS ─────────────────────────────────
   document.addEventListener('keydown', e => {
     if ((e.key === 'Enter' || e.key === 'g') && !['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) {
-      generateNumbers();
+      if (currentMode === 'numbers') generateNumbers();
     }
   });
 </script>

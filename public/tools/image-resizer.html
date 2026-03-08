@@ -107,6 +107,13 @@
     }
     .btn-preset:hover { color: var(--accent); background: var(--accent-dim); border-color: rgba(94,106,210,0.3); }
 
+    /* Social media presets */
+    .social-presets { display: flex; flex-direction: column; gap: 4px; }
+    .btn-social-preset { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); text-align: left; transition: color 0.15s, background 0.15s, border-color 0.15s; }
+    .btn-social-preset:hover { color: var(--accent); background: var(--accent-dim); border-color: rgba(94,106,210,0.3); }
+    .btn-social-preset .preset-dim { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+    .btn-social-preset:hover .preset-dim { color: rgba(94,106,210,0.7); }
+
     /* Format + quality */
     .format-row { display: flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
     .fmt-btn { flex: 1; padding: 7px 6px; font-size: 12px; color: var(--text-secondary); text-align: center; cursor: pointer; background: transparent; border: none; border-right: 1px solid var(--border); transition: color 0.15s, background 0.15s; font-family: var(--font); }
@@ -246,6 +253,19 @@
     </div>
 
     <div class="panel-section">
+      <div class="panel-label">Social Media Presets</div>
+      <div class="social-presets">
+        <button class="btn-social-preset" data-pw="1080" data-ph="1080">Instagram Post<span class="preset-dim">1080 × 1080</span></button>
+        <button class="btn-social-preset" data-pw="1080" data-ph="1920">Instagram / TikTok Story<span class="preset-dim">1080 × 1920</span></button>
+        <button class="btn-social-preset" data-pw="1280" data-ph="720">YouTube Thumbnail<span class="preset-dim">1280 × 720</span></button>
+        <button class="btn-social-preset" data-pw="1200" data-ph="675">Twitter / X Post<span class="preset-dim">1200 × 675</span></button>
+        <button class="btn-social-preset" data-pw="1500" data-ph="500">Twitter / X Header<span class="preset-dim">1500 × 500</span></button>
+        <button class="btn-social-preset" data-pw="1200" data-ph="630">Facebook / OG Image<span class="preset-dim">1200 × 630</span></button>
+        <button class="btn-social-preset" data-pw="1584" data-ph="396">LinkedIn Cover<span class="preset-dim">1584 × 396</span></button>
+      </div>
+    </div>
+
+    <div class="panel-section">
       <div class="panel-label">Output Format</div>
       <div class="format-row">
         <button class="fmt-btn active" data-fmt="image/png">PNG</button>
@@ -359,6 +379,20 @@
       const pct = parseInt(btn.dataset.scale) / 100;
       inWidth.value  = Math.round(origW * pct);
       inHeight.value = Math.round(origH * pct);
+    });
+  });
+
+  // Social media preset buttons
+  document.querySelectorAll('.btn-social-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Temporarily unlock so both dimensions can be set independently, then re-lock
+      aspectLocked = false;
+      inWidth.value  = btn.dataset.pw;
+      inHeight.value = btn.dataset.ph;
+      aspectLocked = true;
+      btnLock.classList.add('locked');
+      lockIcon.innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+      updateOutputMeta();
     });
   });
 

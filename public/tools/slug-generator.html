@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>URL Slug Generator — Simple ToolBox</title>
+  <meta name="description" content="Free online URL slug generator. Convert titles to SEO-friendly slugs. Supports Chinese to pinyin conversion, custom separators, and length limits." />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/pinyin-pro/dist/index.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
+      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
+      --accent: #5E6AD2; --accent-hover: #6E7AE2;
+      --accent-dim: rgba(94,106,210,0.12); --accent-glow: rgba(94,106,210,0.25);
+      --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+      --radius-sm: 6px; --radius-md: 10px;
+      --font: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-back { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    .tool-header { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 32px 32px 28px; position: relative; overflow: hidden; }
+    .tool-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%); pointer-events: none; }
+    .tool-header-inner { max-width: 860px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill { font-family: var(--mono); font-size: 11px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; }
+
+    /* MAIN */
+    .main { max-width: 860px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* CARD */
+    .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .card-header { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .card-body { padding: 16px; }
+
+    /* INPUT */
+    .title-input { width: 100%; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-family: var(--font); font-size: 16px; outline: none; transition: border-color 0.15s; }
+    .title-input:focus { border-color: var(--border-hover); }
+    .title-input::placeholder { color: var(--text-muted); }
+
+    /* OPTIONS ROW */
+    .options-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+    .option-group { display: flex; flex-direction: column; gap: 6px; }
+    .option-label { font-size: 12px; color: var(--text-secondary); }
+    .seg-ctrl { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .seg-btn { padding: 6px 12px; font-size: 12px; font-weight: 500; color: var(--text-secondary); transition: color 0.15s, background 0.15s; white-space: nowrap; }
+    .seg-btn.active { background: var(--accent-dim); color: var(--accent); }
+    .seg-btn:not(.active):hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+    .max-len-input { width: 72px; padding: 6px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-family: var(--mono); font-size: 13px; outline: none; }
+    .base-url-input { padding: 6px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; outline: none; width: 260px; }
+    .base-url-input:focus, .max-len-input:focus { border-color: var(--border-hover); }
+
+    /* SLUG OUTPUT */
+    .slug-output-wrap { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 12px; }
+    .slug-val { font-family: var(--mono); font-size: 15px; color: var(--text-primary); flex: 1; padding: 12px 0; word-break: break-all; }
+    .slug-len { font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+    .slug-len.ok { color: var(--green); }
+    .slug-len.warn { color: var(--yellow); }
+    .slug-len.over { color: var(--red); }
+
+    /* URL PREVIEW */
+    .url-preview { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(255,255,255,0.025); border-radius: var(--radius-sm); overflow: hidden; }
+    .url-base { font-family: var(--mono); font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+    .url-slug-part { font-family: var(--mono); font-size: 12px; color: var(--accent); word-break: break-all; }
+
+    /* COPY BUTTONS */
+    .copy-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-copy { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; border: 1px solid var(--border); color: var(--text-secondary); background: rgba(255,255,255,0.04); transition: all 0.15s; }
+    .btn-copy:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+    .btn-copy.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+
+    /* SEO HINT */
+    .seo-hint { font-size: 12px; margin-top: 10px; display: flex; align-items: center; gap: 6px; }
+    .seo-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .seo-dot.ok { background: var(--green); }
+    .seo-dot.warn { background: var(--yellow); }
+    .seo-dot.over { background: var(--red); }
+    .seo-text { color: var(--text-muted); }
+
+    @media (max-width: 640px) {
+      .main { padding: 16px 16px 48px; }
+      .tool-header { padding: 20px 16px 18px; }
+      .nav { padding: 0 16px; }
+      .nav-logo span { display: none; }
+      .nav-privacy { display: none; }
+      .options-row { gap: 12px; }
+      .base-url-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Home
+  </a>
+  <div class="nav-divider"></div>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">URL Slug Generator <span class="nav-tool-badge">generate</span></div>
+  <div class="nav-spacer"></div>
+  <div class="nav-privacy"><span class="nav-privacy-dot"></span>Runs locally — no data sent</div>
+</nav>
+
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">🔗</div>
+      <h1 class="tool-title">URL Slug Generator</h1>
+    </div>
+    <p class="tool-desc-text">Convert any title into a clean, SEO-friendly URL slug. Supports Chinese to pinyin, custom separators, and length limits.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">SEO</span>
+      <span class="tool-tag-pill">permalink</span>
+      <span class="tool-tag-pill">Chinese pinyin</span>
+      <span class="tool-tag-pill">URL-safe</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- INPUT -->
+  <div class="card">
+    <div class="card-header">Title / Text</div>
+    <div class="card-body">
+      <input class="title-input" id="titleInput" type="text" placeholder="Enter a title, e.g. Hello World 你好世界" autocomplete="off" />
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="card">
+    <div class="card-header">Options</div>
+    <div class="card-body">
+      <div class="options-row">
+        <div class="option-group">
+          <span class="option-label">Separator</span>
+          <div class="seg-ctrl" id="sepCtrl">
+            <button class="seg-btn active" data-sep="-">Hyphen  -</button>
+            <button class="seg-btn" data-sep="_">Underscore  _</button>
+            <button class="seg-btn" data-sep=".">Dot  .</button>
+          </div>
+        </div>
+        <div class="option-group">
+          <span class="option-label">Case</span>
+          <div class="seg-ctrl" id="caseCtrl">
+            <button class="seg-btn active" data-case="lower">lowercase</button>
+            <button class="seg-btn" data-case="upper">UPPER</button>
+          </div>
+        </div>
+        <div class="option-group">
+          <span class="option-label">Max Length</span>
+          <input class="max-len-input" id="maxLen" type="number" value="60" min="10" max="500" />
+        </div>
+        <div class="option-group">
+          <span class="option-label">Base URL (for preview)</span>
+          <input class="base-url-input" id="baseUrl" type="text" value="https://example.com/blog/" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLUG OUTPUT -->
+  <div class="card">
+    <div class="card-header">Slug</div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="slug-output-wrap">
+        <span class="slug-val" id="slugVal">—</span>
+        <span class="slug-len" id="slugLen"></span>
+      </div>
+      <div class="seo-hint">
+        <div class="seo-dot" id="seoDot"></div>
+        <span class="seo-text" id="seoText">Enter a title above to generate a slug.</span>
+      </div>
+      <div class="url-preview">
+        <span class="url-base" id="urlBase">https://example.com/blog/</span>
+        <span class="url-slug-part" id="urlSlugPart">—</span>
+      </div>
+      <div class="copy-actions">
+        <button class="btn-copy" id="btnCopySlug">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Slug
+        </button>
+        <button class="btn-copy" id="btnCopyUrl">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Copy Full URL
+        </button>
+        <button class="btn-copy" id="btnCopyMarkdown">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h8m-8 6h16"/></svg>
+          Copy as Markdown
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentSep  = '-';
+  let currentCase = 'lower';
+
+  const titleInput   = document.getElementById('titleInput');
+  const maxLenInput  = document.getElementById('maxLen');
+  const baseUrlInput = document.getElementById('baseUrl');
+  const slugVal      = document.getElementById('slugVal');
+  const slugLen      = document.getElementById('slugLen');
+  const seoDot       = document.getElementById('seoDot');
+  const seoText      = document.getElementById('seoText');
+  const urlBase      = document.getElementById('urlBase');
+  const urlSlugPart  = document.getElementById('urlSlugPart');
+
+  // Separator & case segment controls
+  document.querySelectorAll('#sepCtrl .seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSep = btn.dataset.sep;
+      document.querySelectorAll('#sepCtrl .seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      update();
+    });
+  });
+  document.querySelectorAll('#caseCtrl .seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCase = btn.dataset.case;
+      document.querySelectorAll('#caseCtrl .seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      update();
+    });
+  });
+
+  // Accent/diacritic normalizer
+  function removeDiacritics(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // Check if text contains Chinese characters
+  function hasChinese(str) {
+    return /[\u4e00-\u9fff\u3400-\u4dbf]/.test(str);
+  }
+
+  // Convert Chinese to pinyin if library is available
+  function toPinyin(str) {
+    if (typeof pinyinPro !== 'undefined' && pinyinPro.pinyin) {
+      return pinyinPro.pinyin(str, { toneType: 'none', separator: ' ', nonZh: 'consecutive' });
+    }
+    // Fallback: leave Chinese characters, they'll be removed in next step
+    return str;
+  }
+
+  function buildSlug(title) {
+    const maxLen = Math.max(10, parseInt(maxLenInput.value) || 60);
+    const sep    = currentSep;
+
+    let s = title;
+
+    // Convert Chinese to pinyin if present
+    if (hasChinese(s)) s = toPinyin(s);
+
+    // Remove diacritics
+    s = removeDiacritics(s);
+
+    // Lowercase first (then we'll apply case preference)
+    s = s.toLowerCase();
+
+    // Replace non-alphanumeric (keep letters, digits, spaces) with separator
+    s = s.replace(/[^a-z0-9\s]/g, ' ');
+
+    // Collapse whitespace and convert to separator
+    s = s.trim().replace(/\s+/g, sep);
+
+    // Apply case preference
+    if (currentCase === 'upper') s = s.toUpperCase();
+
+    // Truncate to maxLen (don't cut in the middle of a word if possible)
+    if (s.length > maxLen) {
+      s = s.slice(0, maxLen);
+      // Remove trailing separator
+      const re = new RegExp(`[${sep.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}]+$`);
+      s = s.replace(re, '');
+    }
+
+    return s;
+  }
+
+  function update() {
+    const title  = titleInput.value;
+    const baseUrl = baseUrlInput.value.trim();
+    const slug   = title.trim() ? buildSlug(title) : '';
+    const maxLen = Math.max(10, parseInt(maxLenInput.value) || 60);
+    const len    = slug.length;
+
+    slugVal.textContent      = slug || '—';
+    urlBase.textContent      = baseUrl || 'https://example.com/blog/';
+    urlSlugPart.textContent  = slug || '—';
+
+    if (!slug) {
+      slugLen.textContent = '';
+      seoDot.className = 'seo-dot';
+      seoText.textContent = 'Enter a title above to generate a slug.';
+      return;
+    }
+
+    slugLen.textContent = `${len} chars`;
+    if (len <= 60) {
+      slugLen.className = 'slug-len ok';
+      seoDot.className  = 'seo-dot ok';
+      seoText.textContent = `Good length for SEO (≤ 60 chars).`;
+    } else if (len <= 75) {
+      slugLen.className = 'slug-len warn';
+      seoDot.className  = 'seo-dot warn';
+      seoText.textContent = `Slightly long for SEO — consider shortening (> 60 chars).`;
+    } else {
+      slugLen.className = 'slug-len over';
+      seoDot.className  = 'seo-dot over';
+      seoText.textContent = `Too long for SEO — consider reducing Max Length (> 75 chars).`;
+    }
+  }
+
+  titleInput.addEventListener('input', update);
+  maxLenInput.addEventListener('input', update);
+  baseUrlInput.addEventListener('input', update);
+
+  // Copy helpers
+  async function copyText(text, btn) {
+    if (!text || text === '—') return;
+    const orig = btn.innerHTML;
+    try { await navigator.clipboard.writeText(text); } catch {
+      const ta = Object.assign(document.createElement('textarea'), { value: text });
+      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    btn.classList.add('copied');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1800);
+  }
+
+  document.getElementById('btnCopySlug').addEventListener('click', () => {
+    copyText(slugVal.textContent, document.getElementById('btnCopySlug'));
+  });
+  document.getElementById('btnCopyUrl').addEventListener('click', () => {
+    const url = (baseUrlInput.value.trim() || 'https://example.com/blog/') + slugVal.textContent;
+    copyText(url, document.getElementById('btnCopyUrl'));
+  });
+  document.getElementById('btnCopyMarkdown').addEventListener('click', () => {
+    const title = titleInput.value.trim() || slugVal.textContent;
+    const url   = (baseUrlInput.value.trim() || 'https://example.com/blog/') + slugVal.textContent;
+    copyText(`[${title}](${url})`, document.getElementById('btnCopyMarkdown'));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Lorem Ipsum Generator — Simple ToolBox</title>
+  <meta name="description" content="Free Lorem Ipsum placeholder text generator. Choose Classic, Chinese, Tech, or Business themes. Generate paragraphs, sentences, or words in plain text, HTML, or Markdown." />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
+      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
+      --accent: #5E6AD2; --accent-hover: #6E7AE2;
+      --accent-dim: rgba(94,106,210,0.12); --accent-glow: rgba(94,106,210,0.25);
+      --green: #22c55e; --red: #ef4444;
+      --radius-sm: 6px; --radius-md: 10px;
+      --font: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-back { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    .tool-header { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 32px 32px 28px; position: relative; overflow: hidden; }
+    .tool-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%); pointer-events: none; }
+    .tool-header-inner { max-width: 1100px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill { font-family: var(--mono); font-size: 11px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; }
+
+    /* SETTINGS */
+    .settings { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .settings-section { padding: 18px 20px; border-bottom: 1px solid var(--border); }
+    .settings-section:last-child { border-bottom: none; }
+    .settings-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
+
+    /* Theme tabs */
+    .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .theme-btn { padding: 8px 6px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-secondary); text-align: center; transition: all 0.15s; }
+    .theme-btn.active { background: var(--accent-dim); color: var(--accent); border-color: rgba(94,106,210,0.3); }
+    .theme-btn:not(.active):hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+
+    /* Unit toggle */
+    .seg-ctrl { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .seg-btn { flex: 1; padding: 6px 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); text-align: center; transition: color 0.15s, background 0.15s; }
+    .seg-btn.active { background: var(--accent-dim); color: var(--accent); }
+    .seg-btn:not(.active):hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+
+    /* Slider */
+    .slider-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+    .slider-wrap { flex: 1; }
+    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--border); outline: none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--bg-surface); }
+    input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--bg-surface); }
+    .slider-limits { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 4px; font-family: var(--mono); }
+    .slider-value { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--text-primary); min-width: 32px; text-align: right; }
+
+    /* Generate button */
+    .btn-generate { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; padding: 13px; border-radius: var(--radius-md); transition: background 0.2s, transform 0.15s; }
+    .btn-generate:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* OUTPUT PANEL */
+    .output-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; }
+    .output-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .output-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); flex: 1; }
+    .output-actions { display: flex; gap: 6px; }
+    .btn-out { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); padding: 5px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border); transition: all 0.15s; }
+    .btn-out:hover { color: var(--text-primary); background: var(--bg-hover); }
+    .btn-out.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .output-textarea { flex: 1; min-height: 400px; resize: vertical; border: none; outline: none; background: transparent; color: var(--text-primary); font-family: var(--font); font-size: 14px; line-height: 1.75; padding: 18px 20px; }
+    .output-footer { padding: 8px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+
+    @media (max-width: 800px) {
+      .main { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .tool-header { padding: 24px 20px 20px; }
+      .nav { padding: 0 16px; }
+      .nav-logo span { display: none; }
+      .nav-privacy { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Home
+  </a>
+  <div class="nav-divider"></div>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">Lorem Ipsum Generator <span class="nav-tool-badge">generate</span></div>
+  <div class="nav-spacer"></div>
+  <div class="nav-privacy"><span class="nav-privacy-dot"></span>Runs locally — no data sent</div>
+</nav>
+
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">📄</div>
+      <h1 class="tool-title">Lorem Ipsum Generator</h1>
+    </div>
+    <p class="tool-desc-text">Generate placeholder text in multiple themes: Classic Lorem, Chinese, Tech/Code, or Business. Output as plain text, HTML, or Markdown.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">placeholder</span>
+      <span class="tool-tag-pill">lorem ipsum</span>
+      <span class="tool-tag-pill">Chinese</span>
+      <span class="tool-tag-pill">tech</span>
+      <span class="tool-tag-pill">business</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SETTINGS -->
+  <div class="settings">
+    <div class="settings-section">
+      <div class="settings-label">Theme</div>
+      <div class="theme-grid">
+        <button class="theme-btn active" data-theme="lorem">Classic Lorem</button>
+        <button class="theme-btn" data-theme="chinese">中文占位</button>
+        <button class="theme-btn" data-theme="tech">Tech / Code</button>
+        <button class="theme-btn" data-theme="business">Business</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">Unit</div>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" data-unit="paragraphs">Paragraphs</button>
+        <button class="seg-btn" data-unit="sentences">Sentences</button>
+        <button class="seg-btn" data-unit="words">Words</button>
+      </div>
+      <div class="slider-row">
+        <div class="slider-wrap">
+          <input type="range" id="countSlider" min="1" max="20" value="3" />
+          <div class="slider-limits"><span id="sliderMin">1</span><span id="sliderMax">20</span></div>
+        </div>
+        <div class="slider-value" id="sliderVal">3</div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">Output Format</div>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" data-fmt="text">Text</button>
+        <button class="seg-btn" data-fmt="html">HTML</button>
+        <button class="seg-btn" data-fmt="markdown">Markdown</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <button class="btn-generate" id="btnGenerate">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        Generate
+      </button>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-panel">
+    <div class="output-header">
+      <span class="output-label" id="outputLabel">Output</span>
+      <div class="output-actions">
+        <button class="btn-out" id="btnCopy">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+        <button class="btn-out" id="btnDownload">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </button>
+      </div>
+    </div>
+    <textarea class="output-textarea" id="outputText" readonly placeholder="Click Generate to create placeholder text…"></textarea>
+    <div class="output-footer" id="outputFooter"></div>
+  </div>
+
+</div>
+
+<script>
+  // ── WORD BANKS ─────────────────────────────────────────
+  const LOREM_WORDS = 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum curabitur pretium tincidunt lacus nulla gravida orci a odio tempus diam mi dictum lacus blandit arcu viverra feugiat nibh facilisis fermentum auctor ligula volutpat'.split(' ');
+
+  const CHINESE_CHARS = '的一是在不了有和人这中大为上个国我以要他时来用们生到作地于出就分对成会可主发年动同工也能下过子说产种面而方后多定行学法所民得经十三之进着等部度家电力里如水化高自二理起小物现实加量都两体制机当使点从业本去把性好应开它合还因由其些然前外天政四日那社义事平形相全表间样与关各重新线内数正心力理样华海建设界感情产业功等发现原来'.split('');
+
+  const TECH_WORDS = 'function component render state props hook context reducer async await promise callback interface type generic module export import class extends implements static abstract method parameter return boolean string number object array null undefined error exception try catch finally fetch api endpoint request response json token auth bearer middleware pipeline schema migration query mutation subscription websocket event listener observer iterator generator closure prototype prototype scope lexical binary heap stack queue graph tree node leaf root branch traversal recursive linear logarithmic complexity algorithm data structure framework library package dependency version release deploy build test lint format debug refactor optimize performance cache memory thread process concurrent parallel distributed microservice container docker kubernetes cloud'.split(' ');
+
+  const BUSINESS_WORDS = 'leverage synergy optimize scalable robust agile enterprise stakeholder deliverable bandwidth paradigm disruptive innovative ecosystem value proposition ROI KPI metrics dashboard pipeline roadmap milestone sprint backlog velocity iteration deployment rollout strategy framework alignment cross-functional holistic end-to-end seamless frictionless proactive reactive data-driven customer-centric market-leading best-in-class world-class turnkey plug-and-play out-of-the-box low-hanging-fruit boil-the-ocean think-outside-the-box move-the-needle circle-back touch-base on-the-same-page deep-dive take-offline sync-up loop-in bandwidth-permitting verticals horizontals'.split(' ');
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function pickMany(arr, n) { const r = []; for (let i = 0; i < n; i++) r.push(pick(arr)); return r; }
+  function randInt(min, max) { return min + Math.floor(Math.random() * (max - min + 1)); }
+
+  // ── SENTENCE BUILDERS ──────────────────────────────────
+  function buildSentence(theme) {
+    if (theme === 'lorem') {
+      const len = randInt(6, 18);
+      const words = pickMany(LOREM_WORDS, len);
+      words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+      return words.join(' ') + '.';
+    }
+    if (theme === 'chinese') {
+      const len = randInt(8, 24);
+      return pickMany(CHINESE_CHARS, len).join('') + '。';
+    }
+    if (theme === 'tech') {
+      const len = randInt(6, 14);
+      const words = pickMany(TECH_WORDS, len);
+      words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+      return words.join(' ') + '.';
+    }
+    if (theme === 'business') {
+      const len = randInt(6, 14);
+      const words = pickMany(BUSINESS_WORDS, len);
+      words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+      return words.join(' ') + '.';
+    }
+    return '';
+  }
+
+  function buildParagraph(theme) {
+    const sentCount = randInt(3, 7);
+    return Array.from({ length: sentCount }, () => buildSentence(theme)).join(' ');
+  }
+
+  function buildWords(theme, n) {
+    const bank = theme === 'lorem' ? LOREM_WORDS : theme === 'chinese' ? CHINESE_CHARS : theme === 'tech' ? TECH_WORDS : BUSINESS_WORDS;
+    return pickMany(bank, n).join(theme === 'chinese' ? '' : ' ');
+  }
+
+  // ── STATE ──────────────────────────────────────────────
+  let currentTheme = 'lorem';
+  let currentUnit  = 'paragraphs';
+  let currentFmt   = 'text';
+
+  const UNIT_CONFIG = {
+    paragraphs: { min: 1, max: 20, default: 3 },
+    sentences:  { min: 1, max: 50, default: 5 },
+    words:      { min: 10, max: 500, default: 50 },
+  };
+
+  const countSlider = document.getElementById('countSlider');
+  const sliderVal   = document.getElementById('sliderVal');
+  const sliderMin   = document.getElementById('sliderMin');
+  const sliderMax   = document.getElementById('sliderMax');
+  const outputText  = document.getElementById('outputText');
+  const outputLabel = document.getElementById('outputLabel');
+  const outputFooter= document.getElementById('outputFooter');
+
+  function updateSliderRange() {
+    const cfg = UNIT_CONFIG[currentUnit];
+    countSlider.min   = cfg.min;
+    countSlider.max   = cfg.max;
+    countSlider.value = cfg.default;
+    sliderVal.textContent = cfg.default;
+    sliderMin.textContent = cfg.min;
+    sliderMax.textContent = cfg.max;
+  }
+
+  countSlider.addEventListener('input', () => { sliderVal.textContent = countSlider.value; });
+
+  // Theme buttons
+  document.querySelectorAll('[data-theme]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTheme = btn.dataset.theme;
+      document.querySelectorAll('[data-theme]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Unit buttons
+  document.querySelectorAll('[data-unit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentUnit = btn.dataset.unit;
+      document.querySelectorAll('[data-unit]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateSliderRange();
+    });
+  });
+
+  // Format buttons
+  document.querySelectorAll('[data-fmt]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentFmt = btn.dataset.fmt;
+      document.querySelectorAll('[data-fmt]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function generate() {
+    const count = parseInt(countSlider.value);
+    let paragraphs = [];
+
+    if (currentUnit === 'paragraphs') {
+      for (let i = 0; i < count; i++) paragraphs.push(buildParagraph(currentTheme));
+    } else if (currentUnit === 'sentences') {
+      const sents = Array.from({ length: count }, () => buildSentence(currentTheme));
+      // Group into paragraphs of 3-5 sentences
+      for (let i = 0; i < sents.length; ) {
+        const take = Math.min(randInt(3, 5), sents.length - i);
+        paragraphs.push(sents.slice(i, i + take).join(' '));
+        i += take;
+      }
+    } else { // words
+      paragraphs = [buildWords(currentTheme, count)];
+    }
+
+    let output = '';
+    if (currentFmt === 'text') {
+      output = paragraphs.join('\n\n');
+    } else if (currentFmt === 'html') {
+      output = paragraphs.map(p => `<p>${p}</p>`).join('\n');
+    } else { // markdown
+      output = paragraphs.join('\n\n');
+    }
+
+    outputText.value = output;
+    const wc = output.split(/\s+/).filter(Boolean).length;
+    const cc = output.length;
+    outputLabel.textContent = `Output — ${paragraphs.length} paragraph${paragraphs.length !== 1 ? 's' : ''}`;
+    outputFooter.textContent = `${wc.toLocaleString()} words  ·  ${cc.toLocaleString()} characters`;
+  }
+
+  document.getElementById('btnGenerate').addEventListener('click', generate);
+
+  // Copy
+  document.getElementById('btnCopy').addEventListener('click', async () => {
+    if (!outputText.value) return;
+    const btn = document.getElementById('btnCopy');
+    const orig = btn.innerHTML;
+    try { await navigator.clipboard.writeText(outputText.value); } catch {
+      const ta = Object.assign(document.createElement('textarea'), { value: outputText.value });
+      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    btn.classList.add('copied'); btn.textContent = 'Copied!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  });
+
+  // Download
+  document.getElementById('btnDownload').addEventListener('click', () => {
+    if (!outputText.value) return;
+    const ext = currentFmt === 'html' ? 'html' : currentFmt === 'markdown' ? 'md' : 'txt';
+    const blob = new Blob([outputText.value], { type: 'text/plain' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `lorem-ipsum.${ext}` });
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  // Keyboard shortcut G to generate
+  document.addEventListener('keydown', e => {
+    if (e.key === 'g' && !['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) generate();
+  });
+
+  // Initialize
+  updateSliderRange();
+  generate();
+</script>
+</body>
+</html>

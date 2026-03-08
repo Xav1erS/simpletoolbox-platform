@@ -106,10 +106,43 @@
     .info-text { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
     .info-text strong { color: var(--text-primary); font-weight: 600; }
 
+    /* MODE TABS */
+    .mode-tabs { display: flex; gap: 4px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px; width: fit-content; }
+    .mode-tab { padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 500; color: var(--text-secondary); transition: color 0.15s, background 0.15s; }
+    .mode-tab.active { background: var(--accent); color: #fff; }
+    .mode-tab:not(.active):hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+
+    /* HISTORY DROPDOWN */
+    .history-wrap { position: relative; }
+    .history-dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); right: 0; z-index: 200;
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+      min-width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .history-dropdown.open { display: block; }
+    .history-header { padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .history-clear-btn { font-size: 11px; color: var(--text-muted); padding: 2px 6px; border-radius: 3px; transition: color 0.15s; }
+    .history-clear-btn:hover { color: var(--red); }
+    .history-item { padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    .history-item:last-child { border-bottom: none; }
+    .history-item:hover { background: rgba(255,255,255,0.04); }
+    .history-item-preview { font-family: var(--mono); font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .history-item-time { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    .history-empty { padding: 14px 12px; font-size: 12px; color: var(--text-muted); text-align: center; }
+
+    /* CSV/JSON PANELS */
+    .csv-panels { display: grid; grid-template-columns: 1fr 48px 1fr; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; min-height: 380px; }
+    .csv-actions-col { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--border); border-right: 1px solid var(--border); background: var(--bg); }
+    .sql-section { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .sql-row { display: flex; align-items: center; gap: 10px; }
+    .sql-label { font-size: 12px; color: var(--text-secondary); white-space: nowrap; }
+    .sql-table-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--text-primary); font-family: var(--mono); font-size: 12px; outline: none; transition: border-color 0.15s; }
+    .sql-table-input:focus { border-color: var(--border-hover); }
+
     /* RESPONSIVE */
     @media (max-width: 720px) {
-      .panels-row { grid-template-columns: 1fr; grid-template-rows: 1fr auto 1fr; }
-      .panels-arrow { height: 36px; border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .panels-row, .csv-panels { grid-template-columns: 1fr; grid-template-rows: 1fr auto 1fr; }
+      .panels-arrow, .csv-actions-col { height: 36px; border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
       .arrow-circle { transform: rotate(90deg); }
     }
     @media (max-width: 640px) {
@@ -161,6 +194,16 @@
 
 <div class="main">
 
+  <!-- Mode Tabs -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="format">Format / Validate</button>
+    <button class="mode-tab" data-mode="json-csv">JSON → CSV</button>
+    <button class="mode-tab" data-mode="csv-json">CSV → JSON</button>
+  </div>
+
+  <!-- ══ FORMAT MODE ══ -->
+  <div id="modeFormat">
+
   <!-- Toolbar -->
   <div class="toolbar">
     <button class="btn-action primary" id="btnPrettify">
@@ -179,6 +222,20 @@
       <button class="seg-btn" id="indTab">Tab</button>
     </div>
     <div class="toolbar-spacer"></div>
+    <button class="btn-action" id="btnLoadExample">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Example
+    </button>
+    <div class="history-wrap">
+      <button class="btn-action" id="btnHistory">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        History
+      </button>
+      <div class="history-dropdown" id="historyDropdown">
+        <div class="history-header">Recent <button class="history-clear-btn" id="btnClearHistory">Clear all</button></div>
+        <div id="historyList"><div class="history-empty">No history yet</div></div>
+      </div>
+    </div>
     <button class="btn-action" id="btnCopyOut">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       Copy
@@ -242,29 +299,176 @@
     </div>
   </div>
 
+  </div><!-- end #modeFormat -->
+
+  <!-- ══ JSON → CSV MODE ══ -->
+  <div id="modeJsonCsv" style="display:none">
+    <div class="toolbar">
+      <button class="btn-action primary" id="btnConvertToCsv">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Convert
+      </button>
+      <button class="btn-action" id="btnLoadExampleCsv">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Example
+      </button>
+      <div class="toolbar-spacer"></div>
+      <button class="btn-action" id="btnCopyCsvOut">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy CSV
+      </button>
+    </div>
+    <div class="csv-panels">
+      <div class="io-panel" id="jsonCsvInputPanel">
+        <div class="io-header">
+          <span class="io-label">Input JSON (array of objects)</span>
+          <div class="io-actions">
+            <button class="io-btn" id="btnClearJsonCsvInput">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              Clear
+            </button>
+          </div>
+        </div>
+        <textarea class="io-textarea" id="jsonCsvInput" placeholder='[{"name":"Alice","age":30},{"name":"Bob","age":25}]' spellcheck="false"></textarea>
+        <div class="io-footer">
+          <span class="io-stat" id="jsonCsvInputStat">0 chars</span>
+          <span class="io-error" id="jsonCsvError"></span>
+        </div>
+      </div>
+      <div class="csv-actions-col"><div class="arrow-circle">→</div></div>
+      <div class="io-panel">
+        <div class="io-header">
+          <span class="io-label">Output CSV</span>
+        </div>
+        <textarea class="io-textarea" id="csvOutput" placeholder="CSV output will appear here…" readonly spellcheck="false"></textarea>
+        <div class="io-footer">
+          <span class="io-stat" id="csvOutputStat">0 chars</span>
+        </div>
+      </div>
+    </div>
+    <!-- SQL Export -->
+    <div class="sql-section">
+      <div class="sql-row">
+        <span class="sql-label">Export as SQL INSERT:</span>
+        <input class="sql-table-input" id="sqlTableName" type="text" value="my_table" placeholder="table_name" />
+        <button class="btn-action" id="btnExportSql">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+          Generate SQL
+        </button>
+        <button class="btn-action" id="btnCopySql" style="display:none">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy SQL
+        </button>
+      </div>
+      <textarea class="io-textarea" id="sqlOutput" placeholder="SQL INSERT statements will appear here…" readonly spellcheck="false" style="min-height:120px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg);"></textarea>
+    </div>
+  </div><!-- end #modeJsonCsv -->
+
+  <!-- ══ CSV → JSON MODE ══ -->
+  <div id="modeCsvJson" style="display:none">
+    <div class="toolbar">
+      <button class="btn-action primary" id="btnConvertToJson">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Convert
+      </button>
+      <div class="toolbar-spacer"></div>
+      <button class="btn-action" id="btnCopyJsonOut">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy JSON
+      </button>
+    </div>
+    <div class="csv-panels">
+      <div class="io-panel" id="csvJsonInputPanel">
+        <div class="io-header">
+          <span class="io-label">Input CSV (first row = headers)</span>
+          <div class="io-actions">
+            <button class="io-btn" id="btnClearCsvJsonInput">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              Clear
+            </button>
+          </div>
+        </div>
+        <textarea class="io-textarea" id="csvJsonInput" placeholder="name,age,city&#10;Alice,30,London&#10;Bob,25,Paris" spellcheck="false"></textarea>
+        <div class="io-footer">
+          <span class="io-stat" id="csvJsonInputStat">0 chars</span>
+          <span class="io-error" id="csvJsonError"></span>
+        </div>
+      </div>
+      <div class="csv-actions-col"><div class="arrow-circle">→</div></div>
+      <div class="io-panel">
+        <div class="io-header">
+          <span class="io-label">Output JSON</span>
+        </div>
+        <textarea class="io-textarea" id="jsonFromCsvOutput" placeholder="JSON output will appear here…" readonly spellcheck="false"></textarea>
+        <div class="io-footer">
+          <span class="io-stat" id="jsonFromCsvStat">0 chars</span>
+        </div>
+      </div>
+    </div>
+  </div><!-- end #modeCsvJson -->
+
 </div>
 
 <script>
-  let indentValue = 4; // 2 | 4 | '\t'
+  // ── STATE ──────────────────────────────────────────────
+  let indentValue  = 4;
+  let currentMode  = 'format'; // 'format' | 'json-csv' | 'csv-json'
+  const HISTORY_KEY = 'stb_json_history';
+  const EXAMPLE_JSON = `[\n  { "id": 1, "name": "Alice", "role": "engineer", "active": true },\n  { "id": 2, "name": "Bob",   "role": "designer",  "active": false },\n  { "id": 3, "name": "Carol","role": "manager",   "active": true }\n]`;
 
-  const inputText    = document.getElementById('inputText');
-  const outputText   = document.getElementById('outputText');
-  const inputStat    = document.getElementById('inputStat');
-  const outputStat   = document.getElementById('outputStat');
-  const inputError   = document.getElementById('inputError');
-  const outputValid  = document.getElementById('outputValid');
-  const inputPanel   = document.getElementById('inputPanel');
-  const outputPanel  = document.getElementById('outputPanel');
-  const outputLabel  = document.getElementById('outputLabel');
-  const btnPrettify  = document.getElementById('btnPrettify');
-  const btnMinify    = document.getElementById('btnMinify');
-  const btnCopyOut   = document.getElementById('btnCopyOut');
+  // ── ELEMENT REFS ───────────────────────────────────────
+  const inputText     = document.getElementById('inputText');
+  const outputText    = document.getElementById('outputText');
+  const inputStat     = document.getElementById('inputStat');
+  const outputStat    = document.getElementById('outputStat');
+  const inputError    = document.getElementById('inputError');
+  const outputValid   = document.getElementById('outputValid');
+  const inputPanel    = document.getElementById('inputPanel');
+  const outputPanel   = document.getElementById('outputPanel');
+  const outputLabel   = document.getElementById('outputLabel');
+  const btnPrettify   = document.getElementById('btnPrettify');
+  const btnMinify     = document.getElementById('btnMinify');
+  const btnCopyOut    = document.getElementById('btnCopyOut');
   const btnCopyHeader = document.getElementById('btnCopyHeader');
-  const btnClearAll  = document.getElementById('btnClearAll');
+  const btnClearAll   = document.getElementById('btnClearAll');
   const btnClearInput = document.getElementById('btnClearInput');
-  const btnPaste     = document.getElementById('btnPaste');
+  const btnPaste      = document.getElementById('btnPaste');
+  const btnLoadExample= document.getElementById('btnLoadExample');
+  const btnHistory    = document.getElementById('btnHistory');
+  const historyDropdown= document.getElementById('historyDropdown');
+  const historyList   = document.getElementById('historyList');
+  const btnClearHistory= document.getElementById('btnClearHistory');
+  // JSON→CSV
+  const jsonCsvInput  = document.getElementById('jsonCsvInput');
+  const csvOutput     = document.getElementById('csvOutput');
+  const jsonCsvInputPanel= document.getElementById('jsonCsvInputPanel');
+  const jsonCsvError  = document.getElementById('jsonCsvError');
+  const jsonCsvInputStat= document.getElementById('jsonCsvInputStat');
+  const csvOutputStat = document.getElementById('csvOutputStat');
+  const sqlOutput     = document.getElementById('sqlOutput');
+  const sqlTableName  = document.getElementById('sqlTableName');
+  const btnCopySql    = document.getElementById('btnCopySql');
+  // CSV→JSON
+  const csvJsonInput  = document.getElementById('csvJsonInput');
+  const jsonFromCsvOutput= document.getElementById('jsonFromCsvOutput');
+  const csvJsonInputPanel= document.getElementById('csvJsonInputPanel');
+  const csvJsonError  = document.getElementById('csvJsonError');
+  const csvJsonInputStat= document.getElementById('csvJsonInputStat');
+  const jsonFromCsvStat= document.getElementById('jsonFromCsvStat');
 
-  // indent segment buttons
+  // ── MODE SWITCHING ─────────────────────────────────────
+  document.querySelectorAll('.mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      currentMode = tab.dataset.mode;
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('modeFormat').style.display  = currentMode === 'format'   ? '' : 'none';
+      document.getElementById('modeJsonCsv').style.display = currentMode === 'json-csv' ? '' : 'none';
+      document.getElementById('modeCsvJson').style.display = currentMode === 'csv-json' ? '' : 'none';
+    });
+  });
+
+  // ── FORMAT MODE ────────────────────────────────────────
   [[document.getElementById('ind2'), 2], [document.getElementById('ind4'), 4], [document.getElementById('indTab'), '\t']].forEach(([btn, val]) => {
     btn.addEventListener('click', () => {
       indentValue = val;
@@ -279,17 +483,13 @@
     outputPanel.classList.remove('has-error', 'is-valid');
     inputError.textContent = '';
   }
-
   function getLineCol(json, pos) {
     const lines = json.slice(0, pos).split('\n');
     return `line ${lines.length}, col ${lines[lines.length - 1].length + 1}`;
   }
-
   function parseJSON(raw) {
-    try {
-      return { ok: true, value: JSON.parse(raw) };
-    } catch (e) {
-      // extract position from error message
+    try { return { ok: true, value: JSON.parse(raw) }; }
+    catch (e) {
       const m = e.message.match(/position (\d+)/i);
       const pos = m ? +m[1] : null;
       const loc = pos !== null ? ` at ${getLineCol(raw, pos)}` : '';
@@ -302,17 +502,12 @@
     const raw = inputText.value.trim();
     if (!raw) { outputText.value = ''; updateStats(); return; }
     const result = parseJSON(raw);
-    if (!result.ok) {
-      inputPanel.classList.add('has-error');
-      inputError.textContent = result.msg;
-      outputText.value = '';
-      outputLabel.textContent = 'Formatted JSON';
-      updateStats(); return;
-    }
+    if (!result.ok) { inputPanel.classList.add('has-error'); inputError.textContent = result.msg; outputText.value = ''; outputLabel.textContent = 'Formatted JSON'; updateStats(); return; }
     outputText.value = JSON.stringify(result.value, null, indentValue);
     outputLabel.textContent = 'Formatted JSON';
     outputPanel.classList.add('is-valid');
     updateStats();
+    saveHistory(raw);
   }
 
   function minify() {
@@ -320,38 +515,27 @@
     const raw = inputText.value.trim();
     if (!raw) { outputText.value = ''; updateStats(); return; }
     const result = parseJSON(raw);
-    if (!result.ok) {
-      inputPanel.classList.add('has-error');
-      inputError.textContent = result.msg;
-      outputText.value = '';
-      outputLabel.textContent = 'Minified JSON';
-      updateStats(); return;
-    }
+    if (!result.ok) { inputPanel.classList.add('has-error'); inputError.textContent = result.msg; outputText.value = ''; outputLabel.textContent = 'Minified JSON'; updateStats(); return; }
     outputText.value = JSON.stringify(result.value);
     outputLabel.textContent = 'Minified JSON';
     outputPanel.classList.add('is-valid');
     updateStats();
+    saveHistory(raw);
   }
 
   function updateStats() {
     const ic = inputText.value.length, oc = outputText.value.length;
-    inputStat.textContent  = ic ? `${ic.toLocaleString()} chars` : '0 chars';
-    outputStat.textContent = oc ? `${oc.toLocaleString()} chars` : '0 chars';
+    inputStat.textContent  = `${ic.toLocaleString()} chars`;
+    outputStat.textContent = `${oc.toLocaleString()} chars`;
   }
 
-  // Live validate as user types (don't auto-format, just show error state)
   let validateTimer;
   inputText.addEventListener('input', () => {
     clearTimeout(validateTimer);
     validateTimer = setTimeout(() => {
       const raw = inputText.value.trim();
-      inputPanel.classList.remove('has-error');
-      outputPanel.classList.remove('is-valid');
-      inputError.textContent = '';
-      if (raw) {
-        const r = parseJSON(raw);
-        if (!r.ok) { inputPanel.classList.add('has-error'); inputError.textContent = r.msg; }
-      }
+      inputPanel.classList.remove('has-error'); outputPanel.classList.remove('is-valid'); inputError.textContent = '';
+      if (raw) { const r = parseJSON(raw); if (!r.ok) { inputPanel.classList.add('has-error'); inputError.textContent = r.msg; } }
       updateStats();
     }, 300);
   });
@@ -364,8 +548,7 @@
     const orig = btn.innerHTML;
     try { await navigator.clipboard.writeText(text); } catch {
       const ta = Object.assign(document.createElement('textarea'), { value: text });
-      ta.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     }
     btn.classList.add('success', 'copied');
     btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
@@ -374,23 +557,151 @@
 
   btnCopyOut.addEventListener('click', () => copyText(outputText.value, btnCopyOut));
   btnCopyHeader.addEventListener('click', () => copyText(outputText.value, btnCopyHeader));
-
   btnPaste.addEventListener('click', async () => {
     try { inputText.value = await navigator.clipboard.readText(); clearState(); updateStats(); } catch {}
   });
-
-  function clearAll() {
-    inputText.value = ''; outputText.value = '';
-    clearState(); updateStats();
-  }
+  function clearAll() { inputText.value = ''; outputText.value = ''; clearState(); updateStats(); }
   btnClearInput.addEventListener('click', clearAll);
   btnClearAll.addEventListener('click', clearAll);
 
-  // Ctrl/Cmd+Enter to prettify
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') prettify();
+  btnLoadExample.addEventListener('click', () => {
+    inputText.value = EXAMPLE_JSON; clearState(); updateStats(); inputText.focus();
   });
 
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && currentMode === 'format') prettify();
+  });
+
+  // ── HISTORY ────────────────────────────────────────────
+  function loadHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; } }
+  function saveHistory(text) {
+    const h = loadHistory().filter(e => e.text !== text);
+    h.unshift({ text, ts: Date.now() });
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0, 5)));
+    renderHistory();
+  }
+  function renderHistory() {
+    const h = loadHistory();
+    if (!h.length) { historyList.innerHTML = '<div class="history-empty">No history yet</div>'; return; }
+    const relTime = ts => { const s = (Date.now() - ts) / 1000; if (s < 60) return 'just now'; if (s < 3600) return `${Math.floor(s/60)}m ago`; return `${Math.floor(s/3600)}h ago`; };
+    historyList.innerHTML = h.map((e, i) =>
+      `<div class="history-item" data-idx="${i}">
+        <div class="history-item-preview">${e.text.slice(0, 80).replace(/</g,'&lt;')}</div>
+        <div class="history-item-time">${relTime(e.ts)}</div>
+      </div>`).join('');
+    historyList.querySelectorAll('.history-item').forEach(el => {
+      el.addEventListener('click', () => {
+        inputText.value = h[+el.dataset.idx].text; clearState(); updateStats(); historyDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  btnHistory.addEventListener('click', e => {
+    e.stopPropagation(); renderHistory(); historyDropdown.classList.toggle('open');
+  });
+  btnClearHistory.addEventListener('click', e => {
+    e.stopPropagation(); localStorage.removeItem(HISTORY_KEY); renderHistory();
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.history-wrap')) historyDropdown.classList.remove('open');
+  });
+
+  // ── JSON → CSV ─────────────────────────────────────────
+  function csvEscape(v) {
+    const s = (v === null || v === undefined) ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
+    return (s.includes(',') || s.includes('"') || s.includes('\n')) ? `"${s.replace(/"/g, '""')}"` : s;
+  }
+  function jsonToCsv(json) {
+    const data = JSON.parse(json);
+    if (!Array.isArray(data)) throw new Error('JSON must be an array of objects');
+    if (!data.length) return '';
+    const keys = [...new Set(data.flatMap(obj => obj && typeof obj === 'object' ? Object.keys(obj) : []))];
+    const rows = [keys.map(csvEscape).join(',')];
+    for (const obj of data) rows.push(keys.map(k => csvEscape(obj ? obj[k] : '')).join(','));
+    return rows.join('\n');
+  }
+  function jsonToSql(json, table) {
+    const data = JSON.parse(json);
+    if (!Array.isArray(data) || !data.length) throw new Error('JSON must be a non-empty array');
+    const keys = [...new Set(data.flatMap(obj => obj ? Object.keys(obj) : []))];
+    const cols = keys.map(k => `\`${k}\``).join(', ');
+    const esc = v => { if (v == null) return 'NULL'; if (typeof v === 'boolean') return v ? '1':'0'; if (typeof v === 'number') return String(v); return `'${String(v).replace(/'/g,"''")}'`; };
+    return data.map(obj => `INSERT INTO \`${table}\` (${cols}) VALUES (${keys.map(k => esc(obj ? obj[k] : null)).join(', ')});`).join('\n');
+  }
+
+  function convertJsonToCsv() {
+    const raw = jsonCsvInput.value.trim();
+    jsonCsvInputPanel.classList.remove('has-error'); jsonCsvError.textContent = '';
+    if (!raw) { csvOutput.value = ''; updateCsvStats(); return; }
+    try {
+      csvOutput.value = jsonToCsv(raw);
+      sqlOutput.value = ''; btnCopySql.style.display = 'none';
+      updateCsvStats();
+    } catch(e) {
+      jsonCsvInputPanel.classList.add('has-error');
+      jsonCsvError.textContent = e.message;
+      csvOutput.value = ''; updateCsvStats();
+    }
+  }
+  function updateCsvStats() {
+    jsonCsvInputStat.textContent = `${jsonCsvInput.value.length.toLocaleString()} chars`;
+    csvOutputStat.textContent    = `${csvOutput.value.length.toLocaleString()} chars`;
+  }
+
+  document.getElementById('btnConvertToCsv').addEventListener('click', convertJsonToCsv);
+  jsonCsvInput.addEventListener('input', () => { jsonCsvInputStat.textContent = `${jsonCsvInput.value.length.toLocaleString()} chars`; });
+  document.getElementById('btnLoadExampleCsv').addEventListener('click', () => { jsonCsvInput.value = EXAMPLE_JSON; jsonCsvInputPanel.classList.remove('has-error'); jsonCsvError.textContent = ''; updateCsvStats(); });
+  document.getElementById('btnClearJsonCsvInput').addEventListener('click', () => { jsonCsvInput.value = ''; csvOutput.value = ''; sqlOutput.value = ''; btnCopySql.style.display='none'; jsonCsvInputPanel.classList.remove('has-error'); jsonCsvError.textContent = ''; updateCsvStats(); });
+  document.getElementById('btnCopyCsvOut').addEventListener('click', () => copyText(csvOutput.value, document.getElementById('btnCopyCsvOut')));
+  document.getElementById('btnExportSql').addEventListener('click', () => {
+    const raw = jsonCsvInput.value.trim();
+    if (!raw) return;
+    try { sqlOutput.value = jsonToSql(raw, sqlTableName.value.trim() || 'my_table'); btnCopySql.style.display = ''; }
+    catch(e) { sqlOutput.value = 'Error: ' + e.message; btnCopySql.style.display = 'none'; }
+  });
+  btnCopySql.addEventListener('click', () => copyText(sqlOutput.value, btnCopySql));
+
+  // ── CSV → JSON ─────────────────────────────────────────
+  function parseCsvRow(line) {
+    const result = []; let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+      else if (line[i] === ',' && !inQ) { result.push(cur); cur = ''; }
+      else cur += line[i];
+    }
+    result.push(cur); return result;
+  }
+  function csvToJson(csv) {
+    const lines = csv.trim().split('\n');
+    if (lines.length < 1) return '[]';
+    const headers = parseCsvRow(lines[0]);
+    const data = lines.slice(1).filter(l => l.trim()).map(line => {
+      const vals = parseCsvRow(line);
+      const obj = {};
+      headers.forEach((h, i) => { obj[h.trim()] = vals[i] !== undefined ? vals[i].trim() : ''; });
+      return obj;
+    });
+    return JSON.stringify(data, null, 2);
+  }
+
+  function convertCsvToJson() {
+    const raw = csvJsonInput.value.trim();
+    csvJsonInputPanel.classList.remove('has-error'); csvJsonError.textContent = '';
+    if (!raw) { jsonFromCsvOutput.value = ''; updateCsvJsonStats(); return; }
+    try { jsonFromCsvOutput.value = csvToJson(raw); updateCsvJsonStats(); }
+    catch(e) { csvJsonInputPanel.classList.add('has-error'); csvJsonError.textContent = e.message; jsonFromCsvOutput.value = ''; updateCsvJsonStats(); }
+  }
+  function updateCsvJsonStats() {
+    csvJsonInputStat.textContent  = `${csvJsonInput.value.length.toLocaleString()} chars`;
+    jsonFromCsvStat.textContent   = `${jsonFromCsvOutput.value.length.toLocaleString()} chars`;
+  }
+
+  document.getElementById('btnConvertToJson').addEventListener('click', convertCsvToJson);
+  csvJsonInput.addEventListener('input', () => { csvJsonInputStat.textContent = `${csvJsonInput.value.length.toLocaleString()} chars`; });
+  document.getElementById('btnClearCsvJsonInput').addEventListener('click', () => { csvJsonInput.value = ''; jsonFromCsvOutput.value = ''; csvJsonInputPanel.classList.remove('has-error'); csvJsonError.textContent = ''; updateCsvJsonStats(); });
+  document.getElementById('btnCopyJsonOut').addEventListener('click', () => copyText(jsonFromCsvOutput.value, document.getElementById('btnCopyJsonOut')));
+
+  // ── INIT ───────────────────────────────────────────────
   updateStats();
 </script>
 </body>
