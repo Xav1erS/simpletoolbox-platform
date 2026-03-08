@@ -1,0 +1,608 @@
+/*
+ * Simple Toolbox - Tool Page Typography System
+ * Version: 1.0
+ * Last Updated: March 8, 2026
+ */
+
+/* ============================================
+   TYPOGRAPHY SCALE
+   ============================================ */
+
+/* Page Title (H1) */
+.tool-page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem 0;
+}
+
+/* Section Heading (H2) */
+.section-heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--linear-primary);
+    margin: 3rem 0 1.25rem 0;
+}
+
+/* Subsection Heading (H3) */
+.subsection-heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    margin: 2rem 0 0.75rem 0;
+}
+
+/* Minor Heading (H4) */
+.minor-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+/* Body Text */
+.body-text {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0;
+    color: var(--linear-text-secondary);
+    margin: 0 0 1rem 0;
+}
+
+/* Small Text */
+.small-text {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: var(--linear-text-secondary);
+}
+
+/* Caption/Tiny Text */
+.caption-text {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: var(--linear-text-tertiary);
+}
+
+/* Accent/Highlight Text */
+.accent-text {
+    color: var(--linear-primary);
+    font-weight: 500;
+}
+
+/* ============================================
+   CONTENT LAYOUT
+   ============================================ */
+
+/* Page Container */
+.tool-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+
+/* Narrow Container */
+.tool-narrow-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+
+/* ============================================
+   LISTS
+   ============================================ */
+
+.content-list {
+    margin: 0 0 1rem 0;
+    padding-left: 1.5rem;
+    color: var(--linear-text-secondary);
+}
+
+.content-list li {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+.content-list li strong {
+    color: var(--linear-text);
+    font-weight: 600;
+}
+
+/* Unordered List */
+.content-list ul {
+    list-style-type: disc;
+}
+
+/* Ordered List */
+.content-list ol {
+    list-style-type: decimal;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+/* Feature Card */
+.feature-card {
+    background-color: var(--linear-bg-secondary);
+    border: 1px solid var(--linear-border);
+    border-radius: var(--linear-radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--linear-shadow);
+}
+
+.feature-card .feature-icon {
+    font-size: 2.5rem;
+    color: var(--linear-primary);
+    margin-bottom: 1rem;
+}
+
+.feature-card .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--linear-text);
+}
+
+.feature-card .feature-description {
+    font-size: 1rem;
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Info Card */
+.info-card {
+    background-color: var(--linear-bg-secondary);
+    border: 1px solid var(--linear-border);
+    border-radius: var(--linear-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--linear-shadow-sm);
+}
+
+.info-card .info-card-title {
+    font-size: 1.25rem;
+    color: var(--linear-primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-card .info-card-content {
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.info-card .info-card-list {
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-card .info-card-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Use Case Card */
+.use-case-card {
+    background-color: var(--linear-bg-secondary);
+    border: 1px solid var(--linear-border);
+    border-radius: var(--linear-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--linear-shadow-sm);
+}
+
+.use-case-card .use-case-icon {
+    font-size: 1.5rem;
+    color: var(--linear-primary);
+    margin-bottom: 1rem;
+}
+
+.use-case-card .use-case-title {
+    font-size: 1.1rem;
+    color: var(--linear-primary);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.use-case-card .use-case-description {
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Example Card */
+.example-card {
+    background-color: var(--linear-bg-tertiary);
+    border-radius: var(--linear-radius-md);
+    padding: 1.5rem;
+    border: 1px solid var(--linear-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.example-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--linear-shadow);
+}
+
+.example-card .example-icon {
+    font-size: 1.5rem;
+    color: var(--linear-primary);
+    margin-bottom: 1rem;
+}
+
+.example-card .example-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--linear-text);
+}
+
+.example-card .example-description {
+    font-size: 0.875rem;
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================
+   CALLOUTS
+   ============================================ */
+
+.callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--linear-radius-md);
+    margin: 1.5rem 0;
+}
+
+.callout .callout-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.callout .callout-content {
+    flex: 1;
+}
+
+.callout .callout-content strong {
+    font-weight: 600;
+}
+
+/* Info Callout */
+.callout-info {
+    background-color: rgba(99, 102, 241, 0.1);
+    border-left: 4px solid var(--linear-primary);
+}
+
+.callout-info .callout-icon {
+    color: var(--linear-primary);
+}
+
+/* Warning Callout */
+.callout-warning {
+    background-color: rgba(251, 191, 36, 0.1);
+    border-left: 4px solid #fbbf24;
+}
+
+.callout-warning .callout-icon {
+    color: #fbbf24;
+}
+
+/* Success Callout */
+.callout-success {
+    background-color: rgba(34, 197, 94, 0.1);
+    border-left: 4px solid #22c55e;
+}
+
+.callout-success .callout-icon {
+    color: #22c55e;
+}
+
+/* Error Callout */
+.callout-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid #ef4444;
+}
+
+.callout-error .callout-icon {
+    color: #ef4444;
+}
+
+/* ============================================
+   CODE EXAMPLES
+   ============================================ */
+
+.code-example {
+    background-color: var(--linear-bg-tertiary);
+    border-radius: var(--linear-radius-lg);
+    border: 1px solid var(--linear-border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.code-example .code-example-title {
+    font-size: 1rem;
+    color: var(--linear-primary);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.code-example pre {
+    font-family: var(--linear-font-family-mono, 'Courier New', monospace);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    padding: 1rem;
+    background-color: var(--linear-bg-primary, #09090b);
+    border-radius: var(--linear-radius-sm);
+    margin: 0;
+    color: var(--linear-text, #f4f4f5);
+}
+
+/* ============================================
+   QUICK TIP
+   ============================================ */
+
+.quick-tip {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--linear-border);
+}
+
+.quick-tip .quick-tip-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--linear-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quick-tip .quick-tip-content {
+    font-size: 0.875rem;
+    color: var(--linear-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================
+   GRIDS
+   ============================================ */
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Examples Grid */
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Use Case Grid */
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* ============================================
+   INFORMATION SECTIONS
+   ============================================ */
+
+.info-section {
+    background: var(--linear-bg-secondary);
+    border: 1px solid var(--linear-border);
+    border-radius: var(--linear-radius-lg);
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.info-section .section-heading {
+    margin-top: 0;
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+
+.features-section {
+    margin-top: 3rem;
+}
+
+.features-section .section-heading {
+    text-align: center;
+}
+
+/* ============================================
+   EXAMPLES SECTION
+   ============================================ */
+
+.examples-section {
+    background: var(--linear-bg-secondary);
+    border: 1px solid var(--linear-border);
+    border-radius: var(--linear-radius-lg);
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.examples-section .section-heading {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ============================================
+   TOOL HEADER
+   ============================================ */
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.tool-header .tool-page-title {
+    background: linear-gradient(135deg, var(--linear-text), #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tool-header .tool-description {
+    font-size: 1.125rem;
+    color: var(--linear-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ============================================
+   BREADCRUMB
+   ============================================ */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    color: var(--linear-text-secondary);
+    font-size: 0.875rem;
+}
+
+.breadcrumb a {
+    color: var(--linear-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--linear-primary);
+}
+
+.breadcrumb .breadcrumb-separator {
+    margin: 0 0.25rem;
+    color: var(--linear-text-tertiary);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Typography Adjustments */
+    .tool-page-title {
+        font-size: 2rem;
+    }
+    
+    .section-heading {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .subsection-heading {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+    }
+    
+    /* Container Adjustments */
+    .tool-page-container,
+    .tool-narrow-container {
+        padding: 0 1rem;
+    }
+    
+    /* Grid Adjustments */
+    .features-grid,
+    .examples-grid,
+    .info-grid,
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Section Padding */
+    .info-section,
+    .examples-section {
+        padding: 1.5rem;
+    }
+    
+    /* Cards */
+    .feature-card,
+    .info-card,
+    .use-case-card,
+    .example-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    /* Two-column layouts stack */
+    .tool-two-column {
+        flex-direction: column;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid var(--linear-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .callout {
+        border: 2px solid currentColor;
+    }
+}
