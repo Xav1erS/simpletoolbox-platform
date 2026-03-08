@@ -4,269 +4,532 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Toolbox | Free Online Tools for Everyday Tasks</title>
-    <meta name="description" content="A collection of free, privacy‑first online tools that run entirely in your browser—no data is sent to servers. Discover your next efficiency tool today!">
+    <meta name="description" content="A collection of free, privacy-first online tools that run entirely in your browser—no data is sent to servers. Discover your next efficiency tool today!">
     
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Design System CSS -->
     <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/framework.css">
+    
+    <style>
+        .stb-hero {
+            padding: var(--linear-spacing-3xl) 0;
+            text-align: center;
+        }
+        
+        .stb-hero-title {
+            font-size: var(--linear-font-size-4xl);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .stb-hero-subtitle {
+            font-size: var(--linear-font-size-xl);
+            color: var(--linear-text-secondary);
+            margin-bottom: var(--linear-spacing-xl);
+        }
+        
+        .stb-hero-description {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--linear-spacing-2xl);
+            line-height: 1.6;
+        }
+        
+        .stb-hero-features {
+            display: flex;
+            justify-content: center;
+            gap: var(--linear-spacing-2xl);
+            flex-wrap: wrap;
+            margin-bottom: var(--linear-spacing-2xl);
+        }
+        
+        .stb-hero-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+            color: var(--linear-text);
+        }
+        
+        .stb-hero-feature i {
+            color: var(--linear-primary);
+            font-size: var(--linear-font-size-xl);
+        }
+        
+        .stb-hero-status {
+            display: flex;
+            justify-content: center;
+            gap: var(--linear-spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .stb-status-label {
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+            padding: var(--linear-spacing-sm) var(--linear-spacing-md);
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-md);
+            color: var(--linear-text-secondary);
+        }
+        
+        .stb-status-label i {
+            color: var(--linear-accent);
+        }
+        
+        .stb-tools-section {
+            padding: var(--linear-spacing-3xl) 0;
+        }
+        
+        .stb-filter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--linear-spacing-xl);
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-md);
+        }
+        
+        .stb-filter-label {
+            font-weight: 600;
+            color: var(--linear-text);
+        }
+        
+        .stb-filter-buttons {
+            display: flex;
+            gap: var(--linear-spacing-sm);
+            flex-wrap: wrap;
+        }
+        
+        .stb-filter-btn {
+            padding: var(--linear-spacing-sm) var(--linear-spacing-md);
+            border: 1px solid var(--linear-border);
+            background-color: var(--linear-bg-secondary);
+            color: var(--linear-text);
+            border-radius: var(--linear-radius-md);
+            cursor: pointer;
+            transition: var(--linear-transition);
+        }
+        
+        .stb-filter-btn:hover,
+        .stb-filter-btn.active {
+            border-color: var(--linear-primary);
+            background-color: var(--linear-primary);
+            color: var(--linear-text-inverse);
+        }
+        
+        .stb-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--linear-spacing-lg);
+        }
+        
+        .stb-home-tool-card {
+            background-color: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+            padding: var(--linear-spacing-xl);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--linear-transition);
+            display: flex;
+            flex-direction: column;
+            gap: var(--linear-spacing-md);
+        }
+        
+        .stb-home-tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--linear-shadow-md);
+            border-color: var(--linear-primary);
+        }
+        
+        .stb-tool-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--linear-spacing-md);
+        }
+        
+        .stb-tool-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--linear-primary-gradient);
+            border-radius: var(--linear-radius-md);
+            flex-shrink: 0;
+        }
+        
+        .stb-tool-icon-wrapper i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        .stb-tool-card-content {
+            flex: 1;
+        }
+        
+        .stb-tool-card-title {
+            font-size: var(--linear-font-size-lg);
+            font-weight: 600;
+            color: var(--linear-text);
+            margin-bottom: var(--linear-spacing-xs);
+        }
+        
+        .stb-tool-card-description {
+            font-size: var(--linear-font-size-sm);
+            color: var(--linear-text-secondary);
+            line-height: 1.5;
+        }
+        
+        .stb-tool-category {
+            align-self: flex-start;
+            padding: var(--linear-spacing-xs) var(--linear-spacing-sm);
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-primary);
+            font-size: var(--linear-font-size-xs);
+            border-radius: var(--linear-radius-sm);
+            font-weight: 500;
+        }
+        
+        .stb-privacy-section {
+            padding: var(--linear-spacing-3xl) 0;
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-primary);
+            margin-top: var(--linear-spacing-3xl);
+            text-align: center;
+        }
+        
+        .stb-privacy-title {
+            font-size: var(--linear-font-size-2xl);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .stb-privacy-description {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--linear-spacing-xl);
+            line-height: 1.6;
+        }
+        
+        .stb-privacy-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--linear-text-secondary);
+        }
+        
+        .stb-privacy-list li {
+            margin-bottom: var(--linear-spacing-md);
+            line-height: 1.6;
+        }
+        
+        .stb-privacy-list strong {
+            color: var(--linear-text);
+        }
+        
+        @media (max-width: 768px) {
+            .stb-hero-title {
+                font-size: var(--linear-font-size-2xl);
+            }
+            
+            .stb-hero-subtitle {
+                font-size: var(--linear-font-size-lg);
+            }
+            
+            .stb-tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stb-filter-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body class="dark">
-    <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-container">
-                <a href="/" class="logo">
-                    <span>Simple Toolbox</span>
-                </a>
-                
-                <nav class="nav">
-                    <a href="/" class="nav-link active">Home</a>
-                    <a href="/tools" class="nav-link">Tools</a>
-                    <a href="/about.html" class="nav-link">About</a>
-                    <a href="/contact.html" class="nav-link">Contact</a>
-                    <a href="/privacy.html" class="nav-link">Privacy</a>
-                    <a href="/terms.html" class="nav-link">Terms</a>
-                </nav>
-                
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun icon-sun"></i>
-                    <i class="fas fa-moon icon-moon"></i>
-                </button>
+    <div class="stb-layout">
+        <header class="stb-layout-header">
+            <div class="stb-container">
+                <div class="stb-header-inner">
+                    <a href="/" class="stb-brand">
+                        <span>Simple Toolbox</span>
+                    </a>
+                    
+                    <nav class="stb-nav-desktop">
+                        <a href="/" class="stb-nav-link active">Home</a>
+                        <a href="/tools" class="stb-nav-link">Tools</a>
+                        <a href="/about.html" class="stb-nav-link">About</a>
+                        <a href="/contact.html" class="stb-nav-link">Contact</a>
+                        <a href="/privacy.html" class="stb-nav-link">Privacy</a>
+                        <a href="/terms.html" class="stb-nav-link">Terms</a>
+                    </nav>
+                    
+                    <div class="stb-nav-actions">
+                        <button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+            
+            <nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu">
+                <div class="stb-mobile-nav-links">
+                    <a href="/" class="stb-mobile-nav-link">Home</a>
+                    <a href="/tools" class="stb-mobile-nav-link">Tools</a>
+                    <a href="/about.html" class="stb-mobile-nav-link">About</a>
+                    <a href="/contact.html" class="stb-mobile-nav-link">Contact</a>
+                    <a href="/privacy.html" class="stb-mobile-nav-link">Privacy</a>
+                    <a href="/terms.html" class="stb-mobile-nav-link">Terms</a>
+                </div>
+            </nav>
         </header>
-
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Hero Section -->
-            <div class="hero">
-                <div class="hero-container">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            <span class="hero-title-main">Discover Your Next Efficiency Tool</span>
-                            <span class="hero-title-sub">Free, privacy-first online tools</span>
-                        </h1>
-                        <p class="hero-description">All tools run entirely in your browser—no data is sent to servers. No registration, no limits. Your privacy is protected by design.</p>
+        
+        <main class="stb-layout-main">
+            <section class="stb-tool-area">
+                <div class="stb-container">
+                    <div class="stb-hero">
+                        <h1 class="stb-hero-title">Discover Your Next Efficiency Tool</h1>
+                        <h2 class="stb-hero-subtitle">Free, privacy-first online tools</h2>
+                        <p class="stb-hero-description">All tools run entirely in your browser—no data is sent to servers. No registration, no limits. Your privacy is protected by design.</p>
                         
-                        <div class="hero-features">
-                            <div class="feature">
-                                <i class="fas fa-shield-alt feature-icon"></i>
+                        <div class="stb-hero-features">
+                            <div class="stb-hero-feature">
+                                <i class="fas fa-shield-alt"></i>
                                 <span>Privacy First</span>
                             </div>
-                            <div class="feature">
-                                <i class="fas fa-laptop-code feature-icon"></i>
+                            <div class="stb-hero-feature">
+                                <i class="fas fa-laptop-code"></i>
                                 <span>Browser-Based</span>
                             </div>
-                            <div class="feature">
-                                <i class="fas fa-lock feature-icon"></i>
+                            <div class="stb-hero-feature">
+                                <i class="fas fa-lock"></i>
                                 <span>No Data Uploads</span>
                             </div>
                         </div>
                         
-                        <p class="hero-note">All tools are free to use and require no account creation.</p>
-                        
-                        <div class="hero-status">
-                            <span class="status-label">
+                        <div class="stb-hero-status">
+                            <span class="stb-status-label">
                                 <i class="fas fa-check-circle"></i>
                                 No Ads
                             </span>
-                            <span class="status-label">
+                            <span class="stb-status-label">
                                 <i class="fas fa-check-circle"></i>
                                 Open Source
                             </span>
-                            <span class="status-label">
+                            <span class="stb-status-label">
                                 <i class="fas fa-check-circle"></i>
                                 Fast Performance
                             </span>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Tools Section -->
-            <div class="tools">
-                <div class="tools-container">
-                    <div class="filter-header">
-                        <span class="filter-label">Categories:</span>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active">All</button>
-                            <button class="filter-btn">Productivity</button>
-                            <button class="filter-btn">Development</button>
-                            <button class="filter-btn">Image</button>
-                            <button class="filter-btn">Conversion</button>
+                    
+                    <div class="stb-tools-section">
+                        <div class="stb-filter-header">
+                            <span class="stb-filter-label">Categories:</span>
+                            <div class="stb-filter-buttons">
+                                <button class="stb-filter-btn active" data-category="all">All</button>
+                                <button class="stb-filter-btn" data-category="productivity">Productivity</button>
+                                <button class="stb-filter-btn" data-category="development">Development</button>
+                                <button class="stb-filter-btn" data-category="image">Image</button>
+                                <button class="stb-filter-btn" data-category="conversion">Conversion</button>
+                            </div>
+                            <span class="stb-tools-count">8 tools available</span>
                         </div>
-                        <span class="tools-count">7 tools available</span>
+                        
+                        <div class="stb-tools-grid" id="tools-grid">
+                            <a href="/tools/password-generator" class="stb-home-tool-card" data-category="security">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-key"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Password Generator</h3>
+                                        <p class="stb-tool-card-description">Create strong, random passwords and API keys with customizable length and character sets. Perfect for securing accounts and applications.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Security</span>
+                            </a>
+                            
+                            <a href="/tools/youtube-thumbnail-downloader" class="stb-home-tool-card" data-category="media">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fab fa-youtube"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">YouTube Thumbnail Downloader</h3>
+                                        <p class="stb-tool-card-description">Download high-quality thumbnails from any YouTube video in multiple resolutions. Simple, fast, and completely free.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Media</span>
+                            </a>
+                            
+                            <a href="/tools/image-background-remover" class="stb-home-tool-card" data-category="image">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-cut"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Image Background Remover</h3>
+                                        <p class="stb-tool-card-description">AI-powered background removal that runs locally in your browser—no uploads, no privacy risks. Perfect for product photos and social media.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Image</span>
+                            </a>
+                            
+                            <a href="/tools/unit-converter" class="stb-home-tool-card" data-category="productivity">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-ruler-combined"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Unit Converter</h3>
+                                        <p class="stb-tool-card-description">Convert length, weight, temperature, volume, area, speed, and time with real-time calculations. Supports hundreds of units across categories.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Productivity</span>
+                            </a>
+                            
+                            <a href="/tools/pdf-to-word-converter" class="stb-home-tool-card" data-category="conversion">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-file-word"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">PDF to Word Converter</h3>
+                                        <p class="stb-tool-card-description">Convert PDF documents to editable Word format while preserving formatting and layout. Works entirely in your browser—your files never leave your device.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Conversion</span>
+                            </a>
+                            
+                            <a href="/tools/json-formatter-tool" class="stb-home-tool-card" data-category="development">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">JSON Formatter Tool</h3>
+                                        <p class="stb-tool-card-description">Format, validate, and beautify JSON data with syntax highlighting and error detection. Perfect for developers and API debugging.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Development</span>
+                            </a>
+                            
+                            <a href="/tools/image-resizer-online" class="stb-home-tool-card" data-category="image">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-expand-alt"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Image Resizer</h3>
+                                        <p class="stb-tool-card-description">Resize images online while maintaining quality. Adjust dimensions, crop, and convert formats. No uploads required.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Image</span>
+                            </a>
+                            
+                            <a href="/tools/random-number-generator" class="stb-home-tool-card" data-category="productivity">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-dice"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Random Number Generator</h3>
+                                        <p class="stb-tool-card-description">Generate true random numbers with customizable ranges and quantities. Perfect for games, lotteries, and statistical sampling.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Productivity</span>
+                            </a>
+                            
+                            <a href="/tools/word-counter-tool" class="stb-home-tool-card" data-category="productivity">
+                                <div class="stb-tool-card-header">
+                                    <div class="stb-tool-icon-wrapper">
+                                        <i class="fas fa-font"></i>
+                                    </div>
+                                    <div class="stb-tool-card-content">
+                                        <h3 class="stb-tool-card-title">Word Counter Tool</h3>
+                                        <p class="stb-tool-card-description">Count words, characters, sentences, and paragraphs in real-time. Perfect for writers, students, and professionals.</p>
+                                    </div>
+                                </div>
+                                <span class="stb-tool-category">Productivity</span>
+                            </a>
+                        </div>
                     </div>
                     
-                    <div class="tools-grid">
-                        <!-- Password Generator -->
-                        <a href="/tools/password-generator" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-key"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Password Generator</h3>
-                                    <p class="tool-description">Create strong, random passwords and API keys with customizable length and character sets. Perfect for securing accounts and applications.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Security</span>
-                        </a>
-                        
-                        <!-- YouTube Thumbnail Downloader -->
-                        <a href="/tools/youtube-thumbnail-downloader" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">YouTube Thumbnail Downloader</h3>
-                                    <p class="tool-description">Download high‑quality thumbnails from any YouTube video in multiple resolutions. Simple, fast, and completely free.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Media</span>
-                        </a>
-                        
-                        <!-- Image Background Remover -->
-                        <a href="/tools/image-background-remover" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-cut"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Image Background Remover</h3>
-                                    <p class="tool-description">AI‑powered background removal that runs locally in your browser—no uploads, no privacy risks. Perfect for product photos and social media.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Image</span>
-                        </a>
-                        
-                        <!-- Unit Converter -->
-                        <a href="/tools/unit-converter" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-ruler-combined"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Unit Converter</h3>
-                                    <p class="tool-description">Convert length, weight, temperature, volume, area, speed, and time with real‑time calculations. Supports hundreds of units across categories.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Productivity</span>
-                        </a>
-                        
-                        <!-- PDF to Word Converter -->
-                        <a href="/tools/pdf-to-word-converter" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-file-word"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">PDF to Word Converter</h3>
-                                    <p class="tool-description">Convert PDF documents to editable Word format while preserving formatting and layout. Works entirely in your browser—your files never leave your device.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Conversion</span>
-                        </a>
-                        
-                        <!-- JSON Formatter Tool -->
-                        <a href="/tools/json-formatter-tool" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">JSON Formatter Tool</h3>
-                                    <p class="tool-description">Format, validate, and beautify JSON data with syntax highlighting and error detection. Perfect for developers and API debugging.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Development</span>
-                        </a>
-                        
-                        <!-- Image Resizer -->
-                        <a href="/tools/image-resizer-online" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-expand-alt"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Image Resizer</h3>
-                                    <p class="tool-description">Resize images online while maintaining quality. Adjust dimensions, crop, and convert formats. No uploads required.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Image</span>
-                        </a>
+                    <div class="stb-privacy-section">
+                        <h2 class="stb-privacy-title">Privacy First</h2>
+                        <p class="stb-privacy-description">Every tool in Simple Toolbox is designed with privacy as the core principle. All processing happens locally in your browser—no data is ever sent to our servers. This means:</p>
+                        <ul class="stb-privacy-list">
+                            <li><strong>No data collection</strong>: We don't track your usage or collect personal information</li>
+                            <li><strong>No file uploads</strong>: Your files stay on your device, processed locally</li>
+                            <li><strong>No registration required</strong>: Use tools immediately without creating accounts</li>
+                            <li><strong>Open source transparency</strong>: All code is available for inspection and verification</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-
-            <!-- Privacy Section -->
-            <div class="hero" style="background-color: var(--linear-bg); border: 1px solid var(--linear-primary);">
-                <h2 style="color: var(--linear-primary);">Privacy First</h2>
-                <p>Every tool in Simple Toolbox is designed with privacy as the core principle. All processing happens locally in your browser—no data is ever sent to our servers. This means:</p>
-                <div style="text-align: left; max-width: 600px; margin: 40px auto;">
-                    <ul style="color: var(--linear-text-secondary); line-height: 1.6;">
-                        <li><strong>No data collection</strong>: We don't track your usage or collect personal information</li>
-                        <li><strong>No file uploads</strong>: Your files stay on your device, processed locally</li>
-                        <li><strong>No registration required</strong>: Use tools immediately without creating accounts</li>
-                        <li><strong>Open source transparency</strong>: All code is available for inspection and verification</li>
-                    </ul>
-                </div>
-            </div>
+            </section>
         </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-container">
-                <p>© 2026 Simple Toolbox. All rights reserved.</p>
-                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+        
+        <footer class="stb-layout-footer">
+            <div class="stb-container">
+                <div class="stb-footer-content">
+                    <div class="stb-footer-brand">
+                        <span>Simple Toolbox</span>
+                    </div>
+                    
+                    <div class="stb-footer-links">
+                        <a href="/about.html">About Us</a>
+                        <a href="/terms.html">Terms of Use</a>
+                        <a href="/privacy.html">Privacy Policy</a>
+                        <a href="/contact.html">Contact</a>
+                    </div>
+                    
+                    <div class="stb-footer-copyright">
+                        <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                        <p>simpletoolbox.dev | A collection of free, privacy-first online tools</p>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
-
-    <!-- JavaScript -->
+    
+    <script src="js/framework.js"></script>
     <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
+        const filterButtons = document.querySelectorAll('.stb-filter-btn');
+        const toolCards = document.querySelectorAll('.stb-home-tool-card');
         
-        // Initialize theme
-        const savedTheme = localStorage.getItem('stb-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        applyTheme(currentTheme);
-        
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-            localStorage.setItem('stb-theme', currentTheme);
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+                
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                toolCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
         });
         
-        function applyTheme(theme) {
-            document.body.className = theme;
-        }
-        
-        // Update copyright year
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearElement = document.querySelector('.footer-container p');
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.querySelector('.stb-footer-copyright p');
             if (yearElement) {
                 yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
             }
         });
-        
-        // Filter buttons functionality
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                // Here you would add logic to filter tools based on the selected category
-            });
-        });
     </script>
-
-    <script src="/js/spa-router.js"></script>
 </body>
 </html>

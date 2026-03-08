@@ -1,0 +1,221 @@
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="dark"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;[Tool Name] - Simple Toolbox&lt;/title&gt;
+    &lt;meta name="description" content="[Tool description goes here]"&gt;
+    
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+    &lt;link rel="stylesheet" href="../css/design-system.css"&gt;
+    &lt;link rel="stylesheet" href="../css/framework.css"&gt;
+    
+    &lt;style&gt;
+        .stb-tool-custom {
+        }
+        
+        @media (max-width: 768px) {
+            .stb-tool-custom {
+            }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="dark"&gt;
+    &lt;div class="stb-layout"&gt;
+        &lt;header class="stb-layout-header"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-header-inner"&gt;
+                    &lt;a href="/" class="stb-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/a&gt;
+                    
+                    &lt;nav class="stb-nav-desktop"&gt;
+                        &lt;a href="/" class="stb-nav-link"&gt;Home&lt;/a&gt;
+                        &lt;a href="/tools" class="stb-nav-link active"&gt;Tools&lt;/a&gt;
+                        &lt;a href="/about.html" class="stb-nav-link"&gt;About&lt;/a&gt;
+                        &lt;a href="/contact.html" class="stb-nav-link"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/privacy.html" class="stb-nav-link"&gt;Privacy&lt;/a&gt;
+                        &lt;a href="/terms.html" class="stb-nav-link"&gt;Terms&lt;/a&gt;
+                    &lt;/nav&gt;
+                    
+                    &lt;div class="stb-nav-actions"&gt;
+                        &lt;button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu"&gt;
+                            &lt;i class="fas fa-bars"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                        &lt;button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme"&gt;
+                            &lt;i class="fas fa-moon"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu"&gt;
+                &lt;div class="stb-mobile-nav-links"&gt;
+                    &lt;a href="/" class="stb-mobile-nav-link"&gt;Home&lt;/a&gt;
+                    &lt;a href="/tools" class="stb-mobile-nav-link"&gt;Tools&lt;/a&gt;
+                    &lt;a href="/about.html" class="stb-mobile-nav-link"&gt;About&lt;/a&gt;
+                    &lt;a href="/contact.html" class="stb-mobile-nav-link"&gt;Contact&lt;/a&gt;
+                    &lt;a href="/privacy.html" class="stb-mobile-nav-link"&gt;Privacy&lt;/a&gt;
+                    &lt;a href="/terms.html" class="stb-mobile-nav-link"&gt;Terms&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        
+        &lt;main class="stb-layout-main"&gt;
+            &lt;section class="stb-tool-area"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="stb-breadcrumb"&gt;
+                        &lt;a href="/"&gt;Home&lt;/a&gt;
+                        &lt;span class="stb-breadcrumb-separator"&gt;&amp;gt;&lt;/span&gt;
+                        &lt;a href="/tools"&gt;Tools&lt;/a&gt;
+                        &lt;span class="stb-breadcrumb-separator"&gt;&amp;gt;&lt;/span&gt;
+                        &lt;span&gt;[Tool Name]&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;header class="stb-tool-header"&gt;
+                        &lt;h1 class="stb-tool-title"&gt;[Tool Name]&lt;/h1&gt;
+                        &lt;p class="stb-tool-description"&gt;[Tool description goes here. Explain what the tool does and its benefits.]&lt;/p&gt;
+                    &lt;/header&gt;
+                    
+                    &lt;div class="stb-content-card stb-tool-custom"&gt;
+                        &lt;h2 class="stb-card-title"&gt;
+                            &lt;i class="fas fa-[icon]"&gt;&lt;/i&gt;
+                            [Card Title]
+                        &lt;/h2&gt;
+                        
+                        &lt;div class="stb-mb-lg"&gt;
+                            &lt;label class="stb-form-label" for="tool-input"&gt;[Input Label]&lt;/label&gt;
+                            &lt;input type="text" id="tool-input" class="stb-form-input" placeholder="[Placeholder text]"&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="stb-btn-group"&gt;
+                            &lt;button class="stb-btn stb-btn-primary" id="action-btn"&gt;
+                                &lt;i class="fas fa-play"&gt;&lt;/i&gt;
+                                &lt;span&gt;[Action]&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;button class="stb-btn stb-btn-secondary" id="clear-btn"&gt;
+                                &lt;i class="fas fa-trash"&gt;&lt;/i&gt;
+                                &lt;span&gt;Clear&lt;/span&gt;
+                            &lt;/button&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="stb-mt-lg" id="result-section"&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;section class="stb-features-section"&gt;
+                        &lt;h2 class="stb-section-title"&gt;Why Choose This Tool?&lt;/h2&gt;
+                        &lt;div class="stb-features-grid" id="features-container"&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
+        
+        &lt;footer class="stb-layout-footer"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-footer-content"&gt;
+                    &lt;div class="stb-footer-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-links"&gt;
+                        &lt;a href="what-is.html"&gt;What Is&lt;/a&gt;
+                        &lt;a href="how-to-use.html"&gt;How to Use&lt;/a&gt;
+                        &lt;a href="/about.html"&gt;About Us&lt;/a&gt;
+                        &lt;a href="/terms.html"&gt;Terms of Use&lt;/a&gt;
+                        &lt;a href="/privacy.html"&gt;Privacy Policy&lt;/a&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-copyright"&gt;
+                        &lt;p&gt;© 2026 Simple Toolbox. All rights reserved.&lt;/p&gt;
+                        &lt;p&gt;simpletoolbox.dev | A collection of free, privacy‑first online tools&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;script src="../js/framework.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        const toolConfig = {
+            id: '[tool-id]',
+            name: '[Tool Name]'
+        };
+        
+        const features = [
+            {
+                icon: 'fa-bolt',
+                title: 'Fast &amp; Efficient',
+                description: 'Get results instantly with our optimized processing.'
+            },
+            {
+                icon: 'fa-shield-alt',
+                title: 'Privacy First',
+                description: 'All processing happens locally in your browser.'
+            },
+            {
+                icon: 'fa-mobile-alt',
+                title: 'Mobile Optimized',
+                description: 'Works perfectly on all devices.'
+            }
+        ];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            STBFramework.generateFeatureCards(features, 'features-container');
+            initTool();
+        });
+        
+        function initTool() {
+            const actionBtn = document.getElementById('action-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            
+            if (actionBtn) {
+                actionBtn.addEventListener('click', handleAction);
+            }
+            
+            if (clearBtn) {
+                clearBtn.addEventListener('click', handleClear);
+            }
+        }
+        
+        function handleAction() {
+            const input = document.getElementById('tool-input');
+            const resultSection = document.getElementById('result-section');
+            
+            if (input &amp;&amp; input.value) {
+                const result = processInput(input.value);
+                displayResult(result, resultSection);
+            }
+        }
+        
+        function handleClear() {
+            const input = document.getElementById('tool-input');
+            const resultSection = document.getElementById('result-section');
+            
+            if (input) {
+                input.value = '';
+            }
+            
+            if (resultSection) {
+                resultSection.innerHTML = '';
+            }
+        }
+        
+        function processInput(value) {
+            return value;
+        }
+        
+        function displayResult(result, container) {
+            if (!container) return;
+            
+            container.innerHTML = `
+                &lt;div class="stb-result-box"&gt;
+                    ${result}
+                &lt;/div&gt;
+            `;
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

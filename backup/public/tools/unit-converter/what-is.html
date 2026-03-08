@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Unit Converter? | SimpleToolBox</title>
+    <meta name="description" content="Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Learn what this tool is, how it wor...">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+        }
+
+        [data-bs-theme="dark"] {
+            --bg: var(--dark-bg);
+            --text: var(--dark-text);
+        }
+
+        [data-bs-theme="light"] {
+            --bg: var(--light-bg);
+            --text: var(--light-text);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-bs-theme="dark"] .header {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--linear-text-secondary);
+            text-decoration: none;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--linear-transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--linear-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--linear-primary-gradient);
+            transition: width var(--linear-transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--linear-primary);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--text);
+            margin-top: 60px;
+        }
+
+        [data-bs-theme="dark"] .footer {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Unit Converter",
+  "applicationCategory": "WebApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Learn what Unit Converter is, how it works, and why it's essential for your workflow.",
+  "featureList": [
+    "Comprehensive unit categories",
+    "Real-time calculations",
+    "Precision accuracy",
+    "Multiple measurement systems",
+    "User-friendly interface"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1250"
+  }
+}
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <i class="fas fa-ruler-combined"></i>
+                <span>Unitly</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="what-is.html" class="active">What Is</a>
+                <a href="how-to-use.html">How to Use</a>
+                
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h1>What Is a Unit Converter?</h1>
+            
+            <p>A unit converter is an essential digital tool that transforms a measurement value from one unit of measurement to another. In our globally connected world, different regions and industries use varied measurement systems—metric (meters, liters, kilograms), imperial (feet, gallons, pounds), and specialized scientific units (Kelvin, Pascal, Joule). A reliable unit converter bridges these systems, enabling accurate, instant conversions that prevent errors, save time, and facilitate international collaboration.</p>
+
+            <h2>Why Unit Conversion Matters</h2>
+            
+            <p>Unit conversion is not merely a technical exercise; it underpins daily activities and professional workflows. Consider these real‑world scenarios:</p>
+            
+            <ul>
+                <li><strong>Cooking & Baking:</strong> A recipe from Europe lists ingredients in grams, but your kitchen scale uses ounces. Without correct conversion, the dish may fail.</li>
+                <li><strong>Travel & Navigation:</strong> Road signs in the United States show miles, while your car’s speedometer is in kilometers per hour. Misunderstanding speeds could lead to traffic violations or accidents.</li>
+                <li><strong>Home Improvement:</strong> You purchase flooring labeled in square meters, but your room dimensions are in square feet. An incorrect conversion results in wasted material and budget overruns.</li>
+                <li><strong>Science & Engineering:</strong> Research papers may report data in Celsius, but your experiment requires Kelvin. A mistake here compromises scientific validity.</li>
+            </ul>
+
+            <h2>How Unitly Stands Out</h2>
+            
+            <p>While many unit converters exist, Unitly delivers a superior experience through several key innovations:</p>
+            
+            <ol>
+                <li><strong>Real‑Time Calculation:</strong> Unlike tools that require a “Convert” button, Unitly updates results instantly as you type, providing immediate feedback.</li>
+                <li><strong>Batch Conversion Mode:</strong> Our unique batch mode lets you convert multiple values at once—perfect for engineers, students, or anyone handling lists of measurements.</li>
+                <li><strong>Privacy‑First Approach:</strong> All calculations happen locally in your browser. We never send your data to servers, ensuring complete confidentiality.</li>
+                <li><strong>Modern, Accessible Design:</strong> Built with WCAG 2.1 AA standards, Unitly works seamlessly for all users, including those relying on screen readers or keyboard navigation.</li>
+                <li><strong>Comprehensive Coverage:</strong> We support all essential categories—length, weight, temperature, volume, area, speed, and time—with precise conversion factors based on international standards.</li>
+            </ol>
+
+            <h2>The Technology Behind Accurate Conversions</h2>
+            
+            <p>Unitly employs industry‑standard conversion formulas and floating‑point arithmetic to guarantee accuracy. For example, length conversions use the exact definition 1 inch = 2.54 cm, while temperature conversions apply the linear formulas °F = (°C × 9/5) + 32 and K = °C + 273.15. Each result is formatted for clarity, showing up to four decimal places or scientific notation for extremely small or large values.</p>
+
+            <p>Beyond core conversion, Unitly integrates features that enhance usability: a history log (stores your last 20 conversions), a favorites system (save frequently used unit pairs), and a progressive web app (PWA) capability that lets you install the tool and use it offline. These elements combine to create a converter that is not only accurate but also genuinely helpful in everyday situations.</p>
+
+            <p>Whether you’re a student tackling homework, a professional preparing a report, a traveler planning a trip, or a home cook trying a new recipe, Unitly provides the reliable, fast, and private conversion tool you need. Explore our <a href="how-to-use.html">How to Use guide</a> to get started, or jump right into the <a href="index.html">converter</a> to experience the difference.</p>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">Unitly</div>
+            <p>unitly.dev | A smart unit converter for everyday use</p>
+            <p>© 2026 Unitly Converter. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple theme detection
+        const savedTheme = localStorage.getItem('unitly_theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        }
+    </script>
+
+    <script src="/js/spa-router.js"></script>
+</body>
+</html>

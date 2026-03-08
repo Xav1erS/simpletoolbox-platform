@@ -1,246 +1,418 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About Simple Toolbox - Your Digital Swiss Army Knife">
-    <title>About Us - SimpleToolbox.dev</title>
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="dark"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;About Us - Simple Toolbox | Your Digital Swiss Army Knife&lt;/title&gt;
+    &lt;meta name="description" content="Learn about Simple Toolbox - Your digital Swiss Army knife. We provide free, privacy-first online tools for everyone."&gt;
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+    &lt;link rel="stylesheet" href="css/design-system.css"&gt;
+    &lt;link rel="stylesheet" href="css/framework.css"&gt;
     
-    <!-- Design System CSS -->
-    <link rel="stylesheet" href="css/design-system.css">
-</head>
-<body class="dark">
-    <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-container">
-                <a href="/" class="logo">
-                    <span>Simple Toolbox</span>
-                </a>
-                
-                <nav class="nav">
-                    <a href="/" class="nav-link">Home</a>
-                    <a href="/tools" class="nav-link">Tools</a>
-                    <a href="/about.html" class="nav-link active">About</a>
-                    <a href="/contact.html" class="nav-link">Contact</a>
-                    <a href="/privacy.html" class="nav-link">Privacy</a>
-                    <a href="/terms.html" class="nav-link">Terms</a>
-                </nav>
-                
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun icon-sun"></i>
-                    <i class="fas fa-moon icon-moon"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main">
-            <section class="hero">
-                <div class="hero-container">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            <span class="hero-title-main">Simple Toolbox: Your Digital Swiss Army Knife</span>
-                            <span class="hero-title-sub">About Us</span>
-                        </h1>
-                        <p class="hero-description">Welcome to Simple Toolbox, a collection of essential utilities designed for the modern digital workflow. We focus on providing reliable, no-nonsense solutions for everyday technical tasks.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="tools">
-                <div class="tools-container">
-                    <!-- Brand Story Section -->
-                    <div class="section" style="margin-bottom: 4rem;">
-                        <h2 style="font-size: 2.25rem; margin-bottom: 1.5rem; font-weight: 700; color: var(--linear-primary);">Our Story</h2>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center;">
-                            <div>
-                                <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; color: var(--linear-text-secondary);">
-                                    Founded in 2024, Simple Toolbox was born from the frustration of needing multiple tools for everyday digital tasks. We saw a gap in the market for a collection of reliable, privacy-focused utilities that work seamlessly without the hassle of registration or data uploads.
-                                </p>
-                                <p style="font-size: 1.1rem; line-height: 1.7; color: var(--linear-text-secondary);">
-                                    Our team of developers and designers set out to create a platform where users could access powerful tools without compromising their privacy. Today, Simple Toolbox has grown into a comprehensive suite of utilities used by professionals and casual users alike.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mission Section -->
-                    <div class="section" style="margin-bottom: 4rem; padding: 2.5rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border);">
-                        <h2 style="font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700; color: var(--linear-primary);">Our Mission</h2>
-                        <p style="font-size: 1.1rem; line-height: 1.7; color: var(--linear-text-secondary);">
-                            Our mission is to streamline your work by offering a suite of tools that are both powerful and incredibly easy to use. Whether you are a developer, designer, or data analyst, our goal is to save you time and effort by providing intuitive solutions for common technical challenges.
-                        </p>
-                        <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
-                            <div style="flex: 1; min-width: 250px; padding: 1.5rem; background-color: var(--linear-bg-tertiary); border-radius: var(--linear-radius-md); border: 1px solid var(--linear-border);">
-                                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--linear-primary);">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">Privacy First</h3>
-                                <p style="font-size: 1rem; line-height: 1.6; color: var(--linear-text-secondary);">All tools process data locally in your browser, ensuring your information remains secure and private.</p>
-                            </div>
-                            <div style="flex: 1; min-width: 250px; padding: 1.5rem; background-color: var(--linear-bg-tertiary); border-radius: var(--linear-radius-md); border: 1px solid var(--linear-border);">
-                                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--linear-primary);">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">User-Centric Design</h3>
-                                <p style="font-size: 1rem; line-height: 1.6; color: var(--linear-text-secondary);">Every tool is designed with simplicity and usability at its core, making complex tasks accessible to everyone.</p>
-                            </div>
-                            <div style="flex: 1; min-width: 250px; padding: 1.5rem; background-color: var(--linear-bg-tertiary); border-radius: var(--linear-radius-md); border: 1px solid var(--linear-border);">
-                                <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--linear-primary);">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                                <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">Constant Innovation</h3>
-                                <p style="font-size: 1rem; line-height: 1.6; color: var(--linear-text-secondary);">We continuously improve our tools and add new utilities based on user feedback and emerging needs.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- What We Offer Section -->
-                    <div class="section" style="margin-bottom: 4rem;">
-                        <h2 style="font-size: 2rem; margin-bottom: 2rem; font-weight: 700; color: var(--linear-primary);">What We Offer</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                            <div style="padding: 2rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                                <div style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Developer Tools</h3>
-                                <ul style="list-style: none; padding: 0; margin: 0;">
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">Code formatting and validation</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">JSON and data manipulation</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">API key and password generation</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div style="padding: 2rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                                <div style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                    <i class="fas fa-database"></i>
-                                </div>
-                                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Data Utilities</h3>
-                                <ul style="list-style: none; padding: 0; margin: 0;">
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">CSV and Excel conversion</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">File format transformations</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">Data validation and cleaning</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div style="padding: 2rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                                <div style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Content Tools</h3>
-                                <ul style="list-style: none; padding: 0; margin: 0;">
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">Text analysis and word counting</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">Image processing and optimization</span>
-                                    </li>
-                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                        <i class="fas fa-check-circle" style="color: var(--linear-primary); margin-top: 0.25rem;"></i>
-                                        <span style="color: var(--linear-text-secondary);">Media file manipulation</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p style="margin-top: 2rem; font-size: 1.1rem; line-height: 1.7; color: var(--linear-text-secondary);">
-                            All our tools are free to use, require no registration, and process your data instantly. We are constantly adding new features based on user feedback and emerging technological trends.
-                        </p>
-                    </div>
-
-                    <!-- Commitment Section -->
-                    <div class="hero" style="background-color: var(--linear-bg-secondary); border: 1px solid var(--linear-primary); border-radius: var(--linear-radius-lg); padding: 3rem; text-align: center;">
-                        <h2 style="color: var(--linear-primary); font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700;">Our Commitment</h2>
-                        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 800px; margin: 0 auto; color: var(--linear-text-secondary);">
-                            We believe in providing high-quality tools that are accessible to everyone. Our focus is on simplicity, reliability, and user experience. We are committed to maintaining a platform that respects your privacy while delivering powerful functionality.
-                        </p>
-                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem;">
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                                <div style="font-size: 2rem; color: var(--linear-primary);">
-                                    <i class="fas fa-lock"></i>
-                                </div>
-                                <span style="font-weight: 600;">100% Privacy</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                                <div style="font-size: 2rem; color: var(--linear-primary);">
-                                    <i class="fas fa-free-code-camp"></i>
-                                </div>
-                                <span style="font-weight: 600;">Free Forever</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                                <div style="font-size: 2rem; color: var(--linear-primary);">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <span style="font-weight: 600;">Fast & Reliable</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-container">
-                <p>© 2026 Simple Toolbox. All rights reserved.</p>
-                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        // Initialize theme
-        const savedTheme = localStorage.getItem('stb-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        applyTheme(currentTheme);
-        
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-            localStorage.setItem('stb-theme', currentTheme);
-        });
-        
-        function applyTheme(theme) {
-            document.body.className = theme;
+    &lt;style&gt;
+        .content-section {
+            padding: 48px 0;
         }
         
-        // Update copyright year
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearElement = document.querySelector('.footer-container p');
-            if (yearElement) {
-                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+        .content-card {
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--linear-primary);
+        }
+        
+        .content-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--linear-text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .feature-card {
+            padding: 24px;
+            background: var(--linear-bg-tertiary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 32px;
+            color: var(--linear-primary);
+            margin-bottom: 16px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .feature-description {
+            font-size: 14px;
+            color: var(--linear-text-secondary);
+            line-height: 1.5;
+        }
+        
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .offer-card {
+            padding: 32px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+            transition: var(--linear-transition);
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--linear-shadow);
+        }
+        
+        .offer-icon {
+            font-size: 40px;
+            color: var(--linear-primary);
+            margin-bottom: 20px;
+        }
+        
+        .offer-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .offer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .offer-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--linear-text-secondary);
+        }
+        
+        .offer-list i {
+            color: var(--linear-primary);
+            margin-top: 2px;
+        }
+        
+        .commitment-section {
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-primary);
+            border-radius: var(--linear-radius-lg);
+            padding: 48px;
+            text-align: center;
+            margin-top: 32px;
+        }
+        
+        .commitment-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--linear-primary);
+        }
+        
+        .commitment-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--linear-text-secondary);
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+        
+        .commitment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+        }
+        
+        .commitment-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .commitment-item i {
+            font-size: 32px;
+            color: var(--linear-primary);
+        }
+        
+        .commitment-item span {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-        });
-    </script>
-
-    <script src="/js/spa-router.js"></script>
-</body>
-</html>
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-card {
+                padding: 24px;
+            }
+            
+            .commitment-section {
+                padding: 32px 24px;
+            }
+            
+            .commitment-icons {
+                gap: 24px;
+            }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="dark"&gt;
+    &lt;div class="stb-layout"&gt;
+        &lt;header class="stb-layout-header"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-header-inner"&gt;
+                    &lt;a href="/" class="stb-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/a&gt;
+                    
+                    &lt;nav class="stb-nav-desktop"&gt;
+                        &lt;a href="/" class="stb-nav-link"&gt;Home&lt;/a&gt;
+                        &lt;a href="/tools" class="stb-nav-link"&gt;Tools&lt;/a&gt;
+                        &lt;a href="/about.html" class="stb-nav-link active"&gt;About&lt;/a&gt;
+                        &lt;a href="/contact.html" class="stb-nav-link"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/privacy.html" class="stb-nav-link"&gt;Privacy&lt;/a&gt;
+                        &lt;a href="/terms.html" class="stb-nav-link"&gt;Terms&lt;/a&gt;
+                    &lt;/nav&gt;
+                    
+                    &lt;div class="stb-nav-actions"&gt;
+                        &lt;button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu"&gt;
+                            &lt;i class="fas fa-bars"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                        &lt;button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme"&gt;
+                            &lt;i class="fas fa-moon"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu"&gt;
+                &lt;div class="stb-mobile-nav-links"&gt;
+                    &lt;a href="/" class="stb-mobile-nav-link"&gt;Home&lt;/a&gt;
+                    &lt;a href="/tools" class="stb-mobile-nav-link"&gt;Tools&lt;/a&gt;
+                    &lt;a href="/about.html" class="stb-mobile-nav-link"&gt;About&lt;/a&gt;
+                    &lt;a href="/contact.html" class="stb-mobile-nav-link"&gt;Contact&lt;/a&gt;
+                    &lt;a href="/privacy.html" class="stb-mobile-nav-link"&gt;Privacy&lt;/a&gt;
+                    &lt;a href="/terms.html" class="stb-mobile-nav-link"&gt;Terms&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        
+        &lt;main class="stb-layout-main"&gt;
+            &lt;section class="stb-hero-section"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="stb-breadcrumb"&gt;
+                        &lt;a href="/"&gt;Home&lt;/a&gt;
+                        &lt;span class="stb-breadcrumb-separator"&gt;&amp;gt;&lt;/span&gt;
+                        &lt;span&gt;About Us&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;h1 class="stb-hero-title"&gt;Simple Toolbox: Your Digital Swiss Army Knife&lt;/h1&gt;
+                    &lt;p class="stb-hero-description"&gt;Welcome to Simple Toolbox, a collection of essential utilities designed for the modern digital workflow. We focus on providing reliable, no-nonsense solutions for everyday technical tasks.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+            
+            &lt;section class="content-section"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="content-card"&gt;
+                        &lt;h2 class="content-title"&gt;Our Story&lt;/h2&gt;
+                        &lt;p class="content-text"&gt;
+                            Founded in 2024, Simple Toolbox was born from the frustration of needing multiple tools for everyday digital tasks. We saw a gap in the market for a collection of reliable, privacy-focused utilities that work seamlessly without the hassle of registration or data uploads.
+                        &lt;/p&gt;
+                        &lt;p class="content-text"&gt;
+                            Our team of developers and designers set out to create a platform where users could access powerful tools without compromising their privacy. Today, Simple Toolbox has grown into a comprehensive suite of utilities used by professionals and casual users alike.
+                        &lt;/p&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="content-card"&gt;
+                        &lt;h2 class="content-title"&gt;Our Mission&lt;/h2&gt;
+                        &lt;p class="content-text"&gt;
+                            Our mission is to streamline your work by offering a suite of tools that are both powerful and incredibly easy to use. Whether you are a developer, designer, or data analyst, our goal is to save you time and effort by providing intuitive solutions for common technical challenges.
+                        &lt;/p&gt;
+                        
+                        &lt;div class="feature-grid"&gt;
+                            &lt;div class="feature-card"&gt;
+                                &lt;div class="feature-icon"&gt;
+                                    &lt;i class="fas fa-shield-alt"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="feature-title"&gt;Privacy First&lt;/h3&gt;
+                                &lt;p class="feature-description"&gt;All tools process data locally in your browser, ensuring your information remains secure and private.&lt;/p&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="feature-card"&gt;
+                                &lt;div class="feature-icon"&gt;
+                                    &lt;i class="fas fa-lightbulb"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="feature-title"&gt;User-Centric Design&lt;/h3&gt;
+                                &lt;p class="feature-description"&gt;Every tool is designed with simplicity and usability at its core, making complex tasks accessible to everyone.&lt;/p&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="feature-card"&gt;
+                                &lt;div class="feature-icon"&gt;
+                                    &lt;i class="fas fa-rocket"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="feature-title"&gt;Constant Innovation&lt;/h3&gt;
+                                &lt;p class="feature-description"&gt;We continuously improve our tools and add new utilities based on user feedback and emerging needs.&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="content-section"&gt;
+                        &lt;h2 class="content-title"&gt;What We Offer&lt;/h2&gt;
+                        
+                        &lt;div class="offer-grid"&gt;
+                            &lt;div class="offer-card"&gt;
+                                &lt;div class="offer-icon"&gt;
+                                    &lt;i class="fas fa-code"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="offer-title"&gt;Developer Tools&lt;/h3&gt;
+                                &lt;ul class="offer-list"&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;Code formatting and validation&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;JSON and data manipulation&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;API key and password generation&lt;/span&gt;
+                                    &lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="offer-card"&gt;
+                                &lt;div class="offer-icon"&gt;
+                                    &lt;i class="fas fa-database"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="offer-title"&gt;Data Utilities&lt;/h3&gt;
+                                &lt;ul class="offer-list"&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;CSV and Excel conversion&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;File format transformations&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;Data validation and cleaning&lt;/span&gt;
+                                    &lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="offer-card"&gt;
+                                &lt;div class="offer-icon"&gt;
+                                    &lt;i class="fas fa-file-alt"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;h3 class="offer-title"&gt;Content Tools&lt;/h3&gt;
+                                &lt;ul class="offer-list"&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;Text analysis and word counting&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;Image processing and optimization&lt;/span&gt;
+                                    &lt;/li&gt;
+                                    &lt;li&gt;
+                                        &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+                                        &lt;span&gt;Media file manipulation&lt;/span&gt;
+                                    &lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;p class="content-text" style="margin-top: 32px;"&gt;
+                            All our tools are free to use, require no registration, and process your data instantly. We are constantly adding new features based on user feedback and emerging technological trends.
+                        &lt;/p&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="commitment-section"&gt;
+                        &lt;h2 class="commitment-title"&gt;Our Commitment&lt;/h2&gt;
+                        &lt;p class="commitment-text"&gt;
+                            We believe in providing high-quality tools that are accessible to everyone. Our focus is on simplicity, reliability, and user experience. We are committed to maintaining a platform that respects your privacy while delivering powerful functionality.
+                        &lt;/p&gt;
+                        &lt;div class="commitment-icons"&gt;
+                            &lt;div class="commitment-item"&gt;
+                                &lt;i class="fas fa-lock"&gt;&lt;/i&gt;
+                                &lt;span&gt;100% Privacy&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class="commitment-item"&gt;
+                                &lt;i class="fas fa-free-code-camp"&gt;&lt;/i&gt;
+                                &lt;span&gt;Free Forever&lt;/span&gt;
+                            &lt;/div&gt;
+                            &lt;div class="commitment-item"&gt;
+                                &lt;i class="fas fa-bolt"&gt;&lt;/i&gt;
+                                &lt;span&gt;Fast &amp; Reliable&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
+        
+        &lt;footer class="stb-layout-footer"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-footer-content"&gt;
+                    &lt;div class="stb-footer-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-links"&gt;
+                        &lt;a href="/about.html"&gt;About Us&lt;/a&gt;
+                        &lt;a href="/contact.html"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/terms.html"&gt;Terms of Use&lt;/a&gt;
+                        &lt;a href="/privacy.html"&gt;Privacy Policy&lt;/a&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-copyright"&gt;
+                        &lt;p&gt;© 2026 Simple Toolbox. All rights reserved.&lt;/p&gt;
+                        &lt;p&gt;simpletoolbox.dev | A collection of free, privacy‑first online tools&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;script src="js/framework.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

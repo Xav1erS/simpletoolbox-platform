@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Unit Converter | Length, Weight, Temperature, Area | SimpleToolBox</title>
+    <meta name="description" content="Free online unit converter for length, weight, temperature, area, volume & more. Real-time calculations with precision accuracy. Easy to use, no login required.">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../../css/design-system.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--linear-spacing-xl);
+            width: 100%;
+        }
+        
+        .tool-content-area {
+            padding: var(--linear-spacing-xl) 0;
+            width: 100%;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+            margin-bottom: var(--linear-spacing-xl);
+            color: var(--linear-text-secondary);
+            font-size: var(--linear-font-size-sm);
+        }
+        
+        .breadcrumb a {
+            color: var(--linear-text-secondary);
+            text-decoration: none;
+            transition: color var(--linear-transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--linear-primary);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 var(--linear-spacing-xs);
+            color: var(--linear-text-tertiary);
+        }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: var(--linear-spacing-2xl);
+        }
+        
+        .tool-header h1 {
+            font-size: var(--linear-font-size-3xl);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .tool-header p {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .converter-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            margin-bottom: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-md);
+        }
+        
+        .card-title {
+            font-size: var(--linear-font-size-2xl);
+            margin-bottom: var(--linear-spacing-lg);
+            color: var(--linear-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+        }
+        
+        .card-title i {
+            font-size: var(--linear-font-size-2xl);
+        }
+        
+        .category-select {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-sm);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .category-btn {
+            padding: var(--linear-spacing-sm) var(--linear-spacing-lg);
+            border: 1px solid var(--linear-primary);
+            background: transparent;
+            color: var(--linear-primary);
+            border-radius: var(--linear-radius-md);
+            cursor: pointer;
+            transition: var(--linear-transition);
+            font-weight: 500;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--linear-primary);
+            color: var(--linear-text-inverse);
+        }
+        
+        .converter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-lg);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .converter-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--linear-spacing-sm);
+            font-weight: 600;
+            color: var(--linear-text-primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--linear-spacing-md) var(--linear-spacing-lg);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-text);
+            font-size: var(--linear-font-size-base);
+            transition: var(--linear-transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--linear-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .result-box {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--linear-primary);
+            border-radius: var(--linear-radius-md);
+            padding: var(--linear-spacing-lg);
+            font-size: var(--linear-font-size-xl);
+            font-weight: 700;
+            color: var(--linear-primary);
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--linear-transition);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-md);
+            margin-top: var(--linear-spacing-xl);
+        }
+        
+        .batch-toggle {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .batch-container {
+            display: none;
+        }
+        
+        .batch-row {
+            display: flex;
+            gap: var(--linear-spacing-md);
+            margin-bottom: var(--linear-spacing-md);
+            align-items: center;
+        }
+        
+        .batch-input {
+            flex: 1;
+        }
+        
+        .batch-remove {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--linear-radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .batch-results {
+            margin-top: var(--linear-spacing-lg);
+            overflow-x: auto;
+        }
+        
+        .batch-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-md);
+            overflow: hidden;
+        }
+        
+        .batch-table th,
+        .batch-table td {
+            padding: var(--linear-spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--linear-border);
+        }
+        
+        .history-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100%;
+            background-color: var(--linear-bg-secondary);
+            box-shadow: var(--linear-shadow-md);
+            padding: var(--linear-spacing-xl);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .history-sidebar.open {
+            right: 0;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .history-list {
+            list-style: none;
+        }
+        
+        .history-item {
+            padding: var(--linear-spacing-md);
+            background-color: var(--linear-bg-tertiary);
+            border-radius: var(--linear-radius-md);
+            margin-bottom: var(--linear-spacing-sm);
+            border-left: 4px solid var(--linear-primary);
+        }
+        
+        .features {
+            margin: var(--linear-spacing-3xl) 0;
+        }
+        
+        .section-title {
+            font-size: var(--linear-font-size-2xl);
+            text-align: center;
+            margin-bottom: var(--linear-spacing-2xl);
+            color: var(--linear-primary);
+        }
+        
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--linear-spacing-lg);
+        }
+        
+        .feature-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-sm);
+            transition: var(--linear-transition);
+            text-align: center;
+            border-top: 4px solid var(--linear-primary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--linear-shadow);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .feature-title {
+            font-size: var(--linear-font-size-lg);
+            margin-bottom: var(--linear-spacing-sm);
+            color: var(--linear-text);
+        }
+        
+        .footer-area {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--linear-border);
+            color: var(--linear-text);
+            margin-top: 60px;
+            width: 100%;
+        }
+        
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--linear-spacing-lg);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .footer-links a {
+            color: var(--linear-text-secondary);
+            text-decoration: none;
+            transition: color var(--linear-transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--linear-primary);
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .converter-row {
+                flex-direction: column;
+            }
+            .history-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free Unit Converter",
+  "alternateName": "Unit Converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "url": "https://simpletoolbox.dev/tools/unit-converter",
+  "author": {
+    "@type": "Organization",
+    "name": "SimpleToolBox"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "description": "Free online unit converter for length, weight, temperature, area, volume, speed & more. Real-time calculations with precision accuracy. Easy to use, no login required.",
+  "featureList": [
+    "Length conversion: meters, kilometers, feet, inches, miles",
+    "Weight conversion: kilograms, grams, pounds, ounces",
+    "Temperature conversion: Celsius, Fahrenheit, Kelvin",
+    "Area conversion: square meters, acres, hectares",
+    "Volume conversion: liters, gallons, cubic meters",
+    "Speed conversion: km/h, mph, m/s",
+    "Real-time calculations as you type",
+    "Batch mode for multiple conversions",
+    "Dark and light themes",
+    "Privacy-first, no data sent to servers",
+    "Mobile-optimized responsive design",
+    "Offline PWA support"
+  ],
+  "keywords": "unit converter, length converter, weight converter, temperature converter, area converter, volume converter, speed converter, online converter, free converter",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1250",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "inLanguage": "English",
+  "potentialAction": {
+    "@type": "UseAction",
+    "target": "https://simpletoolbox.dev/tools/unit-converter"
+  }
+}
+    </script>
+</head>
+<body class="dark">
+    <div class="layout-container">
+        <!-- Navigation Area -->
+        <nav class="navigation-area">
+            <div class="nav-container">
+                <a href="/" class="navigation-brand">
+                    <span>Simple Toolbox</span>
+                </a>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="nav-links">
+                    <a href="/tools">Tools</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div class="mobile-nav-menu" id="mobile-nav-menu">
+                <div class="mobile-nav-links">
+                    <a href="/">Home</a>
+                    <a href="/tools">Tools</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="container">
+        <main class="main-content-area">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-separator">&gt;</span>
+                <a href="/tools">Tools</a>
+                <span class="breadcrumb-separator">&gt;</span>
+                <span>Unit Converter</span>
+            </div>
+
+            <!-- Tool Header -->
+            <header class="tool-header">
+                <h1>Free Online Unit Converter</h1>
+                <p>Convert units instantly with our free online unit converter. Supports length, weight, temperature, area, volume, speed & more. Real-time calculations with precision accuracy, no login required.</p>
+            </header>
+            
+            <!-- Tool-specific content -->
+            <div class="tool-content-area">
+                <!-- Main Converter Card -->
+                <div class="converter-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        Convert Units Instantly
+                    </h2>
+
+                    <!-- Category Selection -->
+                    <div class="category-select">
+                        <label class="form-label">Select Category</label>
+                        <div class="category-buttons" id="categoryButtons">
+                            <!-- Buttons will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Single/Batch Mode Toggle -->
+                    <div class="batch-toggle">
+                        <button class="action-button secondary-action" id="modeToggle">
+                            <i class="fas fa-layer-group"></i>
+                            Switch to Batch Mode
+                        </button>
+                    </div>
+
+                    <!-- Single Converter -->
+                    <div id="singleConverter">
+                        <div class="converter-row">
+                            <div class="converter-col">
+                                <label class="form-label" for="fromUnit">From Unit</label>
+                                <select class="form-control" id="fromUnit">
+                                    <option>Select unit</option>
+                                </select>
+                            </div>
+                            <div class="converter-col">
+                                <label class="form-label" for="toUnit">To Unit</label>
+                                <select class="form-control" id="toUnit">
+                                    <option>Select unit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="converter-row">
+                            <div class="converter-col">
+                                <label class="form-label" for="inputValue">Value</label>
+                                <input type="number" class="form-control" id="inputValue" placeholder="Enter value" step="any">
+                            </div>
+                            <div class="converter-col">
+                                <label class="form-label">Result</label>
+                                <div class="result-box" id="resultBox">
+                                    Enter value to convert
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Batch Converter (hidden by default) -->
+                    <div class="batch-container" id="batchConverter">
+                        <div class="action-buttons">
+                            <button class="action-button secondary-action" id="addBatchRow">
+                                <i class="fas fa-plus"></i>
+                                Add Row
+                            </button>
+                            <button class="action-button secondary-action" id="clearBatch">
+                                <i class="fas fa-trash"></i>
+                                Clear All
+                            </button>
+                        </div>
+                        <div id="batchRows">
+                            <!-- Batch rows will be generated by JavaScript -->
+                        </div>
+                        <div class="batch-results">
+                            <table class="batch-table" id="batchTable">
+                                <thead>
+                                    <tr>
+                                        <th>Value</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Result</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Results will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-button primary-action" id="convertBtn">
+                            <i class="fas fa-calculator"></i>
+                            Convert
+                        </button>
+                        <button class="action-button secondary-action" id="swapUnits">
+                            <i class="fas fa-sync-alt"></i>
+                            Swap Units
+                        </button>
+                        <button class="action-button secondary-action" id="copyResult">
+                            <i class="fas fa-copy"></i>
+                            Copy Result
+                        </button>
+                        <button class="action-button secondary-action" id="addToFavorites">
+                            <i class="fas fa-star"></i>
+                            Add to Favorites
+                        </button>
+                        <button class="action-button secondary-action" id="historyToggle">
+                            <i class="fas fa-history"></i>
+                            View History
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="features">
+                    <h2 class="section-title">Why Choose Our Free Unit Converter?</h2>
+                    <div class="feature-cards" id="featureCardsContainer">
+                        <!-- Feature cards will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="what-is.html">What Is</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="/about.html">About Us</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- History Sidebar -->
+    <aside class="history-sidebar" id="historySidebar">
+        <div class="history-header">
+            <h3>Conversion History</h3>
+            <button class="theme-toggle-button" id="closeHistory">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="history-list" id="historyList">
+            <!-- History items will be generated by JavaScript -->
+        </ul>
+        <button class="action-button secondary-action w-100 mt-3" id="clearHistory" style="width: 100%; margin-top: var(--linear-spacing-lg);">
+            <i class="fas fa-trash"></i>
+            Clear All History
+        </button>
+    </aside>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileMenuButton &amp;&amp; mobileNavMenu) {
+            mobileMenuButton.addEventListener('click', () =&gt; {
+                mobileNavMenu.classList.toggle('active');
+                const icon = mobileMenuButton.querySelector('i');
+                if (mobileNavMenu.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                    icon.setAttribute('aria-label', 'Close menu');
+                } else {
+                    icon.className = 'fas fa-bars';
+                    icon.setAttribute('aria-label', 'Toggle menu');
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) =&gt; {
+                if (!mobileMenuButton.contains(e.target) &amp;&amp; !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('active');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.className = 'fas fa-bars';
+                    icon.setAttribute('aria-label', 'Toggle menu');
+                }
+            });
+        }
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () =&gt; {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.body.className = theme;
+            document.documentElement.className = theme;
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+        
+        // Define conversion data
+        const conversionData = {
+            length: {
+                name: "Length",
+                units: [
+                    { name: "Meter", symbol: "m", factor: 1 },
+                    { name: "Kilometer", symbol: "km", factor: 1000 },
+                    { name: "Centimeter", symbol: "cm", factor: 0.01 },
+                    { name: "Millimeter", symbol: "mm", factor: 0.001 },
+                    { name: "Mile", symbol: "mi", factor: 1609.344 },
+                    { name: "Yard", symbol: "yd", factor: 0.9144 },
+                    { name: "Foot", symbol: "ft", factor: 0.3048 },
+                    { name: "Inch", symbol: "in", factor: 0.0254 }
+                ]
+            },
+            weight: {
+                name: "Weight",
+                units: [
+                    { name: "Kilogram", symbol: "kg", factor: 1 },
+                    { name: "Gram", symbol: "g", factor: 0.001 },
+                    { name: "Milligram", symbol: "mg", factor: 0.000001 },
+                    { name: "Pound", symbol: "lb", factor: 0.453592 },
+                    { name: "Ounce", symbol: "oz", factor: 0.0283495 },
+                    { name: "Ton", symbol: "t", factor: 1000 }
+                ]
+            },
+            temperature: {
+                name: "Temperature",
+                units: [
+                    { name: "Celsius", symbol: "°C", factor: 1 },
+                    { name: "Fahrenheit", symbol: "°F", factor: 1 },
+                    { name: "Kelvin", symbol: "K", factor: 1 }
+                ],
+                convert: function(value, from, to) {
+                    let celsius;
+                    if (from === "Celsius") celsius = value;
+                    else if (from === "Fahrenheit") celsius = (value - 32) * 5/9;
+                    else if (from === "Kelvin") celsius = value - 273.15;
+
+                    if (to === "Celsius") return celsius;
+                    if (to === "Fahrenheit") return (celsius * 9/5) + 32;
+                    if (to === "Kelvin") return celsius + 273.15;
+                }
+            },
+            volume: {
+                name: "Volume",
+                units: [
+                    { name: "Liter", symbol: "L", factor: 1 },
+                    { name: "Milliliter", symbol: "mL", factor: 0.001 },
+                    { name: "Gallon (US)", symbol: "gal", factor: 3.78541 },
+                    { name: "Gallon (UK)", symbol: "gal UK", factor: 4.54609 },
+                    { name: "Cubic Meter", symbol: "m³", factor: 1000 },
+                    { name: "Cubic Foot", symbol: "ft³", factor: 28.3168 }
+                ]
+            },
+            area: {
+                name: "Area",
+                units: [
+                    { name: "Square Meter", symbol: "m²", factor: 1 },
+                    { name: "Square Kilometer", symbol: "km²", factor: 1000000 },
+                    { name: "Square Foot", symbol: "ft²", factor: 0.092903 },
+                    { name: "Acre", symbol: "ac", factor: 4046.86 },
+                    { name: "Hectare", symbol: "ha", factor: 10000 }
+                ]
+            },
+            speed: {
+                name: "Speed",
+                units: [
+                    { name: "Meter per Second", symbol: "m/s", factor: 1 },
+                    { name: "Kilometer per Hour", symbol: "km/h", factor: 0.277778 },
+                    { name: "Mile per Hour", symbol: "mph", factor: 0.44704 },
+                    { name: "Knot", symbol: "kn", factor: 0.514444 }
+                ]
+            }
+        };
+
+        // App state
+        let currentCategory = 'length';
+        let isBatchMode = false;
+        let history = JSON.parse(localStorage.getItem('unitly_history')) || [];
+        let favorites = JSON.parse(localStorage.getItem('unitly_favorites')) || [];
+
+        // DOM elements
+        const modeToggle = document.getElementById('modeToggle');
+        const singleConverter = document.getElementById('singleConverter');
+        const batchConverter = document.getElementById('batchConverter');
+        const categoryButtons = document.getElementById('categoryButtons');
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const inputValue = document.getElementById('inputValue');
+        const resultBox = document.getElementById('resultBox');
+        const convertBtn = document.getElementById('convertBtn');
+        const swapUnitsBtn = document.getElementById('swapUnits');
+        const copyResultBtn = document.getElementById('copyResult');
+        const addToFavoritesBtn = document.getElementById('addToFavorites');
+        const historyToggleBtn = document.getElementById('historyToggle');
+        const historySidebar = document.getElementById('historySidebar');
+        const historyList = document.getElementById('historyList');
+        const closeHistoryBtn = document.getElementById('closeHistory');
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        const addBatchRowBtn = document.getElementById('addBatchRow');
+        const clearBatchBtn = document.getElementById('clearBatch');
+        const batchRows = document.getElementById('batchRows');
+        const batchTable = document.getElementById('batchTable');
+
+        // Initialize function
+        function init() {
+            generateCategoryButtons();
+            updateUnits();
+            generateFeatureCards();
+            updateHistoryList();
+            
+            // Event listeners
+            modeToggle.addEventListener('click', toggleMode);
+            convertBtn.addEventListener('click', convert);
+            swapUnitsBtn.addEventListener('click', swapUnits);
+            copyResultBtn.addEventListener('click', copyResult);
+            addToFavoritesBtn.addEventListener('click', addToFavorites);
+            historyToggleBtn.addEventListener('click', () =&gt; historySidebar.classList.add('open'));
+            closeHistoryBtn.addEventListener('click', () =&gt; historySidebar.classList.remove('open'));
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            addBatchRowBtn.addEventListener('click', addBatchRow);
+            clearBatchBtn.addEventListener('click', clearBatch);
+            fromUnit.addEventListener('change', convert);
+            toUnit.addEventListener('change', convert);
+            inputValue.addEventListener('input', convert);
+        }
+
+        // Generate category buttons
+        function generateCategoryButtons() {
+            categoryButtons.innerHTML = '';
+            Object.keys(conversionData).forEach(category =&gt; {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.textContent = conversionData[category].name;
+                button.dataset.category = category;
+                if (category === currentCategory) button.classList.add('active');
+                button.addEventListener('click', () =&gt; selectCategory(category));
+                categoryButtons.appendChild(button);
+            });
+        }
+
+        // Select category
+        function selectCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn =&gt; {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+            updateUnits();
+            convert();
+        }
+
+        // Update unit dropdowns
+        function updateUnits() {
+            const units = conversionData[currentCategory].units;
+            
+            fromUnit.innerHTML = '';
+            toUnit.innerHTML = '';
+            
+            units.forEach(unit =&gt; {
+                const option1 = document.createElement('option');
+                option1.value = unit.name;
+                option1.textContent = `${unit.name} (${unit.symbol})`;
+                
+                const option2 = document.createElement('option');
+                option2.value = unit.name;
+                option2.textContent = `${unit.name} (${unit.symbol})`;
+                
+                fromUnit.appendChild(option1);
+                toUnit.appendChild(option2);
+            });
+
+            fromUnit.selectedIndex = 0;
+            toUnit.selectedIndex = 1;
+        }
+
+        // Convert function
+        function convert() {
+            if (isBatchMode) {
+                convertBatch();
+                return;
+            }
+
+            const value = parseFloat(inputValue.value);
+            if (isNaN(value)) {
+                resultBox.textContent = 'Enter a valid number';
+                return;
+            }
+
+            const from = fromUnit.value;
+            const to = toUnit.value;
+            
+            if (from === 'Select unit' || to === 'Select unit') {
+                resultBox.textContent = 'Select both units';
+                return;
+            }
+
+            let result;
+            const category = conversionData[currentCategory];
+            
+            if (currentCategory === 'temperature') {
+                result = category.convert(value, from, to);
+            } else {
+                const fromUnitObj = category.units.find(u =&gt; u.name === from);
+                const toUnitObj = category.units.find(u =&gt; u.name === to);
+                result = value * fromUnitObj.factor / toUnitObj.factor;
+            }
+
+            const formatted = formatNumber(result);
+            resultBox.textContent = `${value} ${from} = ${formatted} ${to}`;
+
+            addToHistory(value, from, to, result);
+        }
+
+        // Format number
+        function formatNumber(num) {
+            if (num === 0) return '0';
+            if (Math.abs(num) &gt;= 1000) {
+                return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+            if (Math.abs(num) &gt;= 0.01) {
+                return num.toFixed(4).replace(/\.?0+$/, '');
+            }
+            return num.toExponential(4);
+        }
+
+        // Add to history
+        function addToHistory(value, from, to, result) {
+            const entry = {
+                id: Date.now(),
+                value,
+                from,
+                to,
+                result,
+                category: currentCategory,
+                timestamp: new Date().toISOString()
+            };
+
+            history.unshift(entry);
+            if (history.length &gt; 20) history.pop();
+
+            localStorage.setItem('unitly_history', JSON.stringify(history));
+            updateHistoryList();
+        }
+
+        // Update history list
+        function updateHistoryList() {
+            historyList.innerHTML = '';
+            history.forEach(entry =&gt; {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `
+                    &lt;div&gt;&lt;strong&gt;${entry.value} ${entry.from} = ${formatNumber(entry.result)} ${entry.to}&lt;/strong&gt;&lt;/div&gt;
+                    &lt;small&gt;${new Date(entry.timestamp).toLocaleString()}&lt;/small&gt;
+                `;
+                historyList.appendChild(li);
+            });
+        }
+
+        // Clear history
+        function clearHistory() {
+            history = [];
+            localStorage.setItem('unitly_history', JSON.stringify(history));
+            updateHistoryList();
+        }
+
+        // Toggle mode
+        function toggleMode() {
+            isBatchMode = !isBatchMode;
+            singleConverter.style.display = isBatchMode ? 'none' : 'block';
+            batchConverter.style.display = isBatchMode ? 'block' : 'none';
+            modeToggle.innerHTML = isBatchMode ? 
+                '&lt;i class="fas fa-layer-group"&gt;&lt;/i&gt; Switch to Single Mode' :
+                '&lt;i class="fas fa-layer-group"&gt;&lt;/i&gt; Switch to Batch Mode';
+        }
+
+        // Add batch row
+        function addBatchRow() {
+            const row = document.createElement('div');
+            row.className = 'batch-row';
+            row.innerHTML = `
+                &lt;input type="number" class="form-control batch-input" placeholder="Value" step="any"&gt;
+                &lt;select class="form-control batch-from"&gt;
+                    ${fromUnit.innerHTML}
+                &lt;/select&gt;
+                &lt;select class="form-control batch-to"&gt;
+                    ${toUnit.innerHTML}
+                &lt;/select&gt;
+                &lt;button class="batch-remove"&gt;&lt;i class="fas fa-times"&gt;&lt;/i&gt;&lt;/button&gt;
+            `;
+            batchRows.appendChild(row);
+
+            const fromSelect = row.querySelector('.batch-from');
+            const toSelect = row.querySelector('.batch-to');
+            fromSelect.selectedIndex = 0;
+            toSelect.selectedIndex = 1;
+
+            row.querySelector('.batch-remove').addEventListener('click', () =&gt; row.remove());
+        }
+
+        // Clear batch
+        function clearBatch() {
+            batchRows.innerHTML = '';
+            batchTable.querySelector('tbody').innerHTML = '';
+        }
+
+        // Convert batch
+        function convertBatch() {
+            const rows = batchRows.querySelectorAll('.batch-row');
+            const tbody = batchTable.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            rows.forEach(row =&gt; {
+                const valueInput = row.querySelector('.batch-input');
+                const fromSelect = row.querySelector('.batch-from');
+                const toSelect = row.querySelector('.batch-to');
+
+                const value = parseFloat(valueInput.value);
+                if (isNaN(value)) return;
+
+                const from = fromSelect.value;
+                const to = toSelect.value;
+                if (from === 'Select unit' || to === 'Select unit') return;
+
+                let result;
+                const category = conversionData[currentCategory];
+
+                if (currentCategory === 'temperature') {
+                    result = category.convert(value, from, to);
+                } else {
+                    const fromUnitObj = category.units.find(u =&gt; u.name === from);
+                    const toUnitObj = category.units.find(u =&gt; u.name === to);
+                    result = value * fromUnitObj.factor / toUnitObj.factor;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    &lt;td&gt;${value}&lt;/td&gt;
+                    &lt;td&gt;${from}&lt;/td&gt;
+                    &lt;td&gt;${to}&lt;/td&gt;
+                    &lt;td&gt;${formatNumber(result)}&lt;/td&gt;
+                    &lt;td&gt;&lt;button class="action-button secondary-action copy-batch-result"&gt;Copy&lt;/button&gt;&lt;/td&gt;
+                `;
+                tbody.appendChild(tr);
+
+                tr.querySelector('.copy-batch-result').addEventListener('click', () =&gt; {
+                    navigator.clipboard.writeText(`${formatNumber(result)} ${to}`);
+                    showToast('Result copied to clipboard');
+                });
+            });
+        }
+
+        // Swap units
+        function swapUnits() {
+            const fromIndex = fromUnit.selectedIndex;
+            const toIndex = toUnit.selectedIndex;
+            fromUnit.selectedIndex = toIndex;
+            toUnit.selectedIndex = fromIndex;
+            convert();
+        }
+
+        // Copy result
+        function copyResult() {
+            const text = resultBox.textContent;
+            navigator.clipboard.writeText(text).then(() =&gt; {
+                showToast('Result copied to clipboard');
+            });
+        }
+
+        // Add to favorites
+        function addToFavorites() {
+            const from = fromUnit.value;
+            const to = toUnit.value;
+            if (from === 'Select unit' || to === 'Select unit') return;
+
+            const favorite = {
+                id: Date.now(),
+                from,
+                to,
+                category: currentCategory,
+                created: new Date().toISOString()
+            };
+
+            favorites.push(favorite);
+            localStorage.setItem('unitly_favorites', JSON.stringify(favorites));
+            showToast('Added to favorites');
+        }
+
+        // Show toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.innerHTML = `
+                &lt;div class="toast show" role="alert"&gt;
+                    &lt;div class="toast-body"&gt;
+                        ${message}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() =&gt; toast.remove(), 3000);
+        }
+
+        // Generate feature cards
+        function generateFeatureCards() {
+            const features = [
+                {
+                    icon: 'fa-bolt',
+                    title: 'Real-Time Conversion',
+                    description: 'Results update instantly as you type—no need to click any button.'
+                },
+                {
+                    icon: 'fa-layer-group',
+                    title: 'Batch Mode',
+                    description: 'Convert multiple values at once with our unique batch processing feature.'
+                },
+                {
+                    icon: 'fa-history',
+                    title: 'Smart History',
+                    description: 'Local storage keeps your last 20 conversions for quick reference.'
+                },
+                {
+                    icon: 'fa-star',
+                    title: 'Favorites',
+                    description: 'Save frequently used unit pairs for one-click access.'
+                },
+                {
+                    icon: 'fa-moon',
+                    title: 'Dark/Light Mode',
+                    description: 'Switch between themes based on your preference or environment.'
+                },
+                {
+                    icon: 'fa-shield-alt',
+                    title: 'Privacy First',
+                    description: 'All calculations happen locally in your browser—no data sent to servers.'
+                },
+                {
+                    icon: 'fa-mobile-alt',
+                    title: 'Mobile Optimized',
+                    description: 'Fully responsive design works perfectly on all devices.'
+                },
+                {
+                    icon: 'fa-wifi-slash',
+                    title: 'Offline PWA',
+                    description: 'Install as a Progressive Web App and use without internet access.'
+                }
+            ];
+
+            const container = document.getElementById('featureCardsContainer');
+            container.innerHTML = '';
+            features.forEach(feature =&gt; {
+                const card = document.createElement('div');
+                card.className = 'feature-card';
+                card.innerHTML = `
+                    &lt;div class="feature-icon"&gt;
+                        &lt;i class="fas ${feature.icon}"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;h3 class="feature-title"&gt;${feature.title}&lt;/h3&gt;
+                    &lt;p&gt;${feature.description}&lt;/p&gt;
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // 监听pageLoaded事件（SPA导航）
+        document.addEventListener('pageLoaded', function(event) {
+            console.log('pageLoaded event received on Unit Converter:', event.detail);
+            if (typeof init === 'function') {
+                init();
+            }
+        });
+    &lt;/script&gt;
+
+    &lt;script src="../../js/spa-router.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

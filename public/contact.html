@@ -1,252 +1,505 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact Simple Toolbox - Get in touch with us for questions, feedback, or support." />
-    <title>Contact Us - SimpleToolbox.dev</title>
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="dark"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Contact Us - Simple Toolbox | Get in Touch&lt;/title&gt;
+    &lt;meta name="description" content="Contact Simple Toolbox - Get in touch with us for questions, feedback, or support."&gt;
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+    &lt;link rel="stylesheet" href="css/design-system.css"&gt;
+    &lt;link rel="stylesheet" href="css/framework.css"&gt;
     
-    <!-- Design System CSS -->
-    <link rel="stylesheet" href="css/design-system.css">
-</head>
-<body class="dark">
-    <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-container">
-                <a href="/" class="logo">
-                    <span>Simple Toolbox</span>
-                </a>
-                
-                <nav class="nav">
-                    <a href="/" class="nav-link">Home</a>
-                    <a href="/tools" class="nav-link">Tools</a>
-                    <a href="/about.html" class="nav-link">About</a>
-                    <a href="/contact.html" class="nav-link active">Contact</a>
-                    <a href="/privacy.html" class="nav-link">Privacy</a>
-                    <a href="/terms.html" class="nav-link">Terms</a>
-                </nav>
-                
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun icon-sun"></i>
-                    <i class="fas fa-moon icon-moon"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main">
-            <section class="hero">
-                <div class="hero-container">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            <span class="hero-title-main">Contact Simple Toolbox</span>
-                            <span class="hero-title-sub">Get in Touch</span>
-                        </h1>
-                        <p class="hero-description">We value your feedback and are always eager to hear from our users. Whether you have a suggestion for a new tool, found a bug, or just want to say hello, our team is ready to assist you.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="tools">
-                <div class="tools-container">
-                    <!-- Contact Introduction -->
-                    <div class="section" style="margin-bottom: 4rem; text-align: center;">
-                        <h2 style="font-size: 2.25rem; margin-bottom: 1.5rem; font-weight: 700; color: var(--linear-primary);">We're Here to Help</h2>
-                        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 800px; margin: 0 auto; color: var(--linear-text-secondary);">
-                            Whether you have a question about our tools, need technical support, or have an idea for a new feature, we'd love to hear from you. Our team is dedicated to providing prompt and helpful responses to all inquiries.
-                        </p>
-                    </div>
-
-                    <!-- Contact Methods -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-                        <div style="padding: 2.5rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                            <div style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Email Us</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--linear-text-secondary);">
-                                Send us a direct message and we'll get back to you within 24 hours.
-                            </p>
-                            <a href="mailto:support@simpletoolbox.dev" style="display: inline-block; background-color: var(--linear-primary); color: white; padding: 0.75rem 1.5rem; border-radius: var(--linear-radius-md); font-weight: 600; text-decoration: none; transition: background-color 0.3s ease;">
-                                <i class="fas fa-paper-plane mr-2"></i> Send Email
-                            </a>
-                        </div>
-                        <div style="padding: 2.5rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                            <div style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Technical Support</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--linear-text-secondary);">
-                                For tool-specific issues or technical questions, our support team is ready to help.
-                            </p>
-                            <a href="mailto:support@simpletoolbox.dev" style="display: inline-block; background-color: var(--linear-primary); color: white; padding: 0.75rem 1.5rem; border-radius: var(--linear-radius-md); font-weight: 600; text-decoration: none; transition: background-color 0.3s ease;">
-                                <i class="fas fa-headset mr-2"></i> Get Support
-                            </a>
-                        </div>
-                        <div style="padding: 2.5rem; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                            <div style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--linear-primary);">
-                                <i class="fas fa-lightbulb"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Feedback & Ideas</h3>
-                            <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--linear-text-secondary);">
-                                Have an idea for a new tool or feature? We'd love to hear your suggestions.
-                            </p>
-                            <a href="mailto:contact@simpletoolbox.dev" style="display: inline-block; background-color: var(--linear-primary); color: white; padding: 0.75rem 1.5rem; border-radius: var(--linear-radius-md); font-weight: 600; text-decoration: none; transition: background-color 0.3s ease;">
-                                <i class="fas fa-lightbulb mr-2"></i> Share Idea
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Contact Form -->
-                    <div style="margin-bottom: 4rem;">
-                        <h2 style="font-size: 2rem; margin-bottom: 2rem; font-weight: 700; color: var(--linear-primary); text-align: center;">Send Us a Message</h2>
-                        <div style="max-width: 800px; margin: 0 auto; background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); padding: 2.5rem;">
-                            <form id="contactForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                                <div class="form-group" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <label for="name" style="font-weight: 600; color: var(--linear-text-primary);">Name</label>
-                                    <input type="text" id="name" name="name" required style="padding: 1rem 1.25rem; border: 1px solid var(--linear-border); border-radius: var(--linear-radius-md); font-size: 1rem; background-color: var(--linear-bg-tertiary); color: var(--linear-text); transition: border-color 0.3s ease, box-shadow 0.3s ease;">
-                                </div>
-                                
-                                <div class="form-group" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <label for="email" style="font-weight: 600; color: var(--linear-text-primary);">Email</label>
-                                    <input type="email" id="email" name="email" required style="padding: 1rem 1.25rem; border: 1px solid var(--linear-border); border-radius: var(--linear-radius-md); font-size: 1rem; background-color: var(--linear-bg-tertiary); color: var(--linear-text); transition: border-color 0.3s ease, box-shadow 0.3s ease;">
-                                </div>
-                                
-                                <div class="form-group" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <label for="subject" style="font-weight: 600; color: var(--linear-text-primary);">Subject</label>
-                                    <input type="text" id="subject" name="subject" required style="padding: 1rem 1.25rem; border: 1px solid var(--linear-border); border-radius: var(--linear-radius-md); font-size: 1rem; background-color: var(--linear-bg-tertiary); color: var(--linear-text); transition: border-color 0.3s ease, box-shadow 0.3s ease;">
-                                </div>
-                                
-                                <div class="form-group" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <label for="message" style="font-weight: 600; color: var(--linear-text-primary);">Message</label>
-                                    <textarea id="message" name="message" required style="padding: 1rem 1.25rem; border: 1px solid var(--linear-border); border-radius: var(--linear-radius-md); font-size: 1rem; background-color: var(--linear-bg-tertiary); color: var(--linear-text); transition: border-color 0.3s ease, box-shadow 0.3s ease; resize: vertical; min-height: 180px;"></textarea>
-                                </div>
-                                
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <button type="submit" style="background-color: var(--linear-primary); color: white; border: none; padding: 1rem 2rem; border-radius: var(--linear-radius-md); font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                        <i class="fas fa-paper-plane"></i> Send Message
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- FAQ Section -->
-                    <div style="margin-bottom: 4rem;">
-                        <h2 style="font-size: 2rem; margin-bottom: 2rem; font-weight: 700; color: var(--linear-primary); text-align: center;">Frequently Asked Questions</h2>
-                        <div style="max-width: 800px; margin: 0 auto;">
-                            <div style="background-color: var(--linear-bg-secondary); border-radius: var(--linear-radius-lg); border: 1px solid var(--linear-border); overflow: hidden;">
-                                <div style="padding: 1.5rem; border-bottom: 1px solid var(--linear-border);">
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">Is this service free?</h3>
-                                    <p style="color: var(--linear-text-secondary);">Yes, all tools on Simple Toolbox are completely free to use. We believe in making useful utilities accessible to everyone without cost barriers.</p>
-                                </div>
-                                <div style="padding: 1.5rem; border-bottom: 1px solid var(--linear-border);">
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">Do I need to register?</h3>
-                                    <p style="color: var(--linear-text-secondary);">No registration or login is required to access our utilities. We respect your privacy and want to make our tools as accessible as possible.</p>
-                                </div>
-                                <div style="padding: 1.5rem; border-bottom: 1px solid var(--linear-border);">
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">Is my data safe?</h3>
-                                    <p style="color: var(--linear-text-secondary);">We do not store any of the data you process through our tools. All processing happens locally in your browser, ensuring your information remains private and secure.</p>
-                                </div>
-                                <div style="padding: 1.5rem;">
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600;">How long does it take to get a response?</h3>
-                                    <p style="color: var(--linear-text-secondary);">We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly at support@simpletoolbox.dev.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Social Media Section -->
-                    <div style="margin-bottom: 4rem; text-align: center;">
-                        <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; font-weight: 700; color: var(--linear-primary);">Follow Us</h2>
-                        <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; color: var(--linear-text-secondary);">
-                            Stay updated with our latest tools, features, and tips by following us on social media.
-                        </p>
-                        <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem;">
-                            <a href="#" class="social-link" target="_blank" style="width: 56px; height: 56px; background: var(--linear-bg-secondary); border: 1px solid var(--linear-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--linear-primary); text-decoration: none; transition: all 0.3s ease;">
-                                <i class="fab fa-twitter" style="font-size: 1.25rem;"></i>
-                            </a>
-                            <a href="#" class="social-link" target="_blank" style="width: 56px; height: 56px; background: var(--linear-bg-secondary); border: 1px solid var(--linear-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--linear-primary); text-decoration: none; transition: all 0.3s ease;">
-                                <i class="fab fa-github" style="font-size: 1.25rem;"></i>
-                            </a>
-                            <a href="#" class="social-link" target="_blank" style="width: 56px; height: 56px; background: var(--linear-bg-secondary); border: 1px solid var(--linear-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--linear-primary); text-decoration: none; transition: all 0.3s ease;">
-                                <i class="fab fa-linkedin" style="font-size: 1.25rem;"></i>
-                            </a>
-                            <a href="#" class="social-link" target="_blank" style="width: 56px; height: 56px; background: var(--linear-bg-secondary); border: 1px solid var(--linear-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--linear-primary); text-decoration: none; transition: all 0.3s ease;">
-                                <i class="fab fa-instagram" style="font-size: 1.25rem;"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Response Time Section -->
-                    <div style="background-color: var(--linear-bg-secondary); border: 1px solid var(--linear-primary); border-radius: var(--linear-radius-lg); padding: 2.5rem; text-align: center;">
-                        <h2 style="color: var(--linear-primary); font-size: 1.75rem; margin-bottom: 1rem; font-weight: 700;">Response Time</h2>
-                        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 600px; margin: 0 auto; color: var(--linear-text-secondary);">
-                            We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly at support@simpletoolbox.dev.
-                        </p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-container">
-                <p>© 2026 Simple Toolbox. All rights reserved.</p>
-                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        // Initialize theme
-        const savedTheme = localStorage.getItem('stb-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        applyTheme(currentTheme);
-        
-        // Toggle theme on button click
-        themeToggle.addEventListener('click', () => {
-            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-            localStorage.setItem('stb-theme', currentTheme);
-        });
-        
-        function applyTheme(theme) {
-            document.body.className = theme;
+    &lt;style&gt;
+        .content-section {
+            padding: 48px 0;
         }
         
-        // Update copyright year
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearElement = document.querySelector('.footer-container p');
-            if (yearElement) {
-                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .contact-card {
+            padding: 32px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+            text-align: center;
+            transition: var(--linear-transition);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--linear-shadow);
+        }
+        
+        .contact-icon {
+            font-size: 48px;
+            color: var(--linear-primary);
+            margin-bottom: 16px;
+        }
+        
+        .contact-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .contact-description {
+            font-size: 14px;
+            color: var(--linear-text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--linear-primary);
+            color: white;
+            border: none;
+            border-radius: var(--linear-radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--linear-transition);
+        }
+        
+        .contact-btn:hover {
+            background: var(--linear-primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+        }
+        
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--linear-primary);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--linear-text);
+        }
+        
+        .form-input,
+        .form-textarea {
+            padding: 12px 16px;
+            background: var(--linear-bg-tertiary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            font-size: 16px;
+            color: var(--linear-text);
+            transition: var(--linear-transition);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--linear-primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            grid-column: 1 / -1;
+            padding: 14px 32px;
+            background: var(--linear-primary);
+            color: white;
+            border: none;
+            border-radius: var(--linear-radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--linear-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .submit-btn:hover {
+            background: var(--linear-primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .faq-section {
+            margin-top: 48px;
+        }
+        
+        .faq-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--linear-primary);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-lg);
+            overflow: hidden;
+        }
+        
+        .faq-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--linear-border);
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .faq-answer {
+            font-size: 14px;
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .social-section {
+            margin-top: 48px;
+            text-align: center;
+        }
+        
+        .social-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--linear-primary);
+        }
+        
+        .social-description {
+            font-size: 14px;
+            color: var(--linear-text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        
+        .social-link {
+            width: 56px;
+            height: 56px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--linear-primary);
+            font-size: 24px;
+            text-decoration: none;
+            transition: var(--linear-transition);
+        }
+        
+        .social-link:hover {
+            background: var(--linear-primary);
+            color: white;
+            transform: translateY(-4px);
+        }
+        
+        .response-section {
+            margin-top: 48px;
+            padding: 32px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-primary);
+            border-radius: var(--linear-radius-lg);
+            text-align: center;
+        }
+        
+        .response-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--linear-primary);
+        }
+        
+        .response-text {
+            font-size: 14px;
+            color: var(--linear-text-secondary);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
             }
             
-            // Contact form submission
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 24px;
+            }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="dark"&gt;
+    &lt;div class="stb-layout"&gt;
+        &lt;header class="stb-layout-header"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-header-inner"&gt;
+                    &lt;a href="/" class="stb-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/a&gt;
+                    
+                    &lt;nav class="stb-nav-desktop"&gt;
+                        &lt;a href="/" class="stb-nav-link"&gt;Home&lt;/a&gt;
+                        &lt;a href="/tools" class="stb-nav-link"&gt;Tools&lt;/a&gt;
+                        &lt;a href="/about.html" class="stb-nav-link"&gt;About&lt;/a&gt;
+                        &lt;a href="/contact.html" class="stb-nav-link active"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/privacy.html" class="stb-nav-link"&gt;Privacy&lt;/a&gt;
+                        &lt;a href="/terms.html" class="stb-nav-link"&gt;Terms&lt;/a&gt;
+                    &lt;/nav&gt;
+                    
+                    &lt;div class="stb-nav-actions"&gt;
+                        &lt;button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu"&gt;
+                            &lt;i class="fas fa-bars"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                        &lt;button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme"&gt;
+                            &lt;i class="fas fa-moon"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu"&gt;
+                &lt;div class="stb-mobile-nav-links"&gt;
+                    &lt;a href="/" class="stb-mobile-nav-link"&gt;Home&lt;/a&gt;
+                    &lt;a href="/tools" class="stb-mobile-nav-link"&gt;Tools&lt;/a&gt;
+                    &lt;a href="/about.html" class="stb-mobile-nav-link"&gt;About&lt;/a&gt;
+                    &lt;a href="/contact.html" class="stb-mobile-nav-link"&gt;Contact&lt;/a&gt;
+                    &lt;a href="/privacy.html" class="stb-mobile-nav-link"&gt;Privacy&lt;/a&gt;
+                    &lt;a href="/terms.html" class="stb-mobile-nav-link"&gt;Terms&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        
+        &lt;main class="stb-layout-main"&gt;
+            &lt;section class="stb-hero-section"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="stb-breadcrumb"&gt;
+                        &lt;a href="/"&gt;Home&lt;/a&gt;
+                        &lt;span class="stb-breadcrumb-separator"&gt;&amp;gt;&lt;/span&gt;
+                        &lt;span&gt;Contact Us&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;h1 class="stb-hero-title"&gt;Contact Simple Toolbox&lt;/h1&gt;
+                    &lt;p class="stb-hero-description"&gt;We value your feedback and are always eager to hear from our users. Whether you have a suggestion for a new tool, found a bug, or just want to say hello, our team is ready to assist you.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+            
+            &lt;section class="content-section"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="contact-grid"&gt;
+                        &lt;div class="contact-card"&gt;
+                            &lt;div class="contact-icon"&gt;
+                                &lt;i class="fas fa-envelope"&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h3 class="contact-title"&gt;Email Us&lt;/h3&gt;
+                            &lt;p class="contact-description"&gt;Send us a direct message and we'll get back to you within 24 hours.&lt;/p&gt;
+                            &lt;a href="mailto:support@simpletoolbox.dev" class="contact-btn"&gt;
+                                &lt;i class="fas fa-paper-plane"&gt;&lt;/i&gt;
+                                &lt;span&gt;Send Email&lt;/span&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="contact-card"&gt;
+                            &lt;div class="contact-icon"&gt;
+                                &lt;i class="fas fa-comments"&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h3 class="contact-title"&gt;Technical Support&lt;/h3&gt;
+                            &lt;p class="contact-description"&gt;For tool-specific issues or technical questions, our support team is ready to help.&lt;/p&gt;
+                            &lt;a href="mailto:support@simpletoolbox.dev" class="contact-btn"&gt;
+                                &lt;i class="fas fa-headset"&gt;&lt;/i&gt;
+                                &lt;span&gt;Get Support&lt;/span&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="contact-card"&gt;
+                            &lt;div class="contact-icon"&gt;
+                                &lt;i class="fas fa-lightbulb"&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;h3 class="contact-title"&gt;Feedback &amp; Ideas&lt;/h3&gt;
+                            &lt;p class="contact-description"&gt;Have an idea for a new tool or feature? We'd love to hear your suggestions.&lt;/p&gt;
+                            &lt;a href="mailto:contact@simpletoolbox.dev" class="contact-btn"&gt;
+                                &lt;i class="fas fa-lightbulb"&gt;&lt;/i&gt;
+                                &lt;span&gt;Share Idea&lt;/span&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="form-container"&gt;
+                        &lt;h2 class="form-title"&gt;Send Us a Message&lt;/h2&gt;
+                        &lt;form id="contactForm" class="form-grid"&gt;
+                            &lt;div class="form-group"&gt;
+                                &lt;label class="form-label" for="name"&gt;Name&lt;/label&gt;
+                                &lt;input type="text" id="name" name="name" class="form-input" required&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="form-group"&gt;
+                                &lt;label class="form-label" for="email"&gt;Email&lt;/label&gt;
+                                &lt;input type="email" id="email" name="email" class="form-input" required&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="form-group full"&gt;
+                                &lt;label class="form-label" for="subject"&gt;Subject&lt;/label&gt;
+                                &lt;input type="text" id="subject" name="subject" class="form-input" required&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;div class="form-group full"&gt;
+                                &lt;label class="form-label" for="message"&gt;Message&lt;/label&gt;
+                                &lt;textarea id="message" name="message" class="form-textarea" required&gt;&lt;/textarea&gt;
+                            &lt;/div&gt;
+                            
+                            &lt;button type="submit" class="submit-btn"&gt;
+                                &lt;i class="fas fa-paper-plane"&gt;&lt;/i&gt;
+                                &lt;span&gt;Send Message&lt;/span&gt;
+                            &lt;/button&gt;
+                        &lt;/form&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="faq-section"&gt;
+                        &lt;h2 class="faq-title"&gt;Frequently Asked Questions&lt;/h2&gt;
+                        &lt;div class="faq-container"&gt;
+                            &lt;div class="faq-item"&gt;
+                                &lt;h3 class="faq-question"&gt;Is this service free?&lt;/h3&gt;
+                                &lt;p class="faq-answer"&gt;Yes, all tools on Simple Toolbox are completely free to use. We believe in making useful utilities accessible to everyone without cost barriers.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="faq-item"&gt;
+                                &lt;h3 class="faq-question"&gt;Do I need to register?&lt;/h3&gt;
+                                &lt;p class="faq-answer"&gt;No registration or login is required to access our utilities. We respect your privacy and want to make our tools as accessible as possible.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="faq-item"&gt;
+                                &lt;h3 class="faq-question"&gt;Is my data safe?&lt;/h3&gt;
+                                &lt;p class="faq-answer"&gt;We do not store any of the data you process through our tools. All processing happens locally in your browser, ensuring your information remains private and secure.&lt;/p&gt;
+                            &lt;/div&gt;
+                            &lt;div class="faq-item"&gt;
+                                &lt;h3 class="faq-question"&gt;How long does it take to get a response?&lt;/h3&gt;
+                                &lt;p class="faq-answer"&gt;We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly at support@simpletoolbox.dev.&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="social-section"&gt;
+                        &lt;h2 class="social-title"&gt;Follow Us&lt;/h2&gt;
+                        &lt;p class="social-description"&gt;Stay updated with our latest tools, features, and tips by following us on social media.&lt;/p&gt;
+                        &lt;div class="social-links"&gt;
+                            &lt;a href="#" class="social-link" target="_blank"&gt;
+                                &lt;i class="fab fa-twitter"&gt;&lt;/i&gt;
+                            &lt;/a&gt;
+                            &lt;a href="#" class="social-link" target="_blank"&gt;
+                                &lt;i class="fab fa-github"&gt;&lt;/i&gt;
+                            &lt;/a&gt;
+                            &lt;a href="#" class="social-link" target="_blank"&gt;
+                                &lt;i class="fab fa-linkedin"&gt;&lt;/i&gt;
+                            &lt;/a&gt;
+                            &lt;a href="#" class="social-link" target="_blank"&gt;
+                                &lt;i class="fab fa-instagram"&gt;&lt;/i&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="response-section"&gt;
+                        &lt;h2 class="response-title"&gt;Response Time&lt;/h2&gt;
+                        &lt;p class="response-text"&gt;We aim to respond to all inquiries within 24-48 hours during business days. For urgent matters, please email us directly at support@simpletoolbox.dev.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
+        
+        &lt;footer class="stb-layout-footer"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-footer-content"&gt;
+                    &lt;div class="stb-footer-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-links"&gt;
+                        &lt;a href="/about.html"&gt;About Us&lt;/a&gt;
+                        &lt;a href="/contact.html"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/terms.html"&gt;Terms of Use&lt;/a&gt;
+                        &lt;a href="/privacy.html"&gt;Privacy Policy&lt;/a&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-copyright"&gt;
+                        &lt;p&gt;© 2026 Simple Toolbox. All rights reserved.&lt;/p&gt;
+                        &lt;p&gt;simpletoolbox.dev | A collection of free, privacy‑first online tools&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;script src="js/framework.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', function() {
             const contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
-                    // Here you would typically send the form data to a server
-                    // For now, we'll just show a success message
                     alert('Thank you for your message! We will get back to you soon.');
                     contactForm.reset();
                 });
             }
         });
-    </script>
-
-    <script src="/js/spa-router.js"></script>
-</body>
-</html>
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

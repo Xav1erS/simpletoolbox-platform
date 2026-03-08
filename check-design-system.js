@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const TOOLS_DIR = path.join(__dirname, 'public', 'tools');
+const PUBLIC_DIR = path.join(__dirname, 'public');
 
 const checks = {
     customCSSVariables: {
@@ -129,6 +130,35 @@ function scanToolsDirectory() {
     return results;
 }
 
+function scanPublicDirectory() {
+    const results = {};
+    
+    if (!fs.existsSync(PUBLIC_DIR)) {
+        console.error('public 目录不存在:', PUBLIC_DIR);
+        return results;
+    }
+    
+    const files = fs.readdirSync(PUBLIC_DIR, { withFileTypes: true })
+        .filter(dirent => dirent.isFile() && dirent.name.endsWith('.html'))
+        .map(dirent => dirent.name);
+    
+    for (const file of files) {
+        const filePath = path.join(PUBLIC_DIR, file);
+        results[file] = checkFile(filePath);
+    }
+    
+    return results;
+}
+
+function scanToolsIndexPage() {
+    const results = {};
+    const toolsIndexPath = path.join(TOOLS_DIR, 'index.html');
+    if (fs.existsSync(toolsIndexPath)) {
+        results['tools/index'] = checkFile(toolsIndexPath);
+    }
+    return results;
+}
+
 function printResults(results) {
     console.log('\n╔══════════════════════════════════════════════════════════════╗');
     console.log('║           设计系统合规性检查报告                                ║');
@@ -165,18 +195,26 @@ function printResults(results) {
 }
 
 function main() {
-    console.log('🔍 正在扫描工具页面...');
-    const results = scanToolsDirectory();
+    console.log('🔍 正在扫描所有页面...');
+    const toolResults = scanToolsDirectory();
+    const publicResults = scanPublicDirectory();
+    const toolsIndexResults = scanToolsIndexPage();
     
-    if (Object.keys(results).length === 0) {
-        console.log('未找到任何工具页面');
+    const allResults = {
+        ...publicResults,
+        ...toolsIndexResults,
+        ...toolResults
+    };
+    
+    if (Object.keys(allResults).length === 0) {
+        console.log('未找到任何页面');
         return;
     }
     
-    printResults(results);
+    printResults(allResults);
     
-    const hasFailures = Object.values(results).some(toolResults => 
-        Object.values(toolResults).some(result => !result.passed)
+    const hasFailures = Object.values(allResults).some(pageResults => 
+        Object.values(pageResults).some(result => !result.passed)
     );
     
     process.exit(hasFailures ? 1 : 0);

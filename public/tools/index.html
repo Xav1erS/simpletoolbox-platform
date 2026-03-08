@@ -1,35 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools - Simple Toolbox</title>
-    <meta name="description" content="Browse all free online tools from Simple Toolbox. Privacy-first tools that run entirely in your browser.">
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="dark"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;All Tools - Free Online Tools | Simple Toolbox&lt;/title&gt;
+    &lt;meta name="description" content="Browse all free online tools from Simple Toolbox. Privacy-first tools that run entirely in your browser. Password generator, unit converter, image tools, and more."&gt;
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+    &lt;link rel="stylesheet" href="../css/design-system.css"&gt;
+    &lt;link rel="stylesheet" href="../css/framework.css"&gt;
     
-    <!-- Design System CSS -->
-    <link rel="stylesheet" href="../css/design-system.css">
-    
-    <style>
-        .tools-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-        
-        .tool-section {
+    &lt;style&gt;
+        .tools-section {
             padding: 64px 0;
         }
         
-        .section-header {
+        .tools-header {
             text-align: center;
             margin-bottom: 48px;
         }
         
-        .section-title {
-            font-size: 32px;
+        .tools-title {
+            font-size: 36px;
             font-weight: 700;
             margin-bottom: 16px;
             background: linear-gradient(135deg, var(--linear-text), #a1a1aa);
@@ -38,7 +31,7 @@
             background-clip: text;
         }
         
-        .section-description {
+        .tools-description {
             font-size: 16px;
             color: var(--linear-text-secondary);
             max-width: 600px;
@@ -145,6 +138,33 @@
             align-self: flex-start;
         }
         
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        
+        .category-btn {
+            padding: 8px 16px;
+            background: var(--linear-bg-secondary);
+            border: 1px solid var(--linear-border);
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--linear-text-secondary);
+            cursor: pointer;
+            transition: var(--linear-transition);
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--linear-primary-gradient);
+            border-color: transparent;
+            color: white;
+        }
+        
         @media (max-width: 1024px) {
             .tools-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -152,223 +172,261 @@
         }
         
         @media (max-width: 768px) {
-            .tool-section {
+            .tools-section {
                 padding: 48px 0;
             }
             
-            .section-title {
+            .tools-title {
                 font-size: 24px;
-            }
-            
-            .tools-container {
-                padding: 0 16px;
             }
             
             .tools-grid {
                 grid-template-columns: 1fr;
             }
         }
-    </style>
-</head>
-<body class="dark">
-    <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-container">
-                <a href="/" class="logo">
-                    <span>Simple Toolbox</span>
-                </a>
-                
-                <nav class="nav">
-                    <a href="/" class="nav-link">Home</a>
-                    <a href="/tools" class="nav-link active">Tools</a>
-                    <a href="/about.html" class="nav-link">About</a>
-                    <a href="/contact.html" class="nav-link">Contact</a>
-                    <a href="/privacy.html" class="nav-link">Privacy</a>
-                    <a href="/terms.html" class="nav-link">Terms</a>
-                </nav>
-                
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun icon-sun"></i>
-                    <i class="fas fa-moon icon-moon"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Tools Section -->
-            <div class="tool-section">
-                <div class="tools-container">
-                    <div class="section-header">
-                        <h1 class="section-title">All Tools</h1>
-                        <p class="section-description">Browse our collection of free, privacy-first online tools that run entirely in your browser. No data is sent to servers, no registration required.</p>
-                    </div>
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="dark"&gt;
+    &lt;div class="stb-layout"&gt;
+        &lt;header class="stb-layout-header"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-header-inner"&gt;
+                    &lt;a href="/" class="stb-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/a&gt;
                     
-                    <div class="tools-grid">
-                        <!-- Password Generator -->
-                        <a href="/tools/password-generator" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-key"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Password Generator</h3>
-                                    <p class="tool-description">Create strong, random passwords and API keys with customizable length and character sets.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Security</span>
-                        </a>
-                        
-                        <!-- YouTube Thumbnail Downloader -->
-                        <a href="/tools/youtube-thumbnail-downloader" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">YouTube Thumbnail Downloader</h3>
-                                    <p class="tool-description">Download high-quality thumbnails from any YouTube video in multiple resolutions.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Media</span>
-                        </a>
-                        
-                        <!-- Image Background Remover -->
-                        <a href="/tools/image-background-remover" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-cut"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Image Background Remover</h3>
-                                    <p class="tool-description">AI-powered background removal that runs locally in your browser.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Image</span>
-                        </a>
-                        
-                        <!-- Unit Converter -->
-                        <a href="/tools/unit-converter" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-ruler-combined"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Unit Converter</h3>
-                                    <p class="tool-description">Convert length, weight, temperature, volume, area, speed, and time.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Productivity</span>
-                        </a>
-                        
-                        <!-- PDF to Word Converter -->
-                        <a href="/tools/pdf-to-word-converter" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-file-word"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">PDF to Word Converter</h3>
-                                    <p class="tool-description">Convert PDF documents to editable Word format while preserving formatting.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Conversion</span>
-                        </a>
-                        
-                        <!-- JSON Formatter Tool -->
-                        <a href="/tools/json-formatter-tool" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">JSON Formatter Tool</h3>
-                                    <p class="tool-description">Format, validate, and beautify JSON data with syntax highlighting.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Development</span>
-                        </a>
-                        
-                        <!-- Image Resizer -->
-                        <a href="/tools/image-resizer-online" class="tool-card">
-                            <div class="tool-card-header">
-                                <div class="tool-icon-wrapper">
-                                    <i class="fas fa-expand-alt"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Image Resizer</h3>
-                                    <p class="tool-description">Resize images online while maintaining quality. Adjust dimensions and crop.</p>
-                                </div>
-                            </div>
-                            <span class="tool-category">Image</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-container">
-                <p>© 2026 Simple Toolbox. All rights reserved.</p>
-                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        // 初始化函数
-        function initToolsPage() {
-            console.log('Initializing Tools page');
+                    &lt;nav class="stb-nav-desktop"&gt;
+                        &lt;a href="/" class="stb-nav-link"&gt;Home&lt;/a&gt;
+                        &lt;a href="/tools" class="stb-nav-link active"&gt;Tools&lt;/a&gt;
+                        &lt;a href="/about.html" class="stb-nav-link"&gt;About&lt;/a&gt;
+                        &lt;a href="/contact.html" class="stb-nav-link"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/privacy.html" class="stb-nav-link"&gt;Privacy&lt;/a&gt;
+                        &lt;a href="/terms.html" class="stb-nav-link"&gt;Terms&lt;/a&gt;
+                    &lt;/nav&gt;
+                    
+                    &lt;div class="stb-nav-actions"&gt;
+                        &lt;button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu"&gt;
+                            &lt;i class="fas fa-bars"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                        &lt;button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme"&gt;
+                            &lt;i class="fas fa-moon"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
             
-            // Theme toggle functionality
-            const themeToggle = document.getElementById('theme-toggle');
-            
-            if (themeToggle) {
-                // Initialize theme
-                const savedTheme = localStorage.getItem('stb-theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                
-                let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-                applyTheme(currentTheme);
-                
-                // Toggle theme on button click
-                themeToggle.addEventListener('click', () => {
-                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    applyTheme(currentTheme);
-                    localStorage.setItem('stb-theme', currentTheme);
-                });
-            }
-            
-            function applyTheme(theme) {
-                document.body.className = theme;
-                // 确保html元素也有正确的class
-                if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-            
-            // Update copyright year
-            const yearElement = document.querySelector('.footer-container p');
-            if (yearElement) {
-                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
-            }
-        }
+            &lt;nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu"&gt;
+                &lt;div class="stb-mobile-nav-links"&gt;
+                    &lt;a href="/" class="stb-mobile-nav-link"&gt;Home&lt;/a&gt;
+                    &lt;a href="/tools" class="stb-mobile-nav-link"&gt;Tools&lt;/a&gt;
+                    &lt;a href="/about.html" class="stb-mobile-nav-link"&gt;About&lt;/a&gt;
+                    &lt;a href="/contact.html" class="stb-mobile-nav-link"&gt;Contact&lt;/a&gt;
+                    &lt;a href="/privacy.html" class="stb-mobile-nav-link"&gt;Privacy&lt;/a&gt;
+                    &lt;a href="/terms.html" class="stb-mobile-nav-link"&gt;Terms&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
         
-        // 监听DOMContentLoaded事件（首次加载）
-        document.addEventListener('DOMContentLoaded', initToolsPage);
+        &lt;main class="stb-layout-main"&gt;
+            &lt;section class="tools-section"&gt;
+                &lt;div class="stb-container"&gt;
+                    &lt;div class="stb-breadcrumb"&gt;
+                        &lt;a href="/"&gt;Home&lt;/a&gt;
+                        &lt;span class="stb-breadcrumb-separator"&gt;&amp;gt;&lt;/span&gt;
+                        &lt;span&gt;All Tools&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="tools-header"&gt;
+                        &lt;h1 class="tools-title"&gt;All Tools&lt;/h1&gt;
+                        &lt;p class="tools-description"&gt;Browse our collection of free, privacy-first online tools that run entirely in your browser. No data is sent to servers, no registration required.&lt;/p&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="category-filter" id="category-filter"&gt;
+                        &lt;button class="category-btn active" data-category="all"&gt;All&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="security"&gt;Security&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="media"&gt;Media&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="image"&gt;Image&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="productivity"&gt;Productivity&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="conversion"&gt;Conversion&lt;/button&gt;
+                        &lt;button class="category-btn" data-category="development"&gt;Development&lt;/button&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="tools-grid" id="tools-grid"&gt;
+                        &lt;a href="/tools/password-generator" class="tool-card" data-category="security"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-key"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Password Generator&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Create strong, random passwords and API keys with customizable length and character sets.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Security&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/youtube-thumbnail-downloader" class="tool-card" data-category="media"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fab fa-youtube"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;YouTube Thumbnail Downloader&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Download high-quality thumbnails from any YouTube video in multiple resolutions.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Media&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/image-background-remover" class="tool-card" data-category="image"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-cut"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Image Background Remover&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;AI-powered background removal that runs locally in your browser.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Image&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/unit-converter" class="tool-card" data-category="productivity"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-ruler-combined"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Unit Converter&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Convert length, weight, temperature, volume, area, speed, and time.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Productivity&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/pdf-to-word-converter" class="tool-card" data-category="conversion"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-file-word"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;PDF to Word Converter&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Convert PDF documents to editable Word format while preserving formatting.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Conversion&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/json-formatter-tool" class="tool-card" data-category="development"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-code"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;JSON Formatter Tool&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Format, validate, and beautify JSON data with syntax highlighting.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Development&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/image-resizer-online" class="tool-card" data-category="image"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-expand-alt"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Image Resizer&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Resize images online while maintaining quality. Adjust dimensions and crop.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Image&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/random-number-generator" class="tool-card" data-category="productivity"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-random"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Random Number Generator&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Generate random numbers within a specified range with customizable options.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Productivity&lt;/span&gt;
+                        &lt;/a&gt;
+                        
+                        &lt;a href="/tools/word-counter-tool" class="tool-card" data-category="productivity"&gt;
+                            &lt;div class="tool-card-header"&gt;
+                                &lt;div class="tool-icon-wrapper"&gt;
+                                    &lt;i class="fas fa-font"&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class="tool-content"&gt;
+                                    &lt;h3 class="tool-title"&gt;Word Counter Tool&lt;/h3&gt;
+                                    &lt;p class="tool-description"&gt;Count words, characters, sentences, and paragraphs in your text.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;span class="tool-category"&gt;Productivity&lt;/span&gt;
+                        &lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/section&gt;
+        &lt;/main&gt;
         
-        // 监听pageLoaded事件（SPA导航）
-        document.addEventListener('pageLoaded', function(event) {
-            console.log('pageLoaded event received on Tools page:', event.detail);
+        &lt;footer class="stb-layout-footer"&gt;
+            &lt;div class="stb-container"&gt;
+                &lt;div class="stb-footer-content"&gt;
+                    &lt;div class="stb-footer-brand"&gt;
+                        &lt;span&gt;Simple Toolbox&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-links"&gt;
+                        &lt;a href="/about.html"&gt;About Us&lt;/a&gt;
+                        &lt;a href="/contact.html"&gt;Contact&lt;/a&gt;
+                        &lt;a href="/terms.html"&gt;Terms of Use&lt;/a&gt;
+                        &lt;a href="/privacy.html"&gt;Privacy Policy&lt;/a&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="stb-footer-copyright"&gt;
+                        &lt;p&gt;© 2026 Simple Toolbox. All rights reserved.&lt;/p&gt;
+                        &lt;p&gt;simpletoolbox.dev | A collection of free, privacy‑first online tools&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+    
+    &lt;script src="../js/framework.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', function() {
             initToolsPage();
         });
-    </script>
-
-    <script src="../js/spa-router.js"></script>
-</body>
-</html>
+        
+        function initToolsPage() {
+            const categoryFilter = document.getElementById('category-filter');
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            if (categoryFilter) {
+                categoryFilter.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('category-btn')) {
+                        const category = e.target.dataset.category;
+                        
+                        document.querySelectorAll('.category-btn').forEach(btn =&gt; {
+                            btn.classList.remove('active');
+                        });
+                        e.target.classList.add('active');
+                        
+                        toolCards.forEach(card =&gt; {
+                            if (category === 'all' || card.dataset.category === category) {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
