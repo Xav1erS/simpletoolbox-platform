@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Base64 Encoder / Decoder — Simple ToolBox</title>
+  <meta name="description" content="Free online Base64 encoder and decoder. Encode text or files to Base64, decode Base64 strings. URL-safe mode. Runs entirely in your browser." />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0F0F11;
+      --bg-surface:   #16161A;
+      --bg-hover:     #1C1C22;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5;
+      --text-secondary:#8B8B9A;
+      --text-muted:   #555560;
+      --accent:       #5E6AD2;
+      --accent-hover: #6E7AE2;
+      --accent-dim:   rgba(94,106,210,0.12);
+      --accent-glow:  rgba(94,106,210,0.25);
+      --green:        #22c55e;
+      --red:          #ef4444;
+      --radius-sm:    6px;
+      --radius-md:    10px;
+      --font:         'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --mono:         'JetBrains Mono', 'Fira Code', monospace;
+      --nav-h:        60px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; padding: 0 24px; gap: 16px;
+      background: rgba(15,15,17,0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-secondary); font-size: 13px;
+      padding: 5px 10px; border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s; white-space: nowrap;
+    }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge {
+      font-family: var(--mono); font-size: 10px;
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3);
+      color: #9B8DEB; padding: 2px 7px; border-radius: 4px;
+    }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    /* TOOL HEADER */
+    .tool-header {
+      background: var(--bg-surface); border-bottom: 1px solid var(--border);
+      padding: 32px 32px 28px; position: relative; overflow: hidden;
+    }
+    .tool-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tool-header-inner { max-width: 1100px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon {
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill {
+      font-family: var(--mono); font-size: 11px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 2px 8px; border-radius: 4px;
+    }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* MODE BAR */
+    .mode-bar {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 6px;
+    }
+    .mode-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 16px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mode-btn.active { background: var(--accent); color: #fff; }
+    .mode-btn:not(.active):hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    .mode-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+
+    /* OPTIONS */
+    .options-bar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .option-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+    .toggle-switch { position: relative; width: 34px; height: 18px; cursor: pointer; display: inline-block; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.08); border-radius: 9px; border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toggle-switch input:checked ~ .toggle-track { background: var(--accent); border-color: var(--accent); }
+    .toggle-thumb {
+      position: absolute; top: 2px; left: 2px;
+      width: 12px; height: 12px; background: #fff; border-radius: 50%;
+      transition: transform 0.2s; pointer-events: none;
+    }
+    .toggle-switch input:checked ~ .toggle-thumb { transform: translateX(16px); }
+    .option-hint { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+    .options-spacer { flex: 1; }
+    .btn-swap {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 12px; font-weight: 500;
+      padding: 7px 12px; border-radius: var(--radius-sm);
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-swap:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+    /* PANELS */
+    .panels-row {
+      display: grid; grid-template-columns: 1fr 48px 1fr;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); overflow: hidden; min-height: 320px;
+    }
+    .io-panel { display: flex; flex-direction: column; }
+    .io-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .io-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .io-actions { display: flex; align-items: center; gap: 5px; }
+    .io-btn {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px 9px; border-radius: var(--radius-sm);
+      font-size: 11px; font-weight: 500; color: var(--text-secondary);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      transition: color 0.15s, background 0.15s;
+    }
+    .io-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+    .io-btn.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .drop-zone {
+      margin: 10px 14px 0; border: 1px dashed var(--border); border-radius: var(--radius-sm);
+      padding: 9px 12px; display: flex; align-items: center; gap: 9px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s; flex-shrink: 0;
+    }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: var(--accent-dim); }
+    .drop-zone-text { font-size: 11px; color: var(--text-secondary); }
+    .drop-zone-text strong { color: var(--text-primary); font-weight: 500; }
+    #fileInput { display: none; }
+    .io-textarea {
+      flex: 1; resize: none; outline: none; border: none;
+      background: transparent; color: var(--text-primary);
+      font-family: var(--mono); font-size: 13px; line-height: 1.7;
+      padding: 14px 16px;
+    }
+    .io-textarea::placeholder { color: var(--text-muted); }
+    .io-textarea:focus { background: rgba(94,106,210,0.025); }
+    .io-panel.has-error .io-textarea { color: var(--red); }
+    .io-footer {
+      border-top: 1px solid var(--border); padding: 7px 16px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .io-stat { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+    .io-error { font-size: 11px; color: var(--red); display: none; }
+    .io-panel.has-error .io-error { display: block; }
+    .io-panel.has-error .io-stat { display: none; }
+
+    /* ARROW DIVIDER */
+    .panels-arrow {
+      display: flex; align-items: center; justify-content: center;
+      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .arrow-circle {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 15px; line-height: 1;
+    }
+
+    /* ACTION BUTTONS */
+    .actions-row { display: flex; gap: 10px; align-items: center; }
+    .btn-run {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--accent); color: #fff; font-size: 14px; font-weight: 500;
+      padding: 11px 22px; border-radius: var(--radius-md);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-run:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-run:active { transform: translateY(0); }
+    .btn-ghost {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 13px; font-weight: 500;
+      padding: 11px 16px; border-radius: var(--radius-md);
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+    .btn-ghost.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .actions-spacer { flex: 1; }
+
+    /* INFO CARD */
+    .info-card {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 14px 18px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .info-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .info-text { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+    .info-text strong { color: var(--text-primary); font-weight: 600; }
+    .info-text code { font-family: var(--mono); font-size: 11px; background: rgba(255,255,255,0.06); padding: 1px 4px; border-radius: 3px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .panels-row { grid-template-columns: 1fr; grid-template-rows: 1fr auto 1fr; }
+      .panels-arrow { height: 36px; border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .arrow-circle { transform: rotate(90deg); }
+    }
+    @media (max-width: 640px) {
+      .tool-header { padding: 20px 16px 18px; }
+      .main { padding: 16px 16px 48px; }
+      .nav { padding: 0 16px; }
+      .nav-logo span { display: none; }
+    }
+  </style>
+</head>
+<body>
+<noscript><div style="text-align:center;padding:40px;color:#8B8B9A;font-family:sans-serif">This tool requires JavaScript to run.</div></noscript>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Home
+  </a>
+  <div class="nav-divider"></div>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">
+    Base64 Encoder / Decoder
+    <span class="nav-tool-badge">encode</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-privacy">
+    <span class="nav-privacy-dot"></span>
+    Runs locally — no data sent
+  </div>
+</nav>
+
+<!-- TOOL HEADER -->
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">📦</div>
+      <h1 class="tool-title">Base64 Encoder / Decoder</h1>
+    </div>
+    <p class="tool-desc-text">Encode text or binary files to Base64, or decode Base64 strings back to text. URL-safe mode included. Everything runs in your browser — no server, no tracking.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">atob / btoa</span>
+      <span class="tool-tag-pill">URL-safe</span>
+      <span class="tool-tag-pill">file support</span>
+      <span class="tool-tag-pill">client-side only</span>
+      <span class="tool-tag-pill">no tracking</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- Mode toggle -->
+  <div class="mode-bar">
+    <button class="mode-btn active" id="btnEncode">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Encode &nbsp;Text → Base64
+    </button>
+    <div class="mode-sep"></div>
+    <button class="mode-btn" id="btnDecode">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/><path d="M15 7h2v2"/></svg>
+      Decode &nbsp;Base64 → Text
+    </button>
+  </div>
+
+  <!-- Options -->
+  <div class="options-bar">
+    <label class="option-item">
+      <label class="toggle-switch">
+        <input type="checkbox" id="urlSafeToggle" />
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
+      </label>
+      URL-safe mode
+      <span class="option-hint">(+/= → -/_)</span>
+    </label>
+    <div class="options-spacer"></div>
+    <button class="btn-swap" id="btnSwap">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4 4 4"/><path d="M17 8v12m0 0 4-4m-4 4-4-4"/></svg>
+      Swap panels
+    </button>
+  </div>
+
+  <!-- I/O panels -->
+  <div class="panels-row">
+
+    <!-- INPUT -->
+    <div class="io-panel" id="inputPanel">
+      <div class="io-header">
+        <span class="io-label" id="inputLabel">Plain Text</span>
+        <div class="io-actions">
+          <button class="io-btn" id="btnPaste">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/></svg>
+            Paste
+          </button>
+          <button class="io-btn" id="btnClearInput">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="drop-zone" id="dropZone">
+        <span style="font-size:15px">📂</span>
+        <span class="drop-zone-text"><strong>Drop a file</strong> or click to browse — encodes any binary or text file</span>
+        <input type="file" id="fileInput" />
+      </div>
+      <textarea class="io-textarea" id="inputText" placeholder="Type or paste text here…" spellcheck="false" autocomplete="off"></textarea>
+      <div class="io-footer">
+        <span class="io-stat" id="inputStat">0 chars</span>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="panels-arrow">
+      <div class="arrow-circle" id="arrowIcon">→</div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="io-panel" id="outputPanel">
+      <div class="io-header">
+        <span class="io-label" id="outputLabel">Base64</span>
+        <div class="io-actions">
+          <button class="io-btn" id="btnCopyHeader">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy
+          </button>
+          <button class="io-btn" id="btnDownload">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+        </div>
+      </div>
+      <textarea class="io-textarea" id="outputText" placeholder="Output will appear here…" readonly spellcheck="false"></textarea>
+      <div class="io-footer">
+        <span class="io-stat" id="outputStat">0 chars</span>
+        <span class="io-error" id="errorMsg">Invalid Base64 string</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-row">
+    <button class="btn-run" id="btnRun">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span id="runLabel">Encode</span>
+    </button>
+    <button class="btn-ghost" id="btnCopyResult">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy Result
+    </button>
+    <div class="actions-spacer"></div>
+    <button class="btn-ghost" id="btnClearAll">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14H6L5 6M9 6V4h6v2"/></svg>
+      Clear All
+    </button>
+  </div>
+
+  <!-- Info -->
+  <div class="info-card">
+    <span class="info-icon">💡</span>
+    <div class="info-text">
+      <strong>Base64</strong> encodes binary data as ASCII text using 64 printable characters (A–Z, a–z, 0–9, <code>+</code>, <code>/</code>).
+      <strong>URL-safe mode</strong> replaces <code>+</code>→<code>-</code> and <code>/</code>→<code>_</code>, and strips <code>=</code> padding — making it safe for URLs and filenames without percent-encoding.
+      All processing uses the browser's built-in <strong>TextEncoder</strong> / <strong>TextDecoder</strong> APIs. Nothing leaves your device.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── State ────────────────────────────────────────────────
+  let mode    = 'encode';
+  let urlSafe = false;
+
+  // ── DOM refs ─────────────────────────────────────────────
+  const btnEncode     = document.getElementById('btnEncode');
+  const btnDecode     = document.getElementById('btnDecode');
+  const urlSafeToggle = document.getElementById('urlSafeToggle');
+  const btnSwap       = document.getElementById('btnSwap');
+  const inputText     = document.getElementById('inputText');
+  const outputText    = document.getElementById('outputText');
+  const inputStat     = document.getElementById('inputStat');
+  const outputStat    = document.getElementById('outputStat');
+  const inputLabel    = document.getElementById('inputLabel');
+  const outputLabel   = document.getElementById('outputLabel');
+  const runLabel      = document.getElementById('runLabel');
+  const btnRun        = document.getElementById('btnRun');
+  const btnCopyHeader = document.getElementById('btnCopyHeader');
+  const btnCopyResult = document.getElementById('btnCopyResult');
+  const btnDownload   = document.getElementById('btnDownload');
+  const btnPaste      = document.getElementById('btnPaste');
+  const btnClearInput = document.getElementById('btnClearInput');
+  const btnClearAll   = document.getElementById('btnClearAll');
+  const dropZone      = document.getElementById('dropZone');
+  const fileInput     = document.getElementById('fileInput');
+  const outputPanel   = document.getElementById('outputPanel');
+  const errorMsg      = document.getElementById('errorMsg');
+
+  // ── Encode / Decode logic ────────────────────────────────
+  function encodeText(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    let b64 = btoa(bin);
+    if (urlSafe) b64 = b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return b64;
+  }
+
+  function decodeText(b64) {
+    let s = b64.trim();
+    // normalise URL-safe chars
+    s = s.replace(/-/g, '+').replace(/_/g, '/');
+    // restore padding
+    const pad = s.length % 4;
+    if (pad === 2) s += '==';
+    else if (pad === 3) s += '=';
+    const bin   = atob(s); // throws on invalid
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
+  // ── Run ──────────────────────────────────────────────────
+  function run() {
+    const inp = inputText.value;
+    outputPanel.classList.remove('has-error');
+
+    if (!inp) {
+      outputText.value = '';
+      updateStats();
+      return;
+    }
+
+    try {
+      outputText.value = mode === 'encode' ? encodeText(inp) : decodeText(inp);
+    } catch (e) {
+      outputPanel.classList.add('has-error');
+      outputText.value = '';
+      errorMsg.textContent = mode === 'decode'
+        ? 'Invalid Base64 — check input for unexpected characters'
+        : 'Encoding failed';
+    }
+    updateStats();
+  }
+
+  function updateStats() {
+    const ic = inputText.value.length;
+    const oc = outputText.value.length;
+    inputStat.textContent = ic ? `${ic.toLocaleString()} chars` : '0 chars';
+    if (oc) {
+      let s = `${oc.toLocaleString()} chars`;
+      if (mode === 'encode' && ic) {
+        const overhead = (((oc / ic) - 1) * 100).toFixed(0);
+        s += `  (+${overhead}% size)`;
+      }
+      outputStat.textContent = s;
+    } else {
+      outputStat.textContent = '0 chars';
+    }
+  }
+
+  // ── Mode switch ──────────────────────────────────────────
+  function setMode(m) {
+    mode = m;
+    btnEncode.classList.toggle('active', m === 'encode');
+    btnDecode.classList.toggle('active', m === 'decode');
+    inputLabel.textContent  = m === 'encode' ? 'Plain Text'   : 'Base64 String';
+    outputLabel.textContent = m === 'encode' ? 'Base64'       : 'Decoded Text';
+    runLabel.textContent    = m === 'encode' ? 'Encode'       : 'Decode';
+    inputText.placeholder   = m === 'encode' ? 'Type or paste text here…' : 'Paste Base64 string here…';
+    dropZone.style.display  = m === 'encode' ? '' : 'none';
+    outputPanel.classList.remove('has-error');
+    run();
+  }
+
+  btnEncode.addEventListener('click', () => setMode('encode'));
+  btnDecode.addEventListener('click', () => setMode('decode'));
+
+  // ── URL-safe toggle ──────────────────────────────────────
+  urlSafeToggle.addEventListener('change', () => { urlSafe = urlSafeToggle.checked; run(); });
+
+  // ── Swap ─────────────────────────────────────────────────
+  btnSwap.addEventListener('click', () => {
+    const out = outputText.value;
+    if (!out) return;
+    inputText.value = out;
+    setMode(mode === 'encode' ? 'decode' : 'encode');
+  });
+
+  // ── Live update ──────────────────────────────────────────
+  inputText.addEventListener('input', run);
+
+  // ── Clipboard helpers ────────────────────────────────────
+  async function copyToClipboard(text, btn, label) {
+    if (!text) return;
+    const orig = btn.innerHTML;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${label || 'Copied!'}`;
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  }
+
+  btnCopyHeader.addEventListener('click', () => copyToClipboard(outputText.value, btnCopyHeader, 'Copied'));
+  btnCopyResult.addEventListener('click', () => copyToClipboard(outputText.value, btnCopyResult, 'Copied!'));
+
+  // ── Download ─────────────────────────────────────────────
+  btnDownload.addEventListener('click', () => {
+    const val = outputText.value;
+    if (!val) return;
+    const blob = new Blob([val], { type: 'text/plain' });
+    const url  = URL.createObjectURL(blob);
+    const a    = Object.assign(document.createElement('a'), {
+      href: url,
+      download: mode === 'encode' ? 'encoded.b64' : 'decoded.txt'
+    });
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Paste / clear ────────────────────────────────────────
+  btnPaste.addEventListener('click', async () => {
+    try {
+      inputText.value = await navigator.clipboard.readText();
+      run();
+    } catch { /* permission denied */ }
+  });
+
+  function clearAll() {
+    inputText.value = '';
+    outputText.value = '';
+    outputPanel.classList.remove('has-error');
+    updateStats();
+  }
+  btnClearInput.addEventListener('click', clearAll);
+  btnClearAll.addEventListener('click', clearAll);
+
+  // ── File drop / pick ─────────────────────────────────────
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+
+  function handleFile(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const bytes = new Uint8Array(e.target.result);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      let b64 = btoa(bin);
+      if (urlSafe) b64 = b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      inputText.value = '';
+      outputText.value = b64;
+      outputPanel.classList.remove('has-error');
+      inputStat.textContent  = `${(file.size / 1024).toFixed(1)} KB — ${file.name}`;
+      outputStat.textContent = `${b64.length.toLocaleString()} chars`;
+    };
+    reader.onerror = () => {
+      outputPanel.classList.add('has-error');
+      errorMsg.textContent = 'Failed to read file';
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // ── Main run button ──────────────────────────────────────
+  btnRun.addEventListener('click', run);
+
+  // ── Keyboard: Ctrl/Cmd+Enter to run ─────────────────────
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') run();
+  });
+
+  // ── Init ─────────────────────────────────────────────────
+  setMode('encode');
+</script>
+</body>
+</html>
