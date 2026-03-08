@@ -1,583 +1,993 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Toolbox | Free Online Tools for Everyday Tasks</title>
-    <meta name="description" content="A collection of free, privacy-first online tools that run entirely in your browser—no data is sent to servers. Discover your next efficiency tool today!">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/design-system.css">
-    <link rel="stylesheet" href="css/framework.css">
-    
-    <style>
-        .stb-hero {
-            padding: var(--linear-spacing-3xl) 0;
-            text-align: center;
-        }
-        
-        .stb-hero-title {
-            font-size: var(--linear-font-size-4xl);
-            color: var(--linear-primary);
-            margin-bottom: var(--linear-spacing-lg);
-        }
-        
-        .stb-hero-subtitle {
-            font-size: var(--linear-font-size-xl);
-            color: var(--linear-text-secondary);
-            margin-bottom: var(--linear-spacing-xl);
-        }
-        
-        .stb-hero-description {
-            font-size: var(--linear-font-size-lg);
-            color: var(--linear-text-secondary);
-            max-width: 700px;
-            margin: 0 auto var(--linear-spacing-2xl);
-            line-height: 1.6;
-        }
-        
-        .stb-hero-features {
-            display: flex;
-            justify-content: center;
-            gap: var(--linear-spacing-2xl);
-            flex-wrap: wrap;
-            margin-bottom: var(--linear-spacing-2xl);
-        }
-        
-        .stb-hero-feature {
-            display: flex;
-            align-items: center;
-            gap: var(--linear-spacing-sm);
-            color: var(--linear-text);
-        }
-        
-        .stb-hero-feature i {
-            color: var(--linear-primary);
-            font-size: var(--linear-font-size-xl);
-        }
-        
-        .stb-hero-status {
-            display: flex;
-            justify-content: center;
-            gap: var(--linear-spacing-lg);
-            flex-wrap: wrap;
-        }
-        
-        .stb-status-label {
-            display: flex;
-            align-items: center;
-            gap: var(--linear-spacing-sm);
-            padding: var(--linear-spacing-sm) var(--linear-spacing-md);
-            background-color: var(--linear-bg-secondary);
-            border-radius: var(--linear-radius-md);
-            color: var(--linear-text-secondary);
-        }
-        
-        .stb-status-label i {
-            color: var(--linear-accent);
-        }
-        
-        .stb-tools-section {
-            padding: var(--linear-spacing-3xl) 0;
-        }
-        
-        .stb-filter-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: var(--linear-spacing-xl);
-            flex-wrap: wrap;
-            gap: var(--linear-spacing-md);
-        }
-        
-        .stb-filter-label {
-            font-weight: 600;
-            color: var(--linear-text);
-        }
-        
-        .stb-filter-buttons {
-            display: flex;
-            gap: var(--linear-spacing-sm);
-            flex-wrap: wrap;
-        }
-        
-        .stb-filter-btn {
-            padding: var(--linear-spacing-sm) var(--linear-spacing-md);
-            border: 1px solid var(--linear-border);
-            background-color: var(--linear-bg-secondary);
-            color: var(--linear-text);
-            border-radius: var(--linear-radius-md);
-            cursor: pointer;
-            transition: var(--linear-transition);
-        }
-        
-        .stb-filter-btn:hover,
-        .stb-filter-btn.active {
-            border-color: var(--linear-primary);
-            background-color: var(--linear-primary);
-            color: var(--linear-text-inverse);
-        }
-        
-        .stb-tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: var(--linear-spacing-lg);
-        }
-        
-        .stb-home-tool-card {
-            background-color: var(--linear-bg-secondary);
-            border: 1px solid var(--linear-border);
-            border-radius: var(--linear-radius-lg);
-            padding: var(--linear-spacing-xl);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            transition: var(--linear-transition);
-            display: flex;
-            flex-direction: column;
-            gap: var(--linear-spacing-md);
-        }
-        
-        .stb-home-tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--linear-shadow-md);
-            border-color: var(--linear-primary);
-        }
-        
-        .stb-tool-card-header {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--linear-spacing-md);
-        }
-        
-        .stb-tool-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--linear-primary-gradient);
-            border-radius: var(--linear-radius-md);
-            flex-shrink: 0;
-        }
-        
-        .stb-tool-icon-wrapper i {
-            color: white;
-            font-size: 24px;
-        }
-        
-        .stb-tool-card-content {
-            flex: 1;
-        }
-        
-        .stb-tool-card-title {
-            font-size: var(--linear-font-size-lg);
-            font-weight: 600;
-            color: var(--linear-text);
-            margin-bottom: var(--linear-spacing-xs);
-        }
-        
-        .stb-tool-card-description {
-            font-size: var(--linear-font-size-sm);
-            color: var(--linear-text-secondary);
-            line-height: 1.5;
-        }
-        
-        .stb-tool-category {
-            align-self: flex-start;
-            padding: var(--linear-spacing-xs) var(--linear-spacing-sm);
-            background-color: var(--linear-bg-tertiary);
-            color: var(--linear-primary);
-            font-size: var(--linear-font-size-xs);
-            border-radius: var(--linear-radius-sm);
-            font-weight: 500;
-        }
-        
-        .stb-privacy-section {
-            padding: var(--linear-spacing-3xl) 0;
-            background-color: var(--linear-bg-secondary);
-            border-radius: var(--linear-radius-lg);
-            border: 1px solid var(--linear-primary);
-            margin-top: var(--linear-spacing-3xl);
-            text-align: center;
-        }
-        
-        .stb-privacy-title {
-            font-size: var(--linear-font-size-2xl);
-            color: var(--linear-primary);
-            margin-bottom: var(--linear-spacing-md);
-        }
-        
-        .stb-privacy-description {
-            font-size: var(--linear-font-size-lg);
-            color: var(--linear-text-secondary);
-            max-width: 700px;
-            margin: 0 auto var(--linear-spacing-xl);
-            line-height: 1.6;
-        }
-        
-        .stb-privacy-list {
-            text-align: left;
-            max-width: 600px;
-            margin: 0 auto;
-            color: var(--linear-text-secondary);
-        }
-        
-        .stb-privacy-list li {
-            margin-bottom: var(--linear-spacing-md);
-            line-height: 1.6;
-        }
-        
-        .stb-privacy-list strong {
-            color: var(--linear-text);
-        }
-        
-        @media (max-width: 768px) {
-            .stb-hero-title {
-                font-size: var(--linear-font-size-2xl);
-            }
-            
-            .stb-hero-subtitle {
-                font-size: var(--linear-font-size-lg);
-            }
-            
-            .stb-tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stb-filter-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Simple ToolBox — Developer Toolbox</title>
+  <link rel="icon" href="logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0F0F11;
+      --bg-surface:   #16161A;
+      --bg-hover:     #1C1C22;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5;
+      --text-secondary:#8B8B9A;
+      --text-muted:   #555560;
+      --accent:       #5E6AD2;
+      --accent-hover: #6E7AE2;
+      --accent-dim:   rgba(94,106,210,0.12);
+      --accent-glow:  rgba(94,106,210,0.25);
+      --radius-sm:    6px;
+      --radius-md:    10px;
+      --radius-lg:    16px;
+      --font:         'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --mono:         'JetBrains Mono', 'Fira Code', monospace;
+      --nav-h:        60px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      background: rgba(15,15,17,0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.1); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #5E6AD2, #9B8DEB);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .nav-search {
+      flex: 1;
+      max-width: 380px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .nav-search input {
+      width: 100%;
+      height: 34px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--font);
+      padding: 0 12px 0 34px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .nav-search input::placeholder { color: var(--text-muted); }
+    .nav-search input:focus {
+      border-color: var(--accent);
+      background: rgba(94,106,210,0.06);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .nav-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .nav-search kbd {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: -0.1px;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 96px 24px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(94,106,210,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 30% 50%, rgba(155,141,235,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(94,106,210,0.4), transparent);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(94,106,210,0.3);
+      color: #9B8DEB;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      font-family: var(--mono);
+      letter-spacing: 0.02em;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: #9B8DEB;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(226,226,229,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #5E6AD2 0%, #9B8DEB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .hero-search {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .hero-search input {
+      width: 100%;
+      height: 52px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: var(--font);
+      padding: 0 52px 0 48px;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .hero-search input::placeholder { color: var(--text-muted); }
+    .hero-search input:focus {
+      border-color: var(--accent);
+      background: rgba(94,106,210,0.06);
+      box-shadow: 0 0 0 4px var(--accent-glow), 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .hero-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+    .hero-search-enter {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      font-size: 12px;
+      font-family: var(--mono);
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .hero-search input:focus ~ .hero-search-enter { opacity: 1; }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .hero-tag:hover, .hero-tag.active {
+      background: var(--accent-dim);
+      border-color: rgba(94,106,210,0.4);
+      color: #9B8DEB;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item {
+      background: var(--bg);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-number span { color: var(--accent); }
+    .stat-label { font-size: 13px; color: var(--text-secondary); }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      color: var(--text-primary);
+    }
+    .section-more {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .section-more:hover { color: var(--accent); }
+
+    /* ── CATEGORY GRID ── */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .category-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .category-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, var(--card-color, rgba(94,106,210,0.08)) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .category-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .category-card:hover::before { opacity: 1; }
+
+    .category-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+    }
+    .category-body { flex: 1; min-width: 0; }
+    .category-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      letter-spacing: -0.2px;
+    }
+    .category-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .category-count {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+
+    /* ── TOOL CARDS ── */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+    }
+    .tool-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tool-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .tool-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-dim);
+      border: 1px solid rgba(94,106,210,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .tool-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+    .tool-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .tool-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .tool-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .tool-arrow {
+      color: var(--text-muted);
+      font-size: 14px;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .tool-card:hover .tool-arrow { color: var(--accent); transform: translateX(3px); }
+    a.tool-card { text-decoration: none; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 24px;
+    }
+
+    /* ── FEATURE STRIP ── */
+    .features {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .features-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+    }
+    .feature-item { display: flex; flex-direction: column; gap: 10px; }
+    .feature-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(94,106,210,0.2);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .feature-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .feature-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 36px;
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 40px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 12px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+    .footer-logo-icon {
+      width: 24px; height: 24px;
+      background: linear-gradient(135deg, #5E6AD2, #9B8DEB);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .footer-tagline { font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 220px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: var(--text-secondary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .footer-bottom p { font-size: 12px; color: var(--text-muted); }
+    .footer-bottom-links { display: flex; gap: 16px; }
+    .footer-bottom-links a { font-size: 12px; color: var(--text-muted); transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: var(--text-secondary); }
+
+    /* ── FADE IN ── */
+    .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .footer { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-search { display: none; }
+      .hero { padding: 64px 20px 56px; }
+      .footer { grid-template-columns: 1fr 1fr; padding: 40px 20px; }
+      .section { padding: 48px 20px; }
+    }
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .nav-actions .nav-link { display: none; }
+    }
+
+    /* ── LOGO IMAGE ── */
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-logo-icon { background: none !important; border-radius: 0 !important; border: none !important; width: auto !important; height: auto !important; }
+    .footer-logo-icon { background: none !important; border-radius: 0 !important; border: none !important; width: auto !important; height: auto !important; }
+
+    /* ── HIDDEN CARD ── */
+    .category-card.hidden { display: none; }
+    .no-result { text-align: center; padding: 48px; color: var(--text-muted); font-size: 14px; display: none; }
+    .no-result.show { display: block; }
+  </style>
 </head>
-<body class="dark">
-    <div class="stb-layout">
-        <header class="stb-layout-header">
-            <div class="stb-container">
-                <div class="stb-header-inner">
-                    <a href="/" class="stb-brand">
-                        <span>Simple Toolbox</span>
-                    </a>
-                    
-                    <nav class="stb-nav-desktop">
-                        <a href="/" class="stb-nav-link active">Home</a>
-                        <div class="stb-nav-dropdown">
-                            <a href="/tools" class="stb-nav-link stb-nav-dropdown-toggle">
-                                Tools <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
-                            </a>
-                            <div class="stb-nav-dropdown-menu">
-                                <a href="/tools/password-generator" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-key"></i> Password Generator
-                                </a>
-                                <a href="/tools/unit-converter" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-ruler-combined"></i> Unit Converter
-                                </a>
-                                <a href="/tools/image-background-remover" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-cut"></i> Image Background Remover
-                                </a>
-                                <a href="/tools/image-resizer-online" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-expand-alt"></i> Image Resizer
-                                </a>
-                                <div class="stb-nav-divider"></div>
-                                <a href="/tools/json-formatter-tool" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-code"></i> JSON Formatter
-                                </a>
-                                <a href="/tools/random-number-generator" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-dice"></i> Random Number Generator
-                                </a>
-                                <a href="/tools/word-counter-tool" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-font"></i> Word Counter
-                                </a>
-                                <a href="/tools/pdf-to-word-converter" class="stb-nav-dropdown-item">
-                                    <i class="fas fa-file-word"></i> PDF to Word
-                                </a>
-                                <a href="/tools/youtube-thumbnail-downloader" class="stb-nav-dropdown-item">
-                                    <i class="fab fa-youtube"></i> YouTube Thumbnail Downloader
-                                </a>
-                            </div>
-                        </div>
-                        <a href="/about.html" class="stb-nav-link">About</a>
-                        <a href="/contact.html" class="stb-nav-link">Contact</a>
-                    </nav>
-                    
-                    <div class="stb-nav-actions">
-                        <div class="stb-nav-search">
-                            <i class="fas fa-search stb-nav-search-icon"></i>
-                            <input type="text" class="stb-nav-search-input" placeholder="Search tools...">
-                        </div>
-                        <button class="stb-button stb-button-icon" id="stb-theme-toggle" aria-label="Toggle theme">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                        <button class="stb-button stb-button-icon stb-mobile-menu-btn" id="stb-mobile-menu-btn" aria-label="Toggle menu">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <nav class="stb-mobile-nav-menu" id="stb-mobile-nav-menu">
-                <div class="stb-mobile-nav-links">
-                    <a href="/" class="stb-mobile-nav-link">Home</a>
-                    <a href="/tools" class="stb-mobile-nav-link">All Tools</a>
-                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Popular Tools</div>
-                    <a href="/tools/password-generator" class="stb-mobile-nav-link"><i class="fas fa-key" style="margin-right: 8px; color: var(--linear-primary);"></i> Password Generator</a>
-                    <a href="/tools/unit-converter" class="stb-mobile-nav-link"><i class="fas fa-ruler-combined" style="margin-right: 8px; color: var(--linear-primary);"></i> Unit Converter</a>
-                    <a href="/tools/image-background-remover" class="stb-mobile-nav-link"><i class="fas fa-cut" style="margin-right: 8px; color: var(--linear-primary);"></i> Image Background Remover</a>
-                    <a href="/tools/json-formatter-tool" class="stb-mobile-nav-link"><i class="fas fa-code" style="margin-right: 8px; color: var(--linear-primary);"></i> JSON Formatter</a>
-                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">More Tools</div>
-                    <a href="/tools/image-resizer-online" class="stb-mobile-nav-link">Image Resizer</a>
-                    <a href="/tools/random-number-generator" class="stb-mobile-nav-link">Random Number Generator</a>
-                    <a href="/tools/word-counter-tool" class="stb-mobile-nav-link">Word Counter</a>
-                    <a href="/tools/pdf-to-word-converter" class="stb-mobile-nav-link">PDF to Word</a>
-                    <a href="/tools/youtube-thumbnail-downloader" class="stb-mobile-nav-link">YouTube Thumbnail Downloader</a>
-                    <div style="padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--linear-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px;">Company</div>
-                    <a href="/about.html" class="stb-mobile-nav-link">About</a>
-                    <a href="/contact.html" class="stb-mobile-nav-link">Contact</a>
-                    <a href="/privacy.html" class="stb-mobile-nav-link">Privacy</a>
-                    <a href="/terms.html" class="stb-mobile-nav-link">Terms</a>
-                </div>
-            </nav>
-        </header>
-        
-        <main class="stb-layout-main">
-            <section class="stb-tool-area">
-                <div class="stb-container">
-                    <div class="stb-hero">
-                        <h1 class="stb-hero-title">Discover Your Next Efficiency Tool</h1>
-                        <h2 class="stb-hero-subtitle">Free, privacy-first online tools</h2>
-                        <p class="stb-hero-description">All tools run entirely in your browser—no data is sent to servers. No registration, no limits. Your privacy is protected by design.</p>
-                        
-                        <div class="stb-hero-features">
-                            <div class="stb-hero-feature">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Privacy First</span>
-                            </div>
-                            <div class="stb-hero-feature">
-                                <i class="fas fa-laptop-code"></i>
-                                <span>Browser-Based</span>
-                            </div>
-                            <div class="stb-hero-feature">
-                                <i class="fas fa-lock"></i>
-                                <span>No Data Uploads</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stb-hero-status">
-                            <span class="stb-status-label">
-                                <i class="fas fa-check-circle"></i>
-                                No Ads
-                            </span>
-                            <span class="stb-status-label">
-                                <i class="fas fa-check-circle"></i>
-                                Open Source
-                            </span>
-                            <span class="stb-status-label">
-                                <i class="fas fa-check-circle"></i>
-                                Fast Performance
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="stb-tools-section">
-                        <div class="stb-filter-header">
-                            <span class="stb-filter-label">Categories:</span>
-                            <div class="stb-filter-buttons">
-                                <button class="stb-filter-btn active" data-category="all">All</button>
-                                <button class="stb-filter-btn" data-category="productivity">Productivity</button>
-                                <button class="stb-filter-btn" data-category="development">Development</button>
-                                <button class="stb-filter-btn" data-category="image">Image</button>
-                                <button class="stb-filter-btn" data-category="conversion">Conversion</button>
-                            </div>
-                            <span class="stb-tools-count">9 tools available</span>
-                        </div>
-                        
-                        <div class="stb-tools-grid" id="tools-grid">
-                            <a href="/tools/password-generator" class="stb-home-tool-card" data-category="security">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-key"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Password Generator</h3>
-                                        <p class="stb-tool-card-description">Create strong, random passwords and API keys with customizable length and character sets. Perfect for securing accounts and applications.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Security</span>
-                            </a>
-                            
-                            <a href="/tools/youtube-thumbnail-downloader" class="stb-home-tool-card" data-category="media">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fab fa-youtube"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">YouTube Thumbnail Downloader</h3>
-                                        <p class="stb-tool-card-description">Download high-quality thumbnails from any YouTube video in multiple resolutions. Simple, fast, and completely free.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Media</span>
-                            </a>
-                            
-                            <a href="/tools/image-background-remover" class="stb-home-tool-card" data-category="image">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-cut"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Image Background Remover</h3>
-                                        <p class="stb-tool-card-description">AI-powered background removal that runs locally in your browser—no uploads, no privacy risks. Perfect for product photos and social media.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Image</span>
-                            </a>
-                            
-                            <a href="/tools/unit-converter" class="stb-home-tool-card" data-category="productivity">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-ruler-combined"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Unit Converter</h3>
-                                        <p class="stb-tool-card-description">Convert length, weight, temperature, volume, area, speed, and time with real-time calculations. Supports hundreds of units across categories.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Productivity</span>
-                            </a>
-                            
-                            <a href="/tools/pdf-to-word-converter" class="stb-home-tool-card" data-category="conversion">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-file-word"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">PDF to Word Converter</h3>
-                                        <p class="stb-tool-card-description">Convert PDF documents to editable Word format while preserving formatting and layout. Works entirely in your browser—your files never leave your device.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Conversion</span>
-                            </a>
-                            
-                            <a href="/tools/json-formatter-tool" class="stb-home-tool-card" data-category="development">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-code"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">JSON Formatter Tool</h3>
-                                        <p class="stb-tool-card-description">Format, validate, and beautify JSON data with syntax highlighting and error detection. Perfect for developers and API debugging.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Development</span>
-                            </a>
-                            
-                            <a href="/tools/image-resizer-online" class="stb-home-tool-card" data-category="image">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-expand-alt"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Image Resizer</h3>
-                                        <p class="stb-tool-card-description">Resize images online while maintaining quality. Adjust dimensions, crop, and convert formats. No uploads required.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Image</span>
-                            </a>
-                            
-                            <a href="/tools/random-number-generator" class="stb-home-tool-card" data-category="productivity">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-dice"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Random Number Generator</h3>
-                                        <p class="stb-tool-card-description">Generate true random numbers with customizable ranges and quantities. Perfect for games, lotteries, and statistical sampling.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Productivity</span>
-                            </a>
-                            
-                            <a href="/tools/word-counter-tool" class="stb-home-tool-card" data-category="productivity">
-                                <div class="stb-tool-card-header">
-                                    <div class="stb-tool-icon-wrapper">
-                                        <i class="fas fa-font"></i>
-                                    </div>
-                                    <div class="stb-tool-card-content">
-                                        <h3 class="stb-tool-card-title">Word Counter Tool</h3>
-                                        <p class="stb-tool-card-description">Count words, characters, sentences, and paragraphs in real-time. Perfect for writers, students, and professionals.</p>
-                                    </div>
-                                </div>
-                                <span class="stb-tool-category">Productivity</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="stb-privacy-section">
-                        <h2 class="stb-privacy-title">Privacy First</h2>
-                        <p class="stb-privacy-description">Every tool in Simple Toolbox is designed with privacy as the core principle. All processing happens locally in your browser—no data is ever sent to our servers. This means:</p>
-                        <ul class="stb-privacy-list">
-                            <li><strong>No data collection</strong>: We don't track your usage or collect personal information</li>
-                            <li><strong>No file uploads</strong>: Your files stay on your device, processed locally</li>
-                            <li><strong>No registration required</strong>: Use tools immediately without creating accounts</li>
-                            <li><strong>Open source transparency</strong>: All code is available for inspection and verification</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        <footer class="stb-layout-footer">
-            <div class="stb-container">
-                <div class="stb-footer-content">
-                    <div class="stb-footer-brand">
-                        <span>Simple Toolbox</span>
-                    </div>
-                    
-                    <div class="stb-footer-links">
-                        <a href="/about.html">About Us</a>
-                        <a href="/terms.html">Terms of Use</a>
-                        <a href="/privacy.html">Privacy Policy</a>
-                        <a href="/contact.html">Contact</a>
-                    </div>
-                    
-                    <div class="stb-footer-copyright">
-                        <p>© 2026 Simple Toolbox. All rights reserved.</p>
-                        <p>simpletoolbox.dev | A collection of free, privacy-first online tools</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon"><img src="logo 1.svg" class="logo-img" width="28" height="28" alt="Simple ToolBox" /></div>
+    Simple ToolBox
+  </a>
+
+  <div class="nav-search">
+    <svg class="nav-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="navSearch" placeholder="Search tools…" autocomplete="off" />
+    <kbd>⌘K</kbd>
+  </div>
+
+  <div class="nav-actions">
+    <a href="#" class="nav-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+      GitHub
+    </a>
+    <button class="btn-primary">Submit a Tool</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Actively maintained · v1.0
+  </div>
+  <h1 class="hero-title">The <span>Developer Toolbox</span></h1>
+  <p class="hero-sub">No sign-up required. Use it and go. All tools run locally in your browser — your data never leaves your device.</p>
+
+  <div class="hero-search">
+    <svg class="hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="heroSearch" placeholder="Search tools, e.g. Base64, JSON Formatter…" autocomplete="off" />
+    <span class="hero-search-enter">↵</span>
+  </div>
+
+  <div class="hero-tags">
+    <button class="hero-tag active" data-filter="all">🔥 All</button>
+    <button class="hero-tag" data-filter="encode">🔐 Encode</button>
+    <button class="hero-tag" data-filter="format">✨ Format</button>
+    <button class="hero-tag" data-filter="convert">🔄 Convert</button>
+    <button class="hero-tag" data-filter="generate">⚙️ Generate</button>
+    <button class="hero-tag" data-filter="text">📝 Text</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-number"><span>50</span>+</div>
+    <div class="stat-label">Online Tools</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number"><span>0</span></div>
+    <div class="stat-label">Sign-up Required</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number"><span>100</span>%</div>
+    <div class="stat-label">Free Forever</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="features-inner">
+    <div class="feature-item fade-in">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Data Stays in Your Browser</div>
+      <div class="feature-desc">All processing happens locally. Nothing is ever sent to a server.</div>
     </div>
-    
-    <script src="js/framework.js"></script>
-    <script>
-        const filterButtons = document.querySelectorAll('.stb-filter-btn');
-        const toolCards = document.querySelectorAll('.stb-home-tool-card');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const category = button.dataset.category;
-                
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                toolCards.forEach(card => {
-                    if (category === 'all' || card.dataset.category === category) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearElement = document.querySelector('.stb-footer-copyright p');
-            if (yearElement) {
-                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
-            }
-        });
-    </script>
+    <div class="feature-item fade-in">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Instant, Zero Wait</div>
+      <div class="feature-desc">Tools open and run immediately — no loading screens, no delays.</div>
+    </div>
+    <div class="feature-item fade-in">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Works Everywhere</div>
+      <div class="feature-desc">Fully responsive on desktop and mobile. Code from anywhere.</div>
+    </div>
+    <div class="feature-item fade-in">
+      <div class="feature-icon">🌙</div>
+      <div class="feature-title">Easy on the Eyes</div>
+      <div class="feature-desc">A carefully crafted dark theme designed for long coding sessions.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY GRID -->
+<div class="section fade-in">
+  <div class="section-header">
+    <h2 class="section-title">Categories</h2>
+    <a href="#" class="section-more">Browse all →</a>
+  </div>
+  <div class="category-grid" id="categoryGrid">
+    <div class="category-card" style="--card-color:rgba(94,106,210,0.1)" data-name="encode decode base64 url">
+      <div class="category-icon">🔐</div>
+      <div class="category-body">
+        <div class="category-name">Encode / Decode</div>
+        <div class="category-desc">Base64, URL encoding, HTML entities, JWT parser and more</div>
+        <span class="category-count">12 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(34,197,94,0.08)" data-name="format beautify json xml css sql">
+      <div class="category-icon">✨</div>
+      <div class="category-body">
+        <div class="category-name">Formatters</div>
+        <div class="category-desc">Prettify or minify JSON, XML, CSS, and SQL</div>
+        <span class="category-count">8 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(251,146,60,0.08)" data-name="converter base number timestamp color unit">
+      <div class="category-icon">🔄</div>
+      <div class="category-body">
+        <div class="category-name">Converters</div>
+        <div class="category-desc">Number bases, timestamps, color formats, unit conversion</div>
+        <span class="category-count">10 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(236,72,153,0.08)" data-name="generator uuid password hash random">
+      <div class="category-icon">⚙️</div>
+      <div class="category-body">
+        <div class="category-name">Generators</div>
+        <div class="category-desc">UUID, password, hash, regex, placeholder images</div>
+        <span class="category-count">9 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network">
+      <div class="category-icon">🐛</div>
+      <div class="category-body">
+        <div class="category-name">Debuggers</div>
+        <div class="category-desc">Regex tester, Cron expression, HTTP status code lookup</div>
+        <span class="category-count">7 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(168,85,247,0.08)" data-name="text string markdown diff word count">
+      <div class="category-icon">📝</div>
+      <div class="category-body">
+        <div class="category-name">Text Tools</div>
+        <div class="category-desc">Word count, case converter, Markdown preview, Diff</div>
+        <span class="category-count">11 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(234,179,8,0.08)" data-name="image compress base64 crop convert">
+      <div class="category-icon">🖼️</div>
+      <div class="category-body">
+        <div class="category-name">Image Tools</div>
+        <div class="category-desc">Compress, Base64 convert, resize, and format images</div>
+        <span class="category-count">6 tools</span>
+      </div>
+    </div>
+    <div class="category-card" style="--card-color:rgba(20,184,166,0.08)" data-name="network ip dns url header http">
+      <div class="category-icon">🌐</div>
+      <div class="category-body">
+        <div class="category-name">Network Tools</div>
+        <div class="category-desc">IP lookup, DNS resolver, URL parser, Header analyzer</div>
+        <span class="category-count">5 tools</span>
+      </div>
+    </div>
+  </div>
+  <div class="no-result" id="noResult">No categories found. Try a different keyword.</div>
+</div>
+
+<!-- FEATURED TOOLS -->
+<div class="divider"></div>
+<div class="section fade-in">
+  <div class="section-header">
+    <h2 class="section-title">Popular Tools</h2>
+    <a href="#" class="section-more">All tools →</a>
+  </div>
+  <div class="tool-grid">
+    <a href="#" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">📦</div>
+        <div class="tool-name">Base64 Encode / Decode</div>
+      </div>
+      <div class="tool-desc">Convert text or file contents to and from Base64. One-click copy and download.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">encode</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">🎨</div>
+        <div class="tool-name">JSON Formatter</div>
+      </div>
+      <div class="tool-desc">Prettify or minify JSON with syntax highlighting, error detection, and tree view.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">format</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="tools/password-generator.html" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">🔑</div>
+        <div class="tool-name">Password Generator</div>
+      </div>
+      <div class="tool-desc">Customize length and character sets to generate strong random passwords locally.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">generate</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">⏱️</div>
+        <div class="tool-name">Timestamp Converter</div>
+      </div>
+      <div class="tool-desc">Convert Unix timestamps to human-readable dates and back, with timezone support.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">convert</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">🔗</div>
+        <div class="tool-name">URL Encode / Decode</div>
+      </div>
+      <div class="tool-desc">Encode or decode URL parameters at the full or component level.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">encode</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="#" class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">🆔</div>
+        <div class="tool-name">UUID Generator</div>
+      </div>
+      <div class="tool-desc">Bulk-generate UUID v1/v4 with options for case, hyphens, and more.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">generate</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--border)">
+  <footer class="footer">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon"><img src="logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" /></div>
+        Simple ToolBox
+      </div>
+      <p class="footer-tagline">A one-stop online toolbox for developers. Free, fast, and privacy-first.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <div class="footer-links">
+        <a href="#">Encoders</a>
+        <a href="#">Formatters</a>
+        <a href="#">Converters</a>
+        <a href="#">Generators</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <div class="footer-links">
+        <a href="#">Changelog</a>
+        <a href="#">Submit a Tool</a>
+        <a href="#">Feedback</a>
+        <a href="#">Roadmap</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <p>© 2025 Simple ToolBox. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">GitHub</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Nav scroll shadow
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  // Hero tag pills — UI toggle only
+  document.querySelectorAll('.hero-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      document.querySelectorAll('.hero-tag').forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+    });
+  });
+
+  // Search — filter category cards
+  function filterCategories(query) {
+    const q = query.trim().toLowerCase();
+    const cards = document.querySelectorAll('#categoryGrid .category-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const name = (card.dataset.name || '').toLowerCase();
+      const text = card.innerText.toLowerCase();
+      const match = !q || name.includes(q) || text.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    document.getElementById('noResult').classList.toggle('show', visible === 0 && q.length > 0);
+  }
+
+  document.getElementById('heroSearch').addEventListener('input', e => {
+    filterCategories(e.target.value);
+    document.getElementById('navSearch').value = e.target.value;
+  });
+  document.getElementById('navSearch').addEventListener('input', e => {
+    filterCategories(e.target.value);
+    document.getElementById('heroSearch').value = e.target.value;
+  });
+
+  // ⌘K / Ctrl+K — focus hero search
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const input = document.getElementById('heroSearch');
+      input.focus();
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
