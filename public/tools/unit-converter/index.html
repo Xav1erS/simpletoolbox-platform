@@ -1,483 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-bs-theme="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter - Length, Weight & More | SimpleToolBox</title>
-    <meta name="description" content="Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Real-time calculations with precisi...">
+    <title>Unit Converter - Length, Weight &amp; More | SimpleToolBox</title>
+    <meta name="description" content="Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Real-time calculations with precision accuracy. Convert units instantly - trust...">
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Design System CSS -->
     <link rel="stylesheet" href="../../css/design-system.css">
+    
+    <!-- Tool-specific styles -->
     <style>
-        :root {
-            --primary: #165DFF;
-            --success: #36D399;
-            --danger: #F87272;
-            --light-bg: #ffffff;
-            --light-text: #1a1a1a;
-            --light-card: #f8f9fa;
-            --dark-bg: #0f172a;
-            --dark-text: #f1f5f9;
-            --dark-card: #1e293b;
-            --shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
-            --radius: 12px;
-            --transition: all 0.2s ease;
-        }
-        
-        .layout-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--linear-spacing-xl);
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
         
-        .navigation-area {
-            height: 10vh;
-            min-height: 60px;
-            max-height: 80px;
-            background-color: var(--linear-bg-secondary);
-            border-bottom: 1px solid var(--linear-border);
-            padding: 0;
-            display: flex;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--linear-shadow-sm);
+        .tool-content-area {
+            padding: var(--linear-spacing-xl) 0;
             width: 100%;
         }
         
-        .navigation-brand {
-            display: flex;
-            align-items: center;
-            gap: var(--linear-spacing-sm);
-            font-weight: 700;
-            font-size: var(--linear-font-size-lg);
-            color: var(--linear-primary);
-        }
-        
-        .theme-toggle-button {
-            background: none;
-            border: none;
-            color: var(--linear-text-primary);
-            cursor: pointer;
-            font-size: var(--linear-font-size-lg);
-            padding: var(--linear-spacing-sm);
-            border-radius: var(--linear-radius-md);
-            transition: background-color var(--linear-transition-fast);
-        }
-        
-        .theme-toggle-button:hover {
-            background-color: var(--linear-bg-overlay);
-        }
-
-        [data-bs-theme="dark"] {
-            --bg: var(--dark-bg);
-            --text: var(--dark-text);
-            --card: var(--dark-card);
-        }
-
-        [data-bs-theme="light"] {
-            --bg: var(--light-bg);
-            --text: var(--light-text);
-            --card: var(--light-card);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK JP', Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            transition: var(--transition);
-            padding-bottom: 60px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                padding: 0 48px;
-            }
-        }
-
-
-
-        /* Main converter */
-        .converter-card {
-            background-color: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 32px;
-            margin-bottom: 40px;
-            transition: var(--transition);
-        }
-
-        .converter-card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-title {
-            font-size: 1.8rem;
-            margin-bottom: 24px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .card-title i {
-            font-size: 1.8rem;
-        }
-
-        .category-select {
-            margin-bottom: 24px;
-        }
-
-        .category-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .category-btn {
-            padding: 12px 24px;
-            border: 1px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .converter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .converter-col {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 16px 20px;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 8px;
-            background-color: var(--bg);
-            color: var(--text);
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        [data-bs-theme="dark"] .form-control {
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
-        }
-
-        .result-box {
-            background-color: rgba(22, 93, 255, 0.05);
-            border: 1px solid rgba(22, 93, 255, 0.2);
-            border-radius: 8px;
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-align: center;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #0b4bd8;
-            transform: scale(1.02);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-success {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: #2bbd8a;
-        }
-
-        /* Batch mode */
-        .batch-toggle {
-            margin-bottom: 24px;
-        }
-
-        .batch-container {
-            display: none;
-        }
-
-        .batch-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-
-        .batch-input {
-            flex: 1;
-        }
-
-        .batch-remove {
-            background-color: var(--danger);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .batch-results {
-            margin-top: 24px;
-            overflow-x: auto;
-        }
-
-        .batch-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--card);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .batch-table th,
-        .batch-table td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        [data-bs-theme="dark"] .batch-table th,
-        [data-bs-theme="dark"] .batch-table td {
-            border-bottom-color: rgba(255,255,255,0.05);
-        }
-
-        /* History sidebar */
-        .history-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 350px;
-            height: 100%;
-            background-color: var(--card);
-            box-shadow: -2px 0 20px rgba(0,0,0,0.1);
-            padding: 24px;
-            transition: right 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .history-sidebar.open {
-            right: 0;
-        }
-
-        .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .history-list {
-            list-style: none;
-        }
-
-        .history-item {
-            padding: 16px;
-            background-color: var(--bg);
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--primary);
-        }
-
-        /* Features */
-        .features {
-            margin: 60px 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--primary);
-        }
-
-        .feature-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background-color: var(--card);
-            border-radius: var(--radius);
-            padding: 28px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-            border-top: 4px solid var(--primary);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            color: var(--text);
-            margin-top: 60px;
-        }
-
-        [data-bs-theme="dark"] .footer {
-            border-top-color: rgba(255,255,255,0.05);
-        }
-
-        .footer-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        .footer-description {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-bottom: 24px;
-        }
-
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            border: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .converter-row {
-                flex-direction: column;
-            }
-            .history-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            .feature-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Breadcrumb styles */
         .breadcrumb {
             display: flex;
             align-items: center;
@@ -501,6 +49,324 @@
             margin: 0 var(--linear-spacing-xs);
             color: var(--linear-text-tertiary);
         }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: var(--linear-spacing-2xl);
+        }
+        
+        .tool-header h1 {
+            font-size: var(--linear-font-size-3xl);
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-md);
+        }
+        
+        .tool-header p {
+            font-size: var(--linear-font-size-lg);
+            color: var(--linear-text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .converter-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            border: 1px solid var(--linear-border);
+            padding: var(--linear-spacing-xl);
+            margin-bottom: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-md);
+        }
+        
+        .card-title {
+            font-size: var(--linear-font-size-2xl);
+            margin-bottom: var(--linear-spacing-lg);
+            color: var(--linear-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--linear-spacing-sm);
+        }
+        
+        .card-title i {
+            font-size: var(--linear-font-size-2xl);
+        }
+        
+        .category-select {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-sm);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .category-btn {
+            padding: var(--linear-spacing-sm) var(--linear-spacing-lg);
+            border: 1px solid var(--linear-primary);
+            background: transparent;
+            color: var(--linear-primary);
+            border-radius: var(--linear-radius-md);
+            cursor: pointer;
+            transition: var(--linear-transition);
+            font-weight: 500;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--linear-primary);
+            color: var(--linear-text-inverse);
+        }
+        
+        .converter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-lg);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .converter-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--linear-spacing-sm);
+            font-weight: 600;
+            color: var(--linear-text-primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--linear-spacing-md) var(--linear-spacing-lg);
+            border: 1px solid var(--linear-border);
+            border-radius: var(--linear-radius-md);
+            background-color: var(--linear-bg-tertiary);
+            color: var(--linear-text);
+            font-size: var(--linear-font-size-base);
+            transition: var(--linear-transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--linear-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .result-box {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--linear-primary);
+            border-radius: var(--linear-radius-md);
+            padding: var(--linear-spacing-lg);
+            font-size: var(--linear-font-size-xl);
+            font-weight: 700;
+            color: var(--linear-primary);
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--linear-transition);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--linear-spacing-md);
+            margin-top: var(--linear-spacing-xl);
+        }
+        
+        .batch-toggle {
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .batch-container {
+            display: none;
+        }
+        
+        .batch-row {
+            display: flex;
+            gap: var(--linear-spacing-md);
+            margin-bottom: var(--linear-spacing-md);
+            align-items: center;
+        }
+        
+        .batch-input {
+            flex: 1;
+        }
+        
+        .batch-remove {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--linear-radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .batch-results {
+            margin-top: var(--linear-spacing-lg);
+            overflow-x: auto;
+        }
+        
+        .batch-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-md);
+            overflow: hidden;
+        }
+        
+        .batch-table th,
+        .batch-table td {
+            padding: var(--linear-spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--linear-border);
+        }
+        
+        .history-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100%;
+            background-color: var(--linear-bg-secondary);
+            box-shadow: var(--linear-shadow-md);
+            padding: var(--linear-spacing-xl);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .history-sidebar.open {
+            right: 0;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .history-list {
+            list-style: none;
+        }
+        
+        .history-item {
+            padding: var(--linear-spacing-md);
+            background-color: var(--linear-bg-tertiary);
+            border-radius: var(--linear-radius-md);
+            margin-bottom: var(--linear-spacing-sm);
+            border-left: 4px solid var(--linear-primary);
+        }
+        
+        .features {
+            margin: var(--linear-spacing-3xl) 0;
+        }
+        
+        .section-title {
+            font-size: var(--linear-font-size-2xl);
+            text-align: center;
+            margin-bottom: var(--linear-spacing-2xl);
+            color: var(--linear-primary);
+        }
+        
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--linear-spacing-lg);
+        }
+        
+        .feature-card {
+            background-color: var(--linear-bg-secondary);
+            border-radius: var(--linear-radius-lg);
+            padding: var(--linear-spacing-xl);
+            box-shadow: var(--linear-shadow-sm);
+            transition: var(--linear-transition);
+            text-align: center;
+            border-top: 4px solid var(--linear-primary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--linear-shadow);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .feature-title {
+            font-size: var(--linear-font-size-lg);
+            margin-bottom: var(--linear-spacing-sm);
+            color: var(--linear-text);
+        }
+        
+        .footer-area {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--linear-border);
+            color: var(--linear-text);
+            margin-top: 60px;
+            width: 100%;
+        }
+        
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--linear-primary);
+            margin-bottom: var(--linear-spacing-sm);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--linear-spacing-lg);
+            margin-bottom: var(--linear-spacing-lg);
+        }
+        
+        .footer-links a {
+            color: var(--linear-text-secondary);
+            text-decoration: none;
+            transition: color var(--linear-transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--linear-primary);
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .converter-row {
+                flex-direction: column;
+            }
+            .history-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
     <!-- Structured Data (JSON-LD) -->
@@ -516,7 +382,7 @@
     "price": "0",
     "priceCurrency": "USD"
   },
-  "description": "Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Real-time calculations with precision accuracy. Convert units instantly - trus...",
+  "description": "Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Real-time calculations with precision accuracy.",
   "featureList": [
     "Comprehensive unit categories",
     "Real-time calculations",
@@ -532,179 +398,225 @@
 }
     </script>
 </head>
-<body>
+<body class="dark">
     <div class="layout-container">
         <!-- Navigation Area -->
         <nav class="navigation-area">
             <div class="nav-container">
-                <div class="navigation-brand">
-                    <span>Unit Converter</span>
+                <a href="/" class="navigation-brand">
+                    <span>Simple Toolbox</span>
+                </a>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="nav-links">
+                    <a href="/tools">Tools</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
                 </div>
-                <button class="theme-toggle-button" id="themeToggle" aria-label="Toggle theme">
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div class="mobile-nav-menu" id="mobile-nav-menu">
+                <div class="mobile-nav-links">
+                    <a href="/">Home</a>
+                    <a href="/tools">Tools</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
+                </div>
             </div>
         </nav>
 
         <!-- Main Content Area -->
         <div class="container">
-
-        <!-- Breadcrumb Navigation -->
-        <div class="breadcrumb">
-            <a href="/">Home</a>
-            <span class="breadcrumb-separator">></span>
-            <a href="/tools">Tools</a>
-            <span class="breadcrumb-separator">></span>
-            <span>Unit Converter</span>
-        </div>
-
-        <!-- Main Converter Card -->
-        <main class="converter-card">
-            <h1 class="card-title">
-                <i class="fas fa-exchange-alt"></i>
-                Unit Converter
-            </h1>
-
-            <!-- Category Selection -->
-            <div class="category-select">
-                <label class="form-label">Select Category</label>
-                <div class="category-buttons" id="categoryButtons">
-                    <!-- Buttons will be generated by JavaScript -->
-                </div>
+        <main class="main-content-area">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-separator">&gt;</span>
+                <a href="/tools">Tools</a>
+                <span class="breadcrumb-separator">&gt;</span>
+                <span>Unit Converter</span>
             </div>
 
-            <!-- Single/Batch Mode Toggle -->
-            <div class="batch-toggle">
-                <button class="btn btn-outline" id="modeToggle">
-                    <i class="fas fa-layer-group"></i>
-                    Switch to Batch Mode
-                </button>
-            </div>
+            <!-- Tool Header -->
+            <header class="tool-header">
+                <h1>Unit Converter</h1>
+                <p>Need to convert units quickly? Convert length, weight, temperature, area, and more with our comprehensive unit converter. Real-time calculations with precision accuracy. Convert units instantly - trust...</p>
+            </header>
+            
+            <!-- Tool-specific content -->
+            <div class="tool-content-area">
+                <!-- Main Converter Card -->
+                <div class="converter-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        Unit Converter
+                    </h2>
 
-            <!-- Single Converter -->
-            <div id="singleConverter">
-                <div class="converter-row">
-                    <div class="converter-col">
-                        <label class="form-label" for="fromUnit">From Unit</label>
-                        <select class="form-control" id="fromUnit">
-                            <option>Select unit</option>
-                        </select>
-                    </div>
-                    <div class="converter-col">
-                        <label class="form-label" for="toUnit">To Unit</label>
-                        <select class="form-control" id="toUnit">
-                            <option>Select unit</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="converter-row">
-                    <div class="converter-col">
-                        <label class="form-label" for="inputValue">Value</label>
-                        <input type="number" class="form-control" id="inputValue" placeholder="Enter value" step="any">
-                    </div>
-                    <div class="converter-col">
-                        <label class="form-label">Result</label>
-                        <div class="result-box" id="resultBox">
-                            Enter value to convert
+                    <!-- Category Selection -->
+                    <div class="category-select">
+                        <label class="form-label">Select Category</label>
+                        <div class="category-buttons" id="categoryButtons">
+                            <!-- Buttons will be generated by JavaScript -->
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Batch Converter (hidden by default) -->
-            <div class="batch-container" id="batchConverter">
-                <div class="batch-actions">
-                    <button class="btn btn-outline" id="addBatchRow">
-                        <i class="fas fa-plus"></i>
-                        Add Row
-                    </button>
-                    <button class="btn btn-outline" id="clearBatch">
-                        <i class="fas fa-trash"></i>
-                        Clear All
-                    </button>
-                </div>
-                <div id="batchRows">
-                    <!-- Batch rows will be generated by JavaScript -->
-                </div>
-                <div class="batch-results">
-                    <table class="batch-table" id="batchTable">
-                        <thead>
-                            <tr>
-                                <th>Value</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Result</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Results will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    <!-- Single/Batch Mode Toggle -->
+                    <div class="batch-toggle">
+                        <button class="action-button secondary-action" id="modeToggle">
+                            <i class="fas fa-layer-group"></i>
+                            Switch to Batch Mode
+                        </button>
+                    </div>
 
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button class="btn btn-primary" id="convertBtn">
-                    <i class="fas fa-calculator"></i>
-                    Convert
-                </button>
-                <button class="btn btn-outline" id="swapUnits">
-                    <i class="fas fa-sync-alt"></i>
-                    Swap Units
-                </button>
-                <button class="btn btn-outline" id="copyResult">
-                    <i class="fas fa-copy"></i>
-                    Copy Result
-                </button>
-                <button class="btn btn-outline" id="addToFavorites">
-                    <i class="fas fa-star"></i>
-                    Add to Favorites
-                </button>
-                <button class="btn btn-outline" id="historyToggle">
-                    <i class="fas fa-history"></i>
-                    View History
-                </button>
+                    <!-- Single Converter -->
+                    <div id="singleConverter">
+                        <div class="converter-row">
+                            <div class="converter-col">
+                                <label class="form-label" for="fromUnit">From Unit</label>
+                                <select class="form-control" id="fromUnit">
+                                    <option>Select unit</option>
+                                </select>
+                            </div>
+                            <div class="converter-col">
+                                <label class="form-label" for="toUnit">To Unit</label>
+                                <select class="form-control" id="toUnit">
+                                    <option>Select unit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="converter-row">
+                            <div class="converter-col">
+                                <label class="form-label" for="inputValue">Value</label>
+                                <input type="number" class="form-control" id="inputValue" placeholder="Enter value" step="any">
+                            </div>
+                            <div class="converter-col">
+                                <label class="form-label">Result</label>
+                                <div class="result-box" id="resultBox">
+                                    Enter value to convert
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Batch Converter (hidden by default) -->
+                    <div class="batch-container" id="batchConverter">
+                        <div class="action-buttons">
+                            <button class="action-button secondary-action" id="addBatchRow">
+                                <i class="fas fa-plus"></i>
+                                Add Row
+                            </button>
+                            <button class="action-button secondary-action" id="clearBatch">
+                                <i class="fas fa-trash"></i>
+                                Clear All
+                            </button>
+                        </div>
+                        <div id="batchRows">
+                            <!-- Batch rows will be generated by JavaScript -->
+                        </div>
+                        <div class="batch-results">
+                            <table class="batch-table" id="batchTable">
+                                <thead>
+                                    <tr>
+                                        <th>Value</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Result</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Results will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-button primary-action" id="convertBtn">
+                            <i class="fas fa-calculator"></i>
+                            Convert
+                        </button>
+                        <button class="action-button secondary-action" id="swapUnits">
+                            <i class="fas fa-sync-alt"></i>
+                            Swap Units
+                        </button>
+                        <button class="action-button secondary-action" id="copyResult">
+                            <i class="fas fa-copy"></i>
+                            Copy Result
+                        </button>
+                        <button class="action-button secondary-action" id="addToFavorites">
+                            <i class="fas fa-star"></i>
+                            Add to Favorites
+                        </button>
+                        <button class="action-button secondary-action" id="historyToggle">
+                            <i class="fas fa-history"></i>
+                            View History
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="features">
+                    <h2 class="section-title">Why Choose Unitly?</h2>
+                    <div class="feature-cards" id="featureCardsContainer">
+                        <!-- Feature cards will be generated by JavaScript -->
+                    </div>
+                </div>
             </div>
         </main>
-
-        <!-- Features Section -->
-        <div class="features">
-            <h2 class="section-title">Why Choose Unitly?</h2>
-            <div class="feature-cards">
-                <!-- Feature cards will be generated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-brand">Unitly</div>
-            <p class="footer-description">unitly.dev | A smart unit converter for everyday use</p>
-            <p>© 2026 Unitly Converter. All rights reserved.</p>
-            <div class="footer-links mt-3">
-                <a href="what-is.html" class="me-3">What Is</a>
-                <a href="how-to-use.html" class="me-3">How to Use</a>
-                <a href="about.html" class="me-3">About Us</a>
-                <a href="terms.html" class="me-3">Terms of Use</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-        </footer>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span>Simple Toolbox</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="what-is.html">What Is</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="/about.html">About Us</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2026 Simple Toolbox. All rights reserved.</p>
+                <p>simpletoolbox.dev | A collection of free, privacy‑first online tools</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- History Sidebar -->
     <aside class="history-sidebar" id="historySidebar">
         <div class="history-header">
             <h3>Conversion History</h3>
-            <button class="theme-toggle" id="closeHistory">
+            <button class="theme-toggle-button" id="closeHistory">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <ul class="history-list" id="historyList">
             <!-- History items will be generated by JavaScript -->
         </ul>
-        <button class="btn btn-outline w-100 mt-3" id="clearHistory">
+        <button class="action-button secondary-action w-100 mt-3" id="clearHistory" style="width: 100%; margin-top: var(--linear-spacing-lg);">
             <i class="fas fa-trash"></i>
             Clear All History
         </button>
@@ -712,6 +624,72 @@
 
     <!-- JavaScript -->
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        
+        if (mobileMenuButton &amp;&amp; mobileNavMenu) {
+            mobileMenuButton.addEventListener('click', () =&gt; {
+                mobileNavMenu.classList.toggle('active');
+                const icon = mobileMenuButton.querySelector('i');
+                if (mobileNavMenu.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                    icon.setAttribute('aria-label', 'Close menu');
+                } else {
+                    icon.className = 'fas fa-bars';
+                    icon.setAttribute('aria-label', 'Toggle menu');
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) =&gt; {
+                if (!mobileMenuButton.contains(e.target) &amp;&amp; !mobileNavMenu.contains(e.target)) {
+                    mobileNavMenu.classList.remove('active');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.className = 'fas fa-bars';
+                    icon.setAttribute('aria-label', 'Toggle menu');
+                }
+            });
+        }
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('stb-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () =&gt; {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('stb-theme', currentTheme);
+        });
+        
+        function applyTheme(theme) {
+            document.body.className = theme;
+            document.documentElement.className = theme;
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        }
+        
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const yearElement = document.querySelector('.footer-copyright p');
+            if (yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2026', new Date().getFullYear());
+            }
+        });
+        
         // Define conversion data
         const conversionData = {
             length: {
@@ -746,7 +724,6 @@
                     { name: "Kelvin", symbol: "K", factor: 1 }
                 ],
                 convert: function(value, from, to) {
-                    // Temperature conversion formulas
                     let celsius;
                     if (from === "Celsius") celsius = value;
                     else if (from === "Fahrenheit") celsius = (value - 32) * 5/9;
@@ -796,7 +773,6 @@
         let favorites = JSON.parse(localStorage.getItem('unitly_favorites')) || [];
 
         // DOM elements
-        const themeToggle = document.getElementById('themeToggle');
         const modeToggle = document.getElementById('modeToggle');
         const singleConverter = document.getElementById('singleConverter');
         const batchConverter = document.getElementById('batchConverter');
@@ -819,23 +795,21 @@
         const batchRows = document.getElementById('batchRows');
         const batchTable = document.getElementById('batchTable');
 
-        // Initialize
+        // Initialize function
         function init() {
             generateCategoryButtons();
             updateUnits();
             generateFeatureCards();
             updateHistoryList();
-            updateThemeIcon();
-
+            
             // Event listeners
-            themeToggle.addEventListener('click', toggleTheme);
             modeToggle.addEventListener('click', toggleMode);
             convertBtn.addEventListener('click', convert);
             swapUnitsBtn.addEventListener('click', swapUnits);
             copyResultBtn.addEventListener('click', copyResult);
             addToFavoritesBtn.addEventListener('click', addToFavorites);
-            historyToggleBtn.addEventListener('click', () => historySidebar.classList.add('open'));
-            closeHistoryBtn.addEventListener('click', () => historySidebar.classList.remove('open'));
+            historyToggleBtn.addEventListener('click', () =&gt; historySidebar.classList.add('open'));
+            closeHistoryBtn.addEventListener('click', () =&gt; historySidebar.classList.remove('open'));
             clearHistoryBtn.addEventListener('click', clearHistory);
             addBatchRowBtn.addEventListener('click', addBatchRow);
             clearBatchBtn.addEventListener('click', clearBatch);
@@ -847,13 +821,13 @@
         // Generate category buttons
         function generateCategoryButtons() {
             categoryButtons.innerHTML = '';
-            Object.keys(conversionData).forEach(category => {
+            Object.keys(conversionData).forEach(category =&gt; {
                 const button = document.createElement('button');
                 button.className = 'category-btn';
                 button.textContent = conversionData[category].name;
                 button.dataset.category = category;
                 if (category === currentCategory) button.classList.add('active');
-                button.addEventListener('click', () => selectCategory(category));
+                button.addEventListener('click', () =&gt; selectCategory(category));
                 categoryButtons.appendChild(button);
             });
         }
@@ -861,7 +835,7 @@
         // Select category
         function selectCategory(category) {
             currentCategory = category;
-            document.querySelectorAll('.category-btn').forEach(btn => {
+            document.querySelectorAll('.category-btn').forEach(btn =&gt; {
                 btn.classList.toggle('active', btn.dataset.category === category);
             });
             updateUnits();
@@ -875,7 +849,7 @@
             fromUnit.innerHTML = '';
             toUnit.innerHTML = '';
             
-            units.forEach(unit => {
+            units.forEach(unit =&gt; {
                 const option1 = document.createElement('option');
                 option1.value = unit.name;
                 option1.textContent = `${unit.name} (${unit.symbol})`;
@@ -888,7 +862,6 @@
                 toUnit.appendChild(option2);
             });
 
-            // Set default selections
             fromUnit.selectedIndex = 0;
             toUnit.selectedIndex = 1;
         }
@@ -920,26 +893,24 @@
             if (currentCategory === 'temperature') {
                 result = category.convert(value, from, to);
             } else {
-                const fromUnitObj = category.units.find(u => u.name === from);
-                const toUnitObj = category.units.find(u => u.name === to);
+                const fromUnitObj = category.units.find(u =&gt; u.name === from);
+                const toUnitObj = category.units.find(u =&gt; u.name === to);
                 result = value * fromUnitObj.factor / toUnitObj.factor;
             }
 
-            // Format result
             const formatted = formatNumber(result);
             resultBox.textContent = `${value} ${from} = ${formatted} ${to}`;
 
-            // Add to history
             addToHistory(value, from, to, result);
         }
 
         // Format number
         function formatNumber(num) {
             if (num === 0) return '0';
-            if (Math.abs(num) >= 1000) {
+            if (Math.abs(num) &gt;= 1000) {
                 return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
-            if (Math.abs(num) >= 0.01) {
+            if (Math.abs(num) &gt;= 0.01) {
                 return num.toFixed(4).replace(/\.?0+$/, '');
             }
             return num.toExponential(4);
@@ -958,7 +929,7 @@
             };
 
             history.unshift(entry);
-            if (history.length > 20) history.pop();
+            if (history.length &gt; 20) history.pop();
 
             localStorage.setItem('unitly_history', JSON.stringify(history));
             updateHistoryList();
@@ -967,12 +938,12 @@
         // Update history list
         function updateHistoryList() {
             historyList.innerHTML = '';
-            history.forEach(entry => {
+            history.forEach(entry =&gt; {
                 const li = document.createElement('li');
                 li.className = 'history-item';
                 li.innerHTML = `
-                    <div><strong>${entry.value} ${entry.from} = ${formatNumber(entry.result)} ${entry.to}</strong></div>
-                    <small>${new Date(entry.timestamp).toLocaleString()}</small>
+                    &lt;div&gt;&lt;strong&gt;${entry.value} ${entry.from} = ${formatNumber(entry.result)} ${entry.to}&lt;/strong&gt;&lt;/div&gt;
+                    &lt;small&gt;${new Date(entry.timestamp).toLocaleString()}&lt;/small&gt;
                 `;
                 historyList.appendChild(li);
             });
@@ -985,31 +956,14 @@
             updateHistoryList();
         }
 
-        // Toggle theme
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-bs-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-bs-theme', newTheme);
-            updateThemeIcon();
-            localStorage.setItem('unitly_theme', newTheme);
-        }
-
-        // Update theme icon
-        function updateThemeIcon() {
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-            const icon = themeToggle.querySelector('i');
-            icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-
         // Toggle mode
         function toggleMode() {
             isBatchMode = !isBatchMode;
             singleConverter.style.display = isBatchMode ? 'none' : 'block';
             batchConverter.style.display = isBatchMode ? 'block' : 'none';
             modeToggle.innerHTML = isBatchMode ? 
-                '<i class="fas fa-layer-group"></i> Switch to Single Mode' :
-                '<i class="fas fa-layer-group"></i> Switch to Batch Mode';
+                '&lt;i class="fas fa-layer-group"&gt;&lt;/i&gt; Switch to Single Mode' :
+                '&lt;i class="fas fa-layer-group"&gt;&lt;/i&gt; Switch to Batch Mode';
         }
 
         // Add batch row
@@ -1017,25 +971,23 @@
             const row = document.createElement('div');
             row.className = 'batch-row';
             row.innerHTML = `
-                <input type="number" class="form-control batch-input" placeholder="Value" step="any">
-                <select class="form-control batch-from">
+                &lt;input type="number" class="form-control batch-input" placeholder="Value" step="any"&gt;
+                &lt;select class="form-control batch-from"&gt;
                     ${fromUnit.innerHTML}
-                </select>
-                <select class="form-control batch-to">
+                &lt;/select&gt;
+                &lt;select class="form-control batch-to"&gt;
                     ${toUnit.innerHTML}
-                </select>
-                <button class="batch-remove"><i class="fas fa-times"></i></button>
+                &lt;/select&gt;
+                &lt;button class="batch-remove"&gt;&lt;i class="fas fa-times"&gt;&lt;/i&gt;&lt;/button&gt;
             `;
             batchRows.appendChild(row);
 
-            // Set default selections
             const fromSelect = row.querySelector('.batch-from');
             const toSelect = row.querySelector('.batch-to');
             fromSelect.selectedIndex = 0;
             toSelect.selectedIndex = 1;
 
-            // Remove row event
-            row.querySelector('.batch-remove').addEventListener('click', () => row.remove());
+            row.querySelector('.batch-remove').addEventListener('click', () =&gt; row.remove());
         }
 
         // Clear batch
@@ -1050,7 +1002,7 @@
             const tbody = batchTable.querySelector('tbody');
             tbody.innerHTML = '';
 
-            rows.forEach(row => {
+            rows.forEach(row =&gt; {
                 const valueInput = row.querySelector('.batch-input');
                 const fromSelect = row.querySelector('.batch-from');
                 const toSelect = row.querySelector('.batch-to');
@@ -1068,23 +1020,22 @@
                 if (currentCategory === 'temperature') {
                     result = category.convert(value, from, to);
                 } else {
-                    const fromUnitObj = category.units.find(u => u.name === from);
-                    const toUnitObj = category.units.find(u => u.name === to);
+                    const fromUnitObj = category.units.find(u =&gt; u.name === from);
+                    const toUnitObj = category.units.find(u =&gt; u.name === to);
                     result = value * fromUnitObj.factor / toUnitObj.factor;
                 }
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${value}</td>
-                    <td>${from}</td>
-                    <td>${to}</td>
-                    <td>${formatNumber(result)}</td>
-                    <td><button class="btn btn-sm btn-outline copy-batch-result">Copy</button></td>
+                    &lt;td&gt;${value}&lt;/td&gt;
+                    &lt;td&gt;${from}&lt;/td&gt;
+                    &lt;td&gt;${to}&lt;/td&gt;
+                    &lt;td&gt;${formatNumber(result)}&lt;/td&gt;
+                    &lt;td&gt;&lt;button class="action-button secondary-action copy-batch-result"&gt;Copy&lt;/button&gt;&lt;/td&gt;
                 `;
                 tbody.appendChild(tr);
 
-                // Copy button event
-                tr.querySelector('.copy-batch-result').addEventListener('click', () => {
+                tr.querySelector('.copy-batch-result').addEventListener('click', () =&gt; {
                     navigator.clipboard.writeText(`${formatNumber(result)} ${to}`);
                     showToast('Result copied to clipboard');
                 });
@@ -1103,7 +1054,7 @@
         // Copy result
         function copyResult() {
             const text = resultBox.textContent;
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(text).then(() =&gt; {
                 showToast('Result copied to clipboard');
             });
         }
@@ -1129,18 +1080,17 @@
 
         // Show toast
         function showToast(message) {
-            // Simple toast implementation
             const toast = document.createElement('div');
             toast.className = 'position-fixed bottom-0 end-0 p-3';
             toast.innerHTML = `
-                <div class="toast show" role="alert">
-                    <div class="toast-body">
+                &lt;div class="toast show" role="alert"&gt;
+                    &lt;div class="toast-body"&gt;
                         ${message}
-                    </div>
-                </div>
+                    &lt;/div&gt;
+                &lt;/div&gt;
             `;
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+            setTimeout(() =&gt; toast.remove(), 3000);
         }
 
         // Generate feature cards
@@ -1188,26 +1138,20 @@
                 }
             ];
 
-            const container = document.querySelector('.feature-cards');
+            const container = document.getElementById('featureCardsContainer');
             container.innerHTML = '';
-            features.forEach(feature => {
+            features.forEach(feature =&gt; {
                 const card = document.createElement('div');
                 card.className = 'feature-card';
                 card.innerHTML = `
-                    <div class="feature-icon">
-                        <i class="fas ${feature.icon}"></i>
-                    </div>
-                    <h3 class="feature-title">${feature.title}</h3>
-                    <p>${feature.description}</p>
+                    &lt;div class="feature-icon"&gt;
+                        &lt;i class="fas ${feature.icon}"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;h3 class="feature-title"&gt;${feature.title}&lt;/h3&gt;
+                    &lt;p&gt;${feature.description}&lt;/p&gt;
                 `;
                 container.appendChild(card);
             });
-        }
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('unitly_theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-bs-theme', savedTheme);
         }
 
         // Initialize on load
@@ -1220,8 +1164,8 @@
                 init();
             }
         });
-    </script>
+    &lt;/script&gt;
 
-    <script src="/js/spa-router.js"></script>
-</body>
-</html>
+    &lt;script src="../../js/spa-router.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;

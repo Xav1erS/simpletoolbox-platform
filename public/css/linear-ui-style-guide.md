@@ -211,6 +211,144 @@
 - 当设计规范发生变化时，及时更新本指南
 - 为新添加的组件和功能添加相应的实现指南
 
-## 10. 总结
+## 10. 最佳实践与反模式
+
+### 10.1 ✅ 最佳实践
+
+#### 10.1.1 CSS 变量使用
+- **直接使用设计系统变量**：始终使用 `--linear-*` 变量，不要重新定义
+- **变量命名一致性**：遵循 `--linear-{category}-{name}` 的命名规范
+- **主题变量统一**：亮模式和暗模式使用相同的变量名，通过选择器切换值
+
+#### 10.1.2 类名使用
+- **使用标准组件类名**：
+  - 按钮：`.action-button`, `.primary-action`, `.secondary-action`
+  - 导航：`.navigation-area`, `.nav-container`, `.nav-links`
+  - 卡片：根据具体用途使用标准卡片类
+- **避免自定义类名**：除非有特殊需求且经过设计系统审核
+
+#### 10.1.3 主题切换
+- **使用标准机制**：
+  ```javascript
+  // 正确做法
+  document.body.className = theme;
+  document.documentElement.className = theme;
+  localStorage.setItem('stb-theme', theme);
+  ```
+- **保持一致性**：所有页面使用相同的主题切换逻辑
+- **状态保持**：使用 `stb-theme` 作为 localStorage 键名
+
+#### 10.1.4 页面结构
+- **复制现有模板**：以 `password-generator` 为标准模板创建新页面
+- **完整导航**：包含所有标准导航链接和移动端菜单
+- **标准页脚**：使用统一的页脚结构和链接
+
+#### 10.1.5 初始化事件
+- **双重监听**：同时监听 `DOMContentLoaded` 和 `pageLoaded` 事件
+  ```javascript
+  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('pageLoaded', init);
+  ```
+
+### 10.2 ❌ 反模式 (禁止事项)
+
+#### 10.2.1 CSS 变量反模式
+- ❌ **不要定义自定义 :root 变量**
+  ```css
+  /* 错误做法 */
+  :root {
+      --primary: #165DFF;  /* 应该使用 --linear-primary */
+      --bg: #ffffff;        /* 应该使用 --linear-bg */
+  }
+  ```
+
+- ❌ **不要覆盖设计系统变量**
+  ```css
+  /* 错误做法 */
+  .some-component {
+      --linear-primary: #ff0000;  /* 不要修改全局变量 */
+  }
+  ```
+
+#### 10.2.2 类名反模式
+- ❌ **不要使用旧的/自定义按钮类名**
+  ```html
+  <!-- 错误做法 -->
+  <button class="btn btn-primary">按钮</button>
+  <button class="btn-outline">按钮</button>
+  
+  <!-- 正确做法 -->
+  <button class="action-button primary-action">按钮</button>
+  <button class="action-button secondary-action">按钮</button>
+  ```
+
+- ❌ **不要使用非标准的组件类名**
+
+#### 10.2.3 主题切换反模式
+- ❌ **不要使用 data-* 属性**
+  ```html
+  <!-- 错误做法 -->
+  <html data-theme="dark">
+  
+  <!-- 正确做法 -->
+  <html class="dark">
+  <body class="dark">
+  ```
+
+- ❌ **不要使用自定义 localStorage 键名**
+  ```javascript
+  // 错误做法
+  localStorage.setItem('custom_theme', theme);
+  localStorage.setItem('unitly_theme', theme);
+  
+  // 正确做法
+  localStorage.setItem('stb-theme', theme);
+  ```
+
+#### 10.2.4 导航结构反模式
+- ❌ **不要修改品牌标识**
+  ```html
+  <!-- 错误做法 -->
+  <span>Unit Converter</span>
+  
+  <!-- 正确做法 -->
+  <span>Simple Toolbox</span>
+  ```
+
+- ❌ **不要省略导航链接或移动端菜单**
+
+#### 10.2.5 页面初始化反模式
+- ❌ **不要只监听 DOMContentLoaded**
+  ```javascript
+  // 错误做法 - SPA 导航时不会触发
+  document.addEventListener('DOMContentLoaded', init);
+  
+  // 正确做法
+  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('pageLoaded', init);
+  ```
+
+### 10.3 快速检查清单
+
+在提交新页面之前，请确认：
+
+- [ ] 没有定义自定义的 `:root` 变量
+- [ ] 所有颜色使用 `--linear-*` 变量
+- [ ] 按钮使用 `.action-button` 相关类名
+- [ ] 主题使用 `class="dark"` 而非 `data-*` 属性
+- [ ] localStorage 键名为 `stb-theme`
+- [ ] 品牌标识为 "Simple Toolbox"
+- [ ] 包含完整导航链接和移动端菜单
+- [ ] 同时监听 `DOMContentLoaded` 和 `pageLoaded`
+- [ ] 正确引入 `design-system.css` 和 `spa-router.js`
+
+## 11. 总结
 
 Linear UI风格通过深黑/深灰背景、柔和的渐变与流光效果、精细的光影处理和微噪点纹理，营造出独特的锋利质感和专业调性。本设计规范提供了详细的实现参数和代码示例，确保开发团队能够准确还原Linear UI风格的视觉效果，为用户提供一致、专业的界面体验。
+
+**关键要点**：
+- 始终使用 `--linear-*` CSS 变量，不要自定义
+- 遵循标准类名约定
+- 保持主题切换机制一致
+- 复制现有页面模板确保一致性
+- 使用检查清单验证新页面
