@@ -310,6 +310,20 @@
     }
     .hero-search input:focus ~ .hero-search-enter { opacity: 1; }
 
+    /* SEARCH DROPDOWN */
+    .search-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 300; overflow: hidden; }
+    .search-dropdown.open { display: block; }
+    .search-suggestion { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); transition: background 0.1s; color: var(--text-primary); text-decoration: none; }
+    .search-suggestion:last-child { border-bottom: none; }
+    .search-suggestion:hover, .search-suggestion.focused { background: rgba(255,255,255,0.05); }
+    .suggestion-icon { font-size: 18px; flex-shrink: 0; }
+    .suggestion-text { flex: 1; min-width: 0; }
+    .suggestion-name { font-size: 13px; font-weight: 500; }
+    .suggestion-name mark { background: none; color: var(--accent); font-weight: 700; font-style: normal; }
+    .suggestion-desc { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .suggestion-tag { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.2); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
+    .search-no-result { padding: 14px; text-align: center; font-size: 12px; color: var(--text-muted); }
+
     .hero-tags {
       display: flex;
       flex-wrap: wrap;
@@ -703,6 +717,7 @@
     </svg>
     <input type="text" id="navSearch" placeholder="Search tools…" autocomplete="off" />
     <kbd>⌘K</kbd>
+    <div class="search-dropdown" id="navSearchDropdown"></div>
   </div>
 
   <div class="nav-actions">
@@ -731,6 +746,7 @@
     </svg>
     <input type="text" id="heroSearch" placeholder="Search tools, e.g. Base64, JSON Formatter…" autocomplete="off" />
     <span class="hero-search-enter">↵</span>
+    <div class="search-dropdown" id="heroSearchDropdown"></div>
   </div>
 
   <div class="hero-tags">
@@ -825,7 +841,7 @@
         <span class="category-count">9 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network" data-filter="generate">
+    <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network" data-filter="text">
       <div class="category-icon">🐛</div>
       <div class="category-body">
         <div class="category-name">Debuggers</div>
@@ -1126,9 +1142,30 @@
     nav.classList.toggle('scrolled', window.scrollY > 8);
   }, { passive: true });
 
+  // ── TOOL DATA ──────────────────────────────────────────
+  const TOOLS = [
+    { name: 'Base64 Encode / Decode',       href: 'tools/base64.html',                 tag: 'encode',   icon: '📦', desc: 'Encode or decode text and files to Base64' },
+    { name: 'JSON Formatter',               href: 'tools/json-formatter.html',          tag: 'format',   icon: '🎨', desc: 'Prettify, minify, validate JSON; convert to CSV or SQL' },
+    { name: 'Password Generator',           href: 'tools/password-generator.html',      tag: 'generate', icon: '🔑', desc: 'Generate strong random passwords locally' },
+    { name: 'Timestamp Converter',          href: 'tools/timestamp.html',               tag: 'convert',  icon: '⏱️', desc: 'Convert Unix timestamps to readable dates' },
+    { name: 'URL Encode / Decode',          href: 'tools/url-encode.html',              tag: 'encode',   icon: '🔗', desc: 'Encode or decode URL parameters and components' },
+    { name: 'UUID Generator',               href: 'tools/uuid-generator.html',          tag: 'generate', icon: '🆔', desc: 'Generate UUID v1/v4 identifiers in bulk' },
+    { name: 'Word Counter',                 href: 'tools/word-counter.html',             tag: 'text',     icon: '📝', desc: 'Count words, characters, and estimate reading time' },
+    { name: 'Random Number Generator',      href: 'tools/random-number-generator.html', tag: 'generate', icon: '🎲', desc: 'Generate random numbers, shuffle lists, roll dice' },
+    { name: 'Unit Converter',               href: 'tools/unit-converter.html',           tag: 'convert',  icon: '📐', desc: 'Convert length, weight, temperature, speed and more' },
+    { name: 'Image Resizer',                href: 'tools/image-resizer.html',            tag: 'image',    icon: '🖼️', desc: 'Resize images client-side with preset dimensions' },
+    { name: 'YouTube Thumbnail Downloader', href: 'tools/youtube-thumbnail.html',        tag: 'image',    icon: '📺', desc: 'Download YouTube video thumbnails in all resolutions' },
+    { name: 'QR Code Generator',            href: 'tools/qr-code-generator.html',        tag: 'generate', icon: '📷', desc: 'Create QR codes for URLs, WiFi, contacts, email' },
+    { name: 'URL Slug Generator',           href: 'tools/slug-generator.html',           tag: 'text',     icon: '🔗', desc: 'Convert titles to clean SEO-friendly URL slugs' },
+    { name: 'Lorem Ipsum Generator',        href: 'tools/lorem-ipsum-generator.html',    tag: 'text',     icon: '📄', desc: 'Generate placeholder text in multiple themes' },
+    { name: 'Color Picker',                 href: 'tools/color-picker.html',             tag: 'convert',  icon: '🎨', desc: 'Convert colors between HEX, RGB, HSL, and CMYK' },
+    { name: 'Regex Tester',                 href: 'tools/regex-tester.html',             tag: 'text',     icon: '🔍', desc: 'Test regular expressions with live match highlighting' },
+    { name: 'Markdown Preview',             href: 'tools/markdown-preview.html',         tag: 'text',     icon: '📝', desc: 'Write Markdown and see a live rendered preview' },
+    { name: 'Cron Expression Builder',      href: 'tools/cron-builder.html',             tag: 'generate', icon: '⏰', desc: 'Build cron expressions visually with descriptions' },
+  ];
+
   // ── Tool filtering ─────────────────────────────────────
   const toolCards = document.querySelectorAll('.tool-grid .tool-card');
-
   const clearFilterBtn = document.getElementById('clearFilter');
 
   function filterTools(tag) {
@@ -1139,56 +1176,156 @@
     document.querySelectorAll('.hero-tag').forEach(t => {
       t.classList.toggle('active', t.dataset.filter === tag);
     });
-    // sync category card active state
-    document.querySelectorAll('.category-card[data-filter]').forEach(c => {
-      c.classList.toggle('active', c.dataset.filter === tag && tag !== 'all');
-    });
     // show/hide clear button
     clearFilterBtn.style.display = tag === 'all' ? 'none' : 'flex';
+  }
+
+  function clearCategoryActive() {
+    document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
   }
 
   // Hero tag pills
   document.querySelectorAll('.hero-tag').forEach(tag => {
     tag.addEventListener('click', () => {
+      clearCategoryActive();
+      clearSearch();
       filterTools(tag.dataset.filter);
     });
   });
 
   // Clear filter button
-  clearFilterBtn.addEventListener('click', () => filterTools('all'));
+  clearFilterBtn.addEventListener('click', () => {
+    clearCategoryActive();
+    clearSearch();
+    filterTools('all');
+  });
 
-  // Category card clicks — toggle: click active card resets to All
+  // Category card clicks — each card manages its own active state
   document.querySelectorAll('.category-card[data-filter]').forEach(card => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', () => {
-      const newFilter = card.classList.contains('active') ? 'all' : card.dataset.filter;
-      filterTools(newFilter);
+      const isActive = card.classList.contains('active');
+      clearCategoryActive();
+      clearSearch();
+      if (isActive) {
+        filterTools('all');
+      } else {
+        card.classList.add('active');
+        filterTools(card.dataset.filter);
+      }
       document.getElementById('toolSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  // Search — filter category cards (keep existing)
-  function filterCategories(query) {
-    const q = query.trim().toLowerCase();
-    const cards = document.querySelectorAll('#categoryGrid .category-card');
-    let visible = 0;
-    cards.forEach(card => {
-      const name = (card.dataset.name || '').toLowerCase();
-      const text = card.innerText.toLowerCase();
-      const match = !q || name.includes(q) || text.includes(q);
-      card.classList.toggle('hidden', !match);
-      if (match) visible++;
-    });
-    document.getElementById('noResult').classList.toggle('show', visible === 0 && q.length > 0);
+  // ── Search ─────────────────────────────────────────────
+  function highlightMatch(text, q) {
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return text.slice(0, idx) + '<mark>' + text.slice(idx, idx + q.length) + '</mark>' + text.slice(idx + q.length);
   }
 
+  function buildDropdown(dropdownEl, query) {
+    const q = query.trim().toLowerCase();
+    if (!q) { dropdownEl.classList.remove('open'); dropdownEl.innerHTML = ''; return; }
+    const results = TOOLS.filter(t =>
+      t.name.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.tag.toLowerCase().includes(q)
+    ).slice(0, 6);
+    if (!results.length) {
+      dropdownEl.innerHTML = '<div class="search-no-result">No tools found</div>';
+    } else {
+      dropdownEl.innerHTML = results.map((t, i) =>
+        `<a href="${t.href}" class="search-suggestion" data-idx="${i}">
+          <span class="suggestion-icon">${t.icon}</span>
+          <div class="suggestion-text">
+            <div class="suggestion-name">${highlightMatch(t.name, q)}</div>
+            <div class="suggestion-desc">${t.desc}</div>
+          </div>
+          <span class="suggestion-tag">${t.tag}</span>
+        </a>`
+      ).join('');
+    }
+    dropdownEl.classList.add('open');
+  }
+
+  function filterBySearch(query) {
+    const q = query.trim().toLowerCase();
+    toolCards.forEach(card => {
+      if (!q) { card.style.display = ''; return; }
+      const name = (card.querySelector('.tool-name')?.textContent || '').toLowerCase();
+      const desc = (card.querySelector('.tool-desc')?.textContent || '').toLowerCase();
+      const tag  = (card.dataset.tags || '').toLowerCase();
+      card.style.display = (name.includes(q) || desc.includes(q) || tag.includes(q)) ? '' : 'none';
+    });
+    clearFilterBtn.style.display = q ? 'flex' : 'none';
+    if (q) document.getElementById('toolSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function clearSearch() {
+    document.getElementById('heroSearch').value = '';
+    document.getElementById('navSearch').value = '';
+    document.getElementById('heroSearchDropdown').classList.remove('open');
+    document.getElementById('heroSearchDropdown').innerHTML = '';
+    document.getElementById('navSearchDropdown').classList.remove('open');
+    document.getElementById('navSearchDropdown').innerHTML = '';
+  }
+
+  function handleSearch(query, ownDropdown, otherDropdown, otherId) {
+    document.getElementById(otherId).value = query;
+    buildDropdown(ownDropdown, query);
+    buildDropdown(otherDropdown, query);
+    filterBySearch(query);
+    if (!query.trim()) {
+      clearCategoryActive();
+      document.querySelectorAll('.hero-tag').forEach(t => t.classList.toggle('active', t.dataset.filter === 'all'));
+    }
+  }
+
+  const heroDropdown = document.getElementById('heroSearchDropdown');
+  const navDropdown  = document.getElementById('navSearchDropdown');
+
   document.getElementById('heroSearch').addEventListener('input', e => {
-    filterCategories(e.target.value);
-    document.getElementById('navSearch').value = e.target.value;
+    handleSearch(e.target.value, heroDropdown, navDropdown, 'navSearch');
   });
   document.getElementById('navSearch').addEventListener('input', e => {
-    filterCategories(e.target.value);
-    document.getElementById('heroSearch').value = e.target.value;
+    handleSearch(e.target.value, navDropdown, heroDropdown, 'heroSearch');
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.hero-search') && !e.target.closest('.nav-search')) {
+      heroDropdown.classList.remove('open');
+      navDropdown.classList.remove('open');
+    }
+  });
+
+  // Keyboard: arrow keys + Enter in search inputs
+  [['heroSearch', heroDropdown], ['navSearch', navDropdown]].forEach(([id, dd]) => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      const items = dd.querySelectorAll('.search-suggestion');
+      let idx = [...items].findIndex(el => el.classList.contains('focused'));
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[idx]?.classList.remove('focused');
+        idx = Math.min(idx + 1, items.length - 1);
+        items[idx]?.classList.add('focused');
+        items[idx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[idx]?.classList.remove('focused');
+        idx = Math.max(idx - 1, 0);
+        items[idx]?.classList.add('focused');
+        items[idx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const focused = dd.querySelector('.search-suggestion.focused');
+        if (focused) { focused.click(); }
+        else if (items.length) { items[0].click(); }
+      } else if (e.key === 'Escape') {
+        dd.classList.remove('open');
+      }
+    });
   });
 
   // ⌘K / Ctrl+K — focus hero search
