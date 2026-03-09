@@ -736,6 +736,7 @@
     <button class="hero-tag" data-filter="convert">🔄 Convert</button>
     <button class="hero-tag" data-filter="generate">⚙️ Generate</button>
     <button class="hero-tag" data-filter="text">📝 Text</button>
+    <button class="hero-tag" data-filter="image">🖼️ Image</button>
   </div>
 </section>
 
@@ -788,7 +789,7 @@
     <a href="#" class="section-more">Browse all →</a>
   </div>
   <div class="category-grid" id="categoryGrid">
-    <div class="category-card" style="--card-color:rgba(94,106,210,0.1)" data-name="encode decode base64 url">
+    <div class="category-card" style="--card-color:rgba(94,106,210,0.1)" data-name="encode decode base64 url" data-filter="encode">
       <div class="category-icon">🔐</div>
       <div class="category-body">
         <div class="category-name">Encode / Decode</div>
@@ -796,7 +797,7 @@
         <span class="category-count">12 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(34,197,94,0.08)" data-name="format beautify json xml css sql">
+    <div class="category-card" style="--card-color:rgba(34,197,94,0.08)" data-name="format beautify json xml css sql" data-filter="format">
       <div class="category-icon">✨</div>
       <div class="category-body">
         <div class="category-name">Formatters</div>
@@ -804,7 +805,7 @@
         <span class="category-count">8 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(251,146,60,0.08)" data-name="converter base number timestamp color unit">
+    <div class="category-card" style="--card-color:rgba(251,146,60,0.08)" data-name="converter base number timestamp color unit" data-filter="convert">
       <div class="category-icon">🔄</div>
       <div class="category-body">
         <div class="category-name">Converters</div>
@@ -812,7 +813,7 @@
         <span class="category-count">10 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(236,72,153,0.08)" data-name="generator uuid password hash random">
+    <div class="category-card" style="--card-color:rgba(236,72,153,0.08)" data-name="generator uuid password hash random" data-filter="generate">
       <div class="category-icon">⚙️</div>
       <div class="category-body">
         <div class="category-name">Generators</div>
@@ -820,7 +821,7 @@
         <span class="category-count">9 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network">
+    <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network" data-filter="text">
       <div class="category-icon">🐛</div>
       <div class="category-body">
         <div class="category-name">Debuggers</div>
@@ -828,7 +829,7 @@
         <span class="category-count">7 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(168,85,247,0.08)" data-name="text string markdown diff word count">
+    <div class="category-card" style="--card-color:rgba(168,85,247,0.08)" data-name="text string markdown diff word count" data-filter="text">
       <div class="category-icon">📝</div>
       <div class="category-body">
         <div class="category-name">Text Tools</div>
@@ -836,7 +837,7 @@
         <span class="category-count">11 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(234,179,8,0.08)" data-name="image compress base64 crop convert">
+    <div class="category-card" style="--card-color:rgba(234,179,8,0.08)" data-name="image compress base64 crop convert" data-filter="image">
       <div class="category-icon">🖼️</div>
       <div class="category-body">
         <div class="category-name">Image Tools</div>
@@ -844,7 +845,7 @@
         <span class="category-count">6 tools</span>
       </div>
     </div>
-    <div class="category-card" style="--card-color:rgba(20,184,166,0.08)" data-name="network ip dns url header http">
+    <div class="category-card" style="--card-color:rgba(20,184,166,0.08)" data-name="network ip dns url header http" data-filter="all">
       <div class="category-icon">🌐</div>
       <div class="category-body">
         <div class="category-name">Network Tools</div>
@@ -858,13 +859,13 @@
 
 <!-- FEATURED TOOLS -->
 <div class="divider"></div>
-<div class="section fade-in">
+<div class="section fade-in" id="toolSection">
   <div class="section-header">
-    <h2 class="section-title">Popular Tools</h2>
-    <a href="#" class="section-more">All tools →</a>
+    <h2 class="section-title">All Tools</h2>
+    <a href="all-tools.html" class="section-more">All tools →</a>
   </div>
   <div class="tool-grid">
-    <a href="tools/base64.html" class="tool-card">
+    <a href="tools/base64.html" class="tool-card" data-tags="encode">
       <div class="tool-card-top">
         <div class="tool-icon">📦</div>
         <div class="tool-name">Base64 Encode / Decode</div>
@@ -875,7 +876,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/json-formatter.html" class="tool-card">
+    <a href="tools/json-formatter.html" class="tool-card" data-tags="format">
       <div class="tool-card-top">
         <div class="tool-icon">🎨</div>
         <div class="tool-name">JSON Formatter</div>
@@ -886,7 +887,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/password-generator.html" class="tool-card">
+    <a href="tools/password-generator.html" class="tool-card" data-tags="generate">
       <div class="tool-card-top">
         <div class="tool-icon">🔑</div>
         <div class="tool-name">Password Generator</div>
@@ -897,7 +898,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/timestamp.html" class="tool-card">
+    <a href="tools/timestamp.html" class="tool-card" data-tags="convert">
       <div class="tool-card-top">
         <div class="tool-icon">⏱️</div>
         <div class="tool-name">Timestamp Converter</div>
@@ -908,7 +909,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/url-encode.html" class="tool-card">
+    <a href="tools/url-encode.html" class="tool-card" data-tags="encode">
       <div class="tool-card-top">
         <div class="tool-icon">🔗</div>
         <div class="tool-name">URL Encode / Decode</div>
@@ -919,7 +920,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/uuid-generator.html" class="tool-card">
+    <a href="tools/uuid-generator.html" class="tool-card" data-tags="generate">
       <div class="tool-card-top">
         <div class="tool-icon">🆔</div>
         <div class="tool-name">UUID Generator</div>
@@ -930,18 +931,18 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/word-counter.html" class="tool-card">
+    <a href="tools/word-counter.html" class="tool-card" data-tags="text">
       <div class="tool-card-top">
         <div class="tool-icon">📝</div>
         <div class="tool-name">Word Counter</div>
       </div>
       <div class="tool-desc">Count words, characters, sentences, and estimate reading time in real time.</div>
       <div class="tool-footer">
-        <span class="tool-tag">analyze</span>
+        <span class="tool-tag">text</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/random-number-generator.html" class="tool-card">
+    <a href="tools/random-number-generator.html" class="tool-card" data-tags="generate">
       <div class="tool-card-top">
         <div class="tool-icon">🎲</div>
         <div class="tool-name">Random Number Generator</div>
@@ -952,7 +953,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/unit-converter.html" class="tool-card">
+    <a href="tools/unit-converter.html" class="tool-card" data-tags="convert">
       <div class="tool-card-top">
         <div class="tool-icon">📐</div>
         <div class="tool-name">Unit Converter</div>
@@ -963,7 +964,7 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/image-resizer.html" class="tool-card">
+    <a href="tools/image-resizer.html" class="tool-card" data-tags="image">
       <div class="tool-card-top">
         <div class="tool-icon">🖼️</div>
         <div class="tool-name">Image Resizer</div>
@@ -974,18 +975,18 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/youtube-thumbnail.html" class="tool-card">
+    <a href="tools/youtube-thumbnail.html" class="tool-card" data-tags="image">
       <div class="tool-card-top">
         <div class="tool-icon">📺</div>
         <div class="tool-name">YouTube Thumbnail Downloader</div>
       </div>
       <div class="tool-desc">Download YouTube thumbnails in all resolutions from any video URL.</div>
       <div class="tool-footer">
-        <span class="tool-tag">download</span>
+        <span class="tool-tag">image</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/qr-code-generator.html" class="tool-card">
+    <a href="tools/qr-code-generator.html" class="tool-card" data-tags="generate">
       <div class="tool-card-top">
         <div class="tool-icon">📷</div>
         <div class="tool-name">QR Code Generator</div>
@@ -996,69 +997,69 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/slug-generator.html" class="tool-card">
+    <a href="tools/slug-generator.html" class="tool-card" data-tags="text">
       <div class="tool-card-top">
         <div class="tool-icon">🔗</div>
         <div class="tool-name">URL Slug Generator</div>
       </div>
       <div class="tool-desc">Convert titles to clean SEO-friendly URL slugs. Supports Chinese to pinyin conversion.</div>
       <div class="tool-footer">
-        <span class="tool-tag">generate</span>
+        <span class="tool-tag">text</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/lorem-ipsum-generator.html" class="tool-card">
+    <a href="tools/lorem-ipsum-generator.html" class="tool-card" data-tags="text">
       <div class="tool-card-top">
         <div class="tool-icon">📄</div>
         <div class="tool-name">Lorem Ipsum Generator</div>
       </div>
       <div class="tool-desc">Generate placeholder text in Classic Lorem, Chinese, Tech, or Business themes.</div>
       <div class="tool-footer">
-        <span class="tool-tag">generate</span>
+        <span class="tool-tag">text</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/color-picker.html" class="tool-card">
+    <a href="tools/color-picker.html" class="tool-card" data-tags="convert">
       <div class="tool-card-top">
         <div class="tool-icon">🎨</div>
         <div class="tool-name">Color Picker</div>
       </div>
       <div class="tool-desc">Convert colors between HEX, RGB, HSL, and CMYK. Pick, copy, and save to history.</div>
       <div class="tool-footer">
-        <span class="tool-tag">color</span>
+        <span class="tool-tag">convert</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/regex-tester.html" class="tool-card">
+    <a href="tools/regex-tester.html" class="tool-card" data-tags="text">
       <div class="tool-card-top">
         <div class="tool-icon">🔍</div>
         <div class="tool-name">Regex Tester</div>
       </div>
       <div class="tool-desc">Test regular expressions with real-time match highlighting, group capture, and replace mode.</div>
       <div class="tool-footer">
-        <span class="tool-tag">regex</span>
+        <span class="tool-tag">text</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/markdown-preview.html" class="tool-card">
+    <a href="tools/markdown-preview.html" class="tool-card" data-tags="text">
       <div class="tool-card-top">
         <div class="tool-icon">📝</div>
         <div class="tool-name">Markdown Preview</div>
       </div>
       <div class="tool-desc">Write Markdown and see a live rendered preview. Copy HTML or download the source file.</div>
       <div class="tool-footer">
-        <span class="tool-tag">markdown</span>
+        <span class="tool-tag">text</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
-    <a href="tools/cron-builder.html" class="tool-card">
+    <a href="tools/cron-builder.html" class="tool-card" data-tags="generate">
       <div class="tool-card-top">
         <div class="tool-icon">⏰</div>
         <div class="tool-name">Cron Expression Builder</div>
       </div>
       <div class="tool-desc">Build cron expressions visually with human-readable descriptions and next run time preview.</div>
       <div class="tool-footer">
-        <span class="tool-tag">schedule</span>
+        <span class="tool-tag">generate</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
@@ -1120,15 +1121,37 @@
     nav.classList.toggle('scrolled', window.scrollY > 8);
   }, { passive: true });
 
-  // Hero tag pills — UI toggle only
+  // ── Tool filtering ─────────────────────────────────────
+  const toolCards = document.querySelectorAll('.tool-grid .tool-card');
+
+  function filterTools(tag) {
+    toolCards.forEach(card => {
+      card.style.display = (tag === 'all' || card.dataset.tags === tag) ? '' : 'none';
+    });
+    // sync hero tag active state
+    document.querySelectorAll('.hero-tag').forEach(t => {
+      t.classList.toggle('active', t.dataset.filter === tag);
+    });
+  }
+
+  // Hero tag pills
   document.querySelectorAll('.hero-tag').forEach(tag => {
     tag.addEventListener('click', () => {
-      document.querySelectorAll('.hero-tag').forEach(t => t.classList.remove('active'));
-      tag.classList.add('active');
+      filterTools(tag.dataset.filter);
     });
   });
 
-  // Search — filter category cards
+  // Category card clicks → scroll to tools + filter
+  document.querySelectorAll('.category-card[data-filter]').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const filter = card.dataset.filter;
+      filterTools(filter);
+      document.getElementById('toolSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Search — filter category cards (keep existing)
   function filterCategories(query) {
     const q = query.trim().toLowerCase();
     const cards = document.querySelectorAll('#categoryGrid .category-card');

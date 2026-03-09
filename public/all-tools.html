@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>All Tools — Simple ToolBox</title>
+  <meta name="description" content="Browse all 18 free online developer tools — JSON formatter, regex tester, QR code generator, color picker, and more. Filter by category." />
+  <link rel="canonical" href="https://simpletoolbox.dev/all-tools.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://simpletoolbox.dev/all-tools.html" />
+  <meta property="og:title" content="All Tools — Simple ToolBox" />
+  <meta property="og:description" content="Browse all 18 free online developer tools. Filter by category: encode, format, convert, generate, text, image." />
+  <meta property="og:site_name" content="Simple ToolBox" />
+  <link rel="icon" href="logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
+      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
+      --accent: #5E6AD2; --accent-hover: #6E7AE2; --accent-dim: rgba(94,106,210,0.12);
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px;
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); min-height: 100vh; }
+
+    /* Nav */
+    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); background: rgba(15,15,17,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; transition: box-shadow 0.2s; }
+    .nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.4); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-logo-text { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+    .nav-spacer { flex: 1; }
+    .nav-link { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+    .nav-link:hover { color: var(--text-primary); }
+
+    /* Page header */
+    .page-header { max-width: 1100px; margin: 0 auto; padding: 48px 24px 0; }
+    .page-title { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .page-sub { font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; }
+
+    /* Filter bar */
+    .filter-bar { max-width: 1100px; margin: 0 auto; padding: 0 24px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .filter-search { flex: 1; min-width: 200px; max-width: 320px; position: relative; }
+    .filter-search input { width: 100%; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px 8px 36px; font-size: 13px; color: var(--text-primary); font-family: var(--font); outline: none; transition: border-color 0.15s; }
+    .filter-search input:focus { border-color: var(--accent); }
+    .filter-search input::placeholder { color: var(--text-muted); }
+    .filter-search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+    .filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-tag { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+    .filter-tag:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
+    .filter-tag.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .count-badge { font-size: 12px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+    /* Tool grid */
+    .tool-grid { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .tool-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s, background 0.15s, transform 0.15s; }
+    .tool-card:hover { border-color: var(--border-hover); background: var(--bg-hover); transform: translateY(-1px); }
+    .tool-card-top { display: flex; align-items: center; gap: 12px; }
+    .tool-icon { font-size: 22px; width: 40px; height: 40px; background: var(--accent-dim); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tool-name { font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+    .tool-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+    .tool-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .tool-tag { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 4px; background: var(--accent-dim); color: var(--accent); }
+    .tool-arrow { font-size: 16px; color: var(--text-muted); transition: color 0.15s, transform 0.15s; }
+    .tool-card:hover .tool-arrow { color: var(--accent); transform: translateX(3px); }
+    .no-result { text-align: center; padding: 80px 24px; color: var(--text-muted); grid-column: 1/-1; display: none; }
+    .no-result.show { display: block; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--text-muted); }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text-primary); }
+
+    @media (max-width: 640px) {
+      .page-header { padding: 32px 16px 0; }
+      .filter-bar { padding: 0 16px 20px; }
+      .tool-grid { padding: 0 16px 60px; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="logo 1.svg" alt="Simple ToolBox" />
+    <span class="nav-logo-text">Simple ToolBox</span>
+  </a>
+  <div class="nav-spacer"></div>
+  <a href="index.html" class="nav-link">Home</a>
+</nav>
+
+<div class="page-header">
+  <h1 class="page-title">All Tools</h1>
+  <p class="page-sub">18 free, privacy-first tools. All processing happens in your browser — no sign-up required.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="toolSearch" placeholder="Search tools…" autocomplete="off" />
+  </div>
+  <div class="filter-tags">
+    <button class="filter-tag active" data-filter="all">All</button>
+    <button class="filter-tag" data-filter="encode">🔐 Encode</button>
+    <button class="filter-tag" data-filter="format">✨ Format</button>
+    <button class="filter-tag" data-filter="convert">🔄 Convert</button>
+    <button class="filter-tag" data-filter="generate">⚙️ Generate</button>
+    <button class="filter-tag" data-filter="text">📝 Text</button>
+    <button class="filter-tag" data-filter="image">🖼️ Image</button>
+  </div>
+  <span class="count-badge" id="countBadge">18 tools</span>
+</div>
+
+<div class="tool-grid" id="toolGrid">
+  <a href="tools/base64.html" class="tool-card" data-tags="encode" data-name="Base64 Encode Decode">
+    <div class="tool-card-top">
+      <div class="tool-icon">📦</div>
+      <div class="tool-name">Base64 Encode / Decode</div>
+    </div>
+    <div class="tool-desc">Convert text or file contents to and from Base64. URL-safe mode, one-click copy and download.</div>
+    <div class="tool-footer"><span class="tool-tag">encode</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/json-formatter.html" class="tool-card" data-tags="format" data-name="JSON Formatter Validator Minify Prettify">
+    <div class="tool-card-top">
+      <div class="tool-icon">🎨</div>
+      <div class="tool-name">JSON Formatter</div>
+    </div>
+    <div class="tool-desc">Prettify or minify JSON with syntax validation, CSV/SQL export, and input history.</div>
+    <div class="tool-footer"><span class="tool-tag">format</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/password-generator.html" class="tool-card" data-tags="generate" data-name="Password Generator Strong Secure">
+    <div class="tool-card-top">
+      <div class="tool-icon">🔑</div>
+      <div class="tool-name">Password Generator</div>
+    </div>
+    <div class="tool-desc">Customize length and character sets to generate strong random passwords locally.</div>
+    <div class="tool-footer"><span class="tool-tag">generate</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/timestamp.html" class="tool-card" data-tags="convert" data-name="Timestamp Converter Unix Epoch Date">
+    <div class="tool-card-top">
+      <div class="tool-icon">⏱️</div>
+      <div class="tool-name">Timestamp Converter</div>
+    </div>
+    <div class="tool-desc">Convert Unix timestamps to human-readable dates and back, with timezone support.</div>
+    <div class="tool-footer"><span class="tool-tag">convert</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/url-encode.html" class="tool-card" data-tags="encode" data-name="URL Encode Decode Percent Encoding">
+    <div class="tool-card-top">
+      <div class="tool-icon">🔗</div>
+      <div class="tool-name">URL Encode / Decode</div>
+    </div>
+    <div class="tool-desc">Encode or decode URL parameters at the full or component level.</div>
+    <div class="tool-footer"><span class="tool-tag">encode</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/uuid-generator.html" class="tool-card" data-tags="generate" data-name="UUID Generator v4 GUID">
+    <div class="tool-card-top">
+      <div class="tool-icon">🆔</div>
+      <div class="tool-name">UUID Generator</div>
+    </div>
+    <div class="tool-desc">Bulk-generate UUID v4 with options for case, hyphens, and braces.</div>
+    <div class="tool-footer"><span class="tool-tag">generate</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/word-counter.html" class="tool-card" data-tags="text" data-name="Word Counter Character Count Reading Time">
+    <div class="tool-card-top">
+      <div class="tool-icon">📝</div>
+      <div class="tool-name">Word Counter</div>
+    </div>
+    <div class="tool-desc">Count words, characters, sentences, and estimate reading time in real time.</div>
+    <div class="tool-footer"><span class="tool-tag">text</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/random-number-generator.html" class="tool-card" data-tags="generate" data-name="Random Number Generator Dice Coin Shuffle">
+    <div class="tool-card-top">
+      <div class="tool-icon">🎲</div>
+      <div class="tool-name">Random Number Generator</div>
+    </div>
+    <div class="tool-desc">Generate random numbers, shuffle lists, roll dice, and flip coins.</div>
+    <div class="tool-footer"><span class="tool-tag">generate</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/unit-converter.html" class="tool-card" data-tags="convert" data-name="Unit Converter Length Weight Temperature">
+    <div class="tool-card-top">
+      <div class="tool-icon">📐</div>
+      <div class="tool-name">Unit Converter</div>
+    </div>
+    <div class="tool-desc">Convert length, weight, temperature, area, volume, speed, data, and time.</div>
+    <div class="tool-footer"><span class="tool-tag">convert</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/image-resizer.html" class="tool-card" data-tags="image" data-name="Image Resizer Crop Scale Format Convert">
+    <div class="tool-card-top">
+      <div class="tool-icon">🖼️</div>
+      <div class="tool-name">Image Resizer</div>
+    </div>
+    <div class="tool-desc">Resize images to any dimensions, change format and quality — no upload needed.</div>
+    <div class="tool-footer"><span class="tool-tag">image</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/youtube-thumbnail.html" class="tool-card" data-tags="image" data-name="YouTube Thumbnail Downloader HD">
+    <div class="tool-card-top">
+      <div class="tool-icon">📺</div>
+      <div class="tool-name">YouTube Thumbnail Downloader</div>
+    </div>
+    <div class="tool-desc">Download YouTube thumbnails in all resolutions from any video URL.</div>
+    <div class="tool-footer"><span class="tool-tag">image</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/qr-code-generator.html" class="tool-card" data-tags="generate" data-name="QR Code Generator WiFi vCard URL">
+    <div class="tool-card-top">
+      <div class="tool-icon">📷</div>
+      <div class="tool-name">QR Code Generator</div>
+    </div>
+    <div class="tool-desc">Create custom QR codes for URLs, WiFi, contacts, and email. Add colors and logo.</div>
+    <div class="tool-footer"><span class="tool-tag">generate</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/slug-generator.html" class="tool-card" data-tags="text" data-name="URL Slug Generator SEO Pinyin">
+    <div class="tool-card-top">
+      <div class="tool-icon">🔗</div>
+      <div class="tool-name">URL Slug Generator</div>
+    </div>
+    <div class="tool-desc">Convert titles to clean SEO-friendly URL slugs. Supports Chinese to pinyin.</div>
+    <div class="tool-footer"><span class="tool-tag">text</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/lorem-ipsum-generator.html" class="tool-card" data-tags="text" data-name="Lorem Ipsum Placeholder Text Generator">
+    <div class="tool-card-top">
+      <div class="tool-icon">📄</div>
+      <div class="tool-name">Lorem Ipsum Generator</div>
+    </div>
+    <div class="tool-desc">Generate placeholder text in Classic Lorem, Chinese, Tech, or Business themes.</div>
+    <div class="tool-footer"><span class="tool-tag">text</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/color-picker.html" class="tool-card" data-tags="convert" data-name="Color Picker HEX RGB HSL CMYK Converter">
+    <div class="tool-card-top">
+      <div class="tool-icon">🎨</div>
+      <div class="tool-name">Color Picker</div>
+    </div>
+    <div class="tool-desc">Convert colors between HEX, RGB, HSL, and CMYK. Pick, copy, and save to history.</div>
+    <div class="tool-footer"><span class="tool-tag">convert</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/regex-tester.html" class="tool-card" data-tags="text" data-name="Regex Tester Regular Expression Matcher">
+    <div class="tool-card-top">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-name">Regex Tester</div>
+    </div>
+    <div class="tool-desc">Test regular expressions with real-time match highlighting, group capture, and replace mode.</div>
+    <div class="tool-footer"><span class="tool-tag">text</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/markdown-preview.html" class="tool-card" data-tags="text" data-name="Markdown Preview Editor Live">
+    <div class="tool-card-top">
+      <div class="tool-icon">📝</div>
+      <div class="tool-name">Markdown Preview</div>
+    </div>
+    <div class="tool-desc">Write Markdown and see a live rendered preview. Copy HTML or download the source file.</div>
+    <div class="tool-footer"><span class="tool-tag">text</span><span class="tool-arrow">→</span></div>
+  </a>
+  <a href="tools/cron-builder.html" class="tool-card" data-tags="generate" data-name="Cron Expression Builder Schedule">
+    <div class="tool-card-top">
+      <div class="tool-icon">⏰</div>
+      <div class="tool-name">Cron Expression Builder</div>
+    </div>
+    <div class="tool-desc">Build cron expressions visually with human-readable descriptions and next run time preview.</div>
+    <div class="tool-footer"><span class="tool-tag">generate</span><span class="tool-arrow">→</span></div>
+  </a>
+  <div class="no-result" id="noResult">No tools match your search.</div>
+</div>
+
+<footer>
+  <a href="index.html">← Back to Home</a> &nbsp;·&nbsp;
+  <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+  <a href="about.html">About</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  const cards = Array.from(document.querySelectorAll('.tool-card'));
+  const countBadge = document.getElementById('countBadge');
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    const q = searchQuery.toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const tagMatch = activeTag === 'all' || card.dataset.tags === activeTag;
+      const searchMatch = !q || card.dataset.name.toLowerCase().includes(q) || card.querySelector('.tool-desc').textContent.toLowerCase().includes(q);
+      const show = tagMatch && searchMatch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    countBadge.textContent = visible + ' tool' + (visible !== 1 ? 's' : '');
+    document.getElementById('noResult').classList.toggle('show', visible === 0);
+  }
+
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTag = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  document.getElementById('toolSearch').addEventListener('input', e => {
+    searchQuery = e.target.value;
+    applyFilters();
+  });
+</script>
+</body>
+</html>
