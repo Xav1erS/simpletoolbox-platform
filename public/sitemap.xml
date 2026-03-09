@@ -3,7 +3,7 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/</loc>
+    <loc>https://simpletoolbox.dev/</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,109 +11,109 @@
 
   <!-- Tools -->
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/base64.html</loc>
+    <loc>https://simpletoolbox.dev/tools/base64.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/json-formatter.html</loc>
+    <loc>https://simpletoolbox.dev/tools/json-formatter.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/password-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/password-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/timestamp.html</loc>
+    <loc>https://simpletoolbox.dev/tools/timestamp.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/url-encode.html</loc>
+    <loc>https://simpletoolbox.dev/tools/url-encode.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/uuid-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/uuid-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/word-counter.html</loc>
+    <loc>https://simpletoolbox.dev/tools/word-counter.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/random-number-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/random-number-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/unit-converter.html</loc>
+    <loc>https://simpletoolbox.dev/tools/unit-converter.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/image-resizer.html</loc>
+    <loc>https://simpletoolbox.dev/tools/image-resizer.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/youtube-thumbnail.html</loc>
+    <loc>https://simpletoolbox.dev/tools/youtube-thumbnail.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/qr-code-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/qr-code-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/slug-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/slug-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/lorem-ipsum-generator.html</loc>
+    <loc>https://simpletoolbox.dev/tools/lorem-ipsum-generator.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/color-picker.html</loc>
+    <loc>https://simpletoolbox.dev/tools/color-picker.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/regex-tester.html</loc>
+    <loc>https://simpletoolbox.dev/tools/regex-tester.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/markdown-preview.html</loc>
+    <loc>https://simpletoolbox.dev/tools/markdown-preview.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/tools/cron-builder.html</loc>
+    <loc>https://simpletoolbox.dev/tools/cron-builder.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -121,25 +121,25 @@
 
   <!-- Info pages -->
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/about.html</loc>
+    <loc>https://simpletoolbox.dev/about.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/privacy.html</loc>
+    <loc>https://simpletoolbox.dev/privacy.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/terms.html</loc>
+    <loc>https://simpletoolbox.dev/terms.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://xav1ers.github.io/SimpleToolBox/contact.html</loc>
+    <loc>https://simpletoolbox.dev/contact.html</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xav1ers.github.io/SimpleToolBox/sitemap.xml
+Sitemap: https://simpletoolbox.dev/sitemap.xml
