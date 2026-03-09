@@ -639,6 +639,10 @@
 
     /* ── HIDDEN CARD ── */
     .category-card.hidden { display: none; }
+    .category-card.active { border-color: var(--accent); background: var(--accent-dim); }
+    .category-card.active::before { opacity: 1; }
+    #clearFilter { display: none; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; gap: 5px; align-items: center; }
+    #clearFilter:hover { border-color: var(--accent); color: var(--accent); }
     .no-result { text-align: center; padding: 48px; color: var(--text-muted); font-size: 14px; display: none; }
     .no-result.show { display: block; }
   </style>
@@ -862,6 +866,7 @@
 <div class="section fade-in" id="toolSection">
   <div class="section-header">
     <h2 class="section-title">All Tools</h2>
+    <button id="clearFilter">✕ Clear filter</button>
     <a href="all-tools.html" class="section-more">All tools →</a>
   </div>
   <div class="tool-grid">
@@ -1124,6 +1129,8 @@
   // ── Tool filtering ─────────────────────────────────────
   const toolCards = document.querySelectorAll('.tool-grid .tool-card');
 
+  const clearFilterBtn = document.getElementById('clearFilter');
+
   function filterTools(tag) {
     toolCards.forEach(card => {
       card.style.display = (tag === 'all' || card.dataset.tags === tag) ? '' : 'none';
@@ -1132,6 +1139,12 @@
     document.querySelectorAll('.hero-tag').forEach(t => {
       t.classList.toggle('active', t.dataset.filter === tag);
     });
+    // sync category card active state
+    document.querySelectorAll('.category-card[data-filter]').forEach(c => {
+      c.classList.toggle('active', c.dataset.filter === tag && tag !== 'all');
+    });
+    // show/hide clear button
+    clearFilterBtn.style.display = tag === 'all' ? 'none' : 'flex';
   }
 
   // Hero tag pills
@@ -1141,12 +1154,15 @@
     });
   });
 
-  // Category card clicks → scroll to tools + filter
+  // Clear filter button
+  clearFilterBtn.addEventListener('click', () => filterTools('all'));
+
+  // Category card clicks — toggle: click active card resets to All
   document.querySelectorAll('.category-card[data-filter]').forEach(card => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', () => {
-      const filter = card.dataset.filter;
-      filterTools(filter);
+      const newFilter = card.classList.contains('active') ? 'all' : card.dataset.filter;
+      filterTools(newFilter);
       document.getElementById('toolSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
