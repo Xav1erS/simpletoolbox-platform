@@ -134,6 +134,10 @@
     .btn-fmt-copy:hover { color: var(--text-primary); background: var(--bg-hover); border-color: rgba(255,255,255,0.12); }
     .btn-fmt-copy.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
 
+    /* CMYK 2x2 grid */
+    .cmyk-row { align-items: flex-start; }
+    .cmyk-grid { display: grid !important; grid-template-columns: 1fr 1fr; gap: 5px; }
+
     /* History */
     .history-swatches { display: flex; gap: 7px; flex-wrap: wrap; }
     .history-swatch {
@@ -298,15 +302,15 @@
         </div>
 
         <!-- CMYK (display only) -->
-        <div class="format-row">
+        <div class="format-row cmyk-row">
           <span class="format-label">CMYK</span>
-          <div class="format-inputs">
+          <div class="format-inputs cmyk-grid">
             <input type="text" class="fmt-input" id="cmykC" readonly title="Cyan %" />
             <input type="text" class="fmt-input" id="cmykM" readonly title="Magenta %" />
             <input type="text" class="fmt-input" id="cmykY" readonly title="Yellow %" />
             <input type="text" class="fmt-input" id="cmykK" readonly title="Key/Black %" />
           </div>
-          <button class="btn-fmt-copy" id="copyCmyk" title="Copy CMYK">
+          <button class="btn-fmt-copy" id="copyCmyk" title="Copy CMYK" style="align-self:flex-start;margin-top:1px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
         </div>
