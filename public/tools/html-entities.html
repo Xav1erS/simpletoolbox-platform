@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>HTML Entity Encode / Decode — Simple ToolBox</title>
+  <meta name="description" content="Free online HTML entity encoder and decoder. Convert special characters to named entities (&amp;amp;) or numeric entities (&#38;). Includes quick-reference table." />
+  <link rel="canonical" href="https://simpletoolbox.dev/tools/html-entities.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://simpletoolbox.dev/tools/html-entities.html" />
+  <meta property="og:title" content="HTML Entity Encode / Decode — Simple ToolBox" />
+  <meta property="og:description" content="Encode or decode HTML entities. Named and numeric formats supported. Runs entirely in your browser." />
+  <meta property="og:site_name" content="Simple ToolBox" />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
+      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
+      --accent: #5E6AD2; --accent-hover: #6E7AE2; --accent-dim: rgba(94,106,210,0.12);
+      --accent-glow: rgba(94,106,210,0.25); --green: #22c55e; --red: #ef4444;
+      --radius-sm: 6px; --radius-md: 10px;
+      --font: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace; --nav-h: 60px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-back { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-all-tools { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .nav-all-tools:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    /* TOOL HEADER */
+    .tool-header { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 32px 32px 28px; position: relative; overflow: hidden; }
+    .tool-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%); pointer-events: none; }
+    .tool-header-inner { max-width: 1100px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill { font-family: var(--mono); font-size: 11px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* MODE BAR */
+    .mode-bar { display: flex; align-items: center; gap: 6px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 6px; }
+    .mode-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-secondary); transition: color 0.2s, background 0.2s; }
+    .mode-btn.active { background: var(--accent); color: #fff; }
+    .mode-btn:not(.active):hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    .mode-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+
+    /* OPTIONS BAR */
+    .options-bar { display: flex; align-items: center; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px 16px; flex-wrap: wrap; }
+    .option-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .option-group { display: flex; gap: 6px; }
+    .opt-btn { padding: 4px 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; color: var(--text-secondary); background: rgba(255,255,255,0.04); border: 1px solid var(--border); transition: all 0.15s; }
+    .opt-btn.active { background: var(--accent-dim); border-color: rgba(94,106,210,0.4); color: #9B8DEB; }
+    .opt-btn:hover:not(.active) { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+    /* PANELS */
+    .panels-row { display: grid; grid-template-columns: 1fr 48px 1fr; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; min-height: 280px; }
+    @media (max-width: 640px) { .panels-row { grid-template-columns: 1fr; } .arrow-col { display: none; } }
+    .io-panel { display: flex; flex-direction: column; }
+    .io-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .io-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .io-actions { display: flex; align-items: center; gap: 5px; }
+    .io-btn { display: flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 500; color: var(--text-secondary); background: rgba(255,255,255,0.04); border: 1px solid var(--border); transition: color 0.15s, background 0.15s; }
+    .io-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+    .io-btn.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .io-textarea { flex: 1; padding: 14px 16px; background: transparent; border: none; outline: none; color: var(--text-primary); font-family: var(--mono); font-size: 13px; line-height: 1.7; resize: none; min-height: 240px; }
+    .io-textarea::placeholder { color: var(--text-muted); }
+    .arrow-col { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .arrow-icon { width: 28px; height: 28px; background: var(--bg-hover); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 13px; }
+
+    /* STATS ROW */
+    .stats-row { display: flex; gap: 12px; padding: 8px 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); flex-wrap: wrap; }
+    .stat-chip { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-family: var(--mono); }
+
+    /* REFERENCE TABLE */
+    .ref-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .ref-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .ref-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0; }
+    .ref-item { display: grid; grid-template-columns: 36px 1fr 1fr 1fr; align-items: center; gap: 0; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .ref-item:hover { background: var(--bg-hover); }
+    .ref-char { font-size: 16px; text-align: center; }
+    .ref-name { font-family: var(--mono); color: #86efac; font-size: 11px; }
+    .ref-num { font-family: var(--mono); color: #93c5fd; font-size: 11px; }
+    .ref-desc { color: var(--text-muted); font-size: 11px; }
+    .ref-head { display: grid; grid-template-columns: 36px 1fr 1fr 1fr; gap: 0; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+    .ref-copy-btn { padding: 2px 8px; font-size: 10px; font-family: var(--mono); border-radius: 3px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all 0.1s; margin-left: 4px; }
+    .ref-copy-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  </a>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="28" height="28" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">
+    HTML Entities
+    <span class="nav-tool-badge">encode</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <a href="../index.html" class="nav-all-tools">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    All Tools
+  </a>
+  <div class="nav-privacy">
+    <span class="nav-privacy-dot"></span>
+    Runs locally — no data sent
+  </div>
+</nav>
+
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">🏷️</div>
+      <h1 class="tool-title">HTML Entity Encode / Decode</h1>
+    </div>
+    <p class="tool-desc-text">Bidirectional conversion between plain text and HTML entities. Supports named entities (&amp;amp;), decimal (&#38;), and hex (&#x26;) numeric formats.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">encode</span>
+      <span class="tool-tag-pill">html</span>
+      <span class="tool-tag-pill">entities</span>
+      <span class="tool-tag-pill">client-side</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Mode -->
+  <div class="mode-bar">
+    <button class="mode-btn active" id="modeEncode">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4.9V17L12 22l-9-4.9V7z"/></svg>
+      Encode
+    </button>
+    <div class="mode-sep"></div>
+    <button class="mode-btn" id="modeDecode">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9 9 9-9M12 3v18"/></svg>
+      Decode
+    </button>
+  </div>
+
+  <!-- Options -->
+  <div class="options-bar">
+    <span class="option-label">Format:</span>
+    <div class="option-group" id="encodeFormat">
+      <button class="opt-btn active" data-fmt="named">Named &amp;amp;</button>
+      <button class="opt-btn" data-fmt="decimal">Decimal &#38;</button>
+      <button class="opt-btn" data-fmt="hex">Hex &#x26;</button>
+    </div>
+    <span class="option-label" style="margin-left:8px">Scope:</span>
+    <div class="option-group" id="encodeScope">
+      <button class="opt-btn active" data-scope="html">HTML-safe only</button>
+      <button class="opt-btn" data-scope="all">All non-ASCII</button>
+    </div>
+  </div>
+
+  <!-- Panels -->
+  <div class="panels-row">
+    <div class="io-panel">
+      <div class="io-header">
+        <span class="io-label" id="inputLabel">Plain Text</span>
+        <div class="io-actions">
+          <button class="io-btn" id="btnPaste">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            Paste
+          </button>
+          <button class="io-btn" id="btnClear">Clear</button>
+          <button class="io-btn" id="btnSample">Sample</button>
+        </div>
+      </div>
+      <textarea class="io-textarea" id="inputText" placeholder="Paste or type text to encode / decode…" spellcheck="false"></textarea>
+    </div>
+    <div class="arrow-col">
+      <div class="arrow-icon">→</div>
+    </div>
+    <div class="io-panel">
+      <div class="io-header">
+        <span class="io-label" id="outputLabel">HTML Entities</span>
+        <div class="io-actions">
+          <button class="io-btn" id="btnCopy">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy
+          </button>
+          <button class="io-btn" id="btnSwap">⇄ Swap</button>
+        </div>
+      </div>
+      <textarea class="io-textarea" id="outputText" placeholder="Result will appear here…" readonly spellcheck="false"></textarea>
+      <div class="stats-row" id="statsRow" style="display:none">
+        <span>Input: <span class="stat-chip" id="statIn">0</span> chars</span>
+        <span>Output: <span class="stat-chip" id="statOut">0</span> chars</span>
+        <span>Entities: <span class="stat-chip" id="statEntities">0</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reference table -->
+  <div class="ref-card">
+    <div class="ref-header">
+      <span class="ref-title">Common HTML Entities Reference</span>
+    </div>
+    <div class="ref-head">
+      <span>Char</span><span>Named</span><span>Numeric</span><span>Description</span>
+    </div>
+    <div id="refTable"></div>
+  </div>
+</div>
+
+<script>
+  const NAMED_MAP = {
+    '&': 'amp', '<': 'lt', '>': 'gt', '"': 'quot', "'": 'apos',
+    '©': 'copy', '®': 'reg', '™': 'trade',
+    '€': 'euro', '£': 'pound', '¥': 'yen', '¢': 'cent',
+    '°': 'deg', '±': 'plusmn', '×': 'times', '÷': 'divide',
+    '—': 'mdash', '–': 'ndash', '…': 'hellip',
+    '\u00A0': 'nbsp', '«': 'laquo', '»': 'raquo',
+    '¼': 'frac14', '½': 'frac12', '¾': 'frac34',
+    '←': 'larr', '→': 'rarr', '↑': 'uarr', '↓': 'darr',
+    '♠': 'spades', '♣': 'clubs', '♥': 'hearts', '♦': 'diams',
+    '✓': '#10003', '✗': '#10007',
+  };
+  const REVERSE_NAMED = {};
+  for (const [ch, name] of Object.entries(NAMED_MAP)) REVERSE_NAMED[name] = ch;
+
+  const REF_ITEMS = [
+    ['&', 'amp', 'Ampersand'], ['<', 'lt', 'Less-than'], ['>', 'gt', 'Greater-than'],
+    ['"', 'quot', 'Double quote'], ["'", 'apos', 'Single quote'],
+    ['\u00A0', 'nbsp', 'Non-breaking space'],
+    ['©', 'copy', 'Copyright'], ['®', 'reg', 'Registered'], ['™', 'trade', 'Trademark'],
+    ['€', 'euro', 'Euro'], ['£', 'pound', 'Pound'], ['¥', 'yen', 'Yen'], ['¢', 'cent', 'Cent'],
+    ['°', 'deg', 'Degree'], ['±', 'plusmn', 'Plus-minus'], ['×', 'times', 'Multiply'], ['÷', 'divide', 'Divide'],
+    ['—', 'mdash', 'Em dash'], ['–', 'ndash', 'En dash'], ['…', 'hellip', 'Ellipsis'],
+    ['←', 'larr', 'Left arrow'], ['→', 'rarr', 'Right arrow'],
+    ['¼', 'frac14', 'One quarter'], ['½', 'frac12', 'One half'], ['¾', 'frac34', 'Three quarters'],
+  ];
+
+  let mode = 'encode';
+  let fmt = 'named';
+  let scope = 'html';
+
+  const HTML_SAFE = new Set(['&', '<', '>', '"', "'", '\u00A0']);
+
+  function encodeChar(ch) {
+    const code = ch.codePointAt(0);
+    if (scope === 'html' && !HTML_SAFE.has(ch)) return ch;
+    const namedKey = NAMED_MAP[ch];
+    if (fmt === 'named' && namedKey && !namedKey.startsWith('#')) return `&${namedKey};`;
+    if (fmt === 'decimal') return `&#${code};`;
+    if (fmt === 'hex') return `&#x${code.toString(16).toUpperCase()};`;
+    if (namedKey && !namedKey.startsWith('#')) return `&${namedKey};`;
+    return `&#${code};`;
+  }
+
+  function encode(text) {
+    return [...text].map(ch => {
+      const code = ch.codePointAt(0);
+      const needsEncode = HTML_SAFE.has(ch) || (scope === 'all' && code > 127);
+      if (!needsEncode) return ch;
+      const namedKey = NAMED_MAP[ch];
+      if (fmt === 'named' && namedKey && !namedKey.startsWith('#')) return `&${namedKey};`;
+      if (fmt === 'decimal') return `&#${code};`;
+      if (fmt === 'hex') return `&#x${code.toString(16).toUpperCase()};`;
+      return `&${namedKey || `#${code}`};`;
+    }).join('');
+  }
+
+  function decode(text) {
+    return text
+      .replace(/&([a-zA-Z][a-zA-Z0-9]*);/g, (m, name) => {
+        if (REVERSE_NAMED[name] !== undefined) return REVERSE_NAMED[name];
+        const el = document.createElement('span');
+        el.innerHTML = m;
+        return el.textContent;
+      })
+      .replace(/&#x([0-9a-fA-F]+);/g, (m, hex) => String.fromCodePoint(parseInt(hex, 16)))
+      .replace(/&#(\d+);/g, (m, dec) => String.fromCodePoint(parseInt(dec, 10)));
+  }
+
+  function countEntities(text) {
+    return (text.match(/&[#a-zA-Z][^;]{0,10};/g) || []).length;
+  }
+
+  function process() {
+    const input = document.getElementById('inputText').value;
+    const output = mode === 'encode' ? encode(input) : decode(input);
+    document.getElementById('outputText').value = output;
+    if (input) {
+      document.getElementById('statsRow').style.display = 'flex';
+      document.getElementById('statIn').textContent = input.length;
+      document.getElementById('statOut').textContent = output.length;
+      document.getElementById('statEntities').textContent = mode === 'encode' ? countEntities(output) : countEntities(input);
+    } else {
+      document.getElementById('statsRow').style.display = 'none';
+    }
+  }
+
+  // Mode buttons
+  document.getElementById('modeEncode').addEventListener('click', () => {
+    mode = 'encode';
+    document.getElementById('modeEncode').classList.add('active');
+    document.getElementById('modeDecode').classList.remove('active');
+    document.getElementById('inputLabel').textContent = 'Plain Text';
+    document.getElementById('outputLabel').textContent = 'HTML Entities';
+    document.getElementById('encodeFormat').style.display = '';
+    document.getElementById('encodeScope').parentElement && (document.getElementById('encodeScope').style.display = '');
+    document.getElementById('inputText').placeholder = 'Paste or type text to encode…';
+    process();
+  });
+  document.getElementById('modeDecode').addEventListener('click', () => {
+    mode = 'decode';
+    document.getElementById('modeDecode').classList.add('active');
+    document.getElementById('modeEncode').classList.remove('active');
+    document.getElementById('inputLabel').textContent = 'HTML Entities';
+    document.getElementById('outputLabel').textContent = 'Plain Text';
+    document.getElementById('inputText').placeholder = 'Paste HTML entities to decode, e.g. &amp;lt;div&amp;gt;…';
+    process();
+  });
+
+  // Format buttons
+  document.querySelectorAll('#encodeFormat .opt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#encodeFormat .opt-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      fmt = btn.dataset.fmt;
+      process();
+    });
+  });
+
+  // Scope buttons
+  document.querySelectorAll('#encodeScope .opt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#encodeScope .opt-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      scope = btn.dataset.scope;
+      process();
+    });
+  });
+
+  document.getElementById('inputText').addEventListener('input', process);
+
+  document.getElementById('btnPaste').addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      document.getElementById('inputText').value = text;
+      process();
+    } catch { alert('Clipboard access denied'); }
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    document.getElementById('inputText').value = '';
+    process();
+  });
+
+  document.getElementById('btnSample').addEventListener('click', () => {
+    const samples = {
+      encode: '<div class="hero">\n  <h1>Hello & "World"</h1>\n  <p>© 2025 · Price: £99 → €115</p>\n</div>',
+      decode: '&lt;div class=&quot;hero&quot;&gt;\n  &lt;h1&gt;Hello &amp; &ldquo;World&rdquo;&lt;/h1&gt;\n  &lt;p&gt;&copy; 2025 &middot; Price: &pound;99 &rarr; &euro;115&lt;/p&gt;\n&lt;/div&gt;',
+    };
+    document.getElementById('inputText').value = samples[mode];
+    process();
+  });
+
+  document.getElementById('btnCopy').addEventListener('click', () => {
+    const text = document.getElementById('outputText').value;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btnCopy');
+      btn.classList.add('copied');
+      btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`; }, 1500);
+    });
+  });
+
+  document.getElementById('btnSwap').addEventListener('click', () => {
+    const a = document.getElementById('inputText').value;
+    const b = document.getElementById('outputText').value;
+    document.getElementById('inputText').value = b;
+    if (mode === 'encode') {
+      document.getElementById('modeDecode').click();
+    } else {
+      document.getElementById('modeEncode').click();
+    }
+    document.getElementById('inputText').value = b;
+    process();
+  });
+
+  // Reference table
+  const refTable = document.getElementById('refTable');
+  refTable.innerHTML = REF_ITEMS.map(([ch, name, desc]) => {
+    const code = ch.codePointAt(0);
+    const display = ch === '\u00A0' ? '⎵' : ch;
+    const named = `&amp;${name};`;
+    const decimal = `&amp;#${code};`;
+    return `<div class="ref-item">
+      <span class="ref-char">${display}</span>
+      <span class="ref-name">${named} <button class="ref-copy-btn" data-copy="&${name};" title="Copy">⎘</button></span>
+      <span class="ref-num">${decimal} <button class="ref-copy-btn" data-copy="&#${code};" title="Copy">⎘</button></span>
+      <span class="ref-desc">${desc}</span>
+    </div>`;
+  }).join('');
+
+  refTable.querySelectorAll('.ref-copy-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = orig; }, 1200);
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark" />
   <title>Simple ToolBox — Free Online Developer Tools</title>
-  <meta name="description" content="Free, fast, privacy-first developer tools — JSON formatter, Base64 encoder, password generator, regex tester, QR code generator, and 13+ more. No sign-up, all processing in your browser." />
+  <meta name="description" content="Free, fast, privacy-first developer tools — JSON formatter, Base64 encoder, JWT decoder, hash generator, password generator, regex tester, QR code generator, and 16+ more. No sign-up, all processing in your browser." />
   <link rel="canonical" href="https://simpletoolbox.dev/" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -16,7 +16,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Simple ToolBox — Free Online Developer Tools" />
-  <meta name="twitter:description" content="18+ free developer tools. JSON formatter, regex tester, QR code generator, color picker and more. Privacy-first, no sign-up." />
+  <meta name="twitter:description" content="21+ free developer tools. JWT decoder, hash generator, JSON formatter, regex tester, QR code generator and more. Privacy-first, no sign-up." />
   <link rel="icon" href="logo 1.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -697,7 +697,10 @@
       {"@type":"ListItem","position":15,"name":"Color Picker & Converter","url":"https://simpletoolbox.dev/tools/color-picker.html"},
       {"@type":"ListItem","position":16,"name":"Regex Tester","url":"https://simpletoolbox.dev/tools/regex-tester.html"},
       {"@type":"ListItem","position":17,"name":"Markdown Preview Editor","url":"https://simpletoolbox.dev/tools/markdown-preview.html"},
-      {"@type":"ListItem","position":18,"name":"Cron Expression Builder","url":"https://simpletoolbox.dev/tools/cron-builder.html"}
+      {"@type":"ListItem","position":18,"name":"Cron Expression Builder","url":"https://simpletoolbox.dev/tools/cron-builder.html"},
+      {"@type":"ListItem","position":19,"name":"JWT Decoder / Inspector","url":"https://simpletoolbox.dev/tools/jwt-decoder.html"},
+      {"@type":"ListItem","position":20,"name":"HTML Entity Encode / Decode","url":"https://simpletoolbox.dev/tools/html-entities.html"},
+      {"@type":"ListItem","position":21,"name":"Hash Generator","url":"https://simpletoolbox.dev/tools/hash-generator.html"}
     ]
   }
   </script>
@@ -763,7 +766,7 @@
 <!-- STATS -->
 <div class="stats">
   <div class="stat-item">
-    <div class="stat-number"><span>18</span>+</div>
+    <div class="stat-number"><span>21</span>+</div>
     <div class="stat-label">Online Tools</div>
   </div>
   <div class="stat-item">
@@ -814,7 +817,7 @@
       <div class="category-body">
         <div class="category-name">Encode / Decode</div>
         <div class="category-desc">Base64, URL encoding, HTML entities, JWT parser and more</div>
-        <span class="category-count">2 tools</span>
+        <span class="category-count">4 tools</span>
       </div>
     </div>
     <div class="category-card" style="--card-color:rgba(34,197,94,0.08)" data-name="format beautify json xml css sql" data-filter="format">
@@ -837,8 +840,8 @@
       <div class="category-icon">⚙️</div>
       <div class="category-body">
         <div class="category-name">Generators</div>
-        <div class="category-desc">UUID, password, QR code, random numbers, cron expressions</div>
-        <span class="category-count">5 tools</span>
+        <div class="category-desc">UUID, password, QR code, hash, random numbers, cron expressions</div>
+        <span class="category-count">6 tools</span>
       </div>
     </div>
     <div class="category-card" style="--card-color:rgba(6,182,212,0.08)" data-name="debug regex cron http network" data-filter="text">
@@ -1084,6 +1087,39 @@
         <span class="tool-arrow">→</span>
       </div>
     </a>
+    <a href="tools/jwt-decoder.html" class="tool-card" data-tags="encode">
+      <div class="tool-card-top">
+        <div class="tool-icon">🔐</div>
+        <div class="tool-name">JWT Decoder / Inspector</div>
+      </div>
+      <div class="tool-desc">Decode JWT tokens into Header, Payload, and Signature. View expiration status, algorithm, and all claims.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">encode</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="tools/html-entities.html" class="tool-card" data-tags="encode">
+      <div class="tool-card-top">
+        <div class="tool-icon">🏷️</div>
+        <div class="tool-name">HTML Entity Encode / Decode</div>
+      </div>
+      <div class="tool-desc">Encode special characters to named or numeric HTML entities, or decode them back to plain text.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">encode</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+    <a href="tools/hash-generator.html" class="tool-card" data-tags="generate">
+      <div class="tool-card-top">
+        <div class="tool-icon">#️⃣</div>
+        <div class="tool-name">Hash Generator</div>
+      </div>
+      <div class="tool-desc">Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or file input. All algorithms run in parallel.</div>
+      <div class="tool-footer">
+        <span class="tool-tag">generate</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
   </div>
 </div>
 
@@ -1153,6 +1189,9 @@
     { name: 'Regex Tester',                 href: 'tools/regex-tester.html',             tag: 'text',     icon: '🔍', desc: 'Test regular expressions with live match highlighting' },
     { name: 'Markdown Preview',             href: 'tools/markdown-preview.html',         tag: 'text',     icon: '📝', desc: 'Write Markdown and see a live rendered preview' },
     { name: 'Cron Expression Builder',      href: 'tools/cron-builder.html',             tag: 'generate', icon: '⏰', desc: 'Build cron expressions visually with descriptions' },
+    { name: 'JWT Decoder / Inspector',      href: 'tools/jwt-decoder.html',              tag: 'encode',   icon: '🔐', desc: 'Decode JWT header, payload, signature and inspect claims' },
+    { name: 'HTML Entity Encode / Decode',  href: 'tools/html-entities.html',            tag: 'encode',   icon: '🏷️', desc: 'Encode or decode HTML entities — named and numeric formats' },
+    { name: 'Hash Generator',               href: 'tools/hash-generator.html',           tag: 'generate', icon: '#️⃣', desc: 'Generate MD5, SHA-1, SHA-256, SHA-512 from text or file' },
   ];
 
   // ── Tool filtering ─────────────────────────────────────

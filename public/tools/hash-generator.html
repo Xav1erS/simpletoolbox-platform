@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Hash Generator (MD5 / SHA-256 / SHA-512) — Simple ToolBox</title>
+  <meta name="description" content="Free online hash generator. Compute MD5, SHA-1, SHA-256, SHA-512 hashes from text or file. All algorithms run in parallel. Runs entirely in your browser." />
+  <link rel="canonical" href="https://simpletoolbox.dev/tools/hash-generator.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://simpletoolbox.dev/tools/hash-generator.html" />
+  <meta property="og:title" content="Hash Generator — Simple ToolBox" />
+  <meta property="og:description" content="Generate MD5, SHA-1, SHA-256, SHA-512 hashes from text or files. Runs entirely in your browser." />
+  <meta property="og:site_name" content="Simple ToolBox" />
+  <link rel="icon" href="../logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
+      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
+      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
+      --accent: #5E6AD2; --accent-hover: #6E7AE2; --accent-dim: rgba(94,106,210,0.12);
+      --accent-glow: rgba(94,106,210,0.25); --green: #22c55e; --red: #ef4444;
+      --radius-sm: 6px; --radius-md: 10px;
+      --font: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace; --nav-h: 60px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-back { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-all-tools { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .nav-all-tools:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
+    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+    .nav-tool-name { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .nav-tool-badge { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; }
+    .nav-spacer { flex: 1; }
+    .nav-privacy { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+    .nav-privacy-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+    /* TOOL HEADER */
+    .tool-header { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 32px 32px 28px; position: relative; overflow: hidden; }
+    .tool-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 100% at 0% 50%, rgba(94,106,210,0.1) 0%, transparent 70%); pointer-events: none; }
+    .tool-header-inner { max-width: 1100px; margin: 0 auto; }
+    .tool-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .tool-title-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tool-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .tool-desc-text { font-size: 14px; color: var(--text-secondary); max-width: 560px; }
+    .tool-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tool-tag-pill { font-family: var(--mono); font-size: 11px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* INPUT PANEL */
+    .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .panel-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .panel-actions { display: flex; align-items: center; gap: 6px; }
+    .io-btn { display: flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 500; color: var(--text-secondary); background: rgba(255,255,255,0.04); border: 1px solid var(--border); transition: color 0.15s, background 0.15s; }
+    .io-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+    .io-textarea { width: 100%; min-height: 120px; padding: 14px 16px; background: transparent; border: none; outline: none; color: var(--text-primary); font-family: var(--mono); font-size: 13px; line-height: 1.7; resize: vertical; }
+    .io-textarea::placeholder { color: var(--text-muted); }
+
+    /* TABS */
+    .tabs-bar { display: flex; gap: 2px; padding: 6px 16px 0; border-bottom: 1px solid var(--border); }
+    .tab-btn { padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; margin-bottom: -1px; }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover:not(.active) { color: var(--text-secondary); }
+
+    /* DROP ZONE */
+    .drop-zone { margin: 14px 16px; border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: var(--accent-dim); }
+    .drop-zone-icon { font-size: 28px; }
+    .drop-zone-text { font-size: 13px; color: var(--text-secondary); text-align: center; }
+    .drop-zone-text strong { color: var(--text-primary); }
+    .drop-zone-hint { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+    .file-info { display: none; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); }
+    .file-info.show { display: flex; }
+    .file-name { font-family: var(--mono); color: var(--text-primary); }
+    .file-size { color: var(--text-muted); }
+
+    /* HASH RESULTS */
+    .results-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .results-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .results-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .results-actions { display: flex; align-items: center; gap: 8px; }
+    .case-toggle { display: flex; gap: 4px; }
+    .case-btn { padding: 3px 9px; font-size: 11px; font-family: var(--mono); border-radius: var(--radius-sm); background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-secondary); transition: all 0.15s; }
+    .case-btn.active { background: var(--accent-dim); border-color: rgba(94,106,210,0.4); color: #9B8DEB; }
+    .hash-row { display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    .hash-row:last-child { border-bottom: none; }
+    .hash-row:hover { background: var(--bg-hover); }
+    .hash-algo { font-size: 12px; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+    .algo-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-md5 { background: #fb923c; }
+    .dot-sha1 { background: #a78bfa; }
+    .dot-sha256 { background: #38bdf8; }
+    .dot-sha512 { background: #4ade80; }
+    .hash-value { font-family: var(--mono); font-size: 12px; color: var(--text-primary); word-break: break-all; line-height: 1.6; }
+    .hash-value.empty { color: var(--text-muted); font-style: italic; font-family: var(--font); }
+    .hash-value.loading { color: var(--text-muted); animation: blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .btn-copy-hash { padding: 4px 9px; font-size: 11px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); transition: all 0.15s; white-space: nowrap; }
+    .btn-copy-hash:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+    .btn-copy-hash.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .copy-all-btn { padding: 5px 12px; font-size: 12px; font-weight: 500; border-radius: var(--radius-sm); background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-secondary); transition: all 0.15s; }
+    .copy-all-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+    .copy-all-btn.copied { color: var(--green); border-color: rgba(34,197,94,0.3); }
+
+    /* FILE INPUT HIDDEN */
+    #fileInput { display: none; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  </a>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo 1.svg" class="logo-img" width="28" height="28" alt="Simple ToolBox" />
+    <span>Simple ToolBox</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-tool-name">
+    Hash Generator
+    <span class="nav-tool-badge">generate</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <a href="../index.html" class="nav-all-tools">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    All Tools
+  </a>
+  <div class="nav-privacy">
+    <span class="nav-privacy-dot"></span>
+    Runs locally — no data sent
+  </div>
+</nav>
+
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-title-row">
+      <div class="tool-title-icon">#️⃣</div>
+      <h1 class="tool-title">Hash Generator</h1>
+    </div>
+    <p class="tool-desc-text">Compute MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. All algorithms run in parallel. Uppercase/lowercase output toggle.</p>
+    <div class="tool-tags">
+      <span class="tool-tag-pill">MD5</span>
+      <span class="tool-tag-pill">SHA-1</span>
+      <span class="tool-tag-pill">SHA-256</span>
+      <span class="tool-tag-pill">SHA-512</span>
+      <span class="tool-tag-pill">generate</span>
+      <span class="tool-tag-pill">client-side</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Input -->
+  <div class="panel">
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabText">Text</button>
+      <button class="tab-btn" id="tabFile">File</button>
+    </div>
+
+    <!-- Text tab -->
+    <div id="paneText">
+      <div class="panel-header">
+        <span class="panel-label">Input Text</span>
+        <div class="panel-actions">
+          <button class="io-btn" id="btnPaste">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            Paste
+          </button>
+          <button class="io-btn" id="btnClear">Clear</button>
+          <button class="io-btn" id="btnSample">Sample</button>
+        </div>
+      </div>
+      <textarea class="io-textarea" id="textInput" placeholder="Type or paste text to hash…" spellcheck="false"></textarea>
+    </div>
+
+    <!-- File tab -->
+    <div id="paneFile" style="display:none">
+      <input type="file" id="fileInput" />
+      <div class="drop-zone" id="dropZone">
+        <div class="drop-zone-icon">📂</div>
+        <div class="drop-zone-text"><strong>Drop a file here</strong> or click to browse</div>
+        <div class="drop-zone-hint">Any file type · Processed locally</div>
+      </div>
+      <div class="file-info" id="fileInfo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="file-name" id="fileName">—</span>
+        <span class="file-size" id="fileSize"></span>
+        <button class="io-btn" id="btnRemoveFile" style="margin-left:auto">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-panel">
+    <div class="results-header">
+      <span class="results-label">Hash Results</span>
+      <div class="results-actions">
+        <div class="case-toggle">
+          <button class="case-btn active" id="caseLower">lowercase</button>
+          <button class="case-btn" id="caseUpper">UPPERCASE</button>
+        </div>
+        <button class="copy-all-btn" id="copyAll">Copy All</button>
+      </div>
+    </div>
+    <div class="hash-row">
+      <span class="hash-algo"><span class="algo-dot dot-md5"></span>MD5</span>
+      <span class="hash-value empty" id="valMd5">Awaiting input…</span>
+      <button class="btn-copy-hash" data-id="valMd5">Copy</button>
+    </div>
+    <div class="hash-row">
+      <span class="hash-algo"><span class="algo-dot dot-sha1"></span>SHA-1</span>
+      <span class="hash-value empty" id="valSha1">Awaiting input…</span>
+      <button class="btn-copy-hash" data-id="valSha1">Copy</button>
+    </div>
+    <div class="hash-row">
+      <span class="hash-algo"><span class="algo-dot dot-sha256"></span>SHA-256</span>
+      <span class="hash-value empty" id="valSha256">Awaiting input…</span>
+      <button class="btn-copy-hash" data-id="valSha256">Copy</button>
+    </div>
+    <div class="hash-row">
+      <span class="hash-algo"><span class="algo-dot dot-sha512"></span>SHA-512</span>
+      <span class="hash-value empty" id="valSha512">Awaiting input…</span>
+      <button class="btn-copy-hash" data-id="valSha512">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── MD5 pure-JS implementation ─────────────────────────────────────────────
+  // Based on the canonical RSA Data Security MD5 algorithm, public domain
+  function md5(input) {
+    function safeAdd(x, y) { const lsw = (x & 0xFFFF) + (y & 0xFFFF); const msw = (x >> 16) + (y >> 16) + (lsw >> 16); return (msw << 16) | (lsw & 0xFFFF); }
+    function bitRotateLeft(num, cnt) { return (num << cnt) | (num >>> (32 - cnt)); }
+    function md5cmn(q, a, b, x, s, t) { return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b); }
+    function md5ff(a,b,c,d,x,s,t){return md5cmn((b&c)|((~b)&d),a,b,x,s,t);}
+    function md5gg(a,b,c,d,x,s,t){return md5cmn((b&d)|(c&(~d)),a,b,x,s,t);}
+    function md5hh(a,b,c,d,x,s,t){return md5cmn(b^c^d,a,b,x,s,t);}
+    function md5ii(a,b,c,d,x,s,t){return md5cmn(c^(b|(~d)),a,b,x,s,t);}
+
+    const str = unescape(encodeURIComponent(input));
+    const x = [];
+    for (let i = 0; i < str.length * 8; i += 8) x[i >> 5] = (x[i >> 5] || 0) | (str.charCodeAt(i / 8) & 0xFF) << (i % 32);
+    const len = str.length * 8;
+    x[len >> 5] = (x[len >> 5] || 0) | (0x80 << (len % 32));
+    x[(((len + 64) >>> 9) << 4) + 14] = len;
+
+    let a=1732584193, b=-271733879, c=-1732584194, d=271733878;
+    for (let i = 0; i < x.length; i += 16) {
+      const oa=a, ob=b, oc=c, od=d;
+      a=md5ff(a,b,c,d,x[i],7,-680876936);d=md5ff(d,a,b,c,x[i+1],12,-389564586);c=md5ff(c,d,a,b,x[i+2],17,606105819);b=md5ff(b,c,d,a,x[i+3],22,-1044525330);
+      a=md5ff(a,b,c,d,x[i+4],7,-176418897);d=md5ff(d,a,b,c,x[i+5],12,1200080426);c=md5ff(c,d,a,b,x[i+6],17,-1473231341);b=md5ff(b,c,d,a,x[i+7],22,-45705983);
+      a=md5ff(a,b,c,d,x[i+8],7,1770035416);d=md5ff(d,a,b,c,x[i+9],12,-1958414417);c=md5ff(c,d,a,b,x[i+10],17,-42063);b=md5ff(b,c,d,a,x[i+11],22,-1990404162);
+      a=md5ff(a,b,c,d,x[i+12],7,1804603682);d=md5ff(d,a,b,c,x[i+13],12,-40341101);c=md5ff(c,d,a,b,x[i+14],17,-1502002290);b=md5ff(b,c,d,a,x[i+15],22,1236535329);
+      a=md5gg(a,b,c,d,x[i+1],5,-165796510);d=md5gg(d,a,b,c,x[i+6],9,-1069501632);c=md5gg(c,d,a,b,x[i+11],14,643717713);b=md5gg(b,c,d,a,x[i],20,-373897302);
+      a=md5gg(a,b,c,d,x[i+5],5,-701558691);d=md5gg(d,a,b,c,x[i+10],9,38016083);c=md5gg(c,d,a,b,x[i+15],14,-660478335);b=md5gg(b,c,d,a,x[i+4],20,-405537848);
+      a=md5gg(a,b,c,d,x[i+9],5,568446438);d=md5gg(d,a,b,c,x[i+14],9,-1019803690);c=md5gg(c,d,a,b,x[i+3],14,-187363961);b=md5gg(b,c,d,a,x[i+8],20,1163531501);
+      a=md5gg(a,b,c,d,x[i+13],5,-1444681467);d=md5gg(d,a,b,c,x[i+2],9,-51403784);c=md5gg(c,d,a,b,x[i+7],14,1735328473);b=md5gg(b,c,d,a,x[i+12],20,-1926607734);
+      a=md5hh(a,b,c,d,x[i+5],4,-378558);d=md5hh(d,a,b,c,x[i+8],11,-2022574463);c=md5hh(c,d,a,b,x[i+11],16,1839030562);b=md5hh(b,c,d,a,x[i+14],23,-35309556);
+      a=md5hh(a,b,c,d,x[i+1],4,-1530992060);d=md5hh(d,a,b,c,x[i+4],11,1272893353);c=md5hh(c,d,a,b,x[i+7],16,-155497632);b=md5hh(b,c,d,a,x[i+10],23,-1094730640);
+      a=md5hh(a,b,c,d,x[i+13],4,681279174);d=md5hh(d,a,b,c,x[i],11,-358537222);c=md5hh(c,d,a,b,x[i+3],16,-722521979);b=md5hh(b,c,d,a,x[i+6],23,76029189);
+      a=md5hh(a,b,c,d,x[i+9],4,-640364487);d=md5hh(d,a,b,c,x[i+12],11,-421815835);c=md5hh(c,d,a,b,x[i+15],16,530742520);b=md5hh(b,c,d,a,x[i+2],23,-995338651);
+      a=md5ii(a,b,c,d,x[i],6,-198630844);d=md5ii(d,a,b,c,x[i+7],10,1126891415);c=md5ii(c,d,a,b,x[i+14],15,-1416354905);b=md5ii(b,c,d,a,x[i+5],21,-57434055);
+      a=md5ii(a,b,c,d,x[i+12],6,1700485571);d=md5ii(d,a,b,c,x[i+3],10,-1894986606);c=md5ii(c,d,a,b,x[i+10],15,-1051523);b=md5ii(b,c,d,a,x[i+1],21,-2054922799);
+      a=md5ii(a,b,c,d,x[i+8],6,1873313359);d=md5ii(d,a,b,c,x[i+15],10,-30611744);c=md5ii(c,d,a,b,x[i+6],15,-1560198380);b=md5ii(b,c,d,a,x[i+13],21,1309151649);
+      a=md5ii(a,b,c,d,x[i+4],6,-145523070);d=md5ii(d,a,b,c,x[i+11],10,-1120210379);c=md5ii(c,d,a,b,x[i+2],15,718787259);b=md5ii(b,c,d,a,x[i+9],21,-343485551);
+      a=safeAdd(a,oa);b=safeAdd(b,ob);c=safeAdd(c,oc);d=safeAdd(d,od);
+    }
+    const words = [a, b, c, d];
+    return words.map(w => {
+      let hex = '';
+      for (let j = 0; j < 4; j++) hex += ('0' + ((w >> (j * 8)) & 0xFF).toString(16)).slice(-2);
+      return hex;
+    }).join('');
+  }
+
+  // ── Web Crypto SHA helpers ─────────────────────────────────────────────────
+  async function sha(algo, buffer) {
+    const hashBuffer = await crypto.subtle.digest(algo, buffer);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let currentBuffer = null;
+  let caseMode = 'lower';
+  let currentTab = 'text';
+  const hashes = { md5: '', sha1: '', sha256: '', sha512: '' };
+
+  function applyCase(s) {
+    return caseMode === 'upper' ? s.toUpperCase() : s.toLowerCase();
+  }
+
+  function setHashDisplay(id, value) {
+    const el = document.getElementById(id);
+    el.textContent = value ? applyCase(value) : 'Awaiting input…';
+    el.className = 'hash-value' + (value ? '' : ' empty');
+  }
+
+  function refreshDisplay() {
+    setHashDisplay('valMd5', hashes.md5);
+    setHashDisplay('valSha1', hashes.sha1);
+    setHashDisplay('valSha256', hashes.sha256);
+    setHashDisplay('valSha512', hashes.sha512);
+  }
+
+  function setLoading() {
+    ['valMd5','valSha1','valSha256','valSha512'].forEach(id => {
+      const el = document.getElementById(id);
+      el.textContent = 'Computing…';
+      el.className = 'hash-value loading';
+    });
+  }
+
+  async function computeFromBuffer(buffer) {
+    if (!buffer) return;
+    setLoading();
+    const md5Result = md5FromBuffer(buffer);
+    const [sha1, sha256, sha512] = await Promise.all([
+      sha('SHA-1', buffer),
+      sha('SHA-256', buffer),
+      sha('SHA-512', buffer),
+    ]);
+    hashes.md5 = md5Result;
+    hashes.sha1 = sha1;
+    hashes.sha256 = sha256;
+    hashes.sha512 = sha512;
+    refreshDisplay();
+  }
+
+  function md5FromBuffer(buffer) {
+    // For buffer (ArrayBuffer), convert to string via Uint8Array
+    const bytes = new Uint8Array(buffer);
+    const x = [];
+    for (let i = 0; i < bytes.length * 8; i += 8) x[i >> 5] = (x[i >> 5] || 0) | (bytes[i / 8] & 0xFF) << (i % 32);
+    const len = bytes.length * 8;
+    x[len >> 5] = (x[len >> 5] || 0) | (0x80 << (len % 32));
+    x[(((len + 64) >>> 9) << 4) + 14] = len;
+
+    function safeAdd(x, y) { const lsw = (x & 0xFFFF) + (y & 0xFFFF); const msw = (x >> 16) + (y >> 16) + (lsw >> 16); return (msw << 16) | (lsw & 0xFFFF); }
+    function bitRotateLeft(num, cnt) { return (num << cnt) | (num >>> (32 - cnt)); }
+    function md5cmn(q, a, b, x2, s, t) { return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x2, t)), s), b); }
+    function md5ff(a,b,c,d,x2,s,t){return md5cmn((b&c)|((~b)&d),a,b,x2,s,t);}
+    function md5gg(a,b,c,d,x2,s,t){return md5cmn((b&d)|(c&(~d)),a,b,x2,s,t);}
+    function md5hh(a,b,c,d,x2,s,t){return md5cmn(b^c^d,a,b,x2,s,t);}
+    function md5ii(a,b,c,d,x2,s,t){return md5cmn(c^(b|(~d)),a,b,x2,s,t);}
+
+    let a=1732584193, b=-271733879, c=-1732584194, d=271733878;
+    for (let i = 0; i < x.length; i += 16) {
+      const oa=a, ob=b, oc=c, od=d;
+      a=md5ff(a,b,c,d,x[i]||0,7,-680876936);d=md5ff(d,a,b,c,x[i+1]||0,12,-389564586);c=md5ff(c,d,a,b,x[i+2]||0,17,606105819);b=md5ff(b,c,d,a,x[i+3]||0,22,-1044525330);
+      a=md5ff(a,b,c,d,x[i+4]||0,7,-176418897);d=md5ff(d,a,b,c,x[i+5]||0,12,1200080426);c=md5ff(c,d,a,b,x[i+6]||0,17,-1473231341);b=md5ff(b,c,d,a,x[i+7]||0,22,-45705983);
+      a=md5ff(a,b,c,d,x[i+8]||0,7,1770035416);d=md5ff(d,a,b,c,x[i+9]||0,12,-1958414417);c=md5ff(c,d,a,b,x[i+10]||0,17,-42063);b=md5ff(b,c,d,a,x[i+11]||0,22,-1990404162);
+      a=md5ff(a,b,c,d,x[i+12]||0,7,1804603682);d=md5ff(d,a,b,c,x[i+13]||0,12,-40341101);c=md5ff(c,d,a,b,x[i+14]||0,17,-1502002290);b=md5ff(b,c,d,a,x[i+15]||0,22,1236535329);
+      a=md5gg(a,b,c,d,x[i+1]||0,5,-165796510);d=md5gg(d,a,b,c,x[i+6]||0,9,-1069501632);c=md5gg(c,d,a,b,x[i+11]||0,14,643717713);b=md5gg(b,c,d,a,x[i]||0,20,-373897302);
+      a=md5gg(a,b,c,d,x[i+5]||0,5,-701558691);d=md5gg(d,a,b,c,x[i+10]||0,9,38016083);c=md5gg(c,d,a,b,x[i+15]||0,14,-660478335);b=md5gg(b,c,d,a,x[i+4]||0,20,-405537848);
+      a=md5gg(a,b,c,d,x[i+9]||0,5,568446438);d=md5gg(d,a,b,c,x[i+14]||0,9,-1019803690);c=md5gg(c,d,a,b,x[i+3]||0,14,-187363961);b=md5gg(b,c,d,a,x[i+8]||0,20,1163531501);
+      a=md5gg(a,b,c,d,x[i+13]||0,5,-1444681467);d=md5gg(d,a,b,c,x[i+2]||0,9,-51403784);c=md5gg(c,d,a,b,x[i+7]||0,14,1735328473);b=md5gg(b,c,d,a,x[i+12]||0,20,-1926607734);
+      a=md5hh(a,b,c,d,x[i+5]||0,4,-378558);d=md5hh(d,a,b,c,x[i+8]||0,11,-2022574463);c=md5hh(c,d,a,b,x[i+11]||0,16,1839030562);b=md5hh(b,c,d,a,x[i+14]||0,23,-35309556);
+      a=md5hh(a,b,c,d,x[i+1]||0,4,-1530992060);d=md5hh(d,a,b,c,x[i+4]||0,11,1272893353);c=md5hh(c,d,a,b,x[i+7]||0,16,-155497632);b=md5hh(b,c,d,a,x[i+10]||0,23,-1094730640);
+      a=md5hh(a,b,c,d,x[i+13]||0,4,681279174);d=md5hh(d,a,b,c,x[i]||0,11,-358537222);c=md5hh(c,d,a,b,x[i+3]||0,16,-722521979);b=md5hh(b,c,d,a,x[i+6]||0,23,76029189);
+      a=md5hh(a,b,c,d,x[i+9]||0,4,-640364487);d=md5hh(d,a,b,c,x[i+12]||0,11,-421815835);c=md5hh(c,d,a,b,x[i+15]||0,16,530742520);b=md5hh(b,c,d,a,x[i+2]||0,23,-995338651);
+      a=md5ii(a,b,c,d,x[i]||0,6,-198630844);d=md5ii(d,a,b,c,x[i+7]||0,10,1126891415);c=md5ii(c,d,a,b,x[i+14]||0,15,-1416354905);b=md5ii(b,c,d,a,x[i+5]||0,21,-57434055);
+      a=md5ii(a,b,c,d,x[i+12]||0,6,1700485571);d=md5ii(d,a,b,c,x[i+3]||0,10,-1894986606);c=md5ii(c,d,a,b,x[i+10]||0,15,-1051523);b=md5ii(b,c,d,a,x[i+1]||0,21,-2054922799);
+      a=md5ii(a,b,c,d,x[i+8]||0,6,1873313359);d=md5ii(d,a,b,c,x[i+15]||0,10,-30611744);c=md5ii(c,d,a,b,x[i+6]||0,15,-1560198380);b=md5ii(b,c,d,a,x[i+13]||0,21,1309151649);
+      a=md5ii(a,b,c,d,x[i+4]||0,6,-145523070);d=md5ii(d,a,b,c,x[i+11]||0,10,-1120210379);c=md5ii(c,d,a,b,x[i+2]||0,15,718787259);b=md5ii(b,c,d,a,x[i+9]||0,21,-343485551);
+      a=safeAdd(a,oa);b=safeAdd(b,ob);c=safeAdd(c,oc);d=safeAdd(d,od);
+    }
+    const words = [a, b, c, d];
+    return words.map(w => { let h=''; for(let j=0;j<4;j++) h+=('0'+((w>>(j*8))&0xFF).toString(16)).slice(-2); return h; }).join('');
+  }
+
+  async function computeFromText(text) {
+    if (!text) {
+      hashes.md5 = hashes.sha1 = hashes.sha256 = hashes.sha512 = '';
+      refreshDisplay();
+      return;
+    }
+    const encoder = new TextEncoder();
+    const buffer = encoder.encode(text).buffer;
+    await computeFromBuffer(buffer);
+  }
+
+  // ── Tabs ────────────────────────────────────────────────────────────────────
+  document.getElementById('tabText').addEventListener('click', () => {
+    currentTab = 'text';
+    document.getElementById('tabText').classList.add('active');
+    document.getElementById('tabFile').classList.remove('active');
+    document.getElementById('paneText').style.display = '';
+    document.getElementById('paneFile').style.display = 'none';
+    computeFromText(document.getElementById('textInput').value);
+  });
+  document.getElementById('tabFile').addEventListener('click', () => {
+    currentTab = 'file';
+    document.getElementById('tabFile').classList.add('active');
+    document.getElementById('tabText').classList.remove('active');
+    document.getElementById('paneText').style.display = 'none';
+    document.getElementById('paneFile').style.display = '';
+    if (currentBuffer) computeFromBuffer(currentBuffer);
+    else { hashes.md5 = hashes.sha1 = hashes.sha256 = hashes.sha512 = ''; refreshDisplay(); }
+  });
+
+  // ── Text input ──────────────────────────────────────────────────────────────
+  let debounceTimer;
+  document.getElementById('textInput').addEventListener('input', e => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => computeFromText(e.target.value), 150);
+  });
+  document.getElementById('btnPaste').addEventListener('click', async () => {
+    try { const t = await navigator.clipboard.readText(); document.getElementById('textInput').value = t; computeFromText(t); } catch { alert('Clipboard denied'); }
+  });
+  document.getElementById('btnClear').addEventListener('click', () => {
+    document.getElementById('textInput').value = '';
+    computeFromText('');
+  });
+  document.getElementById('btnSample').addEventListener('click', () => {
+    const s = 'The quick brown fox jumps over the lazy dog';
+    document.getElementById('textInput').value = s;
+    computeFromText(s);
+  });
+
+  // ── File drop ───────────────────────────────────────────────────────────────
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) loadFile(file);
+  });
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+  document.getElementById('btnRemoveFile').addEventListener('click', () => {
+    currentBuffer = null;
+    fileInput.value = '';
+    document.getElementById('fileInfo').classList.remove('show');
+    hashes.md5 = hashes.sha1 = hashes.sha256 = hashes.sha512 = '';
+    refreshDisplay();
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return `${b} B`;
+    if (b < 1024*1024) return `${(b/1024).toFixed(1)} KB`;
+    return `${(b/1024/1024).toFixed(2)} MB`;
+  }
+
+  function loadFile(file) {
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = formatBytes(file.size);
+    document.getElementById('fileInfo').classList.add('show');
+    const reader = new FileReader();
+    reader.onload = e => {
+      currentBuffer = e.target.result;
+      computeFromBuffer(currentBuffer);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // ── Case toggle ─────────────────────────────────────────────────────────────
+  document.getElementById('caseLower').addEventListener('click', () => {
+    caseMode = 'lower';
+    document.getElementById('caseLower').classList.add('active');
+    document.getElementById('caseUpper').classList.remove('active');
+    refreshDisplay();
+  });
+  document.getElementById('caseUpper').addEventListener('click', () => {
+    caseMode = 'upper';
+    document.getElementById('caseUpper').classList.add('active');
+    document.getElementById('caseLower').classList.remove('active');
+    refreshDisplay();
+  });
+
+  // ── Copy buttons ────────────────────────────────────────────────────────────
+  document.querySelectorAll('.btn-copy-hash').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = document.getElementById(btn.dataset.id)?.textContent;
+      if (!val || val === 'Awaiting input…' || val === 'Computing…') return;
+      navigator.clipboard.writeText(val).then(() => {
+        btn.classList.add('copied');
+        const orig = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = orig; }, 1500);
+      });
+    });
+  });
+
+  document.getElementById('copyAll').addEventListener('click', () => {
+    const vals = ['valMd5','valSha1','valSha256','valSha512'].map(id => {
+      const el = document.getElementById(id);
+      const algo = el.closest('.hash-row')?.querySelector('.hash-algo')?.textContent?.trim() || id;
+      return `${algo}: ${el.textContent}`;
+    }).filter(l => !l.includes('Awaiting') && !l.includes('Computing')).join('\n');
+    if (!vals) return;
+    navigator.clipboard.writeText(vals).then(() => {
+      const btn = document.getElementById('copyAll');
+      btn.classList.add('copied');
+      btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy All'; }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
