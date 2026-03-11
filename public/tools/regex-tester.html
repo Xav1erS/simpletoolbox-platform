@@ -58,8 +58,8 @@
     .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
     .nav-back { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; }
     .nav-back:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
-    .nav-all-tools { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; flex-shrink: 0; }
-    .nav-all-tools:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-tools-link { display: flex; align-items: center; font-size: 13px; color: var(--text-secondary); padding: 5px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .nav-tools-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
     .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
     .logo-img { object-fit: contain; display: block; border-radius: 6px; }
     .nav-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
@@ -248,25 +248,19 @@
 <body>
 
 <nav class="nav">
-  <a href="../index.html" class="nav-back">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Home
-  </a>
   <div class="nav-divider"></div>
   <a href="../index.html" class="nav-logo">
     <img src="../logo 1.svg" class="logo-img" width="24" height="24" alt="Simple ToolBox" />
     <span>Simple ToolBox</span>
   </a>
   <div class="nav-divider"></div>
+  <a href="../all-tools.html" class="nav-tools-link">Tools</a>
+  <div class="nav-divider"></div>
   <div class="nav-tool-name">
     Regex Tester
     <span class="nav-tool-badge">regex</span>
   </div>
   <div class="nav-spacer"></div>
-  <a href="../index.html" class="nav-all-tools">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    所有工具
-  </a>
   <div class="nav-privacy">
     <span class="nav-privacy-dot"></span>
     Runs locally — no data sent
