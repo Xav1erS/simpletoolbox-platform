@@ -16,17 +16,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/design-system.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
-      --border: rgba(255,255,255,0.07); --border-hover: rgba(94,106,210,0.5);
-      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
-      --accent: #5E6AD2; --accent-hover: #6E7AE2; --accent-dim: rgba(94,106,210,0.12); --accent-glow: rgba(94,106,210,0.25);
-      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px;
-      --font: 'Inter', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 60px;
+      --bg: var(--ds-color-bg); --bg-surface: var(--ds-color-surface); --bg-hover: var(--ds-color-surface-strong);
+      --border: var(--ds-color-border); --border-hover: var(--ds-color-border-accent);
+      --text-primary: var(--ds-color-text-primary); --text-secondary: var(--ds-color-text-secondary); --text-muted: var(--ds-color-text-muted);
+      --accent: var(--ds-color-accent); --accent-hover: var(--ds-color-accent-hover); --accent-dim: var(--ds-color-surface-tint); --accent-glow: rgba(94,106,210,0.25);
+      --radius-sm: var(--ds-radius-sm); --radius-md: var(--ds-radius-md); --radius-lg: var(--ds-radius-lg);
+      --font: var(--ds-font-sans);
+      --mono: var(--ds-font-mono);
+      --nav-h: var(--ds-nav-height);
     }
     body { font-family: var(--font); background: var(--bg); color: var(--text-primary); min-height: 100vh; }
 
@@ -45,9 +46,7 @@
     .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .nav-link { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 6px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; text-decoration: none; }
     .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); text-decoration: none; }
-    .btn-primary { background: var(--accent); color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); transition: background 0.2s, transform 0.15s; letter-spacing: -0.1px; text-decoration: none; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); text-decoration: none; }
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary { text-decoration: none; }
     .search-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 300; overflow: hidden; }
     .search-dropdown.open { display: block; }
     .search-suggestion { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); transition: background 0.1s; color: var(--text-primary); text-decoration: none; }
@@ -65,8 +64,8 @@
 
     /* Page header */
     .page-header { max-width: 1100px; margin: 0 auto; padding: 48px 24px 0; }
-    .page-title { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
-    .page-sub { font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; }
+    .page-title { font-size: var(--ds-font-size-h1); font-weight: 700; line-height: 1.1; letter-spacing: -0.045em; margin-bottom: 8px; }
+    .page-sub { font-size: var(--ds-font-size-body-lg); color: var(--text-secondary); line-height: var(--ds-line-height-relaxed); margin-bottom: 32px; }
 
     /* Filter bar */
     .filter-bar { max-width: 1100px; margin: 0 auto; padding: 0 24px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -76,7 +75,7 @@
     .filter-search input::placeholder { color: var(--text-muted); }
     .filter-search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; pointer-events: none; }
     .filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .filter-tag { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+    .filter-tag { min-height: 28px; padding: 0 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
     .filter-tag:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
     .filter-tag.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     .count-badge { font-size: 12px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
@@ -110,7 +109,7 @@
     }
   </style>
 </head>
-<body>
+<body class="ds-page">
 
 <nav class="nav" id="nav">
   <a href="index.html" class="nav-logo">
@@ -134,7 +133,7 @@
       </svg>
       GitHub
     </a>
-    <a href="contact.html" class="btn-primary">Submit a Tool</a>
+    <a href="contact.html" class="btn-primary ds-btn ds-btn--primary">Submit a Tool</a>
   </div>
 </nav>
 
@@ -149,13 +148,13 @@
     <input type="text" id="toolSearch" placeholder="Search tools…" autocomplete="off" />
   </div>
   <div class="filter-tags">
-    <button class="filter-tag active" data-filter="all">All</button>
-    <button class="filter-tag" data-filter="encode">🔐 Encode</button>
-    <button class="filter-tag" data-filter="format">✨ Format</button>
-    <button class="filter-tag" data-filter="convert">🔄 Convert</button>
-    <button class="filter-tag" data-filter="generate">⚙️ Generate</button>
-    <button class="filter-tag" data-filter="text">📝 Text</button>
-    <button class="filter-tag" data-filter="image">🖼️ Image</button>
+    <button class="filter-tag ds-pill active" data-filter="all">All</button>
+    <button class="filter-tag ds-pill" data-filter="encode">🔐 Encode</button>
+    <button class="filter-tag ds-pill" data-filter="format">✨ Format</button>
+    <button class="filter-tag ds-pill" data-filter="convert">🔄 Convert</button>
+    <button class="filter-tag ds-pill" data-filter="generate">⚙️ Generate</button>
+    <button class="filter-tag ds-pill" data-filter="text">📝 Text</button>
+    <button class="filter-tag ds-pill" data-filter="image">🖼️ Image</button>
   </div>
   <span class="count-badge" id="countBadge">18 tools</span>
 </div>

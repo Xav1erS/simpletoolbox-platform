@@ -21,28 +21,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/design-system.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #0F0F11;
-      --bg-surface:   #16161A;
-      --bg-hover:     #1C1C22;
-      --border:       rgba(255,255,255,0.07);
-      --border-hover: rgba(94,106,210,0.5);
-      --text-primary: #E2E2E5;
-      --text-secondary:#8B8B9A;
-      --text-muted:   #555560;
-      --accent:       #5E6AD2;
-      --accent-hover: #6E7AE2;
-      --accent-dim:   rgba(94,106,210,0.12);
-      --accent-glow:  rgba(94,106,210,0.25);
-      --radius-sm:    6px;
-      --radius-md:    10px;
-      --radius-lg:    16px;
-      --font:         'Inter', 'SF Pro Display', system-ui, sans-serif;
-      --mono:         'JetBrains Mono', 'Fira Code', monospace;
-      --nav-h:        60px;
+      --bg: var(--ds-color-bg);
+      --bg-surface: var(--ds-color-surface);
+      --bg-hover: var(--ds-color-surface-strong);
+      --border: var(--ds-color-border);
+      --border-hover: var(--ds-color-border-accent);
+      --text-primary: var(--ds-color-text-primary);
+      --text-secondary: var(--ds-color-text-secondary);
+      --text-muted: var(--ds-color-text-muted);
+      --accent: var(--ds-color-accent);
+      --accent-hover: var(--ds-color-accent-hover);
+      --accent-dim: var(--ds-color-surface-tint);
+      --accent-glow: rgba(94,106,210,0.25);
+      --radius-sm: var(--ds-radius-sm);
+      --radius-md: var(--ds-radius-md);
+      --radius-lg: var(--ds-radius-lg);
+      --font: var(--ds-font-sans);
+      --mono: var(--ds-font-mono);
+      --nav-h: var(--ds-nav-height);
     }
 
     html { scroll-behavior: smooth; }
@@ -170,18 +171,7 @@
     }
     .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
 
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
-      transition: background 0.2s, transform 0.15s;
-      letter-spacing: -0.1px;
-    }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary { letter-spacing: -0.1px; }
 
     /* ── HERO ── */
     .hero {
@@ -252,11 +242,11 @@
     }
 
     .hero-sub {
-      font-size: 16px;
+      font-size: var(--ds-font-size-body-lg);
       color: var(--text-secondary);
       max-width: 480px;
       margin: 0 auto 40px;
-      line-height: 1.7;
+      line-height: var(--ds-line-height-relaxed);
       font-weight: 400;
     }
 
@@ -705,7 +695,7 @@
   }
   </script>
 </head>
-<body>
+<body class="ds-page">
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -730,7 +720,7 @@
       </svg>
       GitHub
     </a>
-    <a href="contact.html" class="btn-primary">Submit a Tool</a>
+    <a href="contact.html" class="btn-primary ds-btn ds-btn--primary">Submit a Tool</a>
   </div>
 </nav>
 

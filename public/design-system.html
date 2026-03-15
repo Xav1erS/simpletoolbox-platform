@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Design System - Simple ToolBox</title>
+  <meta name="description" content="Simple ToolBox design system reference for tokens, cards, controls, typography, and maintainable UI standards." />
+  <link rel="icon" href="logo 1.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/design-system.css" />
+  <style>
+    .ds-doc-hero-copy {
+      max-width: 640px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ds-doc-grid {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: var(--ds-space-5);
+      align-items: start;
+      padding-bottom: var(--ds-space-16);
+    }
+
+    .ds-doc-sidebar {
+      position: sticky;
+      top: calc(var(--ds-nav-height) + 20px);
+    }
+
+    .ds-doc-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-2);
+    }
+
+    .ds-doc-nav a {
+      color: var(--ds-color-text-secondary);
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: var(--ds-radius-sm);
+      transition: background var(--ds-duration-fast) var(--ds-ease-standard), color var(--ds-duration-fast) var(--ds-ease-standard);
+    }
+
+    .ds-doc-nav a:hover {
+      color: var(--ds-color-text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ds-doc-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-5);
+    }
+
+    .ds-color-swatch {
+      height: 88px;
+      border-radius: var(--ds-radius-md);
+      border: 1px solid var(--ds-color-border);
+      margin-bottom: var(--ds-space-3);
+    }
+
+    .ds-demo-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--ds-space-4);
+    }
+
+    .ds-demo-form .ds-control-group:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .ds-demo-card-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--ds-space-4);
+    }
+
+    .ds-demo-stat {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-1);
+      padding: var(--ds-space-4);
+      border-radius: var(--ds-radius-md);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--ds-color-border);
+    }
+
+    .ds-demo-stat strong {
+      font-size: 24px;
+      letter-spacing: -0.03em;
+      color: var(--ds-color-accent-soft);
+    }
+
+    .ds-demo-toolbar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-4);
+    }
+
+    @media (max-width: 900px) {
+      .ds-doc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ds-doc-sidebar {
+        position: static;
+      }
+
+      .ds-demo-card-row,
+      .ds-demo-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="ds-page">
+  <nav class="ds-nav">
+    <div class="ds-nav__inner">
+      <a class="ds-nav__brand" href="index.html">
+        <img class="ds-nav__logo" src="logo 1.svg" alt="Simple ToolBox" width="28" height="28" />
+        <span>Simple ToolBox</span>
+      </a>
+      <span class="ds-tag">design-system</span>
+    </div>
+  </nav>
+
+  <header class="ds-hero">
+    <div class="ds-shell ds-shell--page">
+      <section class="ds-hero__panel">
+        <div class="ds-doc-hero-copy ds-stack-5">
+          <span class="ds-eyebrow">Maintainable UI language</span>
+          <h1 class="ds-heading-display">A real design system for future tool development.</h1>
+          <p class="ds-text-lead">This system keeps the current Simple ToolBox visual language intact: dark surfaces, restrained borders, mono metadata, and compact utility-first interaction patterns.</p>
+          <div class="ds-toolbar">
+            <a class="ds-btn ds-btn--primary" href="index.html">Back to site</a>
+            <a class="ds-btn ds-btn--secondary" href="#patterns">View patterns</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="ds-shell ds-shell--page ds-doc-grid">
+    <aside class="ds-doc-sidebar ds-sidebar-card ds-stack-4">
+      <div class="ds-stack-2">
+        <p class="ds-text-micro">Sections</p>
+        <nav class="ds-doc-nav">
+          <a href="#tokens">Tokens</a>
+          <a href="#type">Typography</a>
+          <a href="#cards">Cards</a>
+          <a href="#controls">Controls</a>
+          <a href="#patterns">Patterns</a>
+        </nav>
+      </div>
+      <div class="ds-notice">
+        <div class="ds-notice__icon">i</div>
+        <div class="ds-stack-2">
+          <p class="ds-text-body-sm">Rule of thumb</p>
+          <p class="ds-text-caption">Do not add page-local component styles unless the behavior is unique to that page.</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="ds-doc-content">
+      <section id="tokens" class="ds-panel ds-stack-5">
+        <div class="ds-stack-2">
+          <p class="ds-text-micro">Tokens</p>
+          <h2 class="ds-heading-h2">Color, spacing, radius, and motion</h2>
+          <p class="ds-text-body">Tokens are the only allowed source of truth for visual primitives. New pages should consume them, not redefine them.</p>
+        </div>
+        <div class="ds-demo-card-row">
+          <div class="ds-card ds-stack-3">
+            <div class="ds-color-swatch" style="background: var(--ds-color-bg);"></div>
+            <h3 class="ds-card__title">Background</h3>
+            <p class="ds-card__meta">#0F0F11</p>
+          </div>
+          <div class="ds-card ds-stack-3">
+            <div class="ds-color-swatch" style="background: var(--ds-color-surface);"></div>
+            <h3 class="ds-card__title">Surface</h3>
+            <p class="ds-card__meta">#16161A</p>
+          </div>
+          <div class="ds-card ds-stack-3">
+            <div class="ds-color-swatch" style="background: var(--ds-color-accent);"></div>
+            <h3 class="ds-card__title">Accent</h3>
+            <p class="ds-card__meta">#5E6AD2</p>
+          </div>
+        </div>
+        <div class="ds-grid-3">
+          <div class="ds-demo-stat">
+            <span class="ds-text-micro">Radius</span>
+            <strong>6 / 10 / 16</strong>
+            <span class="ds-text-caption">Use `sm`, `md`, `lg` only.</span>
+          </div>
+          <div class="ds-demo-stat">
+            <span class="ds-text-micro">Spacing</span>
+            <strong>8-32</strong>
+            <span class="ds-text-caption">Most UI fits inside the core spacing band.</span>
+          </div>
+          <div class="ds-demo-stat">
+            <span class="ds-text-micro">Motion</span>
+            <strong>150-220ms</strong>
+            <span class="ds-text-caption">Transitions should stay subtle and fast.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="type" class="ds-panel ds-stack-5">
+        <div class="ds-stack-2">
+          <p class="ds-text-micro">Typography</p>
+          <h2 class="ds-heading-h2">Readable hierarchy with compact density</h2>
+        </div>
+        <div class="ds-stack-4">
+          <h1 class="ds-heading-h1">Page H1: primary page identity</h1>
+          <h2 class="ds-heading-h2">Section H2: major content block</h2>
+          <h3 class="ds-heading-h3">Card group H3: secondary grouping</h3>
+          <h4 class="ds-heading-h4">Card H4: standard card title</h4>
+          <p class="ds-text-lead">Lead text is reserved for short page intros and explanatory blurbs.</p>
+          <p class="ds-text-body">Body text is the default layer for help text, tool descriptions, and result explanations.</p>
+          <p class="ds-text-caption">Caption is used for metadata, counters, field notes, and secondary helpers.</p>
+        </div>
+      </section>
+
+      <section id="cards" class="ds-panel ds-stack-5">
+        <div class="ds-stack-2">
+          <p class="ds-text-micro">Cards</p>
+          <h2 class="ds-heading-h2">Standardized content containers</h2>
+        </div>
+        <div class="ds-demo-card-row">
+          <article class="ds-card ds-stack-3">
+            <div class="ds-card__header">
+              <div class="ds-stack-2">
+                <h3 class="ds-card__title">Tool card</h3>
+                <p class="ds-card__meta">20px padding / 10px radius</p>
+              </div>
+              <span class="ds-tag">tool</span>
+            </div>
+            <p class="ds-text-body">Use for catalog items, metrics, feature summaries, and lightweight previews.</p>
+          </article>
+          <article class="ds-list-card ds-stack-3">
+            <div class="ds-card__header">
+              <div class="ds-stack-2">
+                <h3 class="ds-card__title">List card</h3>
+                <p class="ds-card__meta">Dense content / clear actions</p>
+              </div>
+              <span class="ds-tag">list</span>
+            </div>
+            <p class="ds-text-body">Use for result rows, related tools, jump lists, or recent history blocks.</p>
+          </article>
+          <aside class="ds-sidebar-card ds-stack-3">
+            <div class="ds-card__header">
+              <div class="ds-stack-2">
+                <h3 class="ds-card__title">Sidebar card</h3>
+                <p class="ds-card__meta">Tighter companion content</p>
+              </div>
+              <span class="ds-tag">side</span>
+            </div>
+            <p class="ds-text-body">Use for instructions, tips, contact boxes, filters, or informational side modules.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="controls" class="ds-panel ds-stack-5">
+        <div class="ds-stack-2">
+          <p class="ds-text-micro">Controls</p>
+          <h2 class="ds-heading-h2">Buttons, fields, pills, and state language</h2>
+        </div>
+        <div class="ds-demo-toolbar-wrap">
+          <div class="ds-toolbar">
+            <button class="ds-btn ds-btn--primary" type="button">Run tool</button>
+            <button class="ds-btn ds-btn--secondary" type="button">Reset</button>
+            <button class="ds-btn ds-btn--ghost" type="button">Copy</button>
+            <button class="ds-btn ds-btn--danger" type="button">Delete</button>
+          </div>
+          <div class="ds-pill-row">
+            <button class="ds-pill ds-pill--active" type="button">All</button>
+            <button class="ds-pill" type="button">Encode</button>
+            <button class="ds-pill" type="button">Format</button>
+            <span class="ds-tag">active</span>
+          </div>
+          <div class="ds-demo-form">
+            <label class="ds-control-group">
+              <span class="ds-label">Tool name</span>
+              <input class="ds-input" type="text" placeholder="JSON Formatter" />
+            </label>
+            <label class="ds-control-group">
+              <span class="ds-label">Category</span>
+              <select class="ds-select">
+                <option>Formatter</option>
+                <option>Generator</option>
+                <option>Converter</option>
+              </select>
+            </label>
+            <label class="ds-control-group">
+              <span class="ds-label">Description</span>
+              <textarea class="ds-textarea" placeholder="Explain what the tool does and how it should feel."></textarea>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section id="patterns" class="ds-panel ds-stack-5">
+        <div class="ds-stack-2">
+          <p class="ds-text-micro">Patterns</p>
+          <h2 class="ds-heading-h2">Reusable page composition</h2>
+        </div>
+        <div class="ds-showcase-grid">
+          <div class="ds-stack-4">
+            <div class="ds-notice">
+              <div class="ds-notice__icon">!</div>
+              <div class="ds-stack-2">
+                <p class="ds-text-body-sm">Primary notice</p>
+                <p class="ds-text-caption">Use notice blocks for help text, privacy messaging, or tool limitations.</p>
+              </div>
+            </div>
+            <div class="ds-segmented" role="tablist" aria-label="Modes">
+              <button class="ds-segmented__item is-active" type="button">Encode</button>
+              <button class="ds-segmented__item" type="button">Decode</button>
+              <button class="ds-segmented__item" type="button">Inspect</button>
+            </div>
+          </div>
+          <div class="ds-card">
+            <table class="ds-table">
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Use case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Token</td>
+                  <td>Color, type, spacing, motion</td>
+                </tr>
+                <tr>
+                  <td>Base</td>
+                  <td>Typography and layout primitives</td>
+                </tr>
+                <tr>
+                  <td>Component</td>
+                  <td>Buttons, cards, form controls</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

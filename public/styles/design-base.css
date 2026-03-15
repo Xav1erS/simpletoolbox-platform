@@ -1,0 +1,249 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-font-size-body);
+  line-height: var(--ds-line-height-body);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(94, 106, 210, 0.12) 0%, transparent 70%),
+    var(--ds-color-bg);
+  color: var(--ds-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--ds-font-mono);
+}
+
+::selection {
+  background: rgba(94, 106, 210, 0.28);
+  color: var(--ds-color-text-inverse);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--ds-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ds-page {
+  min-height: 100vh;
+}
+
+.ds-shell {
+  width: min(100% - 48px, var(--ds-container-main));
+  margin: 0 auto;
+}
+
+.ds-shell--page {
+  width: min(100% - 48px, var(--ds-container-page));
+}
+
+.ds-shell--reading {
+  width: min(100% - 48px, var(--ds-container-reading));
+}
+
+.ds-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-1) var(--ds-space-3);
+  border-radius: var(--ds-radius-pill);
+  border: 1px solid rgba(94, 106, 210, 0.3);
+  background: var(--ds-color-surface-tint);
+  color: var(--ds-color-accent-soft);
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-font-size-caption);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.ds-heading-display,
+.ds-heading-h1,
+.ds-heading-h2,
+.ds-heading-h3,
+.ds-heading-h4 {
+  margin: 0;
+  color: var(--ds-color-text-primary);
+}
+
+.ds-heading-display {
+  font-size: var(--ds-font-size-display);
+  line-height: var(--ds-line-height-tight);
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+
+.ds-heading-h1 {
+  font-size: var(--ds-font-size-h1);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.ds-heading-h2 {
+  font-size: var(--ds-font-size-h2);
+  line-height: 1.16;
+  letter-spacing: var(--ds-letter-tight);
+  font-weight: 700;
+}
+
+.ds-heading-h3 {
+  font-size: var(--ds-font-size-h3);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+.ds-heading-h4 {
+  font-size: var(--ds-font-size-h4);
+  line-height: 1.25;
+  letter-spacing: var(--ds-letter-normal);
+  font-weight: 600;
+}
+
+.ds-text-lead,
+.ds-text-body,
+.ds-text-body-sm,
+.ds-text-caption,
+.ds-text-micro {
+  margin: 0;
+}
+
+.ds-text-lead {
+  font-size: var(--ds-font-size-body-lg);
+  line-height: var(--ds-line-height-relaxed);
+  color: var(--ds-color-text-secondary);
+}
+
+.ds-text-body {
+  font-size: var(--ds-font-size-body);
+  line-height: var(--ds-line-height-body);
+  color: var(--ds-color-text-secondary);
+}
+
+.ds-text-body-sm {
+  font-size: var(--ds-font-size-body-sm);
+  line-height: 1.6;
+  color: var(--ds-color-text-secondary);
+}
+
+.ds-text-caption {
+  font-size: var(--ds-font-size-caption);
+  line-height: 1.55;
+  color: var(--ds-color-text-muted);
+}
+
+.ds-text-micro {
+  font-size: var(--ds-font-size-micro);
+  line-height: 1.45;
+  color: var(--ds-color-text-muted);
+  letter-spacing: var(--ds-letter-wide);
+  text-transform: uppercase;
+}
+
+.ds-stack-2,
+.ds-stack-3,
+.ds-stack-4,
+.ds-stack-5,
+.ds-stack-6,
+.ds-stack-8 {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-stack-2 {
+  gap: var(--ds-space-2);
+}
+
+.ds-stack-3 {
+  gap: var(--ds-space-3);
+}
+
+.ds-stack-4 {
+  gap: var(--ds-space-4);
+}
+
+.ds-stack-5 {
+  gap: var(--ds-space-5);
+}
+
+.ds-stack-6 {
+  gap: var(--ds-space-6);
+}
+
+.ds-stack-8 {
+  gap: var(--ds-space-8);
+}
+
+.ds-grid-2,
+.ds-grid-3 {
+  display: grid;
+  gap: var(--ds-space-4);
+}
+
+.ds-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ds-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  .ds-shell,
+  .ds-shell--page,
+  .ds-shell--reading {
+    width: min(100% - 32px, var(--ds-container-main));
+  }
+
+  .ds-grid-2,
+  .ds-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
