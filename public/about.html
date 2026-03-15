@@ -11,19 +11,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/design-system.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0F0F11; --bg-surface: #16161A; --bg-hover: #1C1C22;
-      --border: rgba(255,255,255,0.07);
-      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
-      --accent: #5E6AD2; --accent-hover: #6E7AE2;
-      --accent-dim: rgba(94,106,210,0.12); --accent-glow: rgba(94,106,210,0.25);
+      --bg: var(--ds-color-bg); --bg-surface: var(--ds-color-surface); --bg-hover: var(--ds-color-surface-strong);
+      --border: var(--ds-color-border);
+      --text-primary: var(--ds-color-text-primary); --text-secondary: var(--ds-color-text-secondary); --text-muted: var(--ds-color-text-muted);
+      --accent: var(--ds-color-accent); --accent-hover: var(--ds-color-accent-hover);
+      --accent-dim: var(--ds-color-surface-tint); --accent-glow: rgba(94,106,210,0.25);
       --green: #22c55e; --teal: #14b8a6; --purple: #9B8DEB;
-      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px;
-      --font: 'Inter', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 60px;
+      --radius-sm: var(--ds-radius-sm); --radius-md: var(--ds-radius-md); --radius-lg: var(--ds-radius-lg);
+      --font: var(--ds-font-sans);
+      --mono: var(--ds-font-mono);
+      --nav-h: var(--ds-nav-height);
     }
     html { scroll-behavior: smooth; }
     body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
@@ -34,94 +35,49 @@
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
     /* ── NAV ── */
-    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.8); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
-    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.1); }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; white-space: nowrap; flex-shrink: 0; }
-    .nav-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #5E6AD2, #9B8DEB); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-    .nav-search { flex: 1; max-width: 380px; margin: 0 auto; position: relative; }
-    .nav-search input { width: 100%; height: 34px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; font-family: var(--font); padding: 0 12px 0 34px; outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; }
-    .nav-search input::placeholder { color: var(--text-muted); }
-    .nav-search input:focus { border-color: var(--accent); background: rgba(94,106,210,0.06); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .nav-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-    .nav-search kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 10px; color: var(--text-muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; }
-    .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .nav-link { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 6px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; text-decoration: none; }
-    .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); text-decoration: none; }
-    .btn-primary { background: var(--accent); color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); transition: background 0.2s, transform 0.15s; letter-spacing: -0.1px; text-decoration: none; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); text-decoration: none; }
-    .btn-primary:active { transform: translateY(0); }
-    .search-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 300; overflow: hidden; }
-    .search-dropdown.open { display: block; }
-    .search-suggestion { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); transition: background 0.1s; color: var(--text-primary); text-decoration: none; }
-    .search-suggestion:last-child { border-bottom: none; }
-    .search-suggestion:hover, .search-suggestion.focused { background: rgba(255,255,255,0.05); text-decoration: none; }
-    .suggestion-icon { font-size: 18px; flex-shrink: 0; }
-    .suggestion-text { flex: 1; min-width: 0; }
-    .suggestion-name { font-size: 13px; font-weight: 500; }
-    .suggestion-name mark { background: none; color: var(--accent); font-weight: 700; font-style: normal; }
-    .suggestion-desc { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .suggestion-tag { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.2); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
-    .search-no-result { padding: 14px; text-align: center; font-size: 12px; color: var(--text-muted); }
-    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
-    .nav-logo-icon { background: none !important; border-radius: 0 !important; border: none !important; width: auto !important; height: auto !important; }
 
     /* HERO */
-    .hero { position: relative; padding: 80px 24px 64px; text-align: center; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(94,106,210,0.15) 0%, transparent 70%); pointer-events: none; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: var(--purple); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; margin-bottom: 24px; font-family: var(--mono); }
     .hero-title { font-size: clamp(28px, 5vw, 48px); font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; background: linear-gradient(180deg, #fff 0%, rgba(226,226,229,0.7) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { font-size: 16px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .hero-sub { max-width: 520px; }
 
     /* CONTENT */
-    .content { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; display: flex; flex-direction: column; gap: 40px; }
 
     /* VALUES GRID */
     .values-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-    .value-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; }
+    .value-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--ds-space-5); }
     .value-icon { font-size: 24px; margin-bottom: 12px; }
-    .value-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.2px; }
-    .value-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .value-title { font-size: var(--ds-font-size-h4); font-weight: 600; margin-bottom: var(--ds-space-2); letter-spacing: -0.2px; }
+    .value-desc { font-size: var(--ds-font-size-body-sm); color: var(--text-secondary); line-height: 1.6; }
 
     /* STORY SECTION */
-    .story { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px 32px; }
-    .story h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 14px; }
-    .story p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px; }
+    .story { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--ds-space-7) var(--ds-space-8); }
+    .story h2 { font-size: var(--ds-font-size-h3); font-weight: 700; letter-spacing: -0.3px; margin-bottom: var(--ds-space-3); }
+    .story p { font-size: var(--ds-font-size-body); color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--ds-space-3); }
     .story p:last-child { margin-bottom: 0; }
 
     /* STATS ROW */
-    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
-    .stat-item { background: var(--bg-surface); padding: 24px; text-align: center; }
-    .stat-number { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; color: var(--accent); font-variant-numeric: tabular-nums; }
-    .stat-label { font-size: 12px; color: var(--text-secondary); }
-
     /* STACK */
-    .stack-section h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 16px; }
-    .stack-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .stack-pill { font-family: var(--mono); font-size: 12px; background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-secondary); padding: 5px 12px; border-radius: 20px; }
+    .stack-section h2 { font-size: var(--ds-font-size-h3); font-weight: 700; letter-spacing: -0.3px; margin-bottom: var(--ds-space-4); }
+    .stack-list { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
+    .stack-pill { font-family: var(--mono); font-size: var(--ds-font-size-caption); background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-secondary); padding: 5px 12px; border-radius: var(--ds-radius-pill); }
 
     /* CTA */
-    .cta-card { background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); border-radius: var(--radius-md); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    .cta-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .cta-text p { font-size: 13px; color: var(--text-secondary); }
     .cta-btn { display: flex; align-items: center; gap: 7px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 500; padding: 10px 18px; border-radius: var(--radius-sm); transition: background 0.2s; white-space: nowrap; }
     .cta-btn:hover { background: var(--accent-hover); }
 
-    @media (max-width: 768px) { .nav-search { display: none; } }
     @media (max-width: 640px) {
-      .nav-actions .nav-link { display: none; }
-      .nav { padding: 0 16px; }
-      .hero { padding: 56px 20px 48px; }
-      .content { padding: 0 16px 60px; }
-      .stats-row { grid-template-columns: 1fr; }
-      .story { padding: 20px; }
+      .marketing-hero { padding: 56px 20px 48px; }
+      .marketing-content { padding: 0 var(--ds-space-4) 60px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .story, .cta-card { padding: var(--ds-space-5); }
     }
   </style>
 </head>
-<body>
+<body class="ds-page">
 
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-icon"><img src="logo 1.svg" class="logo-img" width="28" height="28" alt="Simple ToolBox" /></div>
+<nav class="nav ds-nav" id="nav">
+  <a href="index.html" class="nav-logo ds-nav__brand">
+    <div class="nav-logo-icon"><img src="logo 1.svg" class="logo-img ds-nav__logo" width="28" height="28" alt="Simple ToolBox" /></div>
     Simple ToolBox
   </a>
 
@@ -129,7 +85,7 @@
     <svg class="nav-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
     </svg>
-    <input type="text" id="navSearch" placeholder="Search tools…" autocomplete="off" />
+    <input type="text" id="navSearch" class="ds-input" placeholder="Search tools…" autocomplete="off" />
     <kbd>⌘K</kbd>
     <div class="search-dropdown" id="navSearchDropdown"></div>
   </div>
@@ -141,52 +97,52 @@
       </svg>
       GitHub
     </a>
-    <a href="contact.html" class="btn-primary">Submit a Tool</a>
+    <a href="contact.html" class="btn-primary ds-btn ds-btn--primary">Submit a Tool</a>
   </div>
 </nav>
 
-<section class="hero">
+<section class="hero marketing-hero">
   <div class="hero-badge">✦ Our story</div>
   <h1 class="hero-title">Built for developers,<br/>by developers</h1>
   <p class="hero-sub">Simple ToolBox started as a collection of bookmarked one-off tools. We decided to build them all in one place — fast, private, and always free.</p>
 </section>
 
-<div class="content">
+<div class="content marketing-content marketing-content--stack">
 
   <!-- Stats -->
-  <div class="stats-row">
-    <div class="stat-item">
-      <div class="stat-number">50+</div>
-      <div class="stat-label">Tools available</div>
+  <div class="stats-row stats-grid">
+    <div class="stat-item stats-grid__item">
+      <div class="stat-number stats-grid__value">50+</div>
+      <div class="stat-label stats-grid__label">Tools available</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-number">0</div>
-      <div class="stat-label">Bytes sent to server</div>
+    <div class="stat-item stats-grid__item">
+      <div class="stat-number stats-grid__value">0</div>
+      <div class="stat-label stats-grid__label">Bytes sent to server</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Free, forever</div>
+    <div class="stat-item stats-grid__item">
+      <div class="stat-number stats-grid__value">100%</div>
+      <div class="stat-label stats-grid__label">Free, forever</div>
     </div>
   </div>
 
   <!-- Values -->
   <div class="values-grid">
-    <div class="value-card">
+    <div class="value-card ds-card">
       <div class="value-icon">🔒</div>
       <div class="value-title">Privacy by Design</div>
       <div class="value-desc">Every tool runs entirely in your browser. Your data never leaves your device — not even anonymously.</div>
     </div>
-    <div class="value-card">
+    <div class="value-card ds-card">
       <div class="value-icon">⚡</div>
       <div class="value-title">Zero Friction</div>
       <div class="value-desc">No sign-up, no paywall, no ads in your face. Open the tool, do the work, close the tab.</div>
     </div>
-    <div class="value-card">
+    <div class="value-card ds-card">
       <div class="value-icon">🎯</div>
       <div class="value-title">Purpose-Built</div>
       <div class="value-desc">Each tool is designed to solve exactly one problem, and to solve it well. No bloat, no distractions.</div>
     </div>
-    <div class="value-card">
+    <div class="value-card ds-card">
       <div class="value-icon">🌙</div>
       <div class="value-title">Easy on the Eyes</div>
       <div class="value-desc">A carefully crafted dark interface that stays out of your way during long coding sessions.</div>
@@ -194,7 +150,7 @@
   </div>
 
   <!-- Story -->
-  <div class="story">
+  <div class="story ds-panel">
     <h2>Our Story</h2>
     <p>It started with a frustration: every time we needed to encode a Base64 string or format a JSON blob, we'd spend 30 seconds searching Google, land on a sketchy ad-laden site, and wonder whether our API keys or personal data were being logged somewhere.</p>
     <p>So we built Simple ToolBox — a clean, fast, privacy-first alternative. All tools run client-side using native browser APIs. We rely on <code style="font-family:var(--mono);font-size:12px;background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">crypto.getRandomValues()</code>, <code style="font-family:var(--mono);font-size:12px;background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">TextEncoder</code>, and standard JavaScript — no third-party SDKs, no telemetry.</p>
@@ -205,22 +161,22 @@
   <div class="stack-section">
     <h2>How It's Built</h2>
     <div class="stack-list">
-      <span class="stack-pill">Vanilla HTML</span>
-      <span class="stack-pill">CSS Custom Properties</span>
-      <span class="stack-pill">Vanilla JavaScript</span>
-      <span class="stack-pill">Web Crypto API</span>
-      <span class="stack-pill">TextEncoder / TextDecoder</span>
-      <span class="stack-pill">No frameworks</span>
-      <span class="stack-pill">No build step</span>
-      <span class="stack-pill">No trackers</span>
+      <span class="stack-pill ds-tag">Vanilla HTML</span>
+      <span class="stack-pill ds-tag">CSS Custom Properties</span>
+      <span class="stack-pill ds-tag">Vanilla JavaScript</span>
+      <span class="stack-pill ds-tag">Web Crypto API</span>
+      <span class="stack-pill ds-tag">TextEncoder / TextDecoder</span>
+      <span class="stack-pill ds-tag">No frameworks</span>
+      <span class="stack-pill ds-tag">No build step</span>
+      <span class="stack-pill ds-tag">No trackers</span>
     </div>
   </div>
 
   <!-- CTA -->
-  <div class="cta-card">
+  <div class="cta-card cta-banner ds-panel">
     <div class="cta-text">
-      <h3>Have a tool suggestion?</h3>
-      <p>We're always looking to add useful tools. Drop us a message.</p>
+      <h3 class="cta-banner__title">Have a tool suggestion?</h3>
+      <p class="cta-banner__text">We're always looking to add useful tools. Drop us a message.</p>
     </div>
     <a href="contact.html" class="cta-btn">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>

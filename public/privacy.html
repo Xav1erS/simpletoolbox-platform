@@ -11,18 +11,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/design-system.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0F0F11; --bg-surface: #16161A;
-      --border: rgba(255,255,255,0.07);
-      --text-primary: #E2E2E5; --text-secondary: #8B8B9A; --text-muted: #555560;
-      --accent: #5E6AD2; --accent-hover: #6E7AE2; --accent-dim: rgba(94,106,210,0.12); --accent-glow: rgba(94,106,210,0.25);
+      --bg: var(--ds-color-bg); --bg-surface: var(--ds-color-surface);
+      --border: var(--ds-color-border);
+      --text-primary: var(--ds-color-text-primary); --text-secondary: var(--ds-color-text-secondary); --text-muted: var(--ds-color-text-muted);
+      --accent: var(--ds-color-accent); --accent-hover: var(--ds-color-accent-hover); --accent-dim: var(--ds-color-surface-tint); --accent-glow: rgba(94,106,210,0.25);
       --green: #22c55e; --purple: #9B8DEB;
-      --radius-sm: 6px; --radius-md: 10px;
-      --font: 'Inter', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --nav-h: 60px;
+      --radius-sm: var(--ds-radius-sm); --radius-md: var(--ds-radius-md);
+      --font: var(--ds-font-sans);
+      --mono: var(--ds-font-mono);
+      --nav-h: var(--ds-nav-height);
     }
     html { scroll-behavior: smooth; }
     body { font-family: var(--font); background: var(--bg); color: var(--text-primary); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
@@ -33,82 +34,17 @@
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
     /* ── NAV ── */
-    .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; padding: 0 24px; gap: 16px; background: rgba(15,15,17,0.8); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
-    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.1); }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; white-space: nowrap; flex-shrink: 0; color: var(--text-primary); text-decoration: none; }
-    .nav-logo:hover { text-decoration: none; color: var(--text-primary); }
-    .nav-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #5E6AD2, #9B8DEB); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-    .nav-search { flex: 1; max-width: 380px; margin: 0 auto; position: relative; }
-    .nav-search input { width: 100%; height: 34px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 13px; font-family: var(--font); padding: 0 12px 0 34px; outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; }
-    .nav-search input::placeholder { color: var(--text-muted); }
-    .nav-search input:focus { border-color: var(--accent); background: rgba(94,106,210,0.06); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .nav-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-    .nav-search kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 10px; color: var(--text-muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; }
-    .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .nav-link { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 13px; padding: 6px 10px; border-radius: var(--radius-sm); transition: color 0.2s, background 0.2s; text-decoration: none; }
-    .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); text-decoration: none; }
-    .btn-primary { background: var(--accent); color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); transition: background 0.2s, transform 0.15s; letter-spacing: -0.1px; text-decoration: none; }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); text-decoration: none; }
-    .btn-primary:active { transform: translateY(0); }
-    .search-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 300; overflow: hidden; }
-    .search-dropdown.open { display: block; }
-    .search-suggestion { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); transition: background 0.1s; color: var(--text-primary); text-decoration: none; }
-    .search-suggestion:last-child { border-bottom: none; }
-    .search-suggestion:hover, .search-suggestion.focused { background: rgba(255,255,255,0.05); text-decoration: none; }
-    .suggestion-icon { font-size: 18px; flex-shrink: 0; }
-    .suggestion-text { flex: 1; min-width: 0; }
-    .suggestion-name { font-size: 13px; font-weight: 500; }
-    .suggestion-name mark { background: none; color: var(--accent); font-weight: 700; font-style: normal; }
-    .suggestion-desc { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .suggestion-tag { font-family: var(--mono); font-size: 10px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.2); color: #9B8DEB; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; }
-    .search-no-result { padding: 14px; text-align: center; font-size: 12px; color: var(--text-muted); }
-    .logo-img { object-fit: contain; display: block; border-radius: 6px; }
-    .nav-logo-icon { background: none !important; border-radius: 0 !important; border: none !important; width: auto !important; height: auto !important; }
 
-    /* LAYOUT */
-    .page { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 200px 1fr; gap: 48px; align-items: start; }
-
-    /* TOC */
-    .toc { position: sticky; top: calc(var(--nav-h) + 20px); }
-    .toc-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
-    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-    .toc-list a { font-size: 13px; color: var(--text-secondary); text-decoration: none; padding: 4px 8px; border-radius: var(--radius-sm); display: block; transition: color 0.15s, background 0.15s; border-left: 2px solid transparent; }
-    .toc-list a:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); text-decoration: none; }
-    .toc-list a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-dim); }
-
-    /* MAIN CONTENT */
-    .doc { display: flex; flex-direction: column; gap: 32px; }
-
-    .doc-header { padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-    .doc-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-dim); border: 1px solid rgba(94,106,210,0.3); color: var(--purple); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; font-family: var(--mono); }
-    .doc-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
-    .doc-meta { font-size: 12px; color: var(--text-muted); }
-
-    .tldr { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: var(--radius-md); padding: 16px 20px; display: flex; align-items: flex-start; gap: 12px; }
-    .tldr-icon { font-size: 18px; flex-shrink: 0; }
-    .tldr-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
-    .tldr-text strong { color: var(--text-primary); }
-
-    .doc-section { display: flex; flex-direction: column; gap: 12px; }
-    .doc-section h2 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; scroll-margin-top: calc(var(--nav-h) + 20px); }
-    .doc-section p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
-    .doc-section ul { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
-    .doc-section ul li { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-    .doc-section ul li strong { color: var(--text-primary); }
-
-    @media (max-width: 768px) { .nav-search { display: none; } }
     @media (max-width: 720px) {
-      .nav-actions .nav-link { display: none; }
-      .page { grid-template-columns: 1fr; padding: 32px 16px 60px; gap: 32px; }
       .toc { display: none; }
     }
   </style>
 </head>
-<body>
+<body class="ds-page">
 
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-icon"><img src="logo 1.svg" class="logo-img" width="28" height="28" alt="Simple ToolBox" /></div>
+<nav class="nav ds-nav" id="nav">
+  <a href="index.html" class="nav-logo ds-nav__brand">
+    <div class="nav-logo-icon"><img src="logo 1.svg" class="logo-img ds-nav__logo" width="28" height="28" alt="Simple ToolBox" /></div>
     Simple ToolBox
   </a>
 
@@ -116,7 +52,7 @@
     <svg class="nav-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
     </svg>
-    <input type="text" id="navSearch" placeholder="Search tools…" autocomplete="off" />
+    <input type="text" id="navSearch" class="ds-input" placeholder="Search tools…" autocomplete="off" />
     <kbd>⌘K</kbd>
     <div class="search-dropdown" id="navSearchDropdown"></div>
   </div>
@@ -128,16 +64,16 @@
       </svg>
       GitHub
     </a>
-    <a href="contact.html" class="btn-primary">Submit a Tool</a>
+    <a href="contact.html" class="btn-primary ds-btn ds-btn--primary">Submit a Tool</a>
   </div>
 </nav>
 
-<div class="page">
+<div class="page legal-page">
 
   <!-- TOC -->
-  <aside class="toc">
-    <div class="toc-title">Contents</div>
-    <ul class="toc-list">
+  <aside class="toc legal-toc ds-panel ds-panel--compact">
+    <div class="toc-title legal-toc__title">Contents</div>
+    <ul class="toc-list legal-toc__list">
       <li><a href="#summary">TL;DR Summary</a></li>
       <li><a href="#data-collection">Data Collection</a></li>
       <li><a href="#local-processing">Local Processing</a></li>
@@ -151,22 +87,22 @@
   </aside>
 
   <!-- Document -->
-  <main class="doc">
+  <main class="doc legal-doc">
 
-    <div class="doc-header">
-      <div class="doc-badge">Last updated: March 2026</div>
-      <h1 class="doc-title">Privacy Policy</h1>
-      <p class="doc-meta">Effective date: January 1, 2025 &nbsp;·&nbsp; Simple ToolBox</p>
+    <div class="doc-header legal-doc__header ds-panel">
+      <div class="doc-badge legal-doc__badge">Last updated: March 2026</div>
+      <h1 class="doc-title legal-doc__title">Privacy Policy</h1>
+      <p class="doc-meta legal-doc__meta">Effective date: January 1, 2025 &nbsp;·&nbsp; Simple ToolBox</p>
     </div>
 
-    <div class="tldr" id="summary">
-      <span class="tldr-icon">✅</span>
-      <div class="tldr-text">
+    <div class="tldr legal-notice ds-notice" id="summary">
+      <span class="tldr-icon legal-notice__icon">✅</span>
+      <div class="tldr-text legal-notice__text">
         <strong>Short version:</strong> We collect <strong>no personal data whatsoever</strong>. All tool processing happens entirely inside your browser. Nothing you type, paste, upload, or generate is ever sent to our servers — because we don't have any server-side processing to begin with.
       </div>
     </div>
 
-    <div class="doc-section" id="data-collection">
+    <div class="doc-section legal-section ds-panel" id="data-collection">
       <h2>1. Data Collection</h2>
       <p>Simple ToolBox does not collect, store, transmit, or sell any personal data. We do not:</p>
       <ul>
@@ -178,18 +114,18 @@
       </ul>
     </div>
 
-    <div class="doc-section" id="local-processing">
+    <div class="doc-section legal-section ds-panel" id="local-processing">
       <h2>2. Local Processing</h2>
       <p>Every tool on this site runs entirely within your web browser using standard JavaScript APIs such as <code style="font-family:var(--mono);font-size:12px;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px">Web Crypto API</code>, <code style="font-family:var(--mono);font-size:12px;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px">TextEncoder</code>, and <code style="font-family:var(--mono);font-size:12px;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px">JSON.parse</code>.</p>
       <p>Any text, files, or data you provide to a tool never leave your device. There are no API calls, no backend servers processing your input, and no data transmission of any kind related to your usage of the tools.</p>
     </div>
 
-    <div class="doc-section" id="cookies">
+    <div class="doc-section legal-section ds-panel" id="cookies">
       <h2>3. Cookies &amp; Local Storage</h2>
       <p>We do not set any tracking cookies. We may use <strong>localStorage</strong> or <strong>sessionStorage</strong> solely to persist your tool preferences (e.g., selected indent size, last-used mode) within your browser. This data stays on your device and is never transmitted to us.</p>
     </div>
 
-    <div class="doc-section" id="third-parties">
+    <div class="doc-section legal-section ds-panel" id="third-parties">
       <h2>4. Third-Party Services</h2>
       <p>We use a minimal number of third-party services:</p>
       <ul>
@@ -198,22 +134,22 @@
       </ul>
     </div>
 
-    <div class="doc-section" id="fonts">
+    <div class="doc-section legal-section ds-panel" id="fonts">
       <h2>5. Google Fonts</h2>
       <p>We load fonts (Inter, JetBrains Mono) from Google Fonts CDN. When your browser requests these fonts, your IP address is sent to Google's servers. Google may log these requests according to their own privacy policy. If you prefer not to use Google Fonts, you can block the requests in your browser or use a content blocker.</p>
     </div>
 
-    <div class="doc-section" id="children">
+    <div class="doc-section legal-section ds-panel" id="children">
       <h2>6. Children's Privacy</h2>
       <p>Our service is not directed to children under 13. We do not knowingly collect any information from children. Since we collect no personal data from any user, this section is largely academic.</p>
     </div>
 
-    <div class="doc-section" id="changes">
+    <div class="doc-section legal-section ds-panel" id="changes">
       <h2>7. Changes to This Policy</h2>
       <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page will reflect any changes. Continued use of Simple ToolBox after any changes constitutes acceptance of the updated policy.</p>
     </div>
 
-    <div class="doc-section" id="contact">
+    <div class="doc-section legal-section ds-panel" id="contact">
       <h2>8. Contact</h2>
       <p>If you have questions about this Privacy Policy, please <a href="contact.html">contact us</a>.</p>
     </div>
